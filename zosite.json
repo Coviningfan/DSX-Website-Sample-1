@@ -1,0 +1,15 @@
+{
+  "name": "dsx-sample",
+  "local_port": 57621,
+  "entrypoint": "bun run dev",
+  "publish": {
+    "label": "dsx-sample",
+    "type": "http",
+    "entrypoint": "bun run prod",
+    "published_port": 54170,
+    "env": {
+      "NODE_ENV": "production",
+      "ZO_CLIENT_IDENTITY_TOKEN": "none"
+    }
+  }
+}
