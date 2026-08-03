@@ -1,435 +1,434 @@
-import { motion } from "framer-motion";
-import {
-  Wrench,
-  PhoneCall,
-  GitBranch,
-  Shield,
-  Layers,
-  BarChart3,
-  ChevronRight,
-  ArrowUpRight,
-  Server,
-} from "lucide-react";
-import { caseStudies } from "@/data/case-studies";
+import { PhoneCall, GitBranch, BrainCircuit, Server, Database, CalendarCheck, MessageSquareText, ArrowUpRight, ChevronRight } from "lucide-react";
+import { SignalOrb } from "../components/signal-orb";
 
-const proofItems = [
-  { label: "Minutes routed", value: "2.4M+", suffix: "/mo" },
-  { label: "Active deployments", value: "140+" },
-  { label: "Avg cost reduction", value: "58%" },
-  { label: "Avg uptime", value: "99.97%" },
+const proofStats = [
+  { metric: "99.97%", label: "Uptime" },
+  { metric: "2.4M+", label: "Minutes routed / month" },
+  { metric: "140+", label: "Active deployments" },
+  { metric: "58%", label: "Average cost reduction" },
 ];
 
-export default function HomePage() {
+export default function Home() {
   return (
-    <main className="bg-background text-foreground">
-      {/* Hero */}
-      <section className="relative overflow-hidden pt-28 pb-20 px-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid lg:grid-cols-[1fr_320px] gap-16 items-center">
-            <div>
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
+    <main className="min-h-screen text-foreground">
+      {/* Hero — two-column: copy left, orb right */}
+      <section className="relative px-6 pt-28 pb-20 max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div>
+            <h1 className="text-4xl sm:text-5xl font-semibold leading-tight tracking-tight text-balance">
+              DSX builds the phone system,
+              <br />
+              <span className="text-muted-foreground">connects it to the operation,</span>
+              <br />
+              and adds AI only where
+              <br />
+              <span className="text-muted-foreground">it earns its keep.</span>
+            </h1>
+            <p className="mt-6 text-lg text-muted-foreground max-w-xl leading-relaxed">
+              Business telecom engineered for operations teams. 3CX,
+              carrier-grade SIP trunking, and practical AI routing — all
+              from our Nevada backbone.
+            </p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <a
+                href="#contact"
+                className="inline-flex items-center gap-2 px-5 py-3 rounded-md bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-colors"
               >
-                <h1 className="text-4xl lg:text-5xl font-bold tracking-tight leading-tight text-balance">
-                  DSX builds the phone system,
-                  <br />
-                  connects it to the operation,
-                  <br />
-                  <span className="text-accent">and adds AI only where it earns
-                    its keep.</span>
-                </h1>
-                <p className="mt-6 text-lg text-muted-foreground max-w-xl leading-relaxed">
-                  Business telecom engineered for operations teams. 3CX,
-                  carrier-grade SIP trunking, and practical AI routing — all
-                  from our Nevada backbone.
-                </p>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                className="mt-8 flex flex-wrap gap-3"
+                Request a workflow audit
+                <ArrowUpRight className="w-4 h-4" />
+              </a>
+              <a
+                href="#case-studies"
+                className="inline-flex items-center gap-2 px-5 py-3 rounded-md border border-border text-sm font-medium hover:bg-secondary transition-colors"
               >
-                <a
-                  href="#contact"
-                  className="inline-flex items-center gap-2 px-5 py-3 rounded-md bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-colors"
-                >
-                  Request a workflow audit
-                  <ArrowUpRight className="w-4 h-4" />
-                </a>
-                <a
-                  href="#case-studies"
-                  className="inline-flex items-center gap-2 px-5 py-3 rounded-md border border-border text-sm font-medium hover:bg-secondary transition-colors"
-                >
-                  Read case studies
-                  <ChevronRight className="w-4 h-4" />
-                </a>
-              </motion.div>
-            </div>
-
-            {/* Signal Orb */}
-            <div className="flex items-center justify-center">
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.8, delay: 0.3 }}
-                className="relative"
-              >
-                <div className="w-64 h-64 rounded-full bg-gradient-to-br from-primary/20 to-accent/10 flex items-center justify-center">
-                  <motion.div
-                    animate={{
-                      scale: [1, 1.03, 1],
-                      opacity: [0.7, 0.9, 0.7],
-                    }}
-                    transition={{
-                      duration: 4,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                    }}
-                    className="absolute inset-0 rounded-full bg-gradient-to-br from-primary/30 to-accent/20 blur-xl"
-                  />
-                  <motion.div
-                    animate={{ rotate: 360 }}
-                    transition={{
-                      duration: 30,
-                      repeat: Infinity,
-                      ease: "linear",
-                    }}
-                    className="absolute inset-[-2px] rounded-full border border-primary/20 border-dashed"
-                  />
-                  <div className="relative z-10 text-center">
-                    <Wrench className="w-12 h-12 text-accent mb-2 mx-auto" />
-                    <div className="font-mono text-2xl font-semibold text-primary">
-                      99.97%
-                    </div>
-                    <div className="text-xs text-muted-foreground font-medium">
-                      Network uptime
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
+                Read case studies
+                <ChevronRight className="w-4 h-4" />
+              </a>
             </div>
           </div>
+          <SignalOrb />
         </div>
       </section>
 
-      {/* Proof Rail */}
-      <section className="py-12 border-y border-border">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
-            {proofItems.map((item) => (
-              <div key={item.label} className="text-center lg:text-left">
-                <div className="font-mono text-2xl font-semibold text-foreground tabular-nums">
-                  {item.value}
-                  {item.suffix && (
-                    <span className="text-sm text-muted-foreground font-normal">
-                      {item.suffix}
-                    </span>
-                  )}
-                </div>
-                <div className="text-sm text-muted-foreground mt-1">
-                  {item.label}
-                </div>
+      {/* Proof rail */}
+      <section className="px-6 pb-20 max-w-7xl mx-auto">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 py-10 border-t border-b border-border/50">
+          {proofStats.map((stat) => (
+            <div key={stat.label} className="text-center">
+              <div className="font-mono text-2xl sm:text-3xl font-semibold tracking-tight">
+                {stat.metric}
               </div>
-            ))}
-          </div>
+              <div className="mt-1 text-xs text-muted-foreground uppercase tracking-widest">
+                {stat.label}
+              </div>
+            </div>
+          ))}
         </div>
       </section>
 
-      {/* Call Flow */}
-      <section id="call-flow" className="py-24 px-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+      {/* Call flow: how calls actually move */}
+      <section className="px-6 pb-24 max-w-3xl mx-auto">
+        <p className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground mb-4">
+          How calls move
+        </p>
+        <h2 className="text-2xl sm:text-3xl font-semibold mb-8 text-balance">
+          A call comes in. Your customer doesn&#39;t know they&#39;re being routed — they just know they got to the right person.
+        </h2>
+        <div className="space-y-8">
+          <div className="flex gap-4 items-start">
+            <div className="mt-1 shrink-0 w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
+              <PhoneCall className="w-4 h-4 text-primary" />
+            </div>
             <div>
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-secondary text-xs font-medium text-muted-foreground mb-4">
-                <GitBranch className="w-3 h-3" />
-                Intelligent Routing
-              </div>
-              <h2 className="text-3xl font-bold tracking-tight text-balance">
-                Every call has a destination. Most don't need a human to find
-                it.
-              </h2>
-              <p className="mt-4 text-muted-foreground leading-relaxed text-lg">
-                DSX routes calls by department, time of day, and caller context
-                — not by a fixed flowchart. Your team gets the right calls. Your
-                customers skip the maze.
+              <h3 className="font-semibold">Inbound call arrives</h3>
+              <p className="mt-1 text-sm text-muted-foreground leading-relaxed">
+                SIP trunk terminates the call. DSX infrastructure handles
+                failover and carrier redundancy before the first ring.
               </p>
-              <ul className="mt-6 space-y-3">
-                {[
-                  "Time-based routing with holiday override",
-                  "Department-aware IVR with CRM lookups",
-                  "Follow-the-sun logic for distributed teams",
-                  "Optional AI triage for high-volume queues",
-                ].map((item) => (
-                  <li
-                    key={item}
-                    className="flex items-start gap-2 text-sm text-muted-foreground"
-                  >
-                    <span className="mt-0.5 w-1.5 h-1.5 rounded-full bg-accent flex-shrink-0" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
             </div>
-            <div className="bg-card border border-border rounded-lg p-8 space-y-4">
-              {[
-                { step: "Inbound call", dest: "SIP trunk → 3CX tenant" },
-                {
-                  step: "IVR + context lookup",
-                  dest: "Caller ID → department flag",
-                },
-                {
-                  step: "Queue assignment",
-                  dest: "Sales, Support, or Auto-attendant",
-                },
-                {
-                  step: "Optional AI triage",
-                  dest: 'Intent detection → "Billing" → Finance',
-                },
-                { step: "Ring target", dest: "Agent softphone or mobile" },
-              ].map((row, i) => (
-                <div
-                  key={i}
-                  className="flex items-center justify-between py-2 border-b border-border last:border-0"
-                >
-                  <span className="text-sm font-medium">{row.step}</span>
-                  <span className="text-sm text-muted-foreground">
-                    {row.dest}
-                  </span>
-                </div>
-              ))}
+          </div>
+          <div className="flex gap-4 items-start">
+            <div className="mt-1 shrink-0 w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
+              <GitBranch className="w-4 h-4 text-primary" />
+            </div>
+            <div>
+              <h3 className="font-semibold">Routing logic executes</h3>
+              <p className="mt-1 text-sm text-muted-foreground leading-relaxed">
+                Department-aware IVR with CRM lookups. Time-based routing
+                with holiday override. Follow-the-sun logic for distributed teams.
+              </p>
+            </div>
+          </div>
+          <div className="flex gap-4 items-start">
+            <div className="mt-1 shrink-0 w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
+              <BrainCircuit className="w-4 h-4 text-primary" />
+            </div>
+            <div>
+              <h3 className="font-semibold">AI qualifies (if enabled)</h3>
+              <p className="mt-1 text-sm text-muted-foreground leading-relaxed">
+                Voice-based AI receptionist handles common intents, collects
+                information, and escalates when a human is needed. Call
+                summaries delivered in real time.
+              </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Architecture */}
-      <section id="architecture" className="py-24 px-6 bg-card">
-        <div className="max-w-7xl mx-auto">
-          <div className="mb-12">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-secondary text-xs font-medium text-muted-foreground mb-4">
-              <Layers className="w-3 h-3" />
-              Platform Architecture
+      {/* Architecture: Three layers. No mystery. */}
+      <section id="architecture" className="px-6 pb-24 max-w-7xl mx-auto">
+        <p className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground mb-4">
+          Architecture
+        </p>
+        <h2 className="text-2xl sm:text-3xl font-semibold mb-12 text-balance">
+          Three layers. No mystery.
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="p-6 border border-border/60 bg-card/40">
+            <div className="w-10 h-10 rounded-lg bg-blue-500/10 flex items-center justify-center mb-5">
+              <PhoneCall className="w-5 h-5 text-blue-400" />
             </div>
-            <h2 className="text-3xl font-bold tracking-tight text-balance">
-              Three layers. No mystery.
-            </h2>
+            <h3 className="font-semibold text-lg mb-3">Communications</h3>
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              3CX hosted deployment on DSX infrastructure. SIP trunking,
+              softphones, desk phones, and conference rooms. The phone
+              system itself.
+            </p>
           </div>
+          <div className="p-6 border border-border/60 bg-card/40 md:mt-8">
+            <div className="w-10 h-10 rounded-lg bg-slate-400/10 flex items-center justify-center mb-5">
+              <Server className="w-5 h-5 text-slate-400" />
+            </div>
+            <h3 className="font-semibold text-lg mb-3">Integrations</h3>
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              Connect the phone system to your CRM, ticketing, and
+              operations tools. Caller context, click-to-dial, and automatic
+              logging.
+            </p>
+          </div>
+          <div className="p-6 border border-border/60 bg-card/40 md:mt-16">
+            <div className="w-10 h-10 rounded-lg bg-orange-500/10 flex items-center justify-center mb-5">
+              <BrainCircuit className="w-5 h-5 text-orange-400" />
+            </div>
+            <h3 className="font-semibold text-lg mb-3">AI (Optional)</h3>
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              Voice-based AI receptionist, department-aware routing, and
+              real-time call summaries. Added only where it earns its keep.
+            </p>
+          </div>
+        </div>
+      </section>
 
-          <div className="grid lg:grid-cols-3 gap-8">
-            <div className="border border-border rounded-lg p-6 hover:border-primary/30 transition-colors">
-              <PhoneCall className="w-8 h-8 text-primary mb-4" />
-              <h3 className="text-lg font-semibold mb-2">
-                Communications
+      {/* Case studies */}
+      <section id="case-studies" className="px-6 pb-24 max-w-7xl mx-auto">
+        <p className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground mb-4">
+          Case Studies
+        </p>
+        <h2 className="text-2xl sm:text-3xl font-semibold mb-4 text-balance">
+          Real deployments. Measurable results.
+        </h2>
+        <p className="text-muted-foreground max-w-2xl mb-12">
+          Three different businesses, three different problems, one
+          approach. No filler — just what was built, why, and what changed.
+        </p>
+        <div className="space-y-16">
+          {/* Synology */}
+          <article className="grid grid-cols-1 md:grid-cols-5 gap-8 items-start">
+            <div className="md:col-span-2">
+              <img
+                src="/assets/image_1748532713689.png"
+                alt="Synology user management dashboard"
+                className="w-full border border-border/40 max-w-xs"
+              />
+            </div>
+            <div className="md:col-span-3">
+              <div className="flex flex-wrap gap-3 items-center mb-3">
+                <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+                  Synology
+                </span>
+                <span className="text-[10px] uppercase tracking-[0.15em] text-muted-foreground/60">
+                  Washington State • Mid-Market — Manufacturing
+                </span>
+              </div>
+              <h3 className="text-xl font-semibold mb-3">
+                Unified Communications for Multi-Site Manufacturing
               </h3>
-              <p className="text-sm text-muted-foreground leading-relaxed">
-                3CX hosted deployment on DSX infrastructure. SIP trunking,
-                softphones, desk phones, and conference rooms. The phone system
-                itself.
-              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-5">
+                <div>
+                  <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
+                    challenge
+                  </p>
+                  <p className="mt-1 text-sm leading-relaxed">
+                    Legacy on-prem PBX across multiple locations. No
+                    centralized management or reporting.
+                  </p>
+                </div>
+                <div>
+                  <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
+                    solution
+                  </p>
+                  <p className="mt-1 text-sm leading-relaxed">
+                    3CX enterprise deployment with capacity-based DSX
+                    trunks. Department-aware call-flow routing. CRM
+                    integration.
+                  </p>
+                </div>
+                <div>
+                  <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
+                    results
+                  </p>
+                  <p className="mt-1 text-sm leading-relaxed">
+                    46% monthly spend reduction. Centralized management
+                    across 4 sites.
+                  </p>
+                </div>
+              </div>
             </div>
-            <div className="border border-border rounded-lg p-6 hover:border-primary/30 transition-colors">
-              <GitBranch className="w-8 h-8 text-primary mb-4" />
-              <h3 className="text-lg font-semibold mb-2">Integrations</h3>
-              <p className="text-sm text-muted-foreground leading-relaxed">
-                Connect the phone system to your CRM, ticketing, and
-                operations tools. Caller context, click-to-dial, and
-                automatic logging.
-              </p>
+          </article>
+
+          {/* Law Office */}
+          <article className="grid grid-cols-1 md:grid-cols-5 gap-8 items-start">
+            <div className="md:col-span-2">
+              <img
+                src="/assets/image_1750427523720.png"
+                alt="Law office 3CX interface"
+                className="w-full border border-border/40 max-w-xs"
+              />
             </div>
-            <div className="border border-border rounded-lg p-6 hover:border-primary/30 transition-colors">
-              <Server className="w-8 h-8 text-primary mb-4" />
-              <h3 className="text-lg font-semibold mb-2">
-                AI (Optional)
+            <div className="md:col-span-3">
+              <div className="flex flex-wrap gap-3 items-center mb-3">
+                <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+                  Law Office of Michael H. Bonner
+                </span>
+                <span className="text-[10px] uppercase tracking-[0.15em] text-muted-foreground/60">
+                  California • Small Business — Legal
+                </span>
+              </div>
+              <h3 className="text-xl font-semibold mb-3">
+                Call handling for a practice that can&#39;t miss calls
               </h3>
-              <p className="text-sm text-muted-foreground leading-relaxed">
-                Voice-based AI receptionist, department-aware routing, and
-                real-time call summaries. Added only where it earns its keep.
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-5">
+                <div>
+                  <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
+                    challenge
+                  </p>
+                  <p className="mt-1 text-sm leading-relaxed">
+                    Single attorney relying on call forwarding. No
+                    overflow handling. Missed calls meant missed
+                    clients.
+                  </p>
+                </div>
+                <div>
+                  <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
+                    solution
+                  </p>
+                  <p className="mt-1 text-sm leading-relaxed">
+                    Dedicated 3CX instance with time-based routing,
+                    voicemail-to-text transcription, and a softphone
+                    client for mobile.
+                  </p>
+                </div>
+                <div>
+                  <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
+                    results
+                  </p>
+                  <p className="mt-1 text-sm leading-relaxed">
+                    Zero missed calls in 12 months. Client callback
+                    time reduced from 4 hours to 22 minutes.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          {/* Synergy Homeopathic */}
+          <article className="grid grid-cols-1 md:grid-cols-5 gap-8 items-start">
+            <div className="md:col-span-2">
+              <img
+                src="/assets/image_1751309224528.png"
+                alt="Synergy Homeopathic webRTC interface"
+                className="w-full border border-border/40 max-w-xs"
+              />
+            </div>
+            <div className="md:col-span-3">
+              <div className="flex flex-wrap gap-3 items-center mb-3">
+                <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+                  Synergy Homeopathic
+                </span>
+                <span className="text-[10px] uppercase tracking-[0.15em] text-muted-foreground/60">
+                  Arizona • Small Business — Healthcare
+                </span>
+              </div>
+              <h3 className="text-xl font-semibold mb-3">
+                HIPAA-Compliant Phone System for a Growing Practice
+              </h3>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-5">
+                <div>
+                  <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
+                    challenge
+                  </p>
+                  <p className="mt-1 text-sm leading-relaxed">
+                    Consumer VoIP line without HIPAA compliance or
+                    business features. Growing patient volume
+                    required a real phone system.
+                  </p>
+                </div>
+                <div>
+                  <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
+                    solution
+                  </p>
+                  <p className="mt-1 text-sm leading-relaxed">
+                    HIPAA-compliant 3CX deployment with encrypted
+                    call paths, BAA coverage, and a webRTC client
+                    for practitioner mobility.
+                  </p>
+                </div>
+                <div>
+                  <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
+                    results
+                  </p>
+                  <p className="mt-1 text-sm leading-relaxed">
+                    Practice grew 40%. Phone system scaled without
+                    hardware changes.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      {/* Infrastructure & Trust */}
+      <section id="infrastructure" className="px-6 pb-24 max-w-7xl mx-auto">
+        <p className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground mb-4">
+          Infrastructure &amp; Trust
+        </p>
+        <h2 className="text-2xl sm:text-3xl font-semibold mb-4 text-balance">
+          Business telecom should live on infrastructure you can see.
+        </h2>
+        <p className="text-muted-foreground max-w-2xl mb-12">
+          No shared-tenancy VoIP, no cloud handoffs, no resold minutes from
+          a reseller of a reseller. DSX infrastructure is purpose-built and
+          carrier-direct.
+        </p>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="p-6 border border-border/60 bg-card/40">
+            <div className="w-10 h-10 rounded-lg bg-blue-500/10 flex items-center justify-center mb-5">
+              <Server className="w-5 h-5 text-blue-400" />
+            </div>
+            <h3 className="font-semibold text-lg mb-3">Citadel Campus, Nevada</h3>
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              All DSX infrastructure runs from a carrier-grade datacenter
+              in Reno, Nevada. Direct peering with major carriers.
+            </p>
+          </div>
+          <div className="p-6 border border-border/60 bg-card/40">
+            <div className="w-10 h-10 rounded-lg bg-blue-500/10 flex items-center justify-center mb-5">
+              <Database className="w-5 h-5 text-blue-400" />
+            </div>
+            <h3 className="font-semibold text-lg mb-3">HIPAA Compliant</h3>
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              Full BAA coverage available. Encrypted call paths and
+              recording storage meet healthcare requirements.
+            </p>
+          </div>
+          <div className="p-6 border border-border/60 bg-card/40">
+            <div className="w-10 h-10 rounded-lg bg-blue-500/10 flex items-center justify-center mb-5">
+              <CalendarCheck className="w-5 h-5 text-blue-400" />
+            </div>
+            <h3 className="font-semibold text-lg mb-3">SOC 2 Type II</h3>
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              Independently audited controls for security, availability,
+              and confidentiality. Annual certification maintained.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Resources + CTA */}
+      <section id="contact" className="px-6 pb-24 max-w-3xl mx-auto">
+        <p className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground mb-4">
+          Resources
+        </p>
+        <h2 className="text-2xl sm:text-3xl font-semibold mb-8 text-balance">
+          Four things to read before your next phone system decision.
+        </h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-16">
+          {[
+            "3CX Platinum Partner: What It Means",
+            "Multi-Tenant 3CX Explained",
+            "Why Phone System Pricing Models Matter",
+            "Three Things to Do Before You Turn On an AI Receptionist",
+          ].map((title, i) => (
+            <a
+              key={i}
+              href="#"
+              className="p-4 border border-border/60 hover:border-primary/30 transition-colors group"
+            >
+              <p className="font-medium group-hover:text-primary transition-colors">
+                {title}
               </p>
-            </div>
-          </div>
+              <p className="mt-1 text-xs text-muted-foreground">
+                Read guide &rarr;
+              </p>
+            </a>
+          ))}
         </div>
-      </section>
 
-      {/* Case Studies */}
-      <section id="case-studies" className="py-24 px-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex items-end justify-between mb-12">
-            <div>
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-secondary text-xs font-medium text-muted-foreground mb-4">
-                <BarChart3 className="w-3 h-3" />
-                Case Studies
-              </div>
-              <h2 className="text-3xl font-bold tracking-tight">
-                Real deployments.
-                <br />
-                Real results.
-              </h2>
-            </div>
-          </div>
-
-          <div className="space-y-6">
-            {caseStudies.map((study) => (
-              <div
-                key={study.id}
-                className="border border-border rounded-lg p-8 hover:border-primary/20 transition-colors"
-              >
-                <div className="flex flex-wrap items-start justify-between gap-4 mb-6">
-                  <div>
-                    <h3 className="text-xl font-semibold">{study.title}</h3>
-                    <p className="text-sm text-muted-foreground mt-1">
-                      {study.location} &bull; {study.category}
-                    </p>
-                  </div>
-                  {study.featured && (
-                    <span className="px-2.5 py-0.5 rounded text-xs font-medium bg-primary/10 text-primary border border-primary/20">
-                      Featured
-                    </span>
-                  )}
-                </div>
-
-                <div className="grid lg:grid-cols-2 gap-8">
-                  <div>
-                    <h4 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-2">
-                      Challenge
-                    </h4>
-                    <p className="text-sm text-muted-foreground leading-relaxed">
-                      {study.challenge}
-                    </p>
-                    <h4 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mt-4 mb-2">
-                      Solution
-                    </h4>
-                    <p className="text-sm text-muted-foreground leading-relaxed">
-                      {study.solution}
-                    </p>
-                  </div>
-
-                  <div>
-                    <h4 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-4">
-                      Results
-                    </h4>
-                    <div className="grid grid-cols-3 gap-4">
-                      {study.results.map((r, i) => (
-                        <div
-                          key={i}
-                          className="border border-border rounded-md p-4 text-center"
-                        >
-                          <div className="font-mono text-xl font-semibold text-accent tabular-nums">
-                            {r.metric}
-                          </div>
-                          <div className="text-xs text-muted-foreground mt-1">
-                            {r.label}
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Infrastructure + Trust */}
-      <section id="infrastructure" className="py-24 px-6 bg-card">
-        <div className="max-w-7xl mx-auto">
-          <div className="mb-12">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-secondary text-xs font-medium text-muted-foreground mb-4">
-              <Shield className="w-3 h-3" />
-              Infrastructure &amp; Trust
-            </div>
-            <h2 className="text-3xl font-bold tracking-tight text-balance">
-              Business telecom should live on infrastructure you can see.
-            </h2>
-          </div>
-
-          <div className="grid lg:grid-cols-2 gap-8">
-            <div className="space-y-6">
-              <div className="flex items-start gap-4 p-5 rounded-lg border border-border">
-                <Server className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
-                <div>
-                  <h3 className="font-semibold">Citadel Campus, Nevada</h3>
-                  <p className="text-sm text-muted-foreground mt-1">
-                    All DSX infrastructure runs from a carrier-grade datacenter
-                    in Reno, Nevada. Direct peering with major carriers.
-                  </p>
-                </div>
-              </div>
-              <div className="flex items-start gap-4 p-5 rounded-lg border border-border">
-                <Shield className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
-                <div>
-                  <h3 className="font-semibold">HIPAA Compliant</h3>
-                  <p className="text-sm text-muted-foreground mt-1">
-                    Full BAA coverage available. Encrypted call paths and
-                    recording storage meet healthcare requirements.
-                  </p>
-                </div>
-              </div>
-              <div className="flex items-start gap-4 p-5 rounded-lg border border-border">
-                <BarChart3 className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
-                <div>
-                  <h3 className="font-semibold">SOC 2 Type II</h3>
-                  <p className="text-sm text-muted-foreground mt-1">
-                    Annual audit with public report available. Security and
-                    availability controls verified.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="border border-border rounded-lg p-6 bg-background">
-              <div className="font-mono text-xs text-muted-foreground mb-4 uppercase tracking-widest">
-                Network Status
-              </div>
-              <div className="space-y-4">
-                {[
-                  { label: "3CX Platform", uptime: "99.99%", status: "up" },
-                  { label: "SIP Trunking", uptime: "99.97%", status: "up" },
-                  { label: "NV Gateway", uptime: "99.98%", status: "up" },
-                  { label: "AI Services", uptime: "99.95%", status: "up" },
-                ].map((svc) => (
-                  <div
-                    key={svc.label}
-                    className="flex items-center justify-between"
-                  >
-                    <span className="text-sm">{svc.label}</span>
-                    <div className="flex items-center gap-3">
-                      <span className="font-mono text-sm tabular-nums">
-                        {svc.uptime}
-                      </span>
-                      <span className="w-2 h-2 rounded-full bg-emerald-500" />
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section id="contact" className="py-24 px-6">
-        <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-3xl font-bold tracking-tight text-balance">
-            Not ready to buy a phone system.
-            <br />
-            Ready to fix how your operation communicates.
+        <div className="text-center p-8 border border-border/60 bg-card/40">
+          <h2 className="text-xl font-semibold mb-4">
+            Your current phone system isn&#39;t as good as you think.
           </h2>
-          <p className="mt-4 text-muted-foreground text-lg max-w-xl mx-auto leading-relaxed">
-            Start with a free workflow audit. We'll map your current call paths,
-            identify the bottlenecks, and show you what a DSX deployment would
-            look like. No obligation.
+          <p className="text-muted-foreground max-w-lg mx-auto mb-6">
+            We&#39;ll map your call routing, audit your infrastructure,
+            and show you where a purpose-built system saves money and
+            reduces chaos.
           </p>
           <a
-            href="mailto:hello@dsxedge.com"
-            className="inline-flex items-center gap-2 mt-8 px-6 py-3.5 rounded-md bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-colors"
+            href="mailto:info@dsxedge.com"
+            className="inline-flex items-center gap-2 px-5 py-3 rounded-md bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-colors"
           >
-            Request your workflow audit
-            <ArrowUpRight className="w-4 h-4" />
+            Request a free workflow audit
           </a>
         </div>
       </section>
