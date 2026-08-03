@@ -1,6 +1,5 @@
-import { motion } from "framer-motion";
 import { Link } from "wouter";
-import { ArrowRight, TrendingDown, BookOpen, HelpCircle, Calendar, Clock, Tag } from "lucide-react";
+import { TrendingDown, BookOpen, HelpCircle } from "lucide-react";
 import { getAllPosts } from "@/content/blog";
 import Seo from "@/components/seo";
 import Navigation from "@/components/navigation";
@@ -23,80 +22,44 @@ const caseStudies = CASE_STUDIES.map((c, i) => ({
   accent: CASE_ACCENTS[i] ?? "text-blue-600",
 }));
 
+function ProofRail() {
+  const proofs = [
+    { label: "Years deploying real systems", value: "12+", detail: "Since 2014" },
+    { label: "3CX Partner tier", value: "Platinum", detail: "Highest tier" },
+    { label: "Avg. cost reduction", value: "60%", detail: "vs. legacy PBX" },
+    { label: "Uptime SLA", value: "99.9%", detail: "In writing" },
+  ];
+
+  return (
+    <section className="border-y border-white/10 bg-slate-900/50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-white/10">
+          {proofs.map((p) => (
+            <div key={p.label} className="px-4 py-6 first:pl-0 last:pr-0 md:px-6 md:py-8">
+              <div className="text-2xl md:text-3xl font-bold text-white font-mono-dsx tracking-tight">
+                {p.value}
+              </div>
+              <div className="text-xs md:text-sm text-slate-400 mt-1 font-medium">
+                {p.label}
+              </div>
+              <div className="text-xs text-slate-600 mt-0.5 font-mono-dsx">{p.detail}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export default function Home() {
   const latestPosts = getAllPosts().slice(0, 3);
   return (
-    <div className="min-h-screen page-canvas relative overflow-hidden">
-      {/* Brand watermark layer — fixed dot pattern + animated orbital arcs + twinkling signal dots */}
-      <div className="pointer-events-none fixed inset-0 z-0 brand-dots opacity-[0.18]" />
-      <div className="pointer-events-none fixed inset-0 z-0 brand-glow-drift" style={{
-        background:
-          "radial-gradient(ellipse 50% 35% at 70% 20%, rgba(96,165,250,0.10), transparent 60%), radial-gradient(ellipse 40% 30% at 20% 80%, rgba(251,146,60,0.07), transparent 60%)"
-      }} />
-      <svg
-        className="pointer-events-none fixed inset-0 z-0 w-full h-full"
-        viewBox="0 0 1440 900"
-        preserveAspectRatio="xMidYMid slice"
-        aria-hidden="true"
-      >
-        <defs>
-          <linearGradient id="brand-arc-blue" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#60a5fa" stopOpacity="0" />
-            <stop offset="50%" stopColor="#60a5fa" stopOpacity="0.7" />
-            <stop offset="100%" stopColor="#60a5fa" stopOpacity="0" />
-          </linearGradient>
-          <linearGradient id="brand-arc-orange" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#fb923c" stopOpacity="0" />
-            <stop offset="50%" stopColor="#fb923c" stopOpacity="0.55" />
-            <stop offset="100%" stopColor="#fb923c" stopOpacity="0" />
-          </linearGradient>
-        </defs>
-
-        {/* Top-right orbital cluster — slow spin */}
-        <g transform="translate(1200 200)" fill="none" strokeWidth="0.6" opacity="0.18">
-          <g className="brand-arc-spin-slow">
-            <ellipse cx="0" cy="0" rx="380" ry="380" stroke="url(#brand-arc-blue)" />
-          </g>
-          <g className="brand-arc-spin-reverse">
-            <ellipse cx="0" cy="0" rx="280" ry="280" stroke="url(#brand-arc-blue)" strokeDasharray="2 6" />
-          </g>
-          <g className="brand-arc-spin-slow">
-            <ellipse cx="0" cy="0" rx="180" ry="180" stroke="url(#brand-arc-orange)" />
-          </g>
-        </g>
-
-        {/* Bottom-left orbital cluster — reverse spin */}
-        <g transform="translate(180 700)" fill="none" strokeWidth="0.6" opacity="0.15">
-          <g className="brand-arc-spin-reverse">
-            <ellipse cx="0" cy="0" rx="320" ry="320" stroke="url(#brand-arc-blue)" />
-          </g>
-          <g className="brand-arc-spin-slow">
-            <ellipse cx="0" cy="0" rx="220" ry="220" stroke="url(#brand-arc-orange)" strokeDasharray="1 5" />
-          </g>
-        </g>
-
-        {/* Twinkling signal dots — sparse, deliberate */}
-        {[
-          [120, 180], [340, 90], [560, 240], [820, 130], [1080, 310], [1320, 180],
-          [220, 460], [480, 540], [740, 420], [980, 520], [1240, 480],
-          [160, 760], [420, 820], [680, 700], [920, 800], [1180, 740], [1380, 820],
-        ].map(([x, y], i) => (
-          <circle
-            key={i}
-            cx={x}
-            cy={y}
-            r={i % 4 === 0 ? 1.6 : 1}
-            fill={i % 5 === 0 ? "#fb923c" : "#60a5fa"}
-            className="brand-twinkle"
-            style={{ animationDelay: `${(i * 0.37) % 4}s`, transformOrigin: `${x}px ${y}px` }}
-          />
-        ))}
-      </svg>
-
+    <div className="min-h-screen bg-slate-950 relative overflow-hidden">
       <Seo path="/" />
       <div className="relative z-10">
         <Navigation />
         <HeroSection />
+        <ProofRail />
         <ProblemSection />
         <ServicesSection />
         <ThreeCXSection />
@@ -105,220 +68,149 @@ export default function Home() {
         <AboutSection />
         <TestimonialsSection />
 
-      <section id="case-studies" className="py-24 section-dark relative overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none">
-        </div>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <span className="inline-block px-4 py-1.5 rounded-full border border-orange-400/30 bg-orange-500/10 text-orange-200 text-sm font-semibold mb-4 tracking-wide uppercase">
-              Case Studies
-            </span>
-            <h2 className="text-3xl md:text-5xl font-bold text-white mb-5">
-              Real Businesses. <span className="accent-serif text-orange-300">Real Savings.</span>
-            </h2>
-            <p className="text-lg text-slate-300 max-w-2xl mx-auto">
-              The communications work that proved DSX is the right place to bring AI next.
-            </p>
-          </motion.div>
+        <section id="case-studies" className="py-24 relative overflow-hidden">
+          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="mb-16">
+              <p className="text-sm font-semibold tracking-wider uppercase text-orange-500 mb-3 font-mono-dsx">
+                Case Studies
+              </p>
+              <h2 className="text-3xl md:text-5xl font-bold text-white mb-5">
+                Real businesses. Real savings.
+              </h2>
+              <p className="text-lg text-slate-400 max-w-2xl">
+                The communications work that proved DSX is the right place to bring AI next.
+              </p>
+            </div>
 
-          <div className="grid md:grid-cols-3 gap-6">
-            {caseStudies.map((study, index) => (
-              <motion.div
-                key={study.name}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                viewport={{ once: true }}
-              >
-                <Link href={`/case-studies/${study.slug}`}>
-                  <span
+            <div className="grid md:grid-cols-3 gap-6">
+              {caseStudies.map((study) => (
+                <Link key={study.name} href={`/case-studies/${study.slug}`}>
+                  <div
                     data-testid={`link-case-study-${study.slug}`}
-                    className="group block h-full card-glass card-sheen hover-lift rounded-2xl p-8 hover:border-blue-400/50 hover:bg-white/[0.07] cursor-pointer"
+                    className="group block h-full surface-raised rounded-lg p-8 hover:border-blue-500/40 transition-colors duration-200 cursor-pointer"
                   >
-                    <div className="flex items-center gap-3 mb-4">
-                      <div className={`w-10 h-10 rounded-xl bg-white/10 border border-white/10 flex items-center justify-center`}>
-                        <TrendingDown className={`h-5 w-5 ${study.accent.replace('600', '300')}`} />
-                      </div>
-                      <div className={`text-3xl font-bold ${study.accent.replace('600', '300')}`}>{study.savings}</div>
-                      <span className="text-sm text-slate-400 font-medium">saved</span>
+                    <div className={`text-3xl font-bold ${study.accent} mb-3 font-mono-dsx`}>
+                      {study.savings}
+                      <span className="text-sm text-slate-500 font-normal ml-1">saved</span>
                     </div>
-                    <h3 className="text-lg font-bold text-white mb-1" data-testid={`text-case-study-${index}`}>
+                    <h3 className="text-lg font-bold text-white mb-1">
                       {study.name}
                     </h3>
-                    <span className={`inline-block text-xs font-semibold px-2 py-0.5 rounded-full bg-white/10 border border-white/10 ${study.accent.replace('600', '300')} mb-3`}>
+                    <span className="inline-block text-xs font-semibold px-2 py-0.5 rounded bg-white/10 text-slate-400 mb-3">
                       {study.size}
                     </span>
                     <p className="text-sm text-slate-400 mb-5">{study.description}</p>
-                    <div className="bg-white/5 border border-white/5 rounded-xl p-4">
+                    <div className="bg-slate-800/50 rounded-lg p-4 border border-white/5">
                       <div className="flex justify-between items-center">
-                        <span className="text-sm text-slate-300">Monthly Cost</span>
-                        <span className={`font-bold ${study.accent.replace('600', '300')}`}>{study.monthlyCost}</span>
+                        <span className="text-sm text-slate-400">Monthly Cost</span>
+                        <span className={`font-bold font-mono-dsx ${study.accent}`}>{study.monthlyCost}</span>
                       </div>
                     </div>
-                    <p className="text-xs text-slate-400 mt-3">{study.note}</p>
-                    <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-blue-300 group-hover:text-orange-300">
-                      Read case study <ArrowRight size={14} />
+                    <p className="text-xs text-slate-500 mt-3">{study.note}</p>
+                    <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-blue-400 group-hover:text-orange-400 transition-colors">
+                      Read case study
                     </span>
-                  </span>
+                  </div>
                 </Link>
-              </motion.div>
-            ))}
-          </div>
-
-          <div className="mt-8 text-center">
-            <Link href="/case-studies">
-              <span
-                data-testid="link-all-case-studies"
-                className="inline-flex items-center gap-1.5 text-sm font-medium text-blue-300 hover:text-orange-300 transition cursor-pointer"
-              >
-                See all case studies <ArrowRight size={14} />
-              </span>
-            </Link>
-          </div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            viewport={{ once: true }}
-            className="mt-12"
-          >
-            <div className="card-glass brand-halo rounded-2xl p-10 text-center">
-              <p className="text-slate-400 text-sm font-medium uppercase tracking-wider mb-2">Based on actual DSX deployments</p>
-              <p className="text-white text-2xl md:text-3xl font-bold">
-                DSX reduces communication costs by up to{" "}
-                <span className="bg-gradient-to-r from-blue-400 to-orange-400 bg-clip-text text-transparent">
-                  60%
-                </span>
-              </p>
+              ))}
             </div>
-          </motion.div>
-        </div>
-      </section>
 
-      <section id="resources" className="py-24 bg-slate-950 border-t border-white/5 relative overflow-hidden">
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="flex items-end justify-between mb-10 flex-wrap gap-4"
-          >
-            <div>
-              <span className="inline-block px-3 py-1 rounded-full text-[11px] tracking-[0.28em] uppercase bg-white/5 border border-white/10 text-blue-300 mb-3">
-                Resources
-              </span>
-              <h2 className="text-3xl md:text-4xl font-bold text-white">
-                Learn how DSX Edge <span className="accent-serif text-orange-300">works in practice.</span>
-              </h2>
-              <p className="mt-3 text-slate-400 max-w-2xl">
-                Articles, plain-language answers, and real customer case studies — everything you need to evaluate AI on top of your phone system.
-              </p>
-            </div>
-            <Link href="/resources">
-              <span
-                data-testid="link-home-resources-hub"
-                className="inline-flex items-center gap-1.5 text-sm font-medium text-blue-300 hover:text-orange-300 transition cursor-pointer"
-              >
-                Browse all resources <ArrowRight size={14} />
-              </span>
-            </Link>
-          </motion.div>
-
-          {latestPosts.length > 0 && (
-            <div className="grid md:grid-cols-3 gap-6">
-              {latestPosts.map((p, index) => (
-                <motion.div
-                  key={p.slug}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  viewport={{ once: true }}
+            <div className="mt-8 text-center">
+              <Link href="/case-studies">
+                <span
+                  data-testid="link-all-case-studies"
+                  className="inline-flex items-center gap-1.5 text-sm font-medium text-blue-400 hover:text-orange-400 transition-colors cursor-pointer"
                 >
-                  <Link href={`/blog/${p.slug}`}>
+                  See all case studies
+                </span>
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        <section id="resources" className="py-24 bg-slate-950 border-t border-white/5 relative overflow-hidden">
+          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex items-end justify-between mb-10 flex-wrap gap-4">
+              <div>
+                <p className="text-sm font-semibold tracking-wider uppercase text-blue-400 mb-3 font-mono-dsx">
+                  Resources
+                </p>
+                <h2 className="text-3xl md:text-4xl font-bold text-white">
+                  Learn how DSX Edge works in practice.
+                </h2>
+                <p className="mt-3 text-slate-400 max-w-2xl">
+                  Articles, plain-language answers, and real customer case studies.
+                </p>
+              </div>
+              <Link href="/resources">
+                <span className="inline-flex items-center gap-1.5 text-sm font-medium text-blue-400 hover:text-orange-400 transition-colors cursor-pointer">
+                  Browse all resources
+                </span>
+              </Link>
+            </div>
+
+            {latestPosts.length > 0 && (
+              <div className="grid md:grid-cols-3 gap-6">
+                {latestPosts.map((p) => (
+                  <Link key={p.slug} href={`/blog/${p.slug}`}>
                     <article
                       data-testid={`card-home-resource-${p.slug}`}
-                      className="group h-full rounded-2xl border border-white/10 bg-white/[0.03] hover:bg-white/[0.06] p-6 flex flex-col cursor-pointer transition"
+                      className="group h-full surface-raised rounded-lg p-6 flex flex-col cursor-pointer hover:border-blue-500/30 transition-colors duration-200"
                     >
-                      <div className="flex items-center gap-2 text-[11px] uppercase tracking-widest text-blue-300/80 mb-3">
-                        <Tag size={12} />
+                      <div className="text-xs uppercase tracking-wider text-blue-400 mb-3 font-mono-dsx">
                         {p.category}
                       </div>
-                      <h3 className="text-lg font-semibold text-white group-hover:text-orange-300 transition line-clamp-3">
+                      <h3 className="text-lg font-semibold text-white group-hover:text-orange-400 transition-colors line-clamp-3">
                         {p.title}
                       </h3>
                       <p className="mt-3 text-sm text-slate-400 line-clamp-3 flex-grow">
                         {p.description}
                       </p>
-                      <div className="mt-5 pt-4 border-t border-white/5 flex items-center justify-between text-xs text-slate-500">
-                        <span className="flex items-center gap-1.5">
-                          <Calendar size={12} />
+                      <div className="mt-5 pt-4 border-t border-white/5 flex items-center justify-between text-xs text-slate-500 font-mono-dsx">
+                        <span>
                           {new Date(p.date).toLocaleDateString("en-US", {
                             year: "numeric",
                             month: "short",
                             day: "numeric",
                           })}
                         </span>
-                        <span className="flex items-center gap-1.5">
-                          <Clock size={12} />
-                          {p.readTime}
-                        </span>
+                        <span>{p.readTime}</span>
                       </div>
                     </article>
                   </Link>
-                </motion.div>
-              ))}
+                ))}
+              </div>
+            )}
+
+            <div className="mt-8 grid sm:grid-cols-3 gap-3">
+              <Link href="/blog">
+                <span className="flex items-center justify-between surface-raised rounded-lg p-4 cursor-pointer hover:border-blue-500/30 transition-colors">
+                  <span className="flex items-center gap-2 text-sm text-white">
+                    <BookOpen size={16} className="text-blue-400" /> Articles & field notes
+                  </span>
+                </span>
+              </Link>
+              <Link href="/faq">
+                <span className="flex items-center justify-between surface-raised rounded-lg p-4 cursor-pointer hover:border-blue-500/30 transition-colors">
+                  <span className="flex items-center gap-2 text-sm text-white">
+                    <HelpCircle size={16} className="text-blue-400" /> Plain-language FAQ
+                  </span>
+                </span>
+              </Link>
+              <Link href="/case-studies">
+                <span className="flex items-center justify-between surface-raised rounded-lg p-4 cursor-pointer hover:border-blue-500/30 transition-colors">
+                  <span className="flex items-center gap-2 text-sm text-white">
+                    <TrendingDown size={16} className="text-blue-400" /> Customer case studies
+                  </span>
+                </span>
+              </Link>
             </div>
-          )}
-
-          <div className="mt-8 grid sm:grid-cols-3 gap-3">
-            <Link href="/blog">
-              <span
-                data-testid="link-home-resources-blog"
-                className="flex items-center justify-between rounded-xl border border-white/10 bg-white/[0.03] hover:bg-white/[0.06] p-4 cursor-pointer transition"
-              >
-                <span className="flex items-center gap-2 text-sm text-white">
-                  <BookOpen size={16} className="text-blue-300" /> Articles & field notes
-                </span>
-                <ArrowRight size={14} className="text-blue-300" />
-              </span>
-            </Link>
-            <Link href="/faq">
-              <span
-                data-testid="link-home-resources-faq"
-                className="flex items-center justify-between rounded-xl border border-white/10 bg-white/[0.03] hover:bg-white/[0.06] p-4 cursor-pointer transition"
-              >
-                <span className="flex items-center gap-2 text-sm text-white">
-                  <HelpCircle size={16} className="text-blue-300" /> Plain-language FAQ
-                </span>
-                <ArrowRight size={14} className="text-blue-300" />
-              </span>
-            </Link>
-            <Link href="/case-studies">
-              <span
-                data-testid="link-home-resources-case-studies"
-                className="flex items-center justify-between rounded-xl border border-white/10 bg-white/[0.03] hover:bg-white/[0.06] p-4 cursor-pointer transition"
-              >
-                <span className="flex items-center gap-2 text-sm text-white">
-                  <TrendingDown size={16} className="text-blue-300" /> Customer case studies
-                </span>
-                <ArrowRight size={14} className="text-blue-300" />
-              </span>
-            </Link>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <PartnersSection />
-      <ContactSection />
-      <Footer />
+        <PartnersSection />
+        <ContactSection />
+        <Footer />
       </div>
     </div>
   );
