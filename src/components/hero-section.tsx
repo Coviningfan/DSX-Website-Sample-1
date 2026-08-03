@@ -24,19 +24,25 @@ export default function HeroSection() {
           >
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md bg-primary/10 border border-primary/20 text-primary text-xs font-mono mb-8">
               <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-              Fernley, NV &mdash; Serving the Mountain West
+              Reno, Nevada
             </div>
 
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.08] text-foreground text-balance">
-              The phone system that<br />
-              <span className="text-primary">runs your operation</span>
+              DSX builds the phone system,
+              <br />
+              connects it to the operation,
+              <br />
+              and adds AI only where it
+              <br />
+              <span className="text-primary">earns its keep</span>
               <span className="text-accent">.</span>
             </h1>
 
-            <p className="mt-6 text-lg text-muted-foreground leading-relaxed max-w-xl">
-              DSX builds phone systems, connects them to your operation, and
-              adds AI only where it earns its keep. Not a platform. Not a
-              promise of disruption. Just telecom infrastructure that works.
+
+            <p className="mt-4 text-lg text-muted-foreground leading-relaxed max-w-xl">
+              Not a platform. Not a promise of disruption. Just telecom
+              infrastructure that actually works — designed, installed, and
+              supported by engineers who understand operations.
             </p>
 
             <div className="mt-8 flex flex-col sm:flex-row gap-4">

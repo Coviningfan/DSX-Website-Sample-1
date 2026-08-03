@@ -355,7 +355,7 @@ export default function HomePage() {
                   <h3 className="font-semibold">Citadel Campus, Nevada</h3>
                   <p className="text-sm text-muted-foreground mt-1">
                     All DSX infrastructure runs from a carrier-grade datacenter
-                    in Fernley, Nevada. Direct peering with major carriers.
+                    in Reno, Nevada. Direct peering with major carriers.
                   </p>
                 </div>
               </div>
