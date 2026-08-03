@@ -1,4 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -24,11 +25,16 @@
   --destructive-foreground: 210 40% 98%;
   --ring: 221 83% 53%;
   --radius: 0.5rem;
-  
-  /* DSX Edge Brand Colors */
-  --dsx-blue: 221 83% 53%; /* #2563eb */
-  --dsx-orange: 24 95% 53%; /* #f97316 */
-  --dsx-red: 4 90% 58%; /* #ef4444 */
+
+  /* DSX Edge brand colors — preserved */
+  --dsx-blue: 221 83% 53%;
+  --dsx-orange: 24 95% 53%;
+  --dsx-red: 4 90% 58%;
+
+  /* New surface tokens — solid panels, no glass */
+  --surface-raised: 0 0% 100%;
+  --surface-subtle: 210 40% 98%;
+  --border-subtle: 214 31.8% 91.4%;
 }
 
 .dark {
@@ -51,6 +57,10 @@
   --destructive: 0 62.8% 30.6%;
   --destructive-foreground: 210 40% 98%;
   --ring: 221 83% 53%;
+
+  --surface-raised: 217 32.6% 12%;
+  --surface-subtle: 217 32.6% 17.5%;
+  --border-subtle: 217 32.6% 17.5%;
 }
 
 @layer base {
@@ -59,257 +69,61 @@
   }
 
   body {
-    @apply bg-background text-foreground font-sans antialiased;
-    font-family: 'Inter', sans-serif;
+    @apply bg-background text-foreground antialiased;
+    font-family: 'IBM Plex Sans', system-ui, sans-serif;
+    font-feature-settings: 'tnum' on, 'lnum' on;
   }
 }
 
 @layer utilities {
+  /* DSX brand gradients — reserved for SignalOrb and signal paths only */
   .gradient-dsx {
     background: linear-gradient(135deg, hsl(var(--dsx-blue)), hsl(var(--dsx-orange)));
   }
-  
   .gradient-dsx-orange {
     background: linear-gradient(135deg, hsl(var(--dsx-orange)), hsl(var(--dsx-red)));
   }
-  
-  .text-gradient-dsx {
-    background: linear-gradient(135deg, hsl(var(--dsx-blue)), hsl(var(--dsx-orange)));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+
+  /* Solid surface panels — replaces glassmorphism */
+  .surface-raised {
+    background: hsl(var(--surface-raised));
+    border: 1px solid hsl(var(--border-subtle));
+  }
+  .surface-subtle {
+    background: hsl(var(--surface-subtle));
+    border: 1px solid hsl(var(--border-subtle));
   }
 
-  .accent-serif {
-    font-family: 'Fraunces', 'Times New Roman', serif;
-    font-style: italic;
-    font-weight: 300;
-    font-variation-settings: "SOFT" 100, "WONK" 0;
-    letter-spacing: -0.01em;
-  }
-
-  .section-dark {
-    background: transparent;
-  }
-
-  .page-canvas {
-    background:
-      radial-gradient(ellipse 80% 50% at 50% -10%, rgba(37, 99, 235, 0.16), transparent 60%),
-      radial-gradient(ellipse 60% 40% at 90% 30%, rgba(249, 115, 22, 0.07), transparent 60%),
-      radial-gradient(ellipse 70% 50% at 10% 70%, rgba(37, 99, 235, 0.10), transparent 60%),
-      radial-gradient(ellipse 80% 50% at 50% 110%, rgba(249, 115, 22, 0.05), transparent 60%),
-      linear-gradient(180deg, #020617 0%, #060f24 25%, #0a1a36 50%, #060f24 75%, #020617 100%);
-    background-attachment: fixed;
-  }
-
-  .brand-dots {
-    background-image: radial-gradient(rgba(148, 163, 184, 0.18) 1px, transparent 1px);
-    background-size: 48px 48px;
-  }
-
-  .brand-glow-drift {
-    animation: glow-drift 22s ease-in-out infinite;
-  }
-
-  .brand-arc-spin-slow {
-    animation: arc-spin 90s linear infinite;
-    transform-origin: center;
-    transform-box: fill-box;
-  }
-
-  .brand-arc-spin-reverse {
-    animation: arc-spin 120s linear infinite reverse;
-    transform-origin: center;
-    transform-box: fill-box;
-  }
-
-  .brand-twinkle {
-    animation: twinkle 4s ease-in-out infinite;
-  }
-
-  .section-divider {
-    height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(148, 163, 184, 0.12) 20%, rgba(148, 163, 184, 0.12) 80%, transparent);
-  }
-
-  @keyframes arc-spin {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-  }
-
-  @keyframes twinkle {
-    0%, 100% { opacity: 0.2; }
-    50% { opacity: 0.7; }
-  }
-
-  @keyframes glow-drift {
-    0%, 100% { transform: translate(0, 0) scale(1); opacity: 1; }
-    33% { transform: translate(2%, -1%) scale(1.04); opacity: 0.92; }
-    66% { transform: translate(-1%, 2%) scale(0.97); opacity: 1; }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .brand-glow-drift, .brand-arc-spin-slow, .brand-arc-spin-reverse, .brand-twinkle {
-      animation: none;
-    }
-  }
-
-  .card-glass {
-    background: rgba(255, 255, 255, 0.04);
-    backdrop-filter: blur(8px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    transition: transform 600ms cubic-bezier(0.22, 1, 0.36, 1),
-                border-color 400ms ease,
-                background-color 400ms ease,
-                box-shadow 500ms ease;
-  }
-
-  /* Sheen sweep on hover — adds premium tactile feel */
-  .card-sheen {
-    position: relative;
-    overflow: hidden;
-    isolation: isolate;
-  }
-  .card-sheen::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-      115deg,
-      transparent 30%,
-      rgba(96, 165, 250, 0.08) 45%,
-      rgba(251, 146, 60, 0.08) 55%,
-      transparent 70%
-    );
-    transform: translateX(-120%);
-    transition: transform 900ms cubic-bezier(0.22, 1, 0.36, 1);
-    pointer-events: none;
-    z-index: 0;
-    mix-blend-mode: screen;
-  }
-  .card-sheen > * {
-    position: relative;
-    z-index: 1;
-  }
-  .card-sheen:hover::after {
-    transform: translateX(120%);
-  }
-
-  .hover-lift {
-    transition: transform 500ms cubic-bezier(0.22, 1, 0.36, 1),
-                box-shadow 500ms ease,
-                border-color 400ms ease;
-  }
-  .hover-lift:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 20px 40px -20px rgba(37, 99, 235, 0.35),
-                0 0 0 1px rgba(96, 165, 250, 0.25) inset;
-  }
-
-  /* Persistent brand glow halo behind logo/badges */
-  .brand-halo {
-    position: relative;
-  }
-  .brand-halo::before {
-    content: "";
-    position: absolute;
-    inset: -40%;
-    background: radial-gradient(closest-side, rgba(37, 99, 235, 0.35), transparent 70%);
-    filter: blur(20px);
-    z-index: -1;
-    animation: brand-pulse 4s ease-in-out infinite;
-  }
-
-  @keyframes brand-pulse {
-    0%, 100% { opacity: 0.55; transform: scale(1); }
-    50% { opacity: 0.9; transform: scale(1.08); }
-  }
-
-  /* Button shimmer */
-  .btn-shimmer {
-    position: relative;
-    overflow: hidden;
-    isolation: isolate;
-  }
-  .btn-shimmer::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-      110deg,
-      transparent 30%,
-      rgba(255, 255, 255, 0.25) 50%,
-      transparent 70%
-    );
-    transform: translateX(-120%);
-    transition: transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
-    pointer-events: none;
-  }
-  .btn-shimmer:hover::before {
-    transform: translateX(120%);
-  }
-
-  /* Big watermark wordmark — branding visibility */
-  .brand-wordmark {
-    font-family: 'Fraunces', serif;
-    font-style: italic;
-    font-weight: 300;
-    letter-spacing: -0.04em;
-    background: linear-gradient(135deg, rgba(96, 165, 250, 0.08), rgba(251, 146, 60, 0.05));
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    user-select: none;
-    pointer-events: none;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .brand-halo::before,
-    .card-sheen::after,
-    .btn-shimmer::before {
-      animation: none;
-      transition: none;
-    }
-  }
-  
-  .text-gradient-orange {
-    background: linear-gradient(135deg, hsl(var(--dsx-orange)), hsl(var(--dsx-red)));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+  /* Mono utility — system labels, timestamps, metrics, call-routing */
+  .font-mono-dsx {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-feature-settings: 'tnum' on, 'zero' on;
   }
 }
 
-/* Smooth scrolling */
 html {
   scroll-behavior: smooth;
 }
 
-/* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
 }
-
 ::-webkit-scrollbar-track {
   background: transparent;
 }
-
 ::-webkit-scrollbar-thumb {
   background: hsl(var(--dsx-blue) / 0.3);
   border-radius: 3px;
 }
-
 ::-webkit-scrollbar-thumb:hover {
   background: hsl(var(--dsx-blue) / 0.5);
 }
 
-/* Selection */
 ::selection {
   background: hsl(var(--dsx-blue) / 0.15);
   color: hsl(var(--dsx-blue));
 }
 
-/* Focus styles */
 *:focus-visible {
   outline: 2px solid hsl(var(--dsx-blue));
   outline-offset: 2px;
