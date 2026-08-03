@@ -1,0 +1,94 @@
+The previous refactor went too far into generic AI-SaaS language. Do not make DSX Edge sound like a random AI startup. The new positioning must preserve DSX’s historical credibility in business communications while showing that DSX Edge is the next evolution: AI implementation through the communications layer.
+
+The strategic message is not simply “AI workflows.”
+
+The strategic message is:
+
+DSX has spent 12+ years building and managing business communications. DSX Edge is the natural next step: turning the communication system from a passive phone platform into an intelligent front door for the business.
+
+Communications are still the entry point. AI is now the value layer.
+
+Do not erase the telecom foundation. Reframe it.
+
+Old DSX Voice was about connecting calls.
+DSX Edge is about what happens after the call comes in.
+
+The website should communicate that DSX Edge helps businesses answer, understand, route, qualify, schedule, follow up, and automate routine customer interactions using AI agents trained around the way each business actually works.
+
+Avoid generic phrases like:
+- AI-powered business communications
+- workflow automation outcomes
+- intelligent communications backbone
+- AI implementation company
+- operational scalability messaging
+
+Those phrases are technically correct but emotionally weak and too generic.
+
+Use more concrete, business-owner language:
+- Never miss the call that could become your next customer.
+- Let AI handle the routine conversations your staff should not have to repeat all day.
+- Turn every call into an action: a booked appointment, a qualified lead, a routed request, or a completed intake.
+- Your phone system should not just ring. It should work.
+- DSX Edge gives your communications system intelligence.
+- Built around how your business actually operates.
+- From the first “How can I help you?” to the booked appointment.
+
+The homepage should feel like a confident evolution of DSX, not a total identity transplant.
+
+Preferred hero direction:
+
+Headline:
+DSX Edge
+
+Subheadline:
+Your communications system should do more than connect calls.
+
+Body:
+For more than a decade, DSX has helped businesses communicate. Now DSX Edge brings AI into the front line of those communications — answering calls, qualifying leads, booking appointments, routing requests, and following the workflows that keep your business moving.
+
+CTA:
+Show Me What DSX Edge Can Do
+
+Secondary CTA:
+Talk to DSX
+
+Tagline:
+Above the Cloud. Into the Business.
+
+Alternative tagline:
+The Future of Business Communications Is Already Here.
+
+The service cards should not feel like abstract SaaS modules. They should map to real business pain:
+
+1. Answer
+AI agents answer routine calls, collect information, and keep customers from falling into voicemail.
+
+2. Qualify
+DSX Edge asks the right questions, identifies intent, captures lead details, and routes the request properly.
+
+3. Act
+Appointments, messages, follow-ups, CRM updates, and business-specific workflows happen automatically.
+
+The structure should be:
+Answer → Qualify → Act
+
+Not:
+AI Voice Agents → Workflow Automation → Intelligent Communications Backbone
+
+That previous structure sounds corporate and generic. The new structure sounds immediate and useful.
+
+3CX should remain in the background as the proven communications platform DSX builds on. Do not make 3CX the identity, but do not hide DSX’s communications expertise either.
+
+Correct hierarchy:
+DSX experience in communications → DSX Edge intelligence layer → AI agents trained around each business → practical workflow outcomes.
+
+Incorrect hierarchy:
+Generic AI company → vague automation → cloud platform language.
+
+Rewrite the homepage so a small-business owner immediately understands:
+“My phone system could answer better, capture more leads, book more appointments, and save my staff time.”
+
+Rewrite it so an enterprise buyer understands:
+“This is an AI communications layer that can be implemented into existing workflows without replacing the entire business stack.”
+
+Keep the tone practical, confident, and grounded. Do not overuse buzzwords. Do not overuse “AI” in every sentence. Explain what the AI actually does.

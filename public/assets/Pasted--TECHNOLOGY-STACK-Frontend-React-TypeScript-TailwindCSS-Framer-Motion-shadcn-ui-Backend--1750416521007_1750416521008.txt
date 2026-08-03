@@ -1,0 +1,107 @@
+🔹 TECHNOLOGY STACK
+Frontend: React + TypeScript + TailwindCSS + Framer Motion + shadcn/ui
+
+Backend: Express.js + Drizzle ORM + PostgreSQL
+
+Dev Environment: Replit (cloud IDE), Vite (frontend bundler)
+
+Deployment Target: Replit-hosted monorepo with .env secrets and local build
+
+✅ CRITICAL ISSUES IDENTIFIED
+1. 🔄 Scroll Misbehavior
+Symptoms: Reloading or navigating sometimes starts at the bottom of the page.
+
+Cause: React Router does not manage scroll on navigation by default.
+
+Fix:
+
+Add a global ScrollToTop.tsx component to reset scroll on pathname change.
+
+2. 🧭 Broken Navbar Navigation
+Symptoms: Top bar buttons (Home, About, Services, etc.) fail to respond when already on the corresponding route.
+
+Cause: Handlers assume navigation = rerender; doesn’t handle scroll targets.
+
+Fix:
+
+Abstract logic to detect if you're already on the page, then manually scrollIntoView().
+
+3. 🏷️ Content Misnaming
+Issue: “Voice Solutions” still present—must be replaced with “DSX Voice”.
+
+Fix:
+
+Run a global replacement (grep/sed or VSCode multi-file search).
+
+4. 🔼 "Home" Button Does Not Scroll Up
+Issue: Clicking "Home" does not scroll to top when already on homepage.
+
+Fix:
+
+Force window.scrollTo({ top: 0, behavior: 'smooth' }) on "Home" click.
+
+🔐 SECURITY & RELIABILITY REVIEW
+Area	Status	Recommendation
+CORS	⚠️ Likely Default	Restrict origins explicitly
+Input Validation	❌	Add zod or yup schema guards
+Secrets in Logs	⚠️	Ensure process.env is never logged
+HTTPS	⚠️ Replit only	For production, proxy via Netlify/Cloudflare
+Rate Limiting	❌	Install express-rate-limit
+Auth	❌	Optional for now; consider for admin CMS
+
+🧪 QUALITY ASSURANCE & DX
+Category	Status	Suggestion
+Testing	❌ None	Add Vitest (client) + Supertest (server)
+Linting	⚠️ Basic or missing	Use ESLint + Prettier across project
+CI/CD	❌	Add GitHub Actions or a local run.sh
+README	⚠️ Sparse	Add full setup instructions, .env examples, Replit caveats
+Asset Mgmt	⚠️	Audit Tailwind classes, image sizes, fonts
+
+📜 AI CODER SYSTEM PROMPT
+You are an elite full-stack AI software engineer assigned to harden and improve a React + Express portfolio project. The application is hosted on Replit and built with:
+
+Frontend: React + TypeScript + TailwindCSS + Framer Motion + shadcn/ui
+
+Backend: Express.js + TypeScript + Drizzle ORM + PostgreSQL
+
+Bundler: Vite
+
+Hosting: Replit with .env config, no CI/CD
+
+Your mission:
+
+🚧 UX/UI FIXES
+Fix scroll reset on route changes using ScrollToTop.tsx.
+
+Refactor top navbar so that:
+
+Clicking “Home” always scrolls to the top, even if on /.
+
+Buttons scroll to internal sections with smooth behavior (use scrollIntoView).
+
+Replace all "Voice Solutions" text instances with "DSX Voice".
+
+🔐 SECURITY ENHANCEMENTS
+Add middleware: helmet, express-rate-limit, and CORS with whitelist.
+
+Ensure process.env secrets are not printed or exposed in logs.
+
+Input validation with zod (or yup) on all server API endpoints.
+
+⚙️ INFRASTRUCTURE & BUILD
+Serve frontend from Express via app.use(express.static("dist")).
+
+Add vite build → dist/ → Express server fallback route.
+
+Add run.sh: lint, test, build, launch.
+
+✅ QUALITY ASSURANCE
+Install and configure:
+
+eslint, prettier
+
+vitest for React unit tests
+
+supertest for Express API testing
+
+Add .env.example and full README setup guide.

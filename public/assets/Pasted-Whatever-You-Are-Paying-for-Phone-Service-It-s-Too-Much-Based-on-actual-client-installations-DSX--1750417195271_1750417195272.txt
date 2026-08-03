@@ -1,0 +1,46 @@
+Whatever You Are Paying for Phone Service, It’s Too Much
+Based on actual client installations, DSX VOICE reduces phone bills by as much as 60%
+The Old Model
+
+Telephone companies make their profits through oversubscription.  In a given community they run physical lines from their central office switch to every building and charged a fixed priced for each of those lines. Their profit is the difference between the amount they charge for the total number of lines and the cost they incur to connect the few lines actually in use at any given moment.  They exploit the fact that the probability of every line being in use simultaneously is nearly zero.
+
+A conventional office PBX is essentially the same.  You have a fixed number of outside lines coming into to it, which you pay for, and maybe three or four times that number of extensions connected to the PBX.  Even with many more extensions than outside lines, only a fraction of the outside lines are ever in use simultaneously.
+
+The Internet Difference
+Internet-based phone service, called Voice Over Internet Protocol (VoIP) operates differently.  It uses the Internet to carry calls between an office and the VoIP service provider.  The VoIP service provider connects the VoIP PBX to the public telephone system.
+
+When using a VoIP PBX, the number of users or extensions has little to do with the cost of making phone calls. The number of connections to the public telephone system determines the number of simultaneous calls that the system can handle. This is where the true cost lies.
+
+When a VoIP provider charges based on the number of users or extensions, they’re making a bet that only a small fraction of those extensions will be in use simultaneously – a bet they will always win.
+
+The DSXVOICE Model
+The DSX Model
+At DSX VOICE we take a completely different approach.  Our pricing is based on the capacity you need and how you use your phones, not on the number of people, extensions or “lines”.  We calculate your capacity requirement by looking at three factors:
+
+What your company does – are you a sales organization that is phone intensive, or a manufacturer that is a light phone user
+The number of people you have – not only the people in your main location, but also in any other locations around the country or even around the world
+Your usage profile – how are your phones used, for what, and how often
+This let’s us configure the size of the system you need and also estimate the number of simultaneous calls you’re likely to require, which is the critical variable and the reason why we never use simpleminded schemes like charging per user or per extension.  At DSX VOICE we pass the oversubscription savings advantage on to you – that’s what makes us different.
+
+Don’t Take Our Word For It
+You don’t have to take our word for it. Here are some actual client examples that demonstrate the impact of our approach on cost.
+
+Law Office of Michael H. Bonner (California)
+The Law Office of Michael H. Bonner is a leader in business law with a strong emphasis on extra-U.S. matters.  Their practice is highly computerized to be as efficient as possible.  Their DSX VOICE system includes five users, a conference room extension, and an off-site extension.
+
+Extensions	DSX VOICE Cost/Month	Original Cost/Month	DSX Savings vs Original	Competitor Cost/Month1	DSX Savings vs Competitor
+7	$199.95	$570.00	65%	$244.93	18%
+Synology (Washington)
+Synology is the leader in next-generation Network Attached Storage (NAS) servers for small to medium-sized enterprise business markets.  They operate a call center with more than 40 agents and use 100,000+ minutes per month in calls.  Their business is phone intensive and they needed additional capacity.  DSX VOICE added 50% to their capacity at a price that was 16% lower than what they were paying for their original capacity.
+
+Extensions	DSX VOICE Cost/Month	Original Cost/Month	DSX Savings vs Original	Competitor Cost/Month1	DSX Savings vs Competitor
+40+	$686.00	$1,145.002	40%	$1,279.60	46%
+Synergy Homeopathic (California)
+Synergy Homeopathic is a pioneer and market leader in computer software to support homeopathic practitioners and treatment.  Their California operation is the North American headquarters of this India-based company.  Although Synergy Homeopathic is a small business, its 17 users are spread across the globe – California, Massachusetts, Germany, India, and Israel, among others.  Their international users are all part of their DSX VOICE system and use soft phones running on computers or smartphones that work like any other office extension.
+
+Extensions	DSX VOICE Cost/Month	Original Cost/Month	DSX Savings vs Original	Competitor Cost/Month1	DSX Savings vs Competitor
+17	$239.00	$670.653	64%	$594.83	60%
+Based on actual client installations,DSX VOICE reduces company phone costs by as much as 60%
+Pricing based on competitor’s current advertised price for the number of extensions and/or users specified
+Based on the original system cost plus the original provider’s pricing for the additional 50% capacity
+Based on original contract cost for 5 extensions recalculated for 17 extensions

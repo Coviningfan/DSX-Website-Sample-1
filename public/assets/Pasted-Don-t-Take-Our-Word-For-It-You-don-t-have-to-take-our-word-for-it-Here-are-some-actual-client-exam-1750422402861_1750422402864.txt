@@ -1,0 +1,22 @@
+Don’t Take Our Word For It
+You don’t have to take our word for it. Here are some actual client examples that demonstrate the impact of our approach on cost.
+
+Law Office of Michael H. Bonner (California)
+The Law Office of Michael H. Bonner is a leader in business law with a strong emphasis on extra-U.S. matters.  Their practice is highly computerized to be as efficient as possible.  Their DSX VOICE system includes five users, a conference room extension, and an off-site extension.
+
+Extensions	DSX VOICE Cost/Month	Original Cost/Month	DSX Savings vs Original	Competitor Cost/Month1	DSX Savings vs Competitor
+7	$199.95	$570.00	65%	$244.93	18%
+Synology (Washington)
+Synology is the leader in next-generation Network Attached Storage (NAS) servers for small to medium-sized enterprise business markets.  They operate a call center with more than 40 agents and use 100,000+ minutes per month in calls.  Their business is phone intensive and they needed additional capacity.  DSX VOICE added 50% to their capacity at a price that was 16% lower than what they were paying for their original capacity.
+
+Extensions	DSX VOICE Cost/Month	Original Cost/Month	DSX Savings vs Original	Competitor Cost/Month1	DSX Savings vs Competitor
+40+	$686.00	$1,145.002	40%	$1,279.60	46%
+Synergy Homeopathic (California)
+Synergy Homeopathic is a pioneer and market leader in computer software to support homeopathic practitioners and treatment.  Their California operation is the North American headquarters of this India-based company.  Although Synergy Homeopathic is a small business, its 17 users are spread across the globe – California, Massachusetts, Germany, India, and Israel, among others.  Their international users are all part of their DSX VOICE system and use soft phones running on computers or smartphones that work like any other office extension.
+
+Extensions	DSX VOICE Cost/Month	Original Cost/Month	DSX Savings vs Original	Competitor Cost/Month1	DSX Savings vs Competitor
+17	$239.00	$670.653	64%	$594.83	60%
+Based on actual client installations,DSX VOICE reduces company phone costs by as much as 60%
+Pricing based on competitor’s current advertised price for the number of extensions and/or users specified
+Based on the original system cost plus the original provider’s pricing for the additional 50% capacity
+Based on original contract cost for 5 extensions recalculated for 17 extensions

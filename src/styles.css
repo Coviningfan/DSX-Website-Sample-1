@@ -4,6 +4,11 @@
 @plugin "@tailwindcss/typography";
 
 @custom-variant dark (&:is(.dark *));
+/* DSX Edge brand type scale */
+@theme inline {
+  --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, monospace;
+}
 
 /* Explicit cascade-layer order (Tailwind v4 already establishes it; restated
    so the precedence model is visible). App CSS belongs in @layer base. */

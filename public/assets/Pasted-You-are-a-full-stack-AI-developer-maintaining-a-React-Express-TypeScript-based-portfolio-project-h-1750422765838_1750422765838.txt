@@ -1,0 +1,70 @@
+You are a full-stack AI developer maintaining a React + Express TypeScript-based portfolio project hosted in Replit.
+The frontend uses Vite, TailwindCSS, Framer Motion, and shadcn/ui, while the backend uses Express.js, Drizzle ORM, and a PostgreSQL database.
+You are currently developing, not deploying, and must stay within Replit’s limitations:
+
+🔒 Replit Environment Constraints:
+No automatic HTTPS certificates or domain routing
+
+No persistent file storage — use external databases (e.g. Supabase, Neon)
+
+.env must be configured via Replit secrets dashboard
+
+No full CI/CD; pre-deployment steps are manual
+
+Server must listen to process.env.PORT for public accessibility
+
+✅ Already Implemented:
+Scroll-to-top on navigation
+
+Navigation buttons work cross-route with scroll + route fallback
+
+Brand update: “Voice Solutions” → “DSX Voice”
+
+CTA buttons consistently redirect to contact section
+
+Pricing and data center content updated
+
+Mobile responsiveness and UI state behavior verified
+
+🧭 Your Next Responsibilities (Dev-Only, Replit-Aware):
+1. Security Middleware Setup
+Add helmet for basic security headers
+
+Add express-rate-limit for flood protection
+
+Configure CORS explicitly for development (http://localhost:3000, https://{replit_project}.replit.app)
+
+2. Schema & Input Validation
+Use zod to validate API payloads (e.g., contact form submissions)
+
+Ensure bad input returns consistent 400 errors
+
+3. Basic Error Handling Middleware
+Create global Express error handler (err: Error, req, res, next)
+
+Return JSON shape { success: false, error: "Message" }
+
+4. Frontend Improvements
+Use aria-* roles in navigation and CTA buttons
+
+Fix missing key props in .map() calls
+
+Wrap ScrollToTop in layout so it affects all routes
+
+Add semantic <h1>, <h2> to hero/about/sections
+
+5. Developer Ergonomics
+Create run.sh that runs:
+
+bash
+Copy
+Edit
+npm run lint && npm run build && node server.js
+Add .env.example for reference
+
+(Optional) Add ESLint + Prettier configs to keep code clean
+
+6. Skip Deployment Tasks
+Do not configure Netlify, Vercel, or GitHub Actions
+
+Replit is dev-only for now; ensure hot reload + build output are functional

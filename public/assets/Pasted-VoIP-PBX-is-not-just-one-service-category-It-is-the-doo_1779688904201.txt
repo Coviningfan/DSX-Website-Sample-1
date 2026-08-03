@@ -1,0 +1,154 @@
+VoIP/PBX is not just one service category. It is the doorway.
+
+DSX does not enter the customer’s business by saying, “Let us redesign your entire operation with AI.” That sounds too abstract, too expensive, and too invasive.
+
+DSX enters through something the business already understands and already needs:
+
+phones, extensions, call routing, voicemail, SIP, 3CX, auto attendants, queues, missed calls, front desk overflow, after-hours calls, internal transfers.
+
+That is the wedge.
+
+Then, once DSX controls or improves the communications layer, DSX can naturally say:
+
+“Now that we understand how calls enter your business, where they go, who answers them, which ones get missed, and what should happen after each call — we can automate the next step.”
+
+That is the actual strategic sequence:
+
+VoIP/PBX → call flow visibility → operational bottlenecks → AI workflow implementation.
+
+So the site should not look like a generic AI automation company.
+
+It should not look like a pure VoIP company either.
+
+It should present DSX as:
+
+A communications company that uses VoIP/PBX as the entry point for practical AI automation.
+
+That is much sharper.
+
+The mistake in the previous iterations is that they jumped too quickly to the AI future and made VoIP look like a supporting credibility point. It should be the opposite:
+
+VoIP/PBX is the beachhead. AI is the expansion layer.
+
+The customer journey should be:
+
+First: “We fix and modernize your business communications.”
+
+Second: “We map how your calls and messages actually move through your business.”
+
+Third: “We identify what happens after the call.”
+
+Fourth: “We automate the repetitive follow-up, routing, intake, scheduling, and notifications.”
+
+That means the homepage should probably open with communications, not AI.
+
+A better positioning line:
+
+Modern business communications, built to become intelligent.
+
+Or:
+
+DSX Edge starts with your phone system — then turns every customer interaction into an intelligent workflow.
+
+That hits the point.
+
+The hero should not say only:
+
+“DSX Edge turns customer communication into completed business action.”
+
+It should say:
+
+Your phone system is the front door of your business. DSX Edge makes it intelligent.
+
+Then the subtext:
+
+DSX Edge modernizes your VoIP/PBX foundation, maps your call flow, and adds AI workflows that answer, qualify, route, schedule, notify, and follow up — without replacing the communications infrastructure your business depends on.
+
+That is much closer.
+
+The animation should start with the PBX.
+
+Not with “AI Agent.”
+
+Visual:
+
+Customer Call
+↓
+VoIP/PBX / 3CX
+↓
+Call Routing / Queue / Extension / Voicemail
+↓
+DSX Intelligence Layer
+↓
+AI Intake / Appointment / CRM / Staff Alert / Follow-up
+
+That tells the correct story:
+
+AI is not floating above the business. It is attached to the communications backbone.
+
+The service section should not be:
+
+Answer / Qualify / Act
+
+That is good, but incomplete. It skips the entrance point.
+
+Better:
+
+Connect → Understand → Automate
+
+Or:
+
+Build → Map → Automate
+
+Even better for DSX:
+
+Modernize the Phone System
+VoIP, PBX, 3CX, SIP trunks, routing, extensions, queues, voicemail, reliability.
+
+Map the Communication Flow
+Where calls go, who answers, what gets missed, what should happen after each interaction.
+
+Add the Intelligence Layer
+AI reception, lead qualification, appointment booking, staff notifications, CRM updates, and follow-up.
+
+That is the actual model.
+
+The site should make the customer think:
+
+“Okay, they can handle my phone system.”
+
+Then:
+
+“They understand how my business receives customers.”
+
+Then:
+
+“They can automate the parts my staff keeps doing manually.”
+
+That order matters.
+
+The correct brand architecture is:
+
+DSX Voice = the entrance point.
+DSX Edge = the intelligence layer built on top of communications.
+DSX AI Workflows = the automation outcome.
+
+So the website should not bury 3CX. It should use 3CX/PBX as proof that DSX is not a random AI startup.
+
+A strong section title:
+
+We do not start with a chatbot. We start with the system your customers already use to reach you.
+
+Then:
+
+Before DSX adds AI, we look at your communications foundation: your PBX, your call routing, your queues, your voicemail, your extensions, your after-hours handling, and your escalation paths. That is where real business automation begins.
+
+That is the missing point.
+
+The instruction to the builder should be:
+
+Do not frame DSX Edge as a broad AI automation company with VoIP as credibility. Frame it as a communications-first company where VoIP/PBX is the entry point and AI is the next operational layer. The homepage should begin with the phone system as the business front door, then show how DSX maps the call flow and adds intelligence after the PBX. Rework the visual diagram so the PBX/3CX layer sits before the AI layer. Rework the services from “Answer / Qualify / Act” into “Modernize / Map / Automate” or “PBX Foundation / Communication Flow / Intelligence Layer.”
+
+The strongest final line is:
+
+DSX Edge starts where your customers already reach you: your phone system. From there, we turn calls, routing, voicemail, scheduling, and follow-up into intelligent business workflows.

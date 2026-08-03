@@ -1,0 +1,129 @@
+Yes — this is the direction I want.
+
+Do not put a weird diagram, dashboard, or technical architecture visual in the hero.
+
+Instead, I want the hero visual to be more abstract, premium, and brand-driven. A strong option would be an animated orb or energy sphere that represents communications, connectivity, intelligence, and integration.
+
+The feeling should be:
+controlled
+premium
+modern
+technical
+confident
+not gimmicky
+not “AI toy”
+not sci-fi overload
+
+Hero visual concept:
+
+Create a subtle animated orb on the right side of the hero. The orb should feel like the center of an intelligent communications ecosystem. It should suggest signal flow, connected systems, operational intelligence, and unified infrastructure — but in an abstract way, not as a literal diagram.
+
+The orb can include:
+
+* soft blue/navy core tones
+* subtle orange accents or orbit lines
+* faint glow effects
+* restrained motion
+* thin signal rings or orbit traces
+* soft particles or pulse effects
+* maybe very subtle connecting lines or field distortions
+* light glassmorphism or layered translucent effects around it
+
+The orb should feel like:
+communications becoming intelligence
+systems becoming unified
+a modern platform core
+the “edge” in DSX Edge
+
+Do not make it look like:
+
+* a crypto coin
+* a planet in outer space
+* a neon gaming effect
+* a generic AI ball
+* a cheesy hologram
+* a spinning sci-fi machine
+* an overdesigned tech startup animation
+
+It should be elegant and restrained.
+
+Animation behavior:
+
+The animation should be subtle and professional:
+
+* slow pulse
+* faint breathing glow
+* soft orbit movement
+* maybe a slight shift in inner light
+* minimal floating motion
+* smooth opacity changes
+* possibly a very soft parallax effect
+
+Avoid:
+
+* fast spinning
+* bouncing
+* flashy particle explosions
+* aggressive light streaks
+* too much movement
+* anything distracting from the headline and CTAs
+
+Color system:
+
+* deep blue / navy is dominant
+* orange is the controlled accent
+* cyan only if extremely subtle, for signal detail
+* overall page should remain blue/orange branded and coherent
+
+Composition:
+
+The hero should still prioritize:
+
+1. headline
+2. subheadline
+3. CTA buttons
+4. trust strip
+
+The orb is there to create a premium visual anchor, not to compete with the text.
+
+If needed, place 2–3 very small elegant supporting tags or floating mini-cards near the orb, but keep them minimal. For example:
+
+* Business Communications
+* Hosted Infrastructure
+* DSX AI Enabled
+
+These should not become a diagram. They should just reinforce the three pillars.
+
+Then, move the more explicit platform explanation lower on the page.
+
+Below the hero, in a later section, create the place for diagrams or structured explanatory visuals. That lower section can show:
+
+* Communications Platform
+* Infrastructure Backbone
+* DSX AI Enabled
+
+That is where visual explanation belongs.
+
+So:
+Hero = emotional brand identity and premium motion
+Mid-page = strategic explanation and diagrams
+Lower page = proof, case studies, infrastructure credibility, contact
+
+Also improve overall visual coherence:
+
+* unify spacing
+* unify card radii
+* unify border treatments
+* unify animation timing
+* unify glow behavior
+* keep the navbar motion premium
+* make section transitions feel smoother
+* ensure the whole page feels like one design language
+
+The hero should make people feel:
+“This is a serious communications and technology company that understands infrastructure and is evolving intelligently.”
+
+Not:
+“This is a random AI startup.”
+
+If possible, give the orb a slight “signal nucleus” feel — like the central intelligence point where communications, infrastructure, and AI integration converge.

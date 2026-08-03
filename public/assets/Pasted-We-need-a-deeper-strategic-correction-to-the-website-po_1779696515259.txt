@@ -1,0 +1,230 @@
+We need a deeper strategic correction to the website positioning, copy, and visuals.
+
+The current site still feels too much like an “AI receptionist / missed-call automation” product. That is too narrow. DSX Edge is not just about answering calls, booking appointments, or automating phone workflows. Those are examples of what can happen after the communications layer is modernized, but they are not the whole company.
+
+The correct business model is this:
+
+DSX Edge is the integrated evolution of DSX Voice, DSX Data, and AI-enabled business systems.
+
+Do not say or imply that DSX Data is deprecated. That is internal strategy language and should not appear publicly. Publicly, DSX Data should function as the infrastructure and technical credibility layer: hosting, connectivity, reliability, data center background, security, and the technical seriousness behind DSX.
+
+DSX Voice is the active client-facing entry point. Phone systems, VoIP, PBX, 3CX, SIP routing, extensions, queues, call routing, support, and business communications are the doorstep into the client’s operation. Businesses understand their phones. They understand missed calls, bad routing, voicemail problems, fragmented communication, poor follow-up, and staff inefficiency. That is where DSX can begin the relationship.
+
+AI is the expansion layer. Many businesses want AI in their company, but they do not know where to start. They do not know what to automate, what systems to connect, what workflows to map, or how to avoid buying a generic chatbot that does nothing useful. DSX Edge gives them a practical starting point: the communication layer they already depend on. From there, DSX can map the business process and integrate AI, automation, CRM actions, agentic 3CX features, workflow logic, reporting, monitoring, and operational intelligence.
+
+So the site should not communicate:
+
+“We are an AI receptionist company.”
+“We only solve missed calls.”
+“We are just a phone company.”
+“We are abandoning DSX Data.”
+“We are a generic AI automation agency.”
+“We are selling a chatbot.”
+
+The site should communicate:
+
+DSX Edge modernizes the communication systems businesses already use, then uses that foundation to integrate practical AI, automation, infrastructure, and operational intelligence into the business.
+
+The strategic hierarchy should be:
+
+1. Communications Doorstep
+   This is the first point of contact with the client.
+   DSX Voice, 3CX PBX, VoIP, SIP, call routing, extensions, queues, voicemail, support, and managed business telephony.
+
+2. Infrastructure Backbone
+   This is the credibility and reliability layer.
+   DSX Data, hosted infrastructure, connectivity, data center experience, uptime, security, technical depth, and managed systems.
+
+3. Intelligent Integration
+   This is the expansion layer.
+   AI workflows, 3CX Version 20 agentic features, automation, CRM updates, workflow routing, customer intake, reporting, staff notifications, operational intelligence, and custom business-process integration.
+
+The hero should be revised around this broader positioning.
+
+Suggested headline options:
+
+Option A:
+Business Communications. Intelligent Integration.
+
+Option B:
+Your Communications Platform for the AI Era.
+
+Option C:
+Where Business Communications Become Intelligent Infrastructure.
+
+Option D:
+Modern Communications. Practical AI. Integrated Operations.
+
+Suggested subheadline direction:
+
+DSX Edge unifies business communications, hosted infrastructure, and AI-enabled workflow integration. We start with the systems companies already depend on — VoIP, PBX, 3CX, SIP routing, connectivity, and support — then help them integrate practical intelligence into the parts of their business where it actually creates value.
+
+The CTA buttons should not over-focus on “workflow” only. Use broader CTA language like:
+
+Explore DSX Edge
+Talk to DSX
+Modernize Your Communications
+Start with Your Phone System
+See the Platform
+
+The right-side hero visual must change. Remove or heavily reduce the “Live Call Flow” / “Phone → Intelligence → Action” diagram. That makes DSX look like a call automation SaaS.
+
+Replace it with a broader “DSX Edge Integrated Platform” or “DSX Edge Technology Stack” visual. It should feel like an enterprise communications and infrastructure platform, not a toy AI demo.
+
+The visual should have three connected layers:
+
+Layer 1:
+Communications Doorstep
+DSX Voice
+3CX PBX
+VoIP
+SIP Routing
+Queues
+Extensions
+Support
+
+Layer 2:
+Infrastructure Backbone
+DSX Data
+Hosting
+Connectivity
+Monitoring
+Reliability
+Security
+Data Center Experience
+
+Layer 3:
+Intelligent Integration
+AI Workflows
+3CX v20 Agentic Features
+CRM Actions
+Automation
+Operational Intelligence
+Workflow Routing
+Staff Notifications
+
+Make DSX Voice visually dominant because that is the commercial entry point. Make DSX Data present as the infrastructure backbone, not as a discarded legacy brand. Make AI visible as the intelligent expansion layer, but do not let it dominate the brand.
+
+The homepage copy should be adjusted throughout.
+
+Reduce repeated phrases like:
+“missed calls”
+“phone system”
+“AI receptionist”
+“appointment booking”
+“we start with your phone system, then make it intelligent”
+“live call flow”
+“zero calls lost to voicemail”
+
+These can still appear, but only as examples. They should not define the whole company.
+
+Add broader language around:
+business communications
+managed telephony
+hosted infrastructure
+connectivity
+integration
+workflow mapping
+operational modernization
+AI adoption
+practical automation
+business systems
+3CX platform expertise
+data center-backed reliability
+
+The “Real Cost” section should not only be about missed calls. It should be broadened into business friction.
+
+Possible section title:
+The Cost of Disconnected Systems
+
+Possible copy direction:
+Most businesses do not fail because they lack software. They lose time, leads, visibility, and control because their communications, staff workflows, customer records, and follow-up processes are disconnected. DSX Edge starts with the communication layer and uses it to identify where the business can be modernized.
+
+The problems should include:
+missed calls
+bad routing
+voicemail dependency
+slow response time
+manual follow-up
+disconnected CRM
+no visibility into customer interactions
+staff doing repetitive intake
+owners trapped in operational tasks
+technology vendors that do not talk to each other
+
+The “How DSX Edge Works” section should not be only:
+Modernize the Phone System → Map the Communication Flow → Add the Intelligence Layer
+
+Revise it to something more complete:
+
+Step 1:
+Modernize Communications
+VoIP, PBX, 3CX, SIP, routing, queues, extensions, voicemail, call handling, and support.
+
+Step 2:
+Map the Business Flow
+Understand how customers contact the business, how staff respond, where information goes, what gets missed, what is repeated manually, and what systems need to connect.
+
+Step 3:
+Integrate the Systems
+Connect communications with CRM, calendars, notifications, reporting, support workflows, and business tools.
+
+Step 4:
+Add Practical Intelligence
+Use AI and automation where they actually help: intake, qualification, routing, summaries, follow-up, scheduling, reporting, escalation, and operational visibility.
+
+The 3CX section should be reframed around the platform.
+
+Do not present 3CX only as PBX credibility. Present it as the communications platform DSX builds on, especially with Version 20 agentic features and future AI capabilities. Say that DSX Edge uses 3CX as the communications foundation, then adds implementation, integration, support, workflow mapping, and business-specific intelligence around it.
+
+Suggested 3CX copy direction:
+3CX provides the modern PBX and communications platform. DSX Edge provides the implementation, integration, workflow design, support, and intelligent business layer around it.
+
+The AI section should be renamed or reframed. It should not feel like “AI is the product.” It should feel like “AI is applied through communications and business workflow.”
+
+Possible section title:
+AI That Starts Where Your Business Already Works
+
+Possible copy:
+Most companies do not need a generic chatbot. They need intelligence connected to the systems their customers and staff already use. DSX Edge begins with communications, maps the workflow around it, and applies AI only where it creates measurable operational value.
+
+The About page should tell the story more accurately:
+
+DSX Data established the infrastructure and hosted technology foundation.
+DSX Voice established the communications, VoIP, PBX, and telephony foundation.
+DSX Edge brings these paths together into a unified platform for communications, infrastructure, and intelligent business integration.
+
+Do not make the About page sound like DSX Data is dead or replaced. It should sound like DSX Data’s infrastructure DNA is now part of the larger DSX Edge identity.
+
+The Data Center page should connect back to the brand. It should not feel like a separate brochure about Switch/Citadel. It should explain why infrastructure matters to DSX Edge:
+
+Reliable communications need reliable infrastructure.
+AI-enabled workflows need dependable systems.
+Business operations require uptime, connectivity, security, and professional hosting.
+DSX Edge’s infrastructure background supports the reliability behind its communications and managed technology services.
+
+Tone and visual direction:
+
+The site should feel mature, technical, reliable, and professional.
+Not startup gimmicky.
+Not AI-hype heavy.
+Not chatbot-centered.
+Not too much neon cyan.
+Not too many “AI magic” visuals.
+
+The brand should feel like:
+telecommunications
+hosted infrastructure
+managed services
+business modernization
+practical AI integration
+enterprise reliability
+blue/orange DSX Edge identity
+
+Use blue/navy/blue-gray as the dominant identity.
+Use orange as the controlled DSX Edge accent.
+Use cyan only for signal, network, or intelligence details, not everywhere.
+
+Final brand sentence to guide the rewrite:
+
+DSX Edge helps businesses enter the AI era through the systems they already depend on: communications, connectivity, infrastructure, and the workflows surrounding them.

@@ -1,0 +1,107 @@
+You are misreading the objective.
+
+This is not mainly a branding-polish task, and it is not simply about restoring “DSX-specific identity.” The issue is deeper: the website must reflect a business model transformation.
+
+The uploaded transcript is the source of truth.
+
+The current site may look visually acceptable, but the strategic positioning is still wrong if it presents DSX as a generic communications company, a telecom provider, a data company, or a broad “solutions” provider.
+
+The new DSX Edge direction is this:
+
+DSX has spent 12+ years inside business communications. That is the foundation. But DSX Edge is the next evolution: using the communications layer as the entry point for AI implementation inside real business workflows.
+
+So do not merely ask whether to rename services.
+
+Rebuild the site copy around this logic:
+
+1. Business owners are asking: “How can we use AI?”
+2. DSX already sits at the communication layer of the business: calls, routing, voicemail, scheduling, customer contact, front-office workflows.
+3. That makes DSX the natural partner to bring AI into daily operations.
+4. DSX Edge turns the communications system from a passive phone platform into an active business tool.
+5. The AI does practical work: answers calls, asks questions, qualifies leads, books appointments, routes requests, sends messages, updates systems, and follows workflows.
+6. The AI agent is not generic. It is trained around the customer’s actual business process.
+7. DSX is not a CRM. DSX is an implementer of AI-driven technology through business communications.
+8. 3CX is a platform/backbone, not the identity.
+9. The old DSX Voice / DSX Live / DSX Data split should not dominate the main site because the new business is unified under DSX Edge.
+
+Do not make the site sound like a random AI SaaS startup.
+
+Do not make the site sound like a legacy VoIP provider.
+
+The correct middle ground is:
+
+Experienced communications company → AI implementation layer → practical business workflow automation.
+
+The best phrase to guide the rewrite is:
+
+“DSX Edge gives your communications system intelligence.”
+
+Another guiding phrase:
+
+“Your phone system should not just ring. It should work.”
+
+Another:
+
+“From the first call to the booked appointment, DSX Edge helps your business act faster.”
+
+The services should probably be framed around the customer journey, not abstract categories.
+
+Use this structure:
+
+Answer
+AI answers routine calls, captures the reason for the call, and keeps customers from falling into voicemail.
+
+Qualify
+The system asks the right questions, collects details, identifies urgency, and routes the opportunity or request properly.
+
+Act
+DSX Edge books appointments, sends messages, creates follow-ups, updates workflows, and helps the business move without waiting for a human to manually process every call.
+
+This is stronger than generic service names like “Enterprise Voice,” “AI Intelligence,” or “Infrastructure & Security.”
+
+The homepage should not lead with “communications solutions.” It should lead with the transformation of communications into intelligent action.
+
+Hero direction:
+
+Headline:
+DSX Edge
+
+Subheadline:
+Your communications system should do more than connect calls.
+
+Body:
+For more than a decade, DSX has helped businesses communicate. Now DSX Edge brings AI into the front line of those communications — answering calls, qualifying leads, booking appointments, routing requests, and following the workflows that keep your business moving.
+
+CTA:
+Show Me What DSX Edge Can Do
+
+Secondary CTA:
+Talk to DSX
+
+Tagline:
+Above the Cloud. Into the Business.
+
+The “Above the Cloud” idea must be explained properly. It does not simply mean cloud hosting. It means DSX sits above ordinary cloud communications by adding intelligence: AI agents, business-specific workflows, integrations, and automation.
+
+Cloud is infrastructure.
+DSX Edge is intelligence.
+
+Retain DSX credibility:
+- 12+ years in business communications
+- proven telecom/PBX experience
+- 3CX Platinum Partner, if appropriate
+- real-world customer support and implementation experience
+
+But do not let credibility become the main product story. The main product story is AI implementation through communications.
+
+Use practical examples from the transcript:
+- A painter gets calls asking for estimates.
+- The AI answers, asks whether the house is one-story or two-story, asks for square footage, collects details, follows the painter’s estimating logic, and books the appointment.
+- The painter spends more time painting and less time returning calls.
+- This same model applies to lawyers, insurance agencies, electricians, plumbers, real estate, finance, medical offices, hotels, and marketing companies.
+
+The rewrite should make a business owner immediately understand:
+
+“I am losing time and leads through routine communication, and DSX Edge can automate that without forcing me to rebuild my whole company.”
+
+Please revise the homepage and related sections with this strategic spine. Do not merely make cosmetic edits.

@@ -1,0 +1,180 @@
+Good direction, but make another strategic and visual refinement.
+
+Do not overemphasize “3CX v20 agentic features.” We should not make the site sound like DSX Edge is dependent on a specific 3CX feature name or roadmap. 3CX should remain the communications/PBX platform foundation, but the intelligence layer should be branded as DSX’s own capability.
+
+Use language like:
+
+DSX AI Enabled
+DSX Edge AI Enabled
+AI-enabled workflows
+DSX intelligence layer
+AI-assisted business operations
+AI-enabled communications and workflow integration
+
+Avoid making “3CX agentic features” a headline-level phrase. It can be mentioned subtly, if needed, but the stronger public-facing phrase should be DSX AI Enabled.
+
+The structure should be:
+
+1. DSX Voice / 3CX communications platform
+   This is the foundation: PBX, VoIP, SIP routing, extensions, queues, support, call handling, and managed communications.
+
+2. DSX Data / infrastructure backbone
+   This is the technical depth: hosting, connectivity, reliability, monitoring, security, and data center-backed infrastructure.
+
+3. DSX AI Enabled / intelligent integration layer
+   This is the expansion: AI-assisted workflows, CRM updates, customer intake, routing, staff notifications, summaries, follow-up, reporting, workflow automation, and operational intelligence.
+
+Revise the right-side hero visual accordingly.
+
+Instead of:
+“3CX v20 Agentic Features”
+
+Use:
+“DSX AI Enabled”
+
+or:
+“AI-Enabled Workflows”
+
+or:
+“DSX Intelligence Layer”
+
+The visual stack should read more like:
+
+Communications Platform
+DSX Voice · 3CX PBX · VoIP · SIP · Routing · Support
+
+Infrastructure Backbone
+DSX Data · Hosting · Connectivity · Monitoring · Reliability · Security
+
+DSX AI Enabled
+AI Workflows · CRM Actions · Automation · Notifications · Operational Intelligence
+
+Now, beyond copy, improve design quality and coherence.
+
+The site should feel more premium, more animated, and more visually unified. Right now the structure is better, but the design still needs polish.
+
+Design direction:
+
+Make the page feel like a serious communications and infrastructure company entering the AI era — not a template website and not an AI startup landing page.
+
+Use a consistent visual language across all sections:
+blue/navy/blue-gray as the main identity,
+orange as the DSX Edge accent,
+white/off-white only as breathing space,
+cyan only for subtle signal/network details.
+
+Do not let every section look like a different component library. The cards, gradients, borders, icons, spacing, and animations should feel like one system.
+
+Animation direction:
+
+Add subtle professional motion, not gimmicks.
+
+Examples:
+
+* hero platform cards gently fade/slide in with staggered timing
+* soft animated signal lines connecting the three layers
+* slight glow/pulse on orange DSX AI Enabled accents
+* cards lift subtly on hover
+* section headers fade up as they enter viewport
+* metrics count up smoothly
+* CTA buttons have restrained hover movement
+* background blobs move very subtly or remain static if motion feels cheap
+* navbar transition should remain smooth and premium
+
+Avoid:
+
+* bouncy animations
+* excessive neon
+* spinning icons
+* overused AI sparkle effects
+* too much cyan
+* motion that makes the page feel like a SaaS toy
+
+Hero visual refinement:
+
+The right-side visual should not feel like a basic list. Make it feel like an integrated platform architecture. Use three stacked layers connected by thin lines or signal paths. Make DSX Voice/communications the largest and most prominent. Make DSX Data/infrastructure feel stable and foundational. Make DSX AI Enabled feel like the active enhancement layer, with orange accenting.
+
+Suggested labels:
+
+Layer 01:
+Communications Platform
+Install · Route · Support · Modernize
+
+Layer 02:
+Infrastructure Backbone
+Host · Connect · Secure · Monitor
+
+Layer 03:
+DSX AI Enabled
+Automate · Integrate · Notify · Analyze
+
+The orange accent should be strongest on DSX AI Enabled, but not overwhelming. The site should still be blue-first.
+
+Coherence refinements:
+
+Make sure the same terminology is used everywhere. Do not alternate randomly between “AI layer,” “intelligence layer,” “agentic features,” “automation engine,” and “AI receptionist.” Pick a consistent vocabulary:
+
+Preferred:
+DSX AI Enabled
+AI-enabled workflows
+Intelligent integration
+Operational intelligence
+Business workflow automation
+
+Avoid:
+AI receptionist
+agentic features as a major phrase
+chatbot
+magic AI
+live call flow
+zero calls lost to voicemail as a core promise
+
+Section-level corrections:
+
+Hero:
+Use “Business Communications. Intelligent Integration.” or “Your Communications Platform for the AI Era.”
+Subheadline should mention DSX installs, manages, supports, and integrates communications systems, then extends them with infrastructure and DSX AI Enabled workflows.
+
+Problem section:
+Keep “The Cost of Disconnected Systems,” but make the design more premium. Use fewer loud cards and more elegant problem blocks. Emphasize operational friction: lost time, lost leads, poor visibility, disconnected tools, repetitive staff work, fragmented vendors.
+
+Process section:
+Keep the four steps:
+Modernize Communications
+Map the Business Flow
+Connect the Systems
+Enable DSX AI
+
+Change “Add Practical Intelligence” to “Enable DSX AI” or “Enable AI Workflows” so the brand owns the AI layer.
+
+3CX section:
+Do not make the section about 3CX agentic features. Make it about DSX using 3CX as a reliable communications platform and adding implementation, support, integration, and DSX AI Enabled workflows around it.
+
+AI section:
+Rename to something like:
+DSX AI Enabled
+or
+AI Where Your Business Already Works
+
+Make it clear that AI is applied through the client’s actual business systems: communications, CRM, calendars, support flows, intake, reporting, and notifications. It should not sound like a generic AI demo.
+
+Data / infrastructure section:
+Make DSX Data feel integrated into the brand. It should support reliability, hosting, connectivity, and technical credibility. Do not make it look like a separate unrelated page.
+
+Final brand logic:
+
+DSX Voice gives us the communications doorway.
+DSX Data gives us the infrastructure backbone.
+DSX AI Enabled gives clients a practical path into AI adoption.
+DSX Edge is the unified platform that brings those together.
+
+The final experience should feel:
+more premium,
+more coherent,
+more animated,
+more blue/orange branded,
+more DSX-owned,
+less generic AI,
+less dependent on 3CX agentic language,
+less “AI receptionist,”
+and more like an established communications company evolving into an AI-enabled managed technology platform.

@@ -2,7 +2,34 @@ This file provides guidance when working with code in this repository. The READM
 
 # Project Notes
 
-<!-- Documentation for this specific project goes here. This will include both an articulation of what this project aims to accomplish as well as technical details about how it works. This means explaining the purpose of the project as a whole along with an overview of the design choices. -->
+## DSX Edge — Industrial Telecom Website
+
+Migrated from the PortfolioRevamp (Replit-based) codebase to Zo Site. DSX Edge is a business telecom/services company that builds phone systems, connects them to operations, and adds AI only where it earns its keep.
+
+### Phase 1 Design Decisions (Homepage Redesign)
+
+**Font pairing:** IBM Plex Sans (body) + IBM Plex Mono (data/metrics). Loaded from Google Fonts in `index.html`.
+
+**Theme:** Dark navy foundation with blue (infrastructure/trust) and orange (action) as restrained accent roles. No gradient text, no glassmorphism, no glow effects.
+
+**Layout:** Left-aligned editorial grid. Full-bleed elements. Rounded corners at `--radius-lg` (0.625rem). No rounded-2xl or card overload.
+
+**Motion:** Framer Motion for subtle entrance effects on critical elements only. No universal scroll reveals. No hover lifts on cards.
+
+**Surface treatment:** Solid surfaces using the brand palette. No backdrop-blur, no glass effects, no sheen sweeps.
+
+**Explicitly removed:** Gradient headlines, glow pills, italic accent words, dotted background patterns, orbital arc backgrounds, glassmorphism cards, universal fade-up-on-scroll, centered symmetrical layouts.
+
+### Phase 1 File Scope
+
+- `index.html` — title, description meta, Google Fonts preconnect
+- `src/styles.css` — font theme, clean surface tokens
+- `src/pages/home.tsx` — homepage component
+- `src/components/navbar.tsx` — navigation bar
+- `src/components/footer.tsx` — footer
+- `src/components/case-studies-section.tsx` — editorial case studies
+- `src/lib/types.ts` — shared TypeScript types
+- `src/data/case-studies.ts` — case study content
 
 ---
 
