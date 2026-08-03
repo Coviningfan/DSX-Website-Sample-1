@@ -1,19 +1,18 @@
-import { motion } from "framer-motion";
-import { Shuffle, Database, EyeOff, PlugZap, ArrowRight } from "lucide-react";
+import { Phone, PlugZap, Database, EyeOff } from "lucide-react";
 
 export default function ProblemSection() {
   const frictions = [
     {
-      icon: Shuffle,
+      icon: Phone,
       label: "Phones that miss customers",
       detail:
         "Missed calls, dead-end voicemail, slow callbacks. The customer hangs up and dials your competitor.",
     },
     {
       icon: PlugZap,
-      label: "Vendors that don't talk to each other",
+      label: "Vendors that don\u2019t talk to each other",
       detail:
-        "Phones, hosting, CRM, calendars, support — owned by different vendors, with no integration between them.",
+        "Phones, hosting, CRM, calendars, support \u2014 owned by different vendors, with no integration between them.",
     },
     {
       icon: Database,
@@ -30,24 +29,15 @@ export default function ProblemSection() {
   ];
 
   return (
-    <section id="problem" className="py-24 section-dark relative overflow-hidden">
-      <div className="absolute inset-0 pointer-events-none">
-      </div>
-
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="problem" className="py-24 bg-slate-950">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start mb-14">
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            viewport={{ once: true }}
-          >
-            <span className="inline-block px-4 py-1.5 rounded-full border border-blue-400/30 bg-blue-500/10 text-blue-200 text-sm font-semibold mb-4 tracking-wide uppercase">
+          <div>
+            <p className="text-sm font-semibold tracking-wider uppercase text-blue-400 mb-4 font-mono-dsx">
               The Cost of Disconnected Systems
-            </span>
+            </p>
             <h2 className="text-3xl md:text-5xl font-bold text-white mb-5 leading-tight">
-              Most businesses don't fail from a lack of software.{" "}
-              <span className="accent-serif text-orange-300">They fail from disconnection.</span>
+              Most businesses don\u2019t fail from a lack of software. They fail from disconnection.
             </h2>
             <p className="text-lg text-slate-300 leading-relaxed">
               They lose time, leads, visibility, and control because their communications,
@@ -55,43 +45,32 @@ export default function ProblemSection() {
               DSX Edge starts at the communications layer and uses it as the entry point to
               modernize the rest of the operation.
             </p>
-          </motion.div>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
-            viewport={{ once: true }}
-            className="card-glass rounded-2xl p-8"
-          >
-            <p className="text-[11px] uppercase tracking-[0.18em] text-blue-300/70 font-semibold mb-3">
-              The buyer's reality
+          <div className="bg-slate-900 rounded-lg p-8 border border-slate-800">
+            <p className="text-xs uppercase tracking-[0.18em] text-blue-400 font-semibold mb-3 font-mono-dsx">
+              The buyer\u2019s reality
             </p>
             <p className="text-slate-200 text-lg leading-relaxed italic mb-5">
-              "Our phones, our CRM, our schedules, our follow-ups — none of it talks. We
-              know we should be using AI somewhere, but we don't know where to start."
+              \u201cOur phones, our CRM, our schedules, our follow-ups \u2014 none of it talks. We
+              know we should be using AI somewhere, but we don\u2019t know where to start.\u201d
             </p>
-            <div className="flex items-center gap-2 text-sm text-slate-400 pt-4 border-t border-white/10">
-              <ArrowRight className="h-4 w-4 text-orange-400" />
-              <span>DSX Edge starts at communications — and connects the operation from there.</span>
+            <div className="flex items-center gap-2 text-sm text-slate-500 pt-4 border-t border-slate-800">
+              <span>DSX Edge starts at communications \u2014 and connects the operation from there.</span>
             </div>
-          </motion.div>
+          </div>
         </div>
 
         <div className="grid sm:grid-cols-2 gap-5">
           {frictions.map((item, i) => (
-            <motion.div
+            <div
               key={item.label}
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
-              viewport={{ once: true }}
-              className="group relative card-glass card-sheen hover-lift rounded-2xl p-6 hover:border-blue-400/50 hover:bg-white/[0.07]"
+              className="group bg-slate-900 rounded-lg p-6 border border-slate-800 hover:border-slate-700 transition-colors"
               data-testid={`problem-card-${i}`}
             >
               <div className="flex items-start gap-5">
-                <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-blue-500/20 to-blue-600/10 border border-blue-400/30 flex items-center justify-center flex-shrink-0 group-hover:from-blue-500/30 group-hover:to-blue-600/20 transition-colors">
-                  <item.icon className="h-5 w-5 text-blue-300" />
+                <div className="w-11 h-11 rounded-lg bg-blue-600/10 border border-blue-500/20 flex items-center justify-center flex-shrink-0 group-hover:border-blue-500/40 transition-colors">
+                  <item.icon className="h-5 w-5 text-blue-400" />
                 </div>
                 <div className="flex-1">
                   <div className="text-[15px] font-semibold text-white mb-1.5 leading-snug">
@@ -100,7 +79,7 @@ export default function ProblemSection() {
                   <p className="text-sm text-slate-400 leading-relaxed">{item.detail}</p>
                 </div>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>
