@@ -561,3 +561,11 @@ To publish your site publicly, use the **Publish button** in the Zo UI or explic
 ## Deployment
 
 The site exports `{ fetch, port }` from `server.ts` for Zo's deployment system. The same code runs in both dev and production - mode is controlled by `NODE_ENV`.
+
+### Audio Aug 4 2026 — Design audit + SignalOrb state
+
+- **SignalOrb** (`src/components/signal-orb.tsx` + `signal-orb.css`): Three.js WebGL orb. Serves as the hero **background element** (`pointer-events-none absolute inset-0 -z-0` in `#hero`), always animating (packets, particles, shader time, orbit rings). No toolbar, no pause/resume UI — motion starts on load and never pauses. Debug handle `window.__DSX_ORB_DEBUG__` exposes renderer/scene/flows/pausedRef/elapsed.
+- **Homepage sections** (`src/pages/home.tsx`, single page, anchor nav): hero (orb bg + "Every Department, Every Function, 24/7." + 844-DSX-Edge) → proof rail → #departments (Features) → natural-dialogue examples → #demo ("Try It for Yourself") → turnkey-AI → #industries → #features → #pricing (descriptive, no tiers) → #about → #contact.
+- Nav (Features/Industries/Pricing/About/Contact) anchors to section IDs; footer is 4-col with logo, only working links.
+- **Verified claims only:** all stats/contact info cross-checked against the original PortfolioRevamp codebase (`99.9%` uptime SLA, `100K+/mo` minutes, `12+ yrs`, `3CX Platinum`, `hello@dsxedge.com`). No invented data-center or volume claims.
+- Remotes: `origin` → PortfolioRevamp (renamed upstream), `dsx-sample-1` → Coviningfan/DSX-Website-Sample-1 (same repo).
