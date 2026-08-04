@@ -30,7 +30,6 @@
 }
 
 .dsx-orb__motion-button {
-  border: 1px solid rgba(137, 136, 137, 0.28);
   border-radius: 0.5rem;
   background: rgba(255, 255, 255, 0.035);
   color: #a3a3a3;
@@ -57,8 +56,6 @@
   min-height: 400px;
   aspect-ratio: 16 / 10;
   overflow: hidden;
-  border: 1px solid rgba(137, 136, 137, 0.28);
-  border-radius: 0.75rem;
   background:
     radial-gradient(
       circle at 50% 46%,

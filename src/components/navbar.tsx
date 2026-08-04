@@ -1,10 +1,10 @@
 import { Link, useLocation } from "react-router-dom";
 
 const links = [
-  { href: "/#services", label: "Services" },
-  { href: "/#architecture", label: "Architecture" },
-  { href: "/#case-studies", label: "Case Studies" },
-  { href: "/#resources", label: "Resources" },
+  { href: "/#departments", label: "Features" },
+  { href: "/#industries", label: "Industries" },
+  { href: "/#pricing", label: "Pricing" },
+  { href: "/#about", label: "About" },
 ];
 
 export default function Navbar() {
