@@ -1,51 +1,126 @@
-import { useState, useRef, useCallback, useEffect, useMemo } from "react";
-import { motion, animate, useMotionValue, useTransform, useReducedMotion } from "framer-motion";
+import { useState, useRef, useCallback, useEffect } from "react";
+import { motion, animate, useMotionValue, useTransform, useSpring, useReducedMotion } from "framer-motion";
 import { PhoneCall, Server, BrainCircuit, Database, CalendarCheck, MessageSquareText } from "lucide-react";
+
+/* ------------------------------------------------------------------ */
+/* DSX Edge — Signal Core                                               */
+/* A communications-routing emblem, not a galaxy. Three inbound systems */
+/* (Communications, Infrastructure, Intelligence) feed a switching     */
+/* core. Three business actions leave the core and exit right.          */
+/*                                                                      */
+/* Motion is used to explain the system, never to decorate it:          */
+/*   + one coordinated entrance (reduce-aware)                          */
+/*   + packets flowing on each ring (3 motion systems, constant speed)  */
+/*   + path dots on inbound/outbound lanes                              */
+/*   + a slow data-ring rotation inside the core                        */
+/*   + spring-smoothed pointer tilt, capped at 6 degrees                */
+/*   + reduced-motion renders a static, fully readable diagram          */
+/* ------------------------------------------------------------------ */
 
 const VIEWBOX = 600;
 const CX = VIEWBOX / 2;
 const CY = VIEWBOX / 2;
-const CORE_RADIUS = 72;
+const CORE_R = 86;
 const MAX_TILT = 6;
-const PACKET_COUNT = 3;
 
 interface Layer {
-  key: string;
+  key: "communications" | "infrastructure" | "intelligence";
   label: string;
-  shortLabel: string;
+  short: string;
   description: string;
-  angle: number;
   color: string;
-  glow: string;
+  faint: string;
+  angle: number;      // ring rotation, degrees
+  rx: number;         // semi-major
+  ry: number;         // semi-minor
+  nodeRadius: number; // distance of the node chip from center
   icon: React.ElementType;
-  radius: number;
 }
 
 interface Output {
   key: string;
   label: string;
-  angle: number;
   icon: React.ElementType;
+  x: number;
+  y: number;
+  connectAngle: number; // degrees, exit lane direction
 }
+
+/* Node chip sits at the tip of each ring's major axis, so the ring
+   visibly "points at" its system. Three asymmetric ellipses, three
+   distinct stations: left, bottom-left, top. */
+const COMMUNICATIONS_ANGLE = -15;
+const INFRASTRUCTURE_ANGLE = 118;
+const INTELLIGENCE_ANGLE = 92;
 
 const LAYERS: Layer[] = [
-  { key: "communications", label: "Business Communications", shortLabel: "Communications", description: "Calls, messaging, routing, handsets, customer entry.", angle: -90, color: "#60a5fa", glow: "rgba(96,165,250,0.55)", icon: PhoneCall, radius: 170 },
-  { key: "infrastructure", label: "Hosted Infrastructure", shortLabel: "Infrastructure", description: "SIP, hosting, connectivity, uptime, data center.", angle: 150, color: "#cbd5e1", glow: "rgba(203,213,225,0.42)", icon: Server, radius: 155 },
-  { key: "intelligence", label: "Operational Intelligence", shortLabel: "Intelligence", description: "Qualification, decision logic, automation, escalation.", angle: 30, color: "#fb923c", glow: "rgba(251,146,60,0.58)", icon: BrainCircuit, radius: 185 },
+  {
+    key: "communications",
+    label: "Business Communications",
+    short: "Communications",
+    description: "Calls, routing, messaging, handsets, customer entry.",
+    color: "#60a5fa",
+    faint: "rgba(96,165,250,0.35)",
+    angle: COMMUNICATIONS_ANGLE,
+    rx: 206,
+    ry: 66,
+    nodeRadius: 212,
+    icon: PhoneCall,
+  },
+  {
+    key: "infrastructure",
+    label: "Hosted Infrastructure",
+    short: "Infrastructure",
+    description: "SIP, hosting, redundancy, uptime, data center.",
+    color: "#94a3b8",
+    faint: "rgba(148,163,184,0.35)",
+    angle: INFRASTRUCTURE_ANGLE,
+    rx: 156,
+    ry: 76,
+    nodeRadius: 160,
+    icon: Server,
+  },
+  {
+    key: "intelligence",
+    label: "Operational Intelligence",
+    short: "Intelligence",
+    description: "Qualification, decision logic, automation, escalation.",
+    color: "#fb923c",
+    faint: "rgba(251,146,60,0.35)",
+    angle: INTELLIGENCE_ANGLE,
+    rx: 170,
+    ry: 56,
+    nodeRadius: 172,
+    icon: BrainCircuit,
+  },
 ];
 
+/* Business actions exit on the right edge — "into the business." */
 const OUTPUTS: Output[] = [
-  { key: "crm", label: "CRM updated", angle: 205, icon: Database },
-  { key: "booking", label: "Appointment booked", angle: 270, icon: CalendarCheck },
-  { key: "followup", label: "Follow-up sent", angle: 335, icon: MessageSquareText },
+  { key: "crm", label: "CRM updated", icon: Database, x: 538, y: 212, connectAngle: -18 },
+  { key: "booking", label: "Appointment booked", icon: CalendarCheck, x: 545, y: 300, connectAngle: 2 },
+  { key: "followup", label: "Follow-up sent", icon: MessageSquareText, x: 538, y: 388, connectAngle: 22 },
 ];
 
-function polarToCartesian(angle: number, radius: number) {
-  const rad = (angle * Math.PI) / 180;
-  return { x: CX + Math.cos(rad) * radius, y: CY + Math.sin(rad) * radius };
+/* ---------- geometry ---------- */
+
+function polar(angleDeg: number, radius: number) {
+  const r = (angleDeg * Math.PI) / 180;
+  return { x: CX + Math.cos(r) * radius, y: CY + Math.sin(r) * radius };
 }
 
-function bezierPoint(t: number, p0: { x: number; y: number }, cp: { x: number; y: number }, p1: { x: number; y: number }) {
+/* Point on a rotated ellipse (SVG, y down). */
+function ellipsePoint(cx: number, cy: number, rx: number, ry: number, rotDeg: number, t: number) {
+  const rot = (rotDeg * Math.PI) / 180;
+  const px = rx * Math.cos(t);
+  const py = ry * Math.sin(t);
+  return {
+    x: cx + px * Math.cos(rot) - py * Math.sin(rot),
+    y: cy + px * Math.sin(rot) + py * Math.cos(rot),
+  };
+}
+
+function bezier(p0: { x: number; y: number }, cp: { x: number; y: number }, p1: { x: number; y: number }, t: number) {
   const u = 1 - t;
   return {
     x: u * u * p0.x + 2 * u * t * cp.x + t * t * p1.x,
@@ -53,131 +128,280 @@ function bezierPoint(t: number, p0: { x: number; y: number }, cp: { x: number; y
   };
 }
 
-function OrbitRing({ rx, ry, rotation, color, reducedMotion }: { rx: number; ry: number; rotation: number; color: string; reducedMotion: boolean }) {
+/* node -> core (inbound) and core -> output (outbound) lane geometry */
+function laneGeometry(angleDeg: number, inbound: boolean, toX?: number, toY?: number) {
+  const innerR = CORE_R + 14;
+  const start = inbound
+    ? polar(angleDeg, 236)
+    : { x: CX + Math.cos((angleDeg * Math.PI) / 180) * innerR, y: CY + Math.sin((angleDeg * Math.PI) / 180) * innerR };
+  const end = inbound
+    ? polar(angleDeg, innerR)
+    : { x: toX ?? 520, y: toY ?? CY };
+  const rad = (angleDeg * Math.PI) / 180;
+  const bend = inbound ? 46 : -54;
+  const cp = {
+    x: (start.x + end.x) / 2 - Math.sin(rad) * bend,
+    y: (start.y + end.y) / 2 + Math.cos(rad) * bend,
+  };
+  return { start, end, cp, d: `M ${start.x},${start.y} Q ${cp.x},${cp.y} ${end.x},${end.y}` };
+}
+
+/* ---------- sub-renderers ---------- */
+
+function OrbitRing({ layer, active, reducedMotion }: { layer: Layer; active: boolean; reducedMotion: boolean }) {
   const progress = useMotionValue(0);
-  const x = useTransform(progress, (v) => CX + rx * Math.cos(v * Math.PI * 2));
-  const y = useTransform(progress, (v) => CY + ry * Math.sin(v * Math.PI * 2));
+  const t = useTransform(progress, (v) => v * Math.PI * 2);
+  const p = useTransform(t, (v) => ellipsePoint(CX, CY, layer.rx, layer.ry, layer.angle, v));
   useEffect(() => {
     if (reducedMotion) return;
-    const ctrl = animate(progress, 1, { duration: 14 + rx * 0.05, repeat: Infinity, ease: "linear" });
+    const ctrl = animate(progress, 1, { duration: 16, repeat: Infinity, ease: "linear" });
     return () => ctrl.stop();
-  }, [progress, reducedMotion, rx]);
+  }, [progress, reducedMotion]);
   return (
-    <g transform={"rotate(" + rotation + " " + CX + " " + CY + ")"}>
-      <ellipse cx={CX} cy={CY} rx={rx} ry={ry} fill="none" stroke={color} strokeOpacity={0.22} strokeWidth={0.75} />
+    <g>
+      <ellipse
+        cx={CX} cy={CY} rx={layer.rx} ry={layer.ry}
+        transform={`rotate(${layer.angle} ${CX} ${CY})`}
+        fill="none"
+        stroke={layer.color}
+        strokeOpacity={active ? 0.55 : 0.26}
+        strokeWidth={active ? 1.6 : 1.1}
+      />
       {!reducedMotion && (
         <>
-          <motion.circle r={8} fill={color} opacity={0.08} style={{ cx: x, cy: y }} />
-          <motion.circle r={2.5} fill={color} style={{ cx: x, cy: y }} />
+          <motion.circle r={6.5} fill={layer.color} opacity={active ? 0.16 : 0.09} style={{ cx: p.x, cy: p.y }} />
+          <motion.circle r={2.6} fill={layer.color} style={{ cx: p.x, cy: p.y }} />
         </>
       )}
     </g>
   );
 }
 
-function SignalPath({ angle, color, inbound, label, reducedMotion }: { angle: number; color: string; inbound: boolean; label: string; reducedMotion: boolean }) {
-  const outerR = inbound ? LAYERS[0].radius : LAYERS[0].radius - 20;
-  const innerR = inbound ? CORE_RADIUS + 12 : LAYERS[0].radius + 30;
-  const start = polarToCartesian(angle, inbound ? outerR : innerR);
-  const end = polarToCartesian(angle, inbound ? innerR : outerR);
-  const bend = inbound ? 40 : -50;
-  const rad = (angle * Math.PI) / 180;
-  const cp = { x: (start.x + end.x) / 2 - Math.sin(rad) * bend, y: (start.y + end.y) / 2 + Math.cos(rad) * bend };
-  const d = "M " + start.x + " " + start.y + " Q " + cp.x + " " + cp.y + " " + end.x + " " + end.y;
-  const dotProgress = useMotionValue(0);
+function SignalLane({ angle, color, inbound, toX, toY, active, reducedMotion }: {
+  angle: number; color: string; inbound: boolean; toX?: number; toY?: number; active: boolean; reducedMotion: boolean;
+}) {
+  const g = laneGeometry(angle, inbound, toX, toY);
+  const prog = useMotionValue(0);
   useEffect(() => {
     if (reducedMotion) return;
-    const ctrl = animate(dotProgress, 1, { duration: 2.2, repeat: Infinity, ease: "easeInOut" });
+    const ctrl = animate(prog, 1, { duration: 2.4, repeat: Infinity, ease: "linear" });
     return () => ctrl.stop();
-  }, [dotProgress, reducedMotion]);
-  const dotPos = useTransform(dotProgress, (t) => bezierPoint(t, start, cp, end));
-  const mid = bezierPoint(0.5, start, cp, end);
+  }, [prog, reducedMotion]);
+  const pos = useTransform(prog, (v) => bezier(g.start, g.cp, g.end, v));
   return (
     <g>
-      <motion.path d={d} fill="none" stroke={color} strokeWidth={1.5} strokeOpacity={0.4} strokeLinecap="round" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: reducedMotion ? 0 : 0.8 }} />
-      {!reducedMotion && <motion.circle r={3.5} fill={color} style={{ cx: dotPos.x, cy: dotPos.y }} />}
-      <text x={mid.x + (inbound ? -12 : 12)} y={mid.y + (inbound ? -8 : 14)} textAnchor="middle" fill={color} fontSize="9" fontWeight={500} opacity={0.85}>{label}</text>
+      <path
+        d={g.d}
+        fill="none"
+        stroke={color}
+        strokeWidth={active ? 1.8 : 1.1}
+        strokeOpacity={active ? 0.6 : 0.28}
+        strokeLinecap="round"
+        strokeDasharray="3 4"
+      />
+      {!reducedMotion && <motion.circle r={3.1} fill={color} style={{ cx: pos.x, cy: pos.y }} />}
     </g>
   );
 }
 
-function OrbCore({ activeLabel }: { activeLabel: string }) {
+function Core({ reducedMotion }: { reducedMotion: boolean }) {
+  const spin = useMotionValue(0);
+  const rot = useTransform(spin, (v) => v * 360);
+  useEffect(() => {
+    if (reducedMotion) return;
+    const ctrl = animate(spin, 1, { duration: 60, repeat: Infinity, ease: "linear" });
+    return () => ctrl.stop();
+  }, [spin, reducedMotion]);
+  const ticks = Array.from({ length: 12 }, (_, i) => {
+    const a = (i / 12) * Math.PI * 2;
+    const r1 = CORE_R - 24;
+    const r2 = CORE_R - 18;
+    return {
+      x1: CX + Math.cos(a) * r1, y1: CY + Math.sin(a) * r1,
+      x2: CX + Math.cos(a) * r2, y2: CY + Math.sin(a) * r2,
+    };
+  });
   return (
     <g>
       <defs>
-        <radialGradient id="core-grad" cx="50%" cy="45%" r="55%">
-          <stop offset="0%" stopColor="#334155" />
-          <stop offset="100%" stopColor="#0f172a" />
+        <radialGradient id="core-grad" cx="50%" cy="42%" r="62%">
+          <stop offset="0%" stopColor="#24324a" />
+          <stop offset="60%" stopColor="#131d30" />
+          <stop offset="100%" stopColor="#0a1120" />
         </radialGradient>
       </defs>
-      <circle cx={CX} cy={CY} r={CORE_RADIUS} fill="url(#core-grad)" />
-      <circle cx={CX} cy={CY} r={CORE_RADIUS} fill="none" stroke="#475569" strokeOpacity={0.45} strokeWidth={1} />
-      <motion.circle cx={CX} cy={CY} r={CORE_RADIUS} fill="none" stroke="#93c5fd" strokeOpacity={0.35} strokeWidth={1.5} animate={{ opacity: [0.25, 0.55, 0.25], scale: [1, 1.008, 1] }} transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }} style={{ transformOrigin: "" + CX + "px " + CY + "px" }} />
-      <circle cx={CX} cy={CY} r={16} fill="#1e293b" stroke="#64748b" strokeWidth={1.5} />
-      <circle cx={CX} cy={CY} r={6} fill="#93c5fd" opacity={0.85} />
-      <circle cx={CX} cy={CY} r={2} fill="#ffffff" />
-      <text x={CX} y={CY + 108} textAnchor="middle" fill="#f8fafc" fontSize="12" fontWeight={600} letterSpacing="2">DSX EDGE</text>
-      <text x={CX} y={CY + 127} textAnchor="middle" fill="#94a3b8" fontSize="9" letterSpacing="1.4">{activeLabel.toUpperCase()}</text>
+      {/* body */}
+      <circle cx={CX} cy={CY} r={CORE_R} fill="url(#core-grad)" />
+      <circle cx={CX} cy={CY} r={CORE_R} fill="none" stroke="#475569" strokeOpacity={0.55} strokeWidth={1} />
+      {/* breathing ring */}
+      <motion.circle
+        cx={CX} cy={CY} r={CORE_R}
+        fill="none" stroke="#60a5fa" strokeOpacity={0.3} strokeWidth={1.2}
+        animate={reducedMotion ? undefined : { scale: [1, 1.012, 1], opacity: [0.22, 0.42, 0.22] }}
+        transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+        style={{ transformOrigin: `${CX}px ${CY}px` }}
+      />
+      {/* rotating data ring */}
+      <g style={reducedMotion ? undefined : { transformOrigin: `${CX}px ${CY}px`, rotate: rot }}>
+        <circle cx={CX} cy={CY} r={CORE_R - 21} fill="none" stroke="#475569" strokeOpacity={0.5} strokeWidth={1} strokeDasharray="2 5" />
+        {ticks.map((tk, i) => (
+          <line key={i} x1={tk.x1} y1={tk.y1} x2={tk.x2} y2={tk.y2} stroke="#64748b" strokeOpacity={0.7} strokeWidth={1} />
+        ))}
+      </g>
+      {/* center mark */}
+      <circle cx={CX} cy={CY} r={14} fill="#0d1526" stroke="#60a5fa" strokeOpacity={0.6} strokeWidth={1.4} />
+      <motion.circle
+        cx={CX} cy={CY} r={5.5} fill="#93c5fd"
+        animate={reducedMotion ? undefined : { opacity: [0.75, 1, 0.75] }}
+        transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <circle cx={CX} cy={CY} r={1.8} fill="#ffffff" />
     </g>
   );
 }
 
+/* ---------- main ---------- */
+
 export function SignalOrb() {
   const reduceMotion = useReducedMotion() ?? false;
-  const [activeLayer, setActiveLayer] = useState(LAYERS[0].key);
+  const [activeKey, setActiveKey] = useState<Layer["key"]>("communications");
   const containerRef = useRef<HTMLDivElement>(null);
-  const tiltX = useMotionValue(0);
-  const tiltY = useMotionValue(0);
+
+  const rawTiltX = useMotionValue(0);
+  const rawTiltY = useMotionValue(0);
+  const tiltX = useSpring(rawTiltX, { stiffness: 140, damping: 18 });
+  const tiltY = useSpring(rawTiltY, { stiffness: 140, damping: 18 });
+
   const handlePointerMove = useCallback((e: React.PointerEvent) => {
     if (reduceMotion || !containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
     const nx = (e.clientX - rect.left) / rect.width - 0.5;
     const ny = (e.clientY - rect.top) / rect.height - 0.5;
-    tiltX.set(-ny * MAX_TILT);
-    tiltY.set(nx * MAX_TILT);
-  }, [reduceMotion, tiltX, tiltY]);
-  const resetPointer = useCallback(() => { tiltX.set(0); tiltY.set(0); }, [tiltX, tiltY]);
-  const active = LAYERS.find((l) => l.key === activeLayer) ?? LAYERS[0];
+    rawTiltX.set(-ny * MAX_TILT);
+    rawTiltY.set(nx * MAX_TILT);
+  }, [reduceMotion, rawTiltX, rawTiltY]);
+
+  const resetPointer = useCallback(() => { rawTiltX.set(0); rawTiltY.set(0); }, [rawTiltX, rawTiltY]);
+
+  const active = LAYERS.find((l) => l.key === activeKey) ?? LAYERS[0];
+
   return (
-    <section ref={containerRef} className="relative mx-auto aspect-square w-full max-w-[620px]" aria-label="DSX Edge operating system" onPointerMove={handlePointerMove} onPointerLeave={resetPointer}>
-      <motion.svg viewBox={"0 0 " + VIEWBOX + " " + VIEWBOX + ""} className="absolute inset-0 h-full w-full overflow-visible" style={{ rotateX: tiltX, rotateY: tiltY, transformStyle: "preserve-3d" }} role="img" aria-labelledby="orb-title orb-description">
-        <title id="orb-title">DSX Edge operating system</title>
-        <desc id="orb-description">Communications and hosted infrastructure feed the DSX Edge intelligence core, which performs actions inside the customer's business.</desc>
-        <OrbitRing rx={178} ry={68} rotation={-18} color="#60a5fa" reducedMotion={reduceMotion} />
-        <OrbitRing rx={165} ry={88} rotation={22} color="#cbd5e1" reducedMotion={reduceMotion} />
-        <OrbitRing rx={182} ry={56} rotation={58} color="#fb923c" reducedMotion={reduceMotion} />
-        {LAYERS.map((layer) => (
-          <SignalPath key={layer.key} angle={layer.angle} color={layer.color} inbound={true} label={layer.shortLabel} reducedMotion={reduceMotion} />
+    <section
+      ref={containerRef}
+      className="relative mx-auto aspect-square w-full max-w-[540px] select-none"
+      aria-label="DSX Edge operating core"
+      onPointerMove={handlePointerMove}
+      onPointerLeave={resetPointer}
+    >
+      {/* emblem */}
+      <motion.svg
+        viewBox={`0 0 ${VIEWBOX} ${VIEWBOX}`}
+        className="absolute inset-0 h-full w-full overflow-visible"
+        style={{ rotateX: tiltX, rotateY: tiltY, transformStyle: "preserve-3d" }}
+        role="img"
+        aria-labelledby="orb-title orb-desc"
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+      >
+        <title id="orb-title">DSX Edge operating core</title>
+        <desc id="orb-desc">Communications, infrastructure, and intelligence feed the DSX Edge core. Business actions — CRM updates, bookings, follow-ups — leave the core and move into the operation.</desc>
+
+        {LAYERS.map((layer, i) => (
+          <motion.g
+            key={layer.key}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.15 + i * 0.1 }}
+          >
+            <OrbitRing layer={layer} active={layer.key === activeKey} reducedMotion={reduceMotion} />
+          </motion.g>
         ))}
-        {OUTPUTS.map((output) => (
-          <SignalPath key={output.key} angle={output.angle} color="#f59e0b" inbound={false} label={output.label} reducedMotion={reduceMotion} />
+
+        {LAYERS.map((layer, i) => (
+          <motion.g key={`in-${layer.key}`} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.4, delay: 0.4 + i * 0.08 }}>
+            <SignalLane angle={layer.angle} color={layer.color} inbound active={layer.key === activeKey} reducedMotion={reduceMotion} />
+          </motion.g>
         ))}
-        <OrbCore activeLabel={active.shortLabel} />
+
+        {OUTPUTS.map((out, i) => (
+          <motion.g key={`out-${out.key}`} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.4, delay: 0.55 + i * 0.08 }}>
+            <SignalLane angle={out.connectAngle} color="#fbbf24" inbound={false} toX={out.x} toY={out.y} active={activeKey === "intelligence"} reducedMotion={reduceMotion} />
+          </motion.g>
+        ))}
+
+        <motion.g initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.6, delay: 0.5 }}>
+          <Core reducedMotion={reduceMotion} />
+        </motion.g>
       </motion.svg>
+
+      {/* core label (HTML for crisp typography) */}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+        <div className="text-center">
+          <p className="font-mono text-[13px] font-semibold tracking-[0.3em] text-foreground">DSX&nbsp;EDGE</p>
+          <p className="mt-1 font-mono text-[9px] uppercase tracking-[0.26em] text-muted-foreground/70">signal core</p>
+        </div>
+      </div>
+
+      {/* system station chips */}
       {LAYERS.map((layer) => {
-        const pos = polarToCartesian(layer.angle, layer.radius);
+        const pos = polar(layer.angle, layer.nodeRadius);
         const Icon = layer.icon;
+        const isActive = layer.key === activeKey;
         return (
-          <button key={layer.key} onClick={() => setActiveLayer(layer.key)} className="absolute -translate-x-1/2 -translate-y-1/2 group" style={{ left: (pos.x / VIEWBOX) * 100 + "%", top: (pos.y / VIEWBOX) * 100 + "%" }} aria-pressed={activeLayer === layer.key}>
-            <div className={"rounded-full p-2.5 transition-colors " + (activeLayer === layer.key ? "bg-background/90" : "bg-background/60 hover:bg-background/80")} style={{ boxShadow: activeLayer === layer.key ? "0 0 18px " + layer.glow : undefined }}>
-              <Icon className={"w-4 h-4 " + (activeLayer === layer.key ? "text-foreground" : "text-muted-foreground")} strokeWidth={1.8} />
-            </div>
+          <button
+            key={layer.key}
+            onClick={() => setActiveKey(layer.key)}
+            className="group absolute -translate-x-1/2 -translate-y-1/2 rounded-md border transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+            style={{
+              left: `${(pos.x / VIEWBOX) * 100}%`,
+              top: `${(pos.y / VIEWBOX) * 100}%`,
+              borderColor: isActive ? layer.color : "hsl(var(--border))",
+              backgroundColor: isActive ? "hsla(var(--card))" : "transparent",
+              boxShadow: isActive ? `0 0 22px ${layer.faint}` : "none",
+            }}
+            aria-pressed={isActive}
+            aria-label={layer.label}
+            title={layer.label}
+          >
+            <span className="flex h-11 w-11 items-center justify-center">
+              <Icon
+                className="h-[18px] w-[18px] transition-colors"
+                style={{ color: isActive ? layer.color : "hsl(var(--muted-foreground))" }}
+                strokeWidth={1.7}
+              />
+            </span>
           </button>
         );
       })}
-      {OUTPUTS.map((output) => {
-        const pos = polarToCartesian(output.angle, LAYERS[0].radius + 40);
-        const Icon = output.icon;
+
+      {/* business output ticks */}
+      {OUTPUTS.map((out) => {
+        const Icon = out.icon;
         return (
-          <div key={output.key} className="absolute -translate-x-1/2 -translate-y-1/2 text-[10px] text-muted-foreground/70 font-mono uppercase tracking-[0.15em] text-center" style={{ left: (pos.x / VIEWBOX) * 100 + "%", top: (pos.y / VIEWBOX) * 100 + "%" }}>
-            <Icon className="w-3 h-3 mx-auto mb-1 text-amber-500/60" />
-            {output.label}
+          <div
+            key={out.key}
+            className="pointer-events-none absolute -translate-y-1/2"
+            style={{ left: `${(out.x / VIEWBOX) * 100}%`, top: `${(out.y / VIEWBOX) * 100}%` }}
+          >
+            <div className="flex items-center gap-1.5 rounded-sm border border-dashed border-amber-500/30 bg-background/60 px-1.5 py-1">
+              <Icon className="h-3 w-3 text-amber-500/80" strokeWidth={2} />
+              <span className="whitespace-nowrap font-mono text-[9px] uppercase tracking-[0.14em] text-muted-foreground">
+                {out.label}
+              </span>
+            </div>
           </div>
         );
       })}
-      <div className="absolute inset-x-[18%] bottom-0 text-center" aria-live="polite">
-        <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground mb-1">{active.shortLabel}</p>
-        <p className="text-xs text-muted-foreground/60 leading-relaxed max-w-xs mx-auto">{active.description}</p>
+
+      {/* active layer caption */}
+      <div className="pointer-events-none absolute inset-x-0 bottom-[2%] text-center" aria-live="polite">
+        <p className="font-mono text-[10px] font-medium uppercase tracking-[0.22em]" style={{ color: active.color }}>
+          {active.short}
+        </p>
+        <p className="mx-auto mt-1 max-w-[280px] text-xs leading-relaxed text-muted-foreground">
+          {active.description}
+        </p>
       </div>
     </section>
   );

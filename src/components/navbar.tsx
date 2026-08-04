@@ -1,4 +1,3 @@
-import { Wrench } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 
 const links = [
@@ -14,11 +13,12 @@ export default function Navbar() {
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur-sm">
       <nav className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-        <Link to="/" className="flex items-center gap-2.5">
-          <div className="w-7 h-7 rounded-md bg-primary flex items-center justify-center">
-            <Wrench className="w-4 h-4 text-primary-foreground" />
-          </div>
-          <span className="font-semibold text-sm tracking-tight">DSX Edge</span>
+        <Link to="/" className="flex items-center">
+          <img
+            src="/images/dsx-logo.webp"
+            alt="DSX Edge"
+            className="h-8 w-auto"
+          />
         </Link>
 
         <div className="hidden md:flex items-center gap-1">

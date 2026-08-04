@@ -174,12 +174,8 @@ export default function Home() {
         <div className="space-y-16">
           {/* Synology */}
           <article className="grid grid-cols-1 md:grid-cols-5 gap-8 items-start">
-            <div className="md:col-span-2">
-              <img
-                src="/assets/image_1748532713689.png"
-                alt="Synology user management dashboard"
-                className="w-full border border-border/40 max-w-xs"
-              />
+            <div className="md:col-span-2 flex items-start">
+              <span className="font-mono text-5xl font-semibold text-primary/25 leading-none">01</span>
             </div>
             <div className="md:col-span-3">
               <div className="flex flex-wrap gap-3 items-center mb-3">
@@ -228,12 +224,8 @@ export default function Home() {
 
           {/* Law Office */}
           <article className="grid grid-cols-1 md:grid-cols-5 gap-8 items-start">
-            <div className="md:col-span-2">
-              <img
-                src="/assets/image_1750427523720.png"
-                alt="Law office 3CX interface"
-                className="w-full border border-border/40 max-w-xs"
-              />
+            <div className="md:col-span-2 flex items-start">
+              <span className="font-mono text-5xl font-semibold text-primary/25 leading-none">02</span>
             </div>
             <div className="md:col-span-3">
               <div className="flex flex-wrap gap-3 items-center mb-3">
@@ -283,12 +275,8 @@ export default function Home() {
 
           {/* Synergy Homeopathic */}
           <article className="grid grid-cols-1 md:grid-cols-5 gap-8 items-start">
-            <div className="md:col-span-2">
-              <img
-                src="/assets/image_1751309224528.png"
-                alt="Synergy Homeopathic webRTC interface"
-                className="w-full border border-border/40 max-w-xs"
-              />
+            <div className="md:col-span-2 flex items-start">
+              <span className="font-mono text-5xl font-semibold text-primary/25 leading-none">03</span>
             </div>
             <div className="md:col-span-3">
               <div className="flex flex-wrap gap-3 items-center mb-3">
