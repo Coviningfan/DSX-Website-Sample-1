@@ -19,6 +19,13 @@ Migrated from the PortfolioRevamp (Replit-based) codebase to Zo Site. DSX Edge i
 - WebGL scene fully constructed on mount; reduced-motion does not zero out packets (that bug caused an empty scene); playback-only pausing removed entirely. Renderer owns its loop via `renderer.setAnimationLoop`.
 - Full WebGL cleanup on unmount (`setAnimationLoop(null)`, geometry/material disposal, context loss handler).
 
+### Hero blend (2026-08-04)
+
+- Mockup-requested tunnel image (`public/images/hero-tunnel.webp`, extracted from Web Mockup-5) is the full-bleed hero base.
+- SignalOrb is layered over it with `mix-blend-screen`, reduced opacity (~70%), and a radial mask centered toward the tunnel vanishing point so particles/flows read as energy traveling the corridor.
+- Stage solid dark fill is cleared via `.hero-orb-blend` CSS so the tunnel shows through; left-side + bottom gradients keep left-aligned copy readable.
+- Section uses `min-h-[min(72vh,720px)]` for presence while remaining content-driven.
+
 ### Phase 1 Design Decisions (Homepage Redesign)
 
 **Font pairing:** IBM Plex Sans (body) + IBM Plex Mono (data/metrics). Loaded from Google Fonts in `index.html`.
