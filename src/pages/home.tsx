@@ -32,30 +32,48 @@ export default function HomePage() {
   return (
     <main>
 
-      {/* Hero — copy overlaid on the SignalOrb */}
-      <section id="hero" className="relative overflow-hidden px-6 pt-20 pb-12 max-w-7xl mx-auto">
-        <div className="pointer-events-none absolute inset-0 -z-0 opacity-80">
+      {/* Hero — tunnel image + SignalOrb blend */}
+      <section id="hero" className="relative min-h-[min(72vh,720px)] overflow-hidden">
+        {/* Full-bleed hero image (mockup-requested tunnel) */}
+        <div className="absolute inset-0 -z-20">
+          <img
+            src="/images/hero-tunnel.webp"
+            alt=""
+            className="h-full w-full object-cover object-center"
+            fetchPriority="high"
+          />
+          {/* Left-to-right darkening so left-aligned copy stays readable over the bright tunnel */}
+          <div className="absolute inset-0 bg-gradient-to-r from-background via-background/75 to-background/20" />
+          <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-background/30" />
+        </div>
+
+        {/* SignalOrb layered over the tunnel with soft blend so particles & flows feel like energy inside the corridor */}
+        <div className="pointer-events-none absolute inset-0 -z-10 opacity-70 mix-blend-screen hero-orb-blend [mask-image:radial-gradient(ellipse_80%_70%_at_60%_45%,black_15%,transparent_70%)]">
           <SignalOrb />
         </div>
-        <div className="relative z-10 max-w-3xl">
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-semibold tracking-tight text-balance">
-            Every Department,<br />
-            Every Function,<br />
-            <span className="text-primary">24/7.</span>
-          </h1>
-          <p className="mt-6 text-lg text-muted-foreground max-w-2xl">
-            Your employees spend up to 65% of their time performing routine tasks. DSX Edge AI handles
-            those tasks automatically — answering calls, qualifying leads, booking appointments, processing
-            returns, and more — freeing your team for the work that grows your business.
-          </p>
-          <div className="mt-8 flex flex-col sm:flex-row gap-4">
-            <a href="tel:8443793343" className="inline-flex items-center gap-2 px-6 py-3 rounded-md bg-primary text-primary-foreground text-lg font-semibold hover:bg-primary/90 transition-colors">
-              <PhoneCall className="w-5 h-5" />
-              844-DSX-Edge
-            </a>
-            <span className="text-sm text-muted-foreground self-center">
-              Call and try it for yourself
-            </span>
+
+        {/* Content */}
+        <div className="relative z-10 mx-auto max-w-7xl px-6 pt-24 pb-16">
+          <div className="max-w-3xl">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-semibold tracking-tight text-balance text-foreground drop-shadow-sm">
+              Every Department,<br />
+              Every Function,<br />
+              <span className="text-primary">24/7.</span>
+            </h1>
+            <p className="mt-6 text-lg text-muted-foreground max-w-2xl text-pretty">
+              Your employees spend up to 65% of their time performing routine tasks. DSX Edge AI handles
+              those tasks automatically — answering calls, qualifying leads, booking appointments, processing
+              returns, and more — freeing your team for the work that grows your business.
+            </p>
+            <div className="mt-8 flex flex-col sm:flex-row gap-4">
+              <a href="tel:8443793343" className="inline-flex items-center gap-2 px-6 py-3 rounded-md bg-primary text-primary-foreground text-lg font-semibold hover:bg-primary/90 transition-colors">
+                <PhoneCall className="w-5 h-5" />
+                844-DSX-Edge
+              </a>
+              <span className="text-sm text-muted-foreground self-center">
+                Call and try it for yourself
+              </span>
+            </div>
           </div>
         </div>
       </section>
