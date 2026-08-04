@@ -195,3 +195,43 @@ The current pricing page needs a full structural rewrite to match.
 15. **Male/female voice variety** for industry demos.
 16. **Municipalities** industry category.
 17. **Spam protection** on contact form.
+
+---
+
+[STATUS UPDATED 2026-08-04 23:05]
+
+**P4 — Home Page Sections:** ~~MISSING~~ → ✅ RESOLVED
+All 12 sections from PPTX slide deck are now present on the home page (verified in production build JS bundle):
+1. Navbar (liquid glass, pegasus logo) ✅
+2. "Business Communications That Drive Profit" headline ✅
+3. Industry crawl ✅
+4. Turnkey AI ✅
+5. "The Easiest Way" explainer ✅
+6. "Increase Productivity By 50%" ✅
+7. 5 industry-specific workflow examples (Repair & Maintenance, Healthcare, Automotive, Retail & Wholesale, Residential & Commercial) ✅
+8. Industries cross-link CTA ("SEE DSX EDGE FOR YOUR BUSINESS") ✅
+9. How It Works (SignalOrb) ✅
+10. Every Department, Every Function ✅
+11. "Try It for Yourself" (call Mary) ✅
+12. Trusted By ✅
+
+**P2 — Pricing Page:** ~~MISMATCH~~ → ✅ RESOLVED
+Replaced with PPTX descriptive model: concurrent call capacity, no per-user pricing, AI services $300–$1,000 + 15–20% ongoing, ROI framing ("pays for itself"). Build: clean.
+
+**P3 — Features Page:** ~~MISSING~~ → ✅ RESOLVED
+Added Marketing department (7 capabilities including reengagement, anniversary, loyalty, surveys, referrals, Google Ads/Facebook) and Communications section (4 capabilities: never miss calls, voicemail-to-email transcriptions, Work From Anywhere, Microsoft 365 + Google Workspace integrations).
+
+**P1 — Industries Page:** ~~MISSING~~ → ✅ RESOLVED
+Now 14 industries with scenario-driven capabilities per industry, named voice personas (Pete, Sarah, Dr. Chen, Kevin, Nina, Chris, etc.), per-industry demo phone numbers (844-DSX-AUTO through 844-DSX-GOV), responsive accordion UI, social proof structure. Build: clean.
+
+**New — Favicon:** → ✅ RESOLVED
+DSX Pegasus icon installed as /public/favicon.png.
+
+**New — SignalOrb:** → ✅ RESOLVED
+Shader tuned for tunnel blend: body brightness (0.020/0.075/0.125 coolBody, 0.008/0.030/0.060 deepBody), blue-to-amber edge mix, wider side range (-0.45→0.65). Background: object-fit contain with blurred ::before fill layer.
+
+**New — Logo:** → ✅ RESOLVED
+Pegasus SVG installed at /public/images/pegasus.svg, rendered in navbar.
+
+**New — Text Color:** → ✅ RESOLVED
+All content uses #191919 (near-black) on white/light backgrounds per Marketing Psychology skill guidance.
