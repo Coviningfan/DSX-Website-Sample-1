@@ -183,27 +183,7 @@ export default function SignalOrb() {
             2.75
           );
 
-          float side = smoothstep(-0.5, 0.52, vLocalPosition.x);
-
-          vec3 warmTone = mix(
-            uAmber,
-            uAmberLight,
-            smoothstep(0.0, 1.2, vLocalPosition.y) * 0.28
-          );
-
-          vec3 edgeColor = mix(uBlue, warmTone, side);
-
-          float upperLight = smoothstep(
-            0.3,
-            1.0,
-            vLocalPosition.y + 0.55
-          );
-
-          edgeColor = mix(
-            edgeColor,
-            uBlueLight,
-            upperLight * (1.0 - side) * 0.24
-          );
+          float side = smoothstep(-0.45, 0.65, vLocalPosition.x);
 
           float quietWave = 0.5 + 0.5 * sin(
             vLocalPosition.y * 6.0 +
@@ -222,7 +202,20 @@ export default function SignalOrb() {
 
           float fieldLines = smoothstep(0.96, 1.0, fineField);
 
-          vec3 body = vec3(0.006, 0.012, 0.021);
+          vec3 coolBody = vec3(0.020, 0.075, 0.125);
+          vec3 deepBody = vec3(0.008, 0.030, 0.060);
+
+          vec3 body = mix(
+            coolBody,
+            deepBody,
+            smoothstep(-0.3, 0.8, -vLocalPosition.y)
+          );
+
+          vec3 edgeColor = mix(
+            uBlueLight,
+            uAmberLight,
+            side
+          );
           vec3 color = body;
 
           color += edgeColor * fresnel *
