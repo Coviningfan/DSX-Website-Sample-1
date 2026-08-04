@@ -82,6 +82,7 @@ export default function SignalOrb() {
   const pointerTargetRef = useRef({ x: 0, y: 0 });
 
   const [focus, setFocus] = useState<FocusZone>("overview");
+  const [paused, setPaused] = useState(false);
   const [ready, setReady] = useState(false);
 
   const changeFocus = (zone: FocusZone) => {
@@ -89,6 +90,13 @@ export default function SignalOrb() {
     setFocus(zone);
   };
 
+  const toggleMotion = () => {
+    // This is an explicit user override. The initial media preference may pause
+    // playback, but it must not prevent a later manual resume.
+    const nextPaused = !pausedRef.current;
+    pausedRef.current = nextPaused;
+    setPaused(nextPaused);
+  };
 
   const handlePointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
     const rect = event.currentTarget.getBoundingClientRect();
@@ -110,6 +118,12 @@ export default function SignalOrb() {
 
     if (!stage || !canvasMount) return;
 
+    const reduceMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+
+    pausedRef.current = reduceMotion;
+    setPaused(reduceMotion);
 
     const blue = new THREE.Color(COLORS.blue);
     const blueLight = new THREE.Color(COLORS.blueLight);
@@ -669,33 +683,37 @@ export default function SignalOrb() {
       const delta = Math.min(clock.getDelta(), 0.05);
       const activeZone = focusRef.current;
 
-      elapsed += delta;
+      if (!pausedRef.current) {
+        elapsed += delta;
 
-      coreMaterial.uniforms.uTime.value = elapsed;
-      innerParticles.rotation.y = elapsed * 0.032;
-      innerParticles.rotation.x =
-        Math.sin(elapsed * 0.11) * 0.04;
+        coreMaterial.uniforms.uTime.value = elapsed;
+        innerParticles.rotation.y = elapsed * 0.032;
+        innerParticles.rotation.x =
+          Math.sin(elapsed * 0.11) * 0.04;
 
-      orbitA.line.rotation.z = elapsed * 0.042;
-      orbitB.line.rotation.z = -elapsed * 0.031;
-      orbitC.line.rotation.z = elapsed * 0.022;
+        // Slow, but visibly alive. Previous values took several minutes per orbit
+        // and appeared static when signal packets were unavailable.
+        orbitA.line.rotation.z = elapsed * 0.042;
+        orbitB.line.rotation.z = -elapsed * 0.031;
+        orbitC.line.rotation.z = elapsed * 0.022;
 
-      wire.rotation.y = elapsed * 0.028;
+        wire.rotation.y = elapsed * 0.028;
 
-      flows.forEach((flow) => {
-        flow.packets.forEach((packet) => {
-          const progress =
-            (elapsed * flow.speed + packet.offset) % 1;
+        flows.forEach((flow) => {
+          flow.packets.forEach((packet) => {
+            const progress =
+              (elapsed * flow.speed + packet.offset) % 1;
 
-          const point = flow.curve.getPointAt(progress);
-          const envelope = Math.sin(progress * Math.PI);
+            const point = flow.curve.getPointAt(progress);
+            const envelope = Math.sin(progress * Math.PI);
 
-          packet.mesh.position.copy(point);
-          packet.mesh.scale.setScalar(0.7 + envelope * 0.38);
-          packet.mesh.material.opacity =
-            0.42 + envelope * 0.46;
+            packet.mesh.position.copy(point);
+            packet.mesh.scale.setScalar(0.7 + envelope * 0.38);
+            packet.mesh.material.opacity =
+              0.42 + envelope * 0.46;
+          });
         });
-      });
+      }
 
       const coreHoverTarget = activeZone === "core" ? 1 : 0;
 
@@ -786,12 +804,14 @@ export default function SignalOrb() {
         renderer: THREE.WebGLRenderer;
         scene: THREE.Scene;
         flows: Flow[];
+        pausedRef: React.MutableRefObject<boolean>;
         getElapsed: () => number;
       };
     }).__DSX_ORB_DEBUG__ = {
       renderer,
       scene,
       flows,
+      pausedRef,
       getElapsed: () => elapsed,
     };
 
@@ -817,6 +837,21 @@ export default function SignalOrb() {
       data-zone={focus}
       aria-labelledby="dsx-orb-title"
     >
+      <div className="dsx-orb__toolbar">
+        <div className="dsx-orb__state" aria-live="polite">
+          Focus: <strong>{ZONE_LABELS[focus]}</strong>
+        </div>
+
+        <button
+          type="button"
+          className="dsx-orb__motion-button"
+          aria-pressed={paused}
+          onClick={toggleMotion}
+        >
+          {paused ? "Resume motion" : "Pause motion"}
+        </button>
+      </div>
+
       <div
         ref={stageRef}
         className="dsx-orb__stage"
