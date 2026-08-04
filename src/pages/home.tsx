@@ -22,8 +22,8 @@ const INDUSTRIES = [
 ];
 
 const PROOF_POINTS = [
-  { metric: "99.97%", label: "Network uptime" },
-  { metric: "2.4M+/mo", label: "Minutes routed" },
+  { metric: "99.9%", label: "Uptime SLA" },
+  { metric: "100K+/mo", label: "Minutes on one platform" },
   { metric: "12+ yrs", label: "Years deploying" },
   { metric: "3CX Platinum", label: "Highest partner tier" },
 ];
@@ -146,7 +146,7 @@ export default function HomePage() {
       <section id="industries" className="px-6 pb-24 max-w-7xl mx-auto">
         <p className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground mb-4">Industries</p>
         <h2 className="text-2xl sm:text-3xl font-semibold mb-6 text-balance">
-          Serving 400+ companies across industries.
+          Trusted across manufacturing, automotive, medical, legal, hospitality, and construction — industries where every call carries money.
         </h2>
         <p className="text-muted-foreground max-w-2xl mb-10">
           Proudly serving Northern Nevada and the Mountain West. Manufacturing, automotive, medical,
@@ -290,10 +290,10 @@ export default function HomePage() {
               <div className="text-sm text-muted-foreground">(844-379-3343)</div>
             </div>
           </a>
-          <a href="mailto:info@dsxedge.com" className="flex items-center gap-3 p-4 rounded-md bg-secondary hover:bg-secondary/80 transition-colors">
+          <a href="mailto:hello@dsxedge.com" className="flex items-center gap-3 p-4 rounded-md bg-secondary hover:bg-secondary/80 transition-colors">
             <ArrowUpRight className="w-5 h-5 text-primary" />
             <div>
-              <div className="font-medium">info@dsxedge.com</div>
+              <div className="font-medium">hello@dsxedge.com</div>
               <div className="text-sm text-muted-foreground">Email us</div>
             </div>
           </a>

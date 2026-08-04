@@ -6,6 +6,19 @@ This file provides guidance when working with code in this repository. The READM
 
 Migrated from the PortfolioRevamp (Replit-based) codebase to Zo Site. DSX Edge is a business telecom/services company that builds phone systems, connects them to operations, and adds AI only where it earns its keep.
 
+### 2026-08-04 Audit Fixes (verified live)
+
+- **Nav anchor fix:** "Features" now resolves to `#departments` (the section ID was missing, leaving dead links). All five nav links verified: Features→#departments, Industries→#industries, Pricing→#pricing, About→#about, Contact→#contact.
+- **Footer link hygiene:** Removed dead "Case Studies" / "Resources" links — those routes no longer exist (case studies were removed per owner direction); footer Company column is now About + Contact only.
+- **Claim verification:** Replaced unverified stats with source-backed values from the original codebase: `99.9% Uptime SLA` (was 99.97%), `100K+/mo Minutes on one platform` (was 2.4M+/mo — original cites a 100,000+ minutes/month testimonial), removed invented "400+ companies" headline. Contact email corrected to `hello@dsxedge.com` (canonical in original `src/lib/site.ts`).
+- **Pricing** remains descriptive with no tiers: telephone priced by concurrent capacity, AI customization $300–$1,000, ongoing AI 15–20% of telephone charge. No plans, no monthly prices, no feature tables.
+
+### SignalOrb runtime decisions (Three.js)
+
+- Orb is a **background hero element** behind the hero copy, always animating on load — no toolbar, no pause button, no widget chrome.
+- WebGL scene fully constructed on mount; reduced-motion does not zero out packets (that bug caused an empty scene); playback-only pausing removed entirely. Renderer owns its loop via `renderer.setAnimationLoop`.
+- Full WebGL cleanup on unmount (`setAnimationLoop(null)`, geometry/material disposal, context loss handler).
+
 ### Phase 1 Design Decisions (Homepage Redesign)
 
 **Font pairing:** IBM Plex Sans (body) + IBM Plex Mono (data/metrics). Loaded from Google Fonts in `index.html`.

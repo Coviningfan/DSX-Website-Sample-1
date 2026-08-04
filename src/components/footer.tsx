@@ -41,13 +41,19 @@ export default function Footer() {
               Company
             </h4>
             <ul className="space-y-2.5">
-              {["About", "Case Studies", "Resources", "Contact"].map((item) => (
-                <li key={item}>
+              {[
+                  { label: "Features", href: "/#departments" },
+                  { label: "Industries", href: "/#industries" },
+                  { label: "Pricing", href: "/#pricing" },
+                  { label: "About", href: "/#about" },
+                  { label: "Contact", href: "/#contact" },
+                ].map((item) => (
+                <li key={item.label}>
                   <a
-                    href={`/${item.toLowerCase().replace(" ", "-")}`}
+                    href={item.href}
                     className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                   >
-                    {item}
+                    {item.label}
                   </a>
                 </li>
               ))}
