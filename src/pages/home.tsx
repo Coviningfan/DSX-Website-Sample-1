@@ -31,11 +31,13 @@ const PROOF_POINTS = [
 export default function HomePage() {
   return (
     <main>
-      <SignalOrb />
 
-      {/* Hero — overlaid on orb */}
-      <section id="hero" className="relative px-6 pt-20 pb-12 max-w-7xl mx-auto" style={{ zIndex: 1 }}>
-        <div className="max-w-3xl">
+      {/* Hero — copy overlaid on the SignalOrb */}
+      <section id="hero" className="relative overflow-hidden px-6 pt-20 pb-12 max-w-7xl mx-auto">
+        <div className="pointer-events-none absolute inset-0 -z-0 opacity-80">
+          <SignalOrb />
+        </div>
+        <div className="relative z-10 max-w-3xl">
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-semibold tracking-tight text-balance">
             Every Department,<br />
             Every Function,<br />
@@ -71,7 +73,7 @@ export default function HomePage() {
       </section>
 
       {/* Every Department */}
-      <section className="px-6 pb-24 max-w-7xl mx-auto">
+      <section id="departments" className="px-6 pb-24 max-w-7xl mx-auto">
         <p className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground mb-4">Features</p>
         <h2 className="text-2xl sm:text-3xl font-semibold mb-6 text-balance">
           One system handles every department.
