@@ -1,12 +1,18 @@
 import { useState } from "react";
+import { Link, NavLink } from "react-router-dom";
 import { Menu, X, ArrowRight } from "lucide-react";
 
 const NAV_LINKS = [
-  { label: "Departments", href: "#departments" },
-  { label: "Industries", href: "#industries" },
-  { label: "Pricing", href: "#pricing" },
-  { label: "About", href: "#about" },
+  { label: "Features", href: "/features" },
+  { label: "Industries", href: "/industries" },
+  { label: "Pricing", href: "/pricing" },
+  { label: "About", href: "/about" },
 ];
+
+const linkBase =
+  "px-3 py-1.5 text-sm rounded-lg transition-colors duration-200";
+const activeLink = "text-[#191919] bg-black/5";
+const inactiveLink = "text-[#191919]/70 hover:text-[#191919]";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -17,38 +23,41 @@ export default function Navbar() {
         className="pointer-events-auto flex items-center gap-6 px-5 py-3 backdrop-blur-[50px] bg-white/30 rounded-2xl border border-black/10 w-fit max-w-[calc(100vw-2rem)]"
         style={{ boxShadow: "inset 0px 4px 4px 0px rgba(255,255,255,0.25)" }}
       >
-        <a href="/" className="flex items-center gap-2.5 shrink-0">
+        <Link to="/" className="flex items-center gap-2.5 shrink-0">
           <img
-            src="/images/pegasus.png"
+            src="/images/pegasus.svg"
             alt="DSX Edge"
-            className="w-6 h-6"
+            className="w-6 h-6 text-[#191919]"
           />
           <span className="font-semibold text-base tracking-tight text-[#191919]">
             DSX Edge
           </span>
-        </a>
+        </Link>
 
         <div className="hidden md:flex items-center gap-1">
           {NAV_LINKS.map((link) => (
-            <a
+            <NavLink
               key={link.href}
-              href={link.href}
-              className="px-3 py-1.5 text-sm text-[#191919]/70 hover:text-[#191919] transition-colors duration-200 rounded-lg"
+              to={link.href}
+              end={link.href === "/"}
+              className={({ isActive }) =>
+                `${linkBase} ${isActive ? activeLink : inactiveLink}`
+              }
             >
               {link.label}
-            </a>
+            </NavLink>
           ))}
         </div>
 
         <div className="hidden md:flex items-center gap-2">
-          <a
-            href="#contact"
+          <Link
+            to="/about"
             className="flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-white bg-[#0084FF]/80 backdrop-blur-[2px] rounded-2xl hover:scale-[1.02] transition-transform duration-200"
             style={{ boxShadow: "inset 0px 4px 4px 0px rgba(255,255,255,0.35)" }}
           >
             Book A Demo
             <ArrowRight className="w-3.5 h-3.5" />
-          </a>
+          </Link>
         </div>
 
         <button
@@ -65,23 +74,23 @@ export default function Navbar() {
           <div className="bg-white/90 backdrop-blur-[50px] rounded-2xl border border-black/10 p-4 shadow-lg">
             <div className="flex flex-col gap-1">
               {NAV_LINKS.map((link) => (
-                <a
+                <Link
                   key={link.href}
-                  href={link.href}
+                  to={link.href}
                   onClick={() => setOpen(false)}
                   className="px-3 py-2.5 text-sm text-[#191919]/70 hover:text-[#191919] rounded-lg"
                 >
                   {link.label}
-                </a>
+                </Link>
               ))}
-              <a
-                href="#contact"
+              <Link
+                to="/about"
                 onClick={() => setOpen(false)}
                 className="mt-2 flex items-center justify-center gap-1.5 px-4 py-2.5 text-sm font-medium text-white bg-[#0084FF] rounded-2xl"
               >
                 Book A Demo
                 <ArrowRight className="w-3.5 h-3.5" />
-              </a>
+              </Link>
             </div>
           </div>
         </div>

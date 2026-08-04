@@ -1,77 +1,82 @@
 import { Link } from "react-router-dom";
 
-const FOOTER_LINKS = [
-  {
-    label: "Product",
-    items: [
-      { label: "Features", href: "#departments" },
-      { label: "Industries", href: "#industries" },
-      { label: "Pricing", href: "#pricing" },
-      { label: "How It Works", href: "#how-it-works" },
-    ],
-  },
-  {
-    label: "Company",
-    items: [
-      { label: "About", href: "#about" },
-      { label: "Contact", href: "#contact" },
-    ],
-  },
+const PAGES = [
+  { label: "Home", href: "/" },
+  { label: "Features", href: "/features" },
+  { label: "Industries", href: "/industries" },
+  { label: "Pricing", href: "/pricing" },
+  { label: "About", href: "/about" },
 ];
 
 export default function Footer() {
   return (
-    <footer className="border-t border-gray-200 bg-white">
-      <div className="max-w-6xl mx-auto px-6 sm:px-10 md:px-14 py-12 sm:py-16">
-        <div className="flex flex-col sm:flex-row justify-between gap-10">
-          <div className="max-w-xs">
-            <div className="flex items-center gap-2.5">
-              <span className="text-xl font-bold text-[#191919]">DSX Edge</span>
-            </div>
-            <p className="mt-2 text-sm text-[#191919]/60 leading-relaxed">
-              AI that answers the phone — and a lot more. Built inside a working telecom.
+    <footer className="bg-[#191919] text-white">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-10 py-16">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
+          <div className="lg:col-span-2">
+            <Link to="/" className="flex items-center gap-2.5 mb-4">
+              <img
+                src="/images/pegasus.svg"
+                alt="DSX Edge"
+                className="w-6 h-6"
+                style={{ filter: "brightness(0) invert(1)" }}
+              />
+              <span className="font-semibold text-base tracking-tight text-white">
+                DSX Edge
+              </span>
+            </Link>
+            <p className="text-sm text-white/50 leading-relaxed max-w-sm">
+              Business communications, rethought. Conversational AI that handles calls,
+              texts, and tasks so your team does the work that matters.
             </p>
           </div>
-          <div className="flex gap-16 sm:gap-20">
-            {FOOTER_LINKS.map((group) => (
-              <div key={group.label}>
-                <h4 className="text-xs font-semibold uppercase tracking-widest text-[#191919]/40">
-                  {group.label}
-                </h4>
-                <ul className="mt-3 space-y-2.5">
-                  {group.items.map((item) => (
-                    <li key={item.label}>
-                      <a
-                        href={item.href}
-                        className="text-sm text-[#191919]/60 hover:text-[#191919] transition-colors duration-200"
-                      >
-                        {item.label}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
+
+          <div>
+            <p className="text-xs font-medium uppercase tracking-[0.2em] text-white/30 mb-4">
+              Pages
+            </p>
+            <ul className="space-y-2.5">
+              {PAGES.map((page) => (
+                <li key={page.href}>
+                  <Link
+                    to={page.href}
+                    className="text-sm text-white/50 hover:text-white transition-colors duration-200"
+                  >
+                    {page.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <p className="text-xs font-medium uppercase tracking-[0.2em] text-white/30 mb-4">
+              Contact
+            </p>
+            <ul className="space-y-2.5 text-sm text-white/50">
+              <li>
+                <a href="tel:775-624-9424" className="hover:text-white transition-colors duration-200">
+                  775-624-9424
+                </a>
+              </li>
+              <li>
+                <a href="mailto:info@dsxedge.com" className="hover:text-white transition-colors duration-200">
+                  info@dsxedge.com
+                </a>
+              </li>
+              <li>
+                <a href="mailto:sales@dsxedge.com" className="hover:text-white transition-colors duration-200">
+                  sales@dsxedge.com
+                </a>
+              </li>
+              <li>Reno, Nevada</li>
+            </ul>
           </div>
         </div>
-        <div className="mt-10 pt-6 border-t border-gray-100 flex flex-col sm:flex-row justify-between items-center gap-4">
-          <p className="text-xs text-[#191919]/40">
-            &copy; {new Date().getFullYear()} DSX Edge. All rights reserved.
-          </p>
-          <div className="flex gap-6">
-            <a
-              href="tel:+18443793343"
-              className="text-xs text-[#191919]/50 hover:text-[#191919] transition-colors duration-200"
-            >
-              844-DSX-Edge
-            </a>
-            <a
-              href="mailto:hello@dsxedge.com"
-              className="text-xs text-[#191919]/50 hover:text-[#191919] transition-colors duration-200"
-            >
-              hello@dsxedge.com
-            </a>
-          </div>
+
+        <div className="mt-12 pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-white/30">
+          <p>&copy; {new Date().getFullYear()} DSX Edge. All rights reserved.</p>
+          <p>Every Department, Every Function, 24/7.</p>
         </div>
       </div>
     </footer>
