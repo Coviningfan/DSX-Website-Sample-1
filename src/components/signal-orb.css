@@ -1,0 +1,344 @@
+.dsx-orb {
+  --dsx-blue: #5f80b3;
+  --dsx-blue-light: #8ca9d0;
+  --dsx-amber: #d99658;
+  --dsx-amber-light: #efb67d;
+  --dsx-silver: #898889;
+  --dsx-white: #f4f2ef;
+
+  width: 100%;
+  color: var(--dsx-white);
+}
+
+.dsx-orb__toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.dsx-orb__state {
+  color: #9ca3af;
+  font-size: 0.8rem;
+}
+
+.dsx-orb__state strong {
+  color: var(--dsx-white);
+  font-weight: 500;
+}
+
+.dsx-orb__motion-button {
+  border: 1px solid rgba(137, 136, 137, 0.28);
+  border-radius: 0.5rem;
+  background: rgba(255, 255, 255, 0.035);
+  color: #a3a3a3;
+  padding: 0.5rem 0.72rem;
+  font: inherit;
+  font-size: 0.82rem;
+  cursor: pointer;
+}
+
+.dsx-orb__motion-button:hover {
+  border-color: rgba(140, 169, 208, 0.5);
+  color: var(--dsx-white);
+}
+
+.dsx-orb__motion-button:focus-visible,
+.dsx-orb__hit-zone:focus-visible {
+  outline: 2px solid var(--dsx-blue-light);
+  outline-offset: 2px;
+}
+
+.dsx-orb__stage {
+  position: relative;
+  width: 100%;
+  min-height: 400px;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border: 1px solid rgba(137, 136, 137, 0.28);
+  border-radius: 0.75rem;
+  background:
+    radial-gradient(
+      circle at 50% 46%,
+      rgba(95, 128, 179, 0.075),
+      transparent 34%
+    ),
+    linear-gradient(180deg, #111214 0%, #0b0c0e 100%);
+}
+
+.dsx-orb__canvas,
+.dsx-orb__fallback {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.dsx-orb__canvas canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.dsx-orb__fallback {
+  transition: opacity 220ms ease;
+}
+
+.dsx-orb[data-ready="true"] .dsx-orb__fallback {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.dsx-orb__label {
+  position: absolute;
+  z-index: 4;
+  pointer-events: none;
+  transition:
+    opacity 220ms ease,
+    transform 300ms ease,
+    filter 220ms ease;
+}
+
+.dsx-orb__kicker {
+  font-size: 0.66rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.dsx-orb__label-title {
+  margin-top: 0.3rem;
+  color: var(--dsx-white);
+  font-size: 0.88rem;
+  font-weight: 500;
+}
+
+.dsx-orb__label-copy {
+  max-width: 12rem;
+  margin-top: 0.2rem;
+  color: #aaa7a4;
+  font-size: 0.74rem;
+  line-height: 1.45;
+}
+
+.dsx-orb__label--incoming {
+  top: 15%;
+  left: 3.5%;
+}
+
+.dsx-orb__label--incoming .dsx-orb__kicker {
+  color: var(--dsx-blue-light);
+}
+
+.dsx-orb__label--outgoing {
+  top: 15%;
+  right: 3.5%;
+  text-align: right;
+}
+
+.dsx-orb__label--outgoing .dsx-orb__kicker {
+  color: var(--dsx-amber-light);
+}
+
+.dsx-orb__label--outgoing .dsx-orb__label-copy {
+  margin-left: auto;
+}
+
+.dsx-orb__core-label {
+  top: 47%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.dsx-orb__core-label strong {
+  display: block;
+  color: var(--dsx-white);
+  font-size: clamp(1rem, 2.25vw, 1.42rem);
+  font-weight: 500;
+  letter-spacing: 0.13em;
+  white-space: nowrap;
+}
+
+.dsx-orb__core-label span {
+  display: block;
+  margin-top: 0.35rem;
+  color: var(--dsx-blue-light);
+  font-size: 0.64rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  transition: color 220ms ease;
+}
+
+.dsx-orb__foundation-label {
+  bottom: 6.5%;
+  left: 50%;
+  width: max-content;
+  max-width: 90%;
+  transform: translateX(-50%);
+  text-align: center;
+}
+
+.dsx-orb__foundation-label .dsx-orb__kicker {
+  color: var(--dsx-silver);
+}
+
+.dsx-orb__foundation-label .dsx-orb__label-title {
+  color: #d6d2cd;
+  font-size: 0.74rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.dsx-orb__hit-zone {
+  position: absolute;
+  z-index: 3;
+  top: 0;
+  bottom: 0;
+  border: 0;
+  background: transparent;
+  cursor: default;
+}
+
+.dsx-orb__hit-zone--left {
+  left: 0;
+  width: 35%;
+}
+
+.dsx-orb__hit-zone--core {
+  left: 35%;
+  width: 30%;
+  cursor: pointer;
+}
+
+.dsx-orb__hit-zone--right {
+  right: 0;
+  width: 35%;
+}
+
+.dsx-orb[data-zone="communications"] .dsx-orb__label--incoming {
+  transform: translateX(4px);
+  filter: brightness(1.18);
+}
+
+.dsx-orb[data-zone="communications"] .dsx-orb__label--outgoing,
+.dsx-orb[data-zone="communications"] .dsx-orb__foundation-label {
+  opacity: 0.42;
+}
+
+.dsx-orb[data-zone="actions"] .dsx-orb__label--outgoing {
+  transform: translateX(-4px);
+  filter: brightness(1.14);
+}
+
+.dsx-orb[data-zone="actions"] .dsx-orb__label--incoming,
+.dsx-orb[data-zone="actions"] .dsx-orb__foundation-label {
+  opacity: 0.42;
+}
+
+.dsx-orb[data-zone="core"] .dsx-orb__label--incoming,
+.dsx-orb[data-zone="core"] .dsx-orb__label--outgoing {
+  opacity: 0.46;
+}
+
+.dsx-orb[data-zone="core"] .dsx-orb__core-label {
+  transform: translate(-50%, -50%) scale(1.035);
+  filter: brightness(1.12);
+}
+
+.dsx-orb[data-zone="core"] .dsx-orb__core-label span {
+  color: var(--dsx-amber-light);
+}
+
+.dsx-orb__tagline {
+  display: flex;
+  justify-content: center;
+  gap: 0.65rem;
+  margin-top: 0.8rem;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  font-size: 0.7rem;
+}
+
+.dsx-orb__tagline span:first-child {
+  color: var(--dsx-blue-light);
+}
+
+.dsx-orb__tagline span:last-child {
+  color: var(--dsx-amber-light);
+}
+
+.dsx-orb__mobile-summary {
+  display: none;
+}
+
+@media (max-width: 640px) {
+  .dsx-orb__stage {
+    min-height: 510px;
+    aspect-ratio: 4 / 5;
+  }
+
+  .dsx-orb__label--incoming,
+  .dsx-orb__label--outgoing,
+  .dsx-orb__foundation-label {
+    display: none;
+  }
+
+  .dsx-orb__core-label {
+    top: 43%;
+  }
+
+  .dsx-orb__hit-zone--left,
+  .dsx-orb__hit-zone--right {
+    width: 30%;
+  }
+
+  .dsx-orb__hit-zone--core {
+    left: 30%;
+    width: 40%;
+  }
+
+  .dsx-orb__mobile-summary {
+    position: absolute;
+    z-index: 4;
+    right: 1rem;
+    bottom: 1rem;
+    left: 1rem;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.67rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    pointer-events: none;
+  }
+
+  .dsx-orb__mobile-summary span:first-child {
+    color: var(--dsx-blue-light);
+  }
+
+  .dsx-orb__mobile-summary span:nth-child(2) {
+    color: var(--dsx-silver);
+  }
+
+  .dsx-orb__mobile-summary span:last-child {
+    color: var(--dsx-amber-light);
+    text-align: right;
+  }
+
+  .dsx-orb__tagline {
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dsx-orb__label,
+  .dsx-orb__fallback,
+  .dsx-orb__core-label span {
+    transition: none;
+  }
+}

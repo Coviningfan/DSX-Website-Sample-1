@@ -1,408 +1,1055 @@
-import { useState, useRef, useCallback, useEffect } from "react";
-import { motion, animate, useMotionValue, useTransform, useSpring, useReducedMotion } from "framer-motion";
-import { PhoneCall, Server, BrainCircuit, Database, CalendarCheck, MessageSquareText } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import * as THREE from "three";
+import "./signal-orb.css";
 
-/* ------------------------------------------------------------------ */
-/* DSX Edge — Signal Core                                               */
-/* A communications-routing emblem, not a galaxy. Three inbound systems */
-/* (Communications, Infrastructure, Intelligence) feed a switching     */
-/* core. Three business actions leave the core and exit right.          */
-/*                                                                      */
-/* Motion is used to explain the system, never to decorate it:          */
-/*   + one coordinated entrance (reduce-aware)                          */
-/*   + packets flowing on each ring (3 motion systems, constant speed)  */
-/*   + path dots on inbound/outbound lanes                              */
-/*   + a slow data-ring rotation inside the core                        */
-/*   + spring-smoothed pointer tilt, capped at 6 degrees                */
-/*   + reduced-motion renders a static, fully readable diagram          */
-/* ------------------------------------------------------------------ */
+type FocusZone = "overview" | "communications" | "core" | "actions";
 
-const VIEWBOX = 600;
-const CX = VIEWBOX / 2;
-const CY = VIEWBOX / 2;
-const CORE_R = 86;
-const MAX_TILT = 6;
-
-interface Layer {
-  key: "communications" | "infrastructure" | "intelligence";
-  label: string;
-  short: string;
-  description: string;
-  color: string;
-  faint: string;
-  angle: number;      // ring rotation, degrees
-  rx: number;         // semi-major
-  ry: number;         // semi-minor
-  nodeRadius: number; // distance of the node chip from center
-  icon: React.ElementType;
+interface Flow {
+  curve: THREE.CatmullRomCurve3;
+  packets: Array<{
+    mesh: THREE.Mesh<THREE.SphereGeometry, THREE.MeshBasicMaterial>;
+    offset: number;
+  }>;
+  lineMaterial: THREE.MeshBasicMaterial;
+  glowMaterial: THREE.MeshBasicMaterial;
+  side: "in" | "out";
+  speed: number;
+  baseLineOpacity: number;
+  baseGlowOpacity: number;
 }
 
-interface Output {
-  key: string;
-  label: string;
-  icon: React.ElementType;
-  x: number;
-  y: number;
-  connectAngle: number; // degrees, exit lane direction
-}
+const ZONE_LABELS: Record<FocusZone, string> = {
+  overview: "Entire platform",
+  communications: "Communications entering DSX Edge",
+  core: "DSX Edge communications platform",
+  actions: "Intelligent business actions",
+};
 
-/* Node chip sits at the tip of each ring's major axis, so the ring
-   visibly "points at" its system. Three asymmetric ellipses, three
-   distinct stations: left, bottom-left, top. */
-const COMMUNICATIONS_ANGLE = -15;
-const INFRASTRUCTURE_ANGLE = 118;
-const INTELLIGENCE_ANGLE = 92;
+const COLORS = {
+  blue: "#5f80b3",
+  blueLight: "#8ca9d0",
+  amber: "#d99658",
+  amberLight: "#efb67d",
+  silver: "#898889",
+  white: "#f4f2ef",
+} as const;
 
-const LAYERS: Layer[] = [
-  {
-    key: "communications",
-    label: "Business Communications",
-    short: "Communications",
-    description: "Calls, routing, messaging, handsets, customer entry.",
-    color: "#5b9dfd",
-    faint: "rgba(91,157,253,0.4)",
-    angle: COMMUNICATIONS_ANGLE,
-    rx: 206,
-    ry: 66,
-    nodeRadius: 212,
-    icon: PhoneCall,
-  },
-  {
-    key: "infrastructure",
-    label: "Hosted Infrastructure",
-    short: "Infrastructure",
-    description: "SIP, hosting, redundancy, uptime, data center.",
-    color: "#8fa5c0",
-    faint: "rgba(143,165,192,0.38)",
-    angle: INFRASTRUCTURE_ANGLE,
-    rx: 156,
-    ry: 76,
-    nodeRadius: 160,
-    icon: Server,
-  },
-  {
-    key: "intelligence",
-    label: "Operational Intelligence",
-    short: "Intelligence",
-    description: "Qualification, decision logic, automation, escalation.",
-    color: "#ff9540",
-    faint: "rgba(255,149,64,0.4)",
-    angle: INTELLIGENCE_ANGLE,
-    rx: 170,
-    ry: 56,
-    nodeRadius: 172,
-    icon: BrainCircuit,
-  },
-];
+function seededRandom(seed: number) {
+  let value = seed >>> 0;
 
-/* Business actions exit on the right edge — "into the business." */
-const OUTPUTS: Output[] = [
-  { key: "crm", label: "CRM updated", icon: Database, x: 538, y: 212, connectAngle: -18 },
-  { key: "booking", label: "Appointment booked", icon: CalendarCheck, x: 545, y: 300, connectAngle: 2 },
-  { key: "followup", label: "Follow-up sent", icon: MessageSquareText, x: 538, y: 388, connectAngle: 22 },
-];
-
-/* ---------- geometry ---------- */
-
-function polar(angleDeg: number, radius: number) {
-  const r = (angleDeg * Math.PI) / 180;
-  return { x: CX + Math.cos(r) * radius, y: CY + Math.sin(r) * radius };
-}
-
-/* Point on a rotated ellipse (SVG, y down). */
-function ellipsePoint(cx: number, cy: number, rx: number, ry: number, rotDeg: number, t: number) {
-  const rot = (rotDeg * Math.PI) / 180;
-  const px = rx * Math.cos(t);
-  const py = ry * Math.sin(t);
-  return {
-    x: cx + px * Math.cos(rot) - py * Math.sin(rot),
-    y: cy + px * Math.sin(rot) + py * Math.cos(rot),
+  return () => {
+    value += 0x6d2b79f5;
+    let result = value;
+    result = Math.imul(result ^ (result >>> 15), result | 1);
+    result ^= result + Math.imul(result ^ (result >>> 7), result | 61);
+    return ((result ^ (result >>> 14)) >>> 0) / 4294967296;
   };
 }
 
-function bezier(p0: { x: number; y: number }, cp: { x: number; y: number }, p1: { x: number; y: number }, t: number) {
-  const u = 1 - t;
-  return {
-    x: u * u * p0.x + 2 * u * t * cp.x + t * t * p1.x,
-    y: u * u * p0.y + 2 * u * t * cp.y + t * t * p1.y,
-  };
-}
+function disposeScene(scene: THREE.Scene) {
+  scene.traverse((object) => {
+    if (object instanceof THREE.Mesh || object instanceof THREE.Points || object instanceof THREE.Line) {
+      object.geometry?.dispose();
 
-/* node -> core (inbound) and core -> output (outbound) lane geometry */
-function laneGeometry(angleDeg: number, inbound: boolean, toX?: number, toY?: number) {
-  const innerR = CORE_R + 14;
-  const start = inbound
-    ? polar(angleDeg, 236)
-    : { x: CX + Math.cos((angleDeg * Math.PI) / 180) * innerR, y: CY + Math.sin((angleDeg * Math.PI) / 180) * innerR };
-  const end = inbound
-    ? polar(angleDeg, innerR)
-    : { x: toX ?? 520, y: toY ?? CY };
-  const rad = (angleDeg * Math.PI) / 180;
-  const bend = inbound ? 46 : -54;
-  const cp = {
-    x: (start.x + end.x) / 2 - Math.sin(rad) * bend,
-    y: (start.y + end.y) / 2 + Math.cos(rad) * bend,
-  };
-  return { start, end, cp, d: `M ${start.x},${start.y} Q ${cp.x},${cp.y} ${end.x},${end.y}` };
-}
+      const materials = Array.isArray(object.material)
+        ? object.material
+        : [object.material];
 
-/* ---------- sub-renderers ---------- */
+      materials.forEach((material) => {
+        const candidate = material as THREE.Material & {
+          map?: THREE.Texture;
+          alphaMap?: THREE.Texture;
+        };
 
-function OrbitRing({ layer, active, reducedMotion }: { layer: Layer; active: boolean; reducedMotion: boolean }) {
-  const progress = useMotionValue(0);
-  const t = useTransform(progress, (v) => v * Math.PI * 2);
-  const p = useTransform(t, (v) => ellipsePoint(CX, CY, layer.rx, layer.ry, layer.angle, v));
-  useEffect(() => {
-    if (reducedMotion) return;
-    const ctrl = animate(progress, 1, { duration: 16, repeat: Infinity, ease: "linear" });
-    return () => ctrl.stop();
-  }, [progress, reducedMotion]);
-  return (
-    <g>
-      <ellipse
-        cx={CX} cy={CY} rx={layer.rx} ry={layer.ry}
-        transform={`rotate(${layer.angle} ${CX} ${CY})`}
-        fill="none"
-        stroke={layer.color}
-        strokeOpacity={active ? 0.55 : 0.26}
-        strokeWidth={active ? 1.6 : 1.1}
-      />
-      {!reducedMotion && (
-        <>
-          <motion.circle r={6.5} fill={layer.color} opacity={active ? 0.16 : 0.09} style={{ cx: p.x, cy: p.y }} />
-          <motion.circle r={2.6} fill={layer.color} style={{ cx: p.x, cy: p.y }} />
-        </>
-      )}
-    </g>
-  );
-}
+        candidate.map?.dispose();
+        candidate.alphaMap?.dispose();
+        material.dispose();
+      });
+    }
 
-function SignalLane({ angle, color, inbound, toX, toY, active, reducedMotion }: {
-  angle: number; color: string; inbound: boolean; toX?: number; toY?: number; active: boolean; reducedMotion: boolean;
-}) {
-  const g = laneGeometry(angle, inbound, toX, toY);
-  const prog = useMotionValue(0);
-  useEffect(() => {
-    if (reducedMotion) return;
-    const ctrl = animate(prog, 1, { duration: 2.4, repeat: Infinity, ease: "linear" });
-    return () => ctrl.stop();
-  }, [prog, reducedMotion]);
-  const pos = useTransform(prog, (v) => bezier(g.start, g.cp, g.end, v));
-  return (
-    <g>
-      <path
-        d={g.d}
-        fill="none"
-        stroke={color}
-        strokeWidth={active ? 1.8 : 1.1}
-        strokeOpacity={active ? 0.6 : 0.28}
-        strokeLinecap="round"
-        strokeDasharray="3 4"
-      />
-      {!reducedMotion && <motion.circle r={3.1} fill={color} style={{ cx: pos.x, cy: pos.y }} />}
-    </g>
-  );
-}
-
-function Core({ reducedMotion }: { reducedMotion: boolean }) {
-  const spin = useMotionValue(0);
-  const rot = useTransform(spin, (v) => v * 360);
-  useEffect(() => {
-    if (reducedMotion) return;
-    const ctrl = animate(spin, 1, { duration: 60, repeat: Infinity, ease: "linear" });
-    return () => ctrl.stop();
-  }, [spin, reducedMotion]);
-  const ticks = Array.from({ length: 12 }, (_, i) => {
-    const a = (i / 12) * Math.PI * 2;
-    const r1 = CORE_R - 24;
-    const r2 = CORE_R - 18;
-    return {
-      x1: CX + Math.cos(a) * r1, y1: CY + Math.sin(a) * r1,
-      x2: CX + Math.cos(a) * r2, y2: CY + Math.sin(a) * r2,
-    };
+    if (object instanceof THREE.Sprite) {
+      object.material.map?.dispose();
+      object.material.dispose();
+    }
   });
-  return (
-    <g>
-      <defs>
-        <radialGradient id="core-grad" cx="50%" cy="42%" r="62%">
-          <stop offset="0%" stopColor="#24324a" />
-          <stop offset="60%" stopColor="#131d30" />
-          <stop offset="100%" stopColor="#0a1120" />
-        </radialGradient>
-      </defs>
-      {/* body */}
-      <circle cx={CX} cy={CY} r={CORE_R} fill="url(#core-grad)" />
-      <circle cx={CX} cy={CY} r={CORE_R} fill="none" stroke="#475569" strokeOpacity={0.55} strokeWidth={1} />
-      {/* breathing ring */}
-      <motion.circle
-        cx={CX} cy={CY} r={CORE_R}
-        fill="none" stroke="#5b9dfd" strokeOpacity={0.32} strokeWidth={1.2}
-        animate={reducedMotion ? undefined : { scale: [1, 1.012, 1], opacity: [0.22, 0.42, 0.22] }}
-        transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-        style={{ transformOrigin: `${CX}px ${CY}px` }}
-      />
-      {/* rotating data ring */}
-      <g style={reducedMotion ? undefined : { transformOrigin: `${CX}px ${CY}px`, rotate: rot }}>
-        <circle cx={CX} cy={CY} r={CORE_R - 21} fill="none" stroke="#475569" strokeOpacity={0.5} strokeWidth={1} strokeDasharray="2 5" />
-        {ticks.map((tk, i) => (
-          <line key={i} x1={tk.x1} y1={tk.y1} x2={tk.x2} y2={tk.y2} stroke="#64748b" strokeOpacity={0.7} strokeWidth={1} />
-        ))}
-      </g>
-      {/* center mark */}
-      <circle cx={CX} cy={CY} r={14} fill="#0d1526" stroke="#60a5fa" strokeOpacity={0.6} strokeWidth={1.4} />
-      <motion.circle
-        cx={CX} cy={CY} r={5.5} fill="#9cc4ff"
-        animate={reducedMotion ? undefined : { opacity: [0.75, 1, 0.75] }}
-        transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut" }}
-      />
-      <circle cx={CX} cy={CY} r={1.8} fill="#ffffff" />
-    </g>
-  );
 }
 
-/* ---------- main ---------- */
+export default function SignalOrb() {
+  const stageRef = useRef<HTMLDivElement>(null);
+  const canvasMountRef = useRef<HTMLDivElement>(null);
+  const focusRef = useRef<FocusZone>("overview");
+  const pausedRef = useRef(false);
+  const pointerTargetRef = useRef({ x: 0, y: 0 });
 
-export function SignalOrb() {
-  const reduceMotion = useReducedMotion() ?? false;
-  const [activeKey, setActiveKey] = useState<Layer["key"]>("communications");
-  const containerRef = useRef<HTMLDivElement>(null);
+  const [focus, setFocus] = useState<FocusZone>("overview");
+  const [paused, setPaused] = useState(false);
+  const [ready, setReady] = useState(false);
 
-  const rawTiltX = useMotionValue(0);
-  const rawTiltY = useMotionValue(0);
-  const tiltX = useSpring(rawTiltX, { stiffness: 140, damping: 18 });
-  const tiltY = useSpring(rawTiltY, { stiffness: 140, damping: 18 });
+  const changeFocus = (zone: FocusZone) => {
+    focusRef.current = zone;
+    setFocus(zone);
+  };
 
-  const handlePointerMove = useCallback((e: React.PointerEvent) => {
-    if (reduceMotion || !containerRef.current) return;
-    const rect = containerRef.current.getBoundingClientRect();
-    const nx = (e.clientX - rect.left) / rect.width - 0.5;
-    const ny = (e.clientY - rect.top) / rect.height - 0.5;
-    rawTiltX.set(-ny * MAX_TILT);
-    rawTiltY.set(nx * MAX_TILT);
-  }, [reduceMotion, rawTiltX, rawTiltY]);
+  const toggleMotion = () => {
+    // This is an explicit user override. The initial media preference may pause
+    // playback, but it must not prevent a later manual resume.
+    const nextPaused = !pausedRef.current;
+    pausedRef.current = nextPaused;
+    setPaused(nextPaused);
+  };
 
-  const resetPointer = useCallback(() => { rawTiltX.set(0); rawTiltY.set(0); }, [rawTiltX, rawTiltY]);
+  const handlePointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
+    const rect = event.currentTarget.getBoundingClientRect();
+    const normalizedX = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+    const normalizedY = -(((event.clientY - rect.top) / rect.height) * 2 - 1);
 
-  const active = LAYERS.find((l) => l.key === activeKey) ?? LAYERS[0];
+    pointerTargetRef.current.y = normalizedX * 0.042;
+    pointerTargetRef.current.x = normalizedY * -0.028;
+  };
+
+  const handlePointerLeave = () => {
+    pointerTargetRef.current = { x: 0, y: 0 };
+    changeFocus("overview");
+  };
+
+  useEffect(() => {
+    const stage = stageRef.current;
+    const canvasMount = canvasMountRef.current;
+
+    if (!stage || !canvasMount) return;
+
+    const reduceMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+
+    pausedRef.current = reduceMotion;
+    setPaused(reduceMotion);
+
+    const blue = new THREE.Color(COLORS.blue);
+    const blueLight = new THREE.Color(COLORS.blueLight);
+    const amber = new THREE.Color(COLORS.amber);
+    const amberLight = new THREE.Color(COLORS.amberLight);
+    const silver = new THREE.Color(COLORS.silver);
+    const white = new THREE.Color(COLORS.white);
+
+    const scene = new THREE.Scene();
+
+    const camera = new THREE.PerspectiveCamera(34, 1, 0.1, 100);
+    camera.position.set(0, 0, 8.9);
+
+    const renderer = new THREE.WebGLRenderer({
+      antialias: true,
+      alpha: true,
+      powerPreference: "high-performance",
+    });
+
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
+    renderer.setClearColor(0x000000, 0);
+    renderer.outputColorSpace = THREE.SRGBColorSpace;
+    canvasMount.appendChild(renderer.domElement);
+
+    const root = new THREE.Group();
+    root.position.set(0, -0.03, 0);
+    root.scale.setScalar(0.96);
+    scene.add(root);
+
+    const coreMaterial = new THREE.ShaderMaterial({
+      uniforms: {
+        uTime: { value: 0 },
+        uHover: { value: 0 },
+        uBlue: { value: blue.clone() },
+        uBlueLight: { value: blueLight.clone() },
+        uAmber: { value: amber.clone() },
+        uAmberLight: { value: amberLight.clone() },
+      },
+      vertexShader: `
+        varying vec3 vNormalView;
+        varying vec3 vWorldPosition;
+        varying vec3 vLocalPosition;
+
+        void main() {
+          vLocalPosition = position;
+          vNormalView = normalize(normalMatrix * normal);
+
+          vec4 worldPosition = modelMatrix * vec4(position, 1.0);
+          vWorldPosition = worldPosition.xyz;
+
+          gl_Position = projectionMatrix * viewMatrix * worldPosition;
+        }
+      `,
+      fragmentShader: `
+        uniform float uTime;
+        uniform float uHover;
+        uniform vec3 uBlue;
+        uniform vec3 uBlueLight;
+        uniform vec3 uAmber;
+        uniform vec3 uAmberLight;
+
+        varying vec3 vNormalView;
+        varying vec3 vWorldPosition;
+        varying vec3 vLocalPosition;
+
+        void main() {
+          vec3 viewDirection = normalize(cameraPosition - vWorldPosition);
+
+          float fresnel = pow(
+            1.0 - max(dot(vNormalView, viewDirection), 0.0),
+            2.75
+          );
+
+          float side = smoothstep(-0.5, 0.52, vLocalPosition.x);
+
+          vec3 warmTone = mix(
+            uAmber,
+            uAmberLight,
+            smoothstep(0.0, 1.2, vLocalPosition.y) * 0.28
+          );
+
+          vec3 edgeColor = mix(uBlue, warmTone, side);
+
+          float upperLight = smoothstep(
+            0.3,
+            1.0,
+            vLocalPosition.y + 0.55
+          );
+
+          edgeColor = mix(
+            edgeColor,
+            uBlueLight,
+            upperLight * (1.0 - side) * 0.24
+          );
+
+          float quietWave = 0.5 + 0.5 * sin(
+            vLocalPosition.y * 6.0 +
+            vLocalPosition.z * 3.0 +
+            uTime * 0.28
+          );
+
+          float fineField = 0.5 + 0.5 * sin(
+            (
+              vLocalPosition.x * 0.8 +
+              vLocalPosition.y +
+              vLocalPosition.z * 0.55
+            ) * 17.0 +
+            uTime * 0.38
+          );
+
+          float fieldLines = smoothstep(0.96, 1.0, fineField);
+
+          vec3 body = vec3(0.006, 0.012, 0.021);
+          vec3 color = body;
+
+          color += edgeColor * fresnel *
+            (0.55 + quietWave * 0.10 + uHover * 0.17);
+
+          color += edgeColor * fieldLines *
+            (0.02 + uHover * 0.015);
+
+          gl_FragColor = vec4(color, 0.99);
+        }
+      `,
+      transparent: true,
+      depthWrite: true,
+    });
+
+    const core = new THREE.Mesh(
+      new THREE.IcosahedronGeometry(1.38, 7),
+      coreMaterial,
+    );
+    root.add(core);
+
+    const wireMaterial = new THREE.MeshBasicMaterial({
+      color: silver,
+      wireframe: true,
+      transparent: true,
+      opacity: 0.05,
+      depthWrite: false,
+    });
+
+    const wire = new THREE.Mesh(
+      new THREE.IcosahedronGeometry(1.405, 4),
+      wireMaterial,
+    );
+    root.add(wire);
+
+    const makeHaloTexture = () => {
+      const canvas = document.createElement("canvas");
+      canvas.width = 256;
+      canvas.height = 256;
+
+      const context = canvas.getContext("2d");
+      if (!context) {
+        throw new Error("Unable to create the DSX Edge halo texture.");
+      }
+
+      const gradient = context.createRadialGradient(
+        128,
+        128,
+        0,
+        128,
+        128,
+        128,
+      );
+
+      gradient.addColorStop(0, "rgba(95, 128, 179, 0.19)");
+      gradient.addColorStop(0.45, "rgba(95, 128, 179, 0.065)");
+      gradient.addColorStop(0.72, "rgba(217, 150, 88, 0.022)");
+      gradient.addColorStop(1, "rgba(0, 0, 0, 0)");
+
+      context.fillStyle = gradient;
+      context.fillRect(0, 0, 256, 256);
+
+      const texture = new THREE.CanvasTexture(canvas);
+      texture.colorSpace = THREE.SRGBColorSpace;
+      return texture;
+    };
+
+    const haloMaterial = new THREE.SpriteMaterial({
+      map: makeHaloTexture(),
+      transparent: true,
+      opacity: 0.68,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false,
+    });
+
+    const halo = new THREE.Sprite(haloMaterial);
+    halo.scale.set(4.65, 4.65, 1);
+    halo.position.z = -0.32;
+    root.add(halo);
+
+    const random = seededRandom(731);
+    // Always construct the complete scene. Reduced-motion controls playback,
+    // so pressing Resume can animate everything without rebuilding WebGL objects.
+    const particleCount = 118;
+    const particlePositions = new Float32Array(particleCount * 3);
+
+    for (let index = 0; index < particleCount; index += 1) {
+      const radius = Math.cbrt(random()) * 1.16;
+      const theta = random() * Math.PI * 2;
+      const phi = Math.acos(2 * random() - 1);
+
+      particlePositions[index * 3] =
+        radius * Math.sin(phi) * Math.cos(theta);
+
+      particlePositions[index * 3 + 1] =
+        radius * Math.sin(phi) * Math.sin(theta);
+
+      particlePositions[index * 3 + 2] =
+        radius * Math.cos(phi);
+    }
+
+    const particleGeometry = new THREE.BufferGeometry();
+    particleGeometry.setAttribute(
+      "position",
+      new THREE.BufferAttribute(particlePositions, 3),
+    );
+
+    const particleMaterial = new THREE.PointsMaterial({
+      color: white,
+      size: 0.016,
+      transparent: true,
+      opacity: 0.29,
+      depthWrite: false,
+      blending: THREE.AdditiveBlending,
+    });
+
+    const innerParticles = new THREE.Points(
+      particleGeometry,
+      particleMaterial,
+    );
+    root.add(innerParticles);
+
+    const createEllipse = (
+      radiusX: number,
+      radiusY: number,
+      rotationX: number,
+      rotationY: number,
+      color: THREE.Color,
+      opacity: number,
+    ) => {
+      const points: THREE.Vector3[] = [];
+
+      for (let index = 0; index <= 150; index += 1) {
+        const angle = (index / 150) * Math.PI * 2;
+
+        points.push(
+          new THREE.Vector3(
+            Math.cos(angle) * radiusX,
+            Math.sin(angle) * radiusY,
+            0,
+          ),
+        );
+      }
+
+      const material = new THREE.LineBasicMaterial({
+        color,
+        transparent: true,
+        opacity,
+        depthWrite: false,
+      });
+
+      const line = new THREE.LineLoop(
+        new THREE.BufferGeometry().setFromPoints(points),
+        material,
+      );
+
+      line.rotation.x = rotationX;
+      line.rotation.y = rotationY;
+      root.add(line);
+
+      return { line, material, baseOpacity: opacity };
+    };
+
+    const orbitA = createEllipse(
+      2.38,
+      0.75,
+      -0.22,
+      0.18,
+      blue,
+      0.21,
+    );
+
+    const orbitB = createEllipse(
+      2.16,
+      0.92,
+      0.65,
+      -0.25,
+      amber,
+      0.12,
+    );
+
+    const orbitC = createEllipse(
+      2.45,
+      0.64,
+      -0.88,
+      0.15,
+      silver,
+      0.1,
+    );
+
+    const foundation = new THREE.Group();
+    foundation.position.set(0, -1.88, -0.2);
+    root.add(foundation);
+
+    [
+      { y: 0.36, rx: 1.55, ry: 0.3, opacity: 0.23 },
+      { y: 0.02, rx: 1.42, ry: 0.28, opacity: 0.17 },
+      { y: -0.3, rx: 1.28, ry: 0.25, opacity: 0.12 },
+    ].forEach((layer, layerIndex) => {
+      const points: THREE.Vector3[] = [];
+
+      for (let pointIndex = 0; pointIndex <= 110; pointIndex += 1) {
+        const angle = (pointIndex / 110) * Math.PI * 2;
+
+        points.push(
+          new THREE.Vector3(
+            Math.cos(angle) * layer.rx,
+            Math.sin(angle) * layer.ry + layer.y,
+            0,
+          ),
+        );
+      }
+
+      const material = new THREE.LineBasicMaterial({
+        color: layerIndex === 0 ? blue : silver,
+        transparent: true,
+        opacity: layer.opacity,
+        depthWrite: false,
+      });
+
+      foundation.add(
+        new THREE.LineLoop(
+          new THREE.BufferGeometry().setFromPoints(points),
+          material,
+        ),
+      );
+    });
+
+    const flows: Flow[] = [];
+
+    const createFlow = ({
+      start,
+      end,
+      color,
+      side,
+      bendY,
+      bendZ,
+      speed,
+      packetCount,
+    }: {
+      start: [number, number, number];
+      end: [number, number, number];
+      color: THREE.Color;
+      side: "in" | "out";
+      bendY: number;
+      bendZ: number;
+      speed: number;
+      packetCount: number;
+    }) => {
+      const startPoint = new THREE.Vector3(...start);
+      const endPoint = new THREE.Vector3(...end);
+
+      const controlA = startPoint.clone().lerp(endPoint, 0.34);
+      const controlB = startPoint.clone().lerp(endPoint, 0.7);
+
+      controlA.y += bendY;
+      controlA.z += bendZ;
+
+      controlB.y -= bendY * 0.34;
+      controlB.z -= bendZ * 0.35;
+
+      const curve = new THREE.CatmullRomCurve3([
+        startPoint,
+        controlA,
+        controlB,
+        endPoint,
+      ]);
+
+      const lineMaterial = new THREE.MeshBasicMaterial({
+        color,
+        transparent: true,
+        opacity: 0.34,
+        depthWrite: false,
+        blending: THREE.AdditiveBlending,
+      });
+
+      const glowMaterial = new THREE.MeshBasicMaterial({
+        color,
+        transparent: true,
+        opacity: 0.022,
+        depthWrite: false,
+        blending: THREE.AdditiveBlending,
+      });
+
+      root.add(
+        new THREE.Mesh(
+          new THREE.TubeGeometry(curve, 68, 0.008, 6, false),
+          lineMaterial,
+        ),
+      );
+
+      root.add(
+        new THREE.Mesh(
+          new THREE.TubeGeometry(curve, 68, 0.025, 6, false),
+          glowMaterial,
+        ),
+      );
+
+      const packets = Array.from(
+        { length: packetCount },
+        (_, index) => {
+          const packetMaterial = new THREE.MeshBasicMaterial({
+            color,
+            transparent: true,
+            opacity: 0.9,
+            depthWrite: false,
+            blending: THREE.AdditiveBlending,
+          });
+
+          const packet = new THREE.Mesh(
+            new THREE.SphereGeometry(0.031, 9, 9),
+            packetMaterial,
+          );
+
+          root.add(packet);
+
+          return {
+            mesh: packet,
+            offset: index / packetCount,
+          };
+        },
+      );
+
+      flows.push({
+        curve,
+        packets,
+        lineMaterial,
+        glowMaterial,
+        side,
+        speed,
+        baseLineOpacity: 0.34,
+        baseGlowOpacity: 0.022,
+      });
+    };
+
+    createFlow({
+      start: [-4.1, 1.05, 0.18],
+      end: [-1.03, 0.62, 0.02],
+      color: blue,
+      side: "in",
+      bendY: 0.4,
+      bendZ: 0.16,
+      speed: 0.085,
+      packetCount: 3,
+    });
+
+    createFlow({
+      start: [-4.1, 0.35, -0.05],
+      end: [-1.16, 0.18, 0.06],
+      color: blueLight,
+      side: "in",
+      bendY: 0.17,
+      bendZ: -0.1,
+      speed: 0.105,
+      packetCount: 4,
+    });
+
+    createFlow({
+      start: [-4.1, -0.35, 0.08],
+      end: [-1.15, -0.2, -0.02],
+      color: blue,
+      side: "in",
+      bendY: -0.11,
+      bendZ: 0.16,
+      speed: 0.092,
+      packetCount: 4,
+    });
+
+    createFlow({
+      start: [-4.1, -1.02, -0.1],
+      end: [-1.0, -0.58, 0.04],
+      color: blue,
+      side: "in",
+      bendY: -0.36,
+      bendZ: -0.14,
+      speed: 0.073,
+      packetCount: 3,
+    });
+
+    createFlow({
+      start: [1.03, 0.62, 0.02],
+      end: [4.1, 1.05, 0.18],
+      color: amberLight,
+      side: "out",
+      bendY: 0.4,
+      bendZ: 0.16,
+      speed: 0.098,
+      packetCount: 3,
+    });
+
+    createFlow({
+      start: [1.16, 0.18, 0.06],
+      end: [4.1, 0.35, -0.05],
+      color: amber,
+      side: "out",
+      bendY: 0.17,
+      bendZ: -0.1,
+      speed: 0.112,
+      packetCount: 4,
+    });
+
+    createFlow({
+      start: [1.15, -0.2, -0.02],
+      end: [4.1, -0.35, 0.08],
+      color: amber,
+      side: "out",
+      bendY: -0.11,
+      bendZ: 0.16,
+      speed: 0.091,
+      packetCount: 4,
+    });
+
+    createFlow({
+      start: [1.0, -0.58, 0.04],
+      end: [4.1, -1.02, -0.1],
+      color: amberLight,
+      side: "out",
+      bendY: -0.36,
+      bendZ: -0.14,
+      speed: 0.074,
+      packetCount: 3,
+    });
+
+    let elapsed = 0;
+    let animationFrame = 0;
+
+    const clock = new THREE.Clock();
+    const targetScale = new THREE.Vector3(1, 1, 1);
+
+    const resize = () => {
+      const width = stage.clientWidth;
+      const height = stage.clientHeight;
+
+      camera.aspect = width / height;
+      camera.updateProjectionMatrix();
+      renderer.setSize(width, height, false);
+    };
+
+    const resizeObserver = new ResizeObserver(resize);
+    resizeObserver.observe(stage);
+    resize();
+
+    const frame = () => {
+      animationFrame = window.requestAnimationFrame(frame);
+
+      const delta = Math.min(clock.getDelta(), 0.05);
+      const activeZone = focusRef.current;
+
+      if (!pausedRef.current) {
+        elapsed += delta;
+
+        coreMaterial.uniforms.uTime.value = elapsed;
+        innerParticles.rotation.y = elapsed * 0.032;
+        innerParticles.rotation.x =
+          Math.sin(elapsed * 0.11) * 0.04;
+
+        // Slow, but visibly alive. Previous values took several minutes per orbit
+        // and appeared static when signal packets were unavailable.
+        orbitA.line.rotation.z = elapsed * 0.042;
+        orbitB.line.rotation.z = -elapsed * 0.031;
+        orbitC.line.rotation.z = elapsed * 0.022;
+
+        wire.rotation.y = elapsed * 0.028;
+
+        flows.forEach((flow) => {
+          flow.packets.forEach((packet) => {
+            const progress =
+              (elapsed * flow.speed + packet.offset) % 1;
+
+            const point = flow.curve.getPointAt(progress);
+            const envelope = Math.sin(progress * Math.PI);
+
+            packet.mesh.position.copy(point);
+            packet.mesh.scale.setScalar(0.7 + envelope * 0.38);
+            packet.mesh.material.opacity =
+              0.42 + envelope * 0.46;
+          });
+        });
+      }
+
+      const coreHoverTarget = activeZone === "core" ? 1 : 0;
+
+      coreMaterial.uniforms.uHover.value +=
+        (coreHoverTarget -
+          coreMaterial.uniforms.uHover.value) *
+        0.08;
+
+      const coreScale = activeZone === "core" ? 1.035 : 1;
+      targetScale.setScalar(coreScale);
+
+      core.scale.lerp(targetScale, 0.08);
+      wire.scale.copy(core.scale);
+
+      const haloOpacityTarget =
+        activeZone === "core" ? 0.86 : 0.68;
+
+      haloMaterial.opacity +=
+        (haloOpacityTarget - haloMaterial.opacity) * 0.08;
+
+      root.rotation.x +=
+        (pointerTargetRef.current.x - root.rotation.x) *
+        Math.min(delta * 2.6, 1);
+
+      root.rotation.y +=
+        (pointerTargetRef.current.y - root.rotation.y) *
+        Math.min(delta * 2.6, 1);
+
+      flows.forEach((flow) => {
+        const emphasized =
+          (activeZone === "communications" &&
+            flow.side === "in") ||
+          (activeZone === "actions" &&
+            flow.side === "out");
+
+        const dimmed =
+          (activeZone === "communications" &&
+            flow.side === "out") ||
+          (activeZone === "actions" &&
+            flow.side === "in");
+
+        const targetLineOpacity = emphasized
+          ? 0.58
+          : dimmed
+            ? 0.07
+            : flow.baseLineOpacity;
+
+        const targetGlowOpacity = emphasized
+          ? 0.052
+          : dimmed
+            ? 0.004
+            : flow.baseGlowOpacity;
+
+        flow.lineMaterial.opacity +=
+          (targetLineOpacity -
+            flow.lineMaterial.opacity) *
+          0.08;
+
+        flow.glowMaterial.opacity +=
+          (targetGlowOpacity -
+            flow.glowMaterial.opacity) *
+          0.08;
+
+        flow.packets.forEach((packet) => {
+          packet.mesh.visible = !dimmed;
+        });
+      });
+
+      orbitA.material.opacity +=
+        (
+          orbitA.baseOpacity +
+          (activeZone === "communications" ? 0.12 : 0) -
+          orbitA.material.opacity
+        ) * 0.08;
+
+      orbitB.material.opacity +=
+        (
+          orbitB.baseOpacity +
+          (activeZone === "actions" ? 0.1 : 0) -
+          orbitB.material.opacity
+        ) * 0.08;
+
+      renderer.render(scene, camera);
+    };
+
+    setReady(true);
+    frame();
+
+    return () => {
+      window.cancelAnimationFrame(animationFrame);
+      resizeObserver.disconnect();
+      disposeScene(scene);
+      renderer.dispose();
+
+      if (renderer.domElement.parentElement === canvasMount) {
+        canvasMount.removeChild(renderer.domElement);
+      }
+    };
+  }, []);
 
   return (
     <section
-      ref={containerRef}
-      className="relative mx-auto aspect-square w-full max-w-[600px] select-none"
-      aria-label="DSX Edge operating core"
-      onPointerMove={handlePointerMove}
-      onPointerLeave={resetPointer}
+      className="dsx-orb"
+      data-ready={ready}
+      data-zone={focus}
+      aria-labelledby="dsx-orb-title"
     >
-      {/* emblem */}
-      <motion.svg
-        viewBox={`0 0 ${VIEWBOX} ${VIEWBOX}`}
-        className="absolute inset-0 h-full w-full overflow-visible"
-        style={{ rotateX: tiltX, rotateY: tiltY, transformStyle: "preserve-3d" }}
-        role="img"
-        aria-labelledby="orb-title orb-desc"
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+      <div className="dsx-orb__toolbar">
+        <div className="dsx-orb__state" aria-live="polite">
+          Focus: <strong>{ZONE_LABELS[focus]}</strong>
+        </div>
+
+        <button
+          type="button"
+          className="dsx-orb__motion-button"
+          aria-pressed={paused}
+          onClick={toggleMotion}
+        >
+          {paused ? "Resume motion" : "Pause motion"}
+        </button>
+      </div>
+
+      <div
+        ref={stageRef}
+        className="dsx-orb__stage"
+        onPointerMove={handlePointerMove}
+        onPointerLeave={handlePointerLeave}
       >
-        <title id="orb-title">DSX Edge operating core</title>
-        <desc id="orb-desc">Communications, infrastructure, and intelligence feed the DSX Edge core. Business actions — CRM updates, bookings, follow-ups — leave the core and move into the operation.</desc>
+        <div
+          ref={canvasMountRef}
+          className="dsx-orb__canvas"
+          aria-hidden="true"
+        />
 
-        {LAYERS.map((layer, i) => (
-          <motion.g
-            key={layer.key}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.15 + i * 0.1 }}
+        <svg
+          className="dsx-orb__fallback"
+          viewBox="0 0 1000 620"
+          role="img"
+          aria-labelledby="dsx-orb-title dsx-orb-description"
+        >
+          <title id="dsx-orb-title">
+            DSX Edge communications platform
+          </title>
+
+          <desc id="dsx-orb-description">
+            Communications enter DSX Edge and become intelligent
+            business actions through a 3CX-based PBX, SIP, and hosted
+            infrastructure platform.
+          </desc>
+
+          <defs>
+            <radialGradient
+              id="dsx-static-core"
+              cx="40%"
+              cy="34%"
+              r="72%"
+            >
+              <stop
+                offset="0"
+                stopColor={COLORS.blueLight}
+                stopOpacity="0.28"
+              />
+              <stop
+                offset="0.58"
+                stopColor="#10151d"
+                stopOpacity="0.98"
+              />
+              <stop offset="1" stopColor="#090a0c" />
+            </radialGradient>
+
+            <linearGradient
+              id="dsx-static-rim"
+              x1="0"
+              y1="0"
+              x2="1"
+              y2="0"
+            >
+              <stop offset="0" stopColor={COLORS.blue} />
+              <stop offset="0.54" stopColor={COLORS.blueLight} />
+              <stop offset="1" stopColor={COLORS.amber} />
+            </linearGradient>
+          </defs>
+
+          <g
+            fill="none"
+            strokeLinecap="round"
           >
-            <OrbitRing layer={layer} active={layer.key === activeKey} reducedMotion={reduceMotion} />
-          </motion.g>
-        ))}
+            <path
+              d="M90 235 C245 235 330 265 420 298"
+              stroke={COLORS.blue}
+              strokeOpacity="0.48"
+            />
+            <path
+              d="M70 310 C240 310 330 310 420 310"
+              stroke={COLORS.blueLight}
+              strokeOpacity="0.64"
+            />
+            <path
+              d="M90 385 C245 385 330 350 420 322"
+              stroke={COLORS.blue}
+              strokeOpacity="0.42"
+            />
 
-        {LAYERS.map((layer, i) => (
-          <motion.g key={`in-${layer.key}`} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.4, delay: 0.4 + i * 0.08 }}>
-            <SignalLane angle={layer.angle} color={layer.color} inbound active={layer.key === activeKey} reducedMotion={reduceMotion} />
-          </motion.g>
-        ))}
+            <path
+              d="M580 298 C670 265 755 235 910 235"
+              stroke={COLORS.amberLight}
+              strokeOpacity="0.45"
+            />
+            <path
+              d="M580 310 C670 310 760 310 930 310"
+              stroke={COLORS.amber}
+              strokeOpacity="0.58"
+            />
+            <path
+              d="M580 322 C670 350 755 385 910 385"
+              stroke={COLORS.amberLight}
+              strokeOpacity="0.4"
+            />
 
-        {OUTPUTS.map((out, i) => (
-          <motion.g key={`out-${out.key}`} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.4, delay: 0.55 + i * 0.08 }}>
-            <SignalLane angle={out.connectAngle} color="#fbbf24" inbound={false} toX={out.x} toY={out.y} active={activeKey === "intelligence"} reducedMotion={reduceMotion} />
-          </motion.g>
-        ))}
+            <ellipse
+              cx="500"
+              cy="310"
+              rx="215"
+              ry="80"
+              stroke={COLORS.blue}
+              strokeOpacity="0.18"
+            />
 
-        <motion.g initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.6, delay: 0.5 }}>
-          <Core reducedMotion={reduceMotion} />
-        </motion.g>
-      </motion.svg>
+            <ellipse
+              cx="500"
+              cy="310"
+              rx="202"
+              ry="112"
+              stroke={COLORS.amber}
+              strokeOpacity="0.12"
+              transform="rotate(36 500 310)"
+            />
+          </g>
 
-      {/* core label (HTML for crisp typography) */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-        <div className="text-center">
-          <p className="font-mono text-[13px] font-semibold tracking-[0.3em] text-foreground">DSX&nbsp;EDGE</p>
-          <p className="mt-1 font-mono text-[9px] uppercase tracking-[0.26em] text-muted-foreground/70">signal core</p>
+          <circle
+            cx="500"
+            cy="310"
+            r="112"
+            fill="url(#dsx-static-core)"
+            stroke="url(#dsx-static-rim)"
+            strokeWidth="2"
+          />
+
+          <circle
+            cx="500"
+            cy="310"
+            r="4"
+            fill={COLORS.white}
+          />
+        </svg>
+
+        <div className="dsx-orb__label dsx-orb__label--incoming">
+          <div className="dsx-orb__kicker">
+            Communications enter
+          </div>
+          <div className="dsx-orb__label-title">
+            The starting point
+          </div>
+          <div className="dsx-orb__label-copy">
+            Calls, messages, routing events, web chat, and customer
+            inquiries.
+          </div>
+        </div>
+
+        <div className="dsx-orb__label dsx-orb__label--outgoing">
+          <div className="dsx-orb__kicker">
+            Intelligent actions leave
+          </div>
+          <div className="dsx-orb__label-title">
+            The business responds
+          </div>
+          <div className="dsx-orb__label-copy">
+            CRM updates, scheduling, routing, follow-up, and reporting.
+          </div>
+        </div>
+
+        <div className="dsx-orb__label dsx-orb__core-label">
+          <strong>DSX EDGE</strong>
+          <span>Communications platform</span>
+        </div>
+
+        <div className="dsx-orb__label dsx-orb__foundation-label">
+          <div className="dsx-orb__kicker">Built on</div>
+          <div className="dsx-orb__label-title">
+            3CX · PBX · SIP · Hosted Infrastructure
+          </div>
+        </div>
+
+        <button
+          type="button"
+          className="dsx-orb__hit-zone dsx-orb__hit-zone--left"
+          aria-label="Focus incoming communications"
+          aria-pressed={focus === "communications"}
+          onPointerEnter={() => changeFocus("communications")}
+          onFocus={() => changeFocus("communications")}
+          onClick={() => changeFocus("communications")}
+        />
+
+        <button
+          type="button"
+          className="dsx-orb__hit-zone dsx-orb__hit-zone--core"
+          aria-label="Focus the DSX Edge communications platform"
+          aria-pressed={focus === "core"}
+          onPointerEnter={() => changeFocus("core")}
+          onFocus={() => changeFocus("core")}
+          onClick={() => changeFocus("core")}
+        />
+
+        <button
+          type="button"
+          className="dsx-orb__hit-zone dsx-orb__hit-zone--right"
+          aria-label="Focus intelligent business actions"
+          aria-pressed={focus === "actions"}
+          onPointerEnter={() => changeFocus("actions")}
+          onFocus={() => changeFocus("actions")}
+          onClick={() => changeFocus("actions")}
+        />
+
+        <div className="dsx-orb__mobile-summary" aria-hidden="true">
+          <span>Communications</span>
+          <span>→</span>
+          <span>Business action</span>
         </div>
       </div>
 
-      {/* system station chips */}
-      {LAYERS.map((layer) => {
-        const pos = polar(layer.angle, layer.nodeRadius);
-        const Icon = layer.icon;
-        const isActive = layer.key === activeKey;
-        return (
-          <button
-            key={layer.key}
-            onClick={() => setActiveKey(layer.key)}
-            className="group absolute -translate-x-1/2 -translate-y-1/2 rounded-md border transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
-            style={{
-              left: `${(pos.x / VIEWBOX) * 100}%`,
-              top: `${(pos.y / VIEWBOX) * 100}%`,
-              borderColor: isActive ? layer.color : "var(--border)",
-              backgroundColor: isActive ? "var(--card)" : "transparent",
-              boxShadow: isActive ? `0 0 22px ${layer.faint}` : "none",
-            }}
-            aria-pressed={isActive}
-            aria-label={layer.label}
-            title={layer.label}
-          >
-            <span className="flex h-12 w-12 items-center justify-center">
-              <Icon
-                className="h-[20px] w-[20px] transition-colors"
-                style={{ color: isActive ? layer.color : "var(--muted-foreground)" }}
-                strokeWidth={1.7}
-              />
-            </span>
-          </button>
-        );
-      })}
-
-      {/* business output ticks */}
-      {OUTPUTS.map((out) => {
-        const Icon = out.icon;
-        return (
-          <div
-            key={out.key}
-            className="pointer-events-none absolute -translate-y-1/2"
-            style={{ left: `${(out.x / VIEWBOX) * 100}%`, top: `${(out.y / VIEWBOX) * 100}%` }}
-          >
-            <div className="flex items-center gap-1.5 rounded-sm border border-dashed border-amber-500/30 bg-background/60 px-1.5 py-1">
-              <Icon className="h-3 w-3 text-amber-500/80" strokeWidth={2} />
-              <span className="whitespace-nowrap font-mono text-[9px] uppercase tracking-[0.14em] text-muted-foreground">
-                {out.label}
-              </span>
-            </div>
-          </div>
-        );
-      })}
-
-      {/* active layer caption */}
-      <div className="pointer-events-none absolute inset-x-0 bottom-[2%] text-center" aria-live="polite">
-        <p className="font-mono text-[10px] font-medium uppercase tracking-[0.22em]" style={{ color: active.color }}>
-          {active.short}
-        </p>
-        <p className="mx-auto mt-1 max-w-[280px] text-xs leading-relaxed text-muted-foreground">
-          {active.description}
-        </p>
-      </div>
+      <p className="dsx-orb__tagline">
+        <span>Above the Cloud.</span>
+        <span>Into the Business.</span>
+      </p>
     </section>
   );
 }

@@ -1,5 +1,5 @@
 import { PhoneCall, GitBranch, BrainCircuit, Server, Database, CalendarCheck, MessageSquareText, ArrowUpRight, ChevronRight } from "lucide-react";
-import { SignalOrb } from "../components/signal-orb";
+import SignalOrb from "../components/signal-orb";
 
 const proofStats = [
   { metric: "99.97%", label: "Uptime" },
