@@ -1,37 +1,46 @@
-import { useEffect, useRef, useState } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  type PointerEvent as ReactPointerEvent,
+} from "react";
 import * as THREE from "three";
 import "./signal-orb.css";
 
-type FocusZone = "overview" | "communications" | "core" | "actions";
+type FocusZone =
+  | "overview"
+  | "communications"
+  | "core"
+  | "actions";
 
 interface Flow {
   curve: THREE.CatmullRomCurve3;
   packets: Array<{
-    mesh: THREE.Mesh<THREE.SphereGeometry, THREE.MeshBasicMaterial>;
+    mesh: THREE.Mesh<
+      THREE.SphereGeometry,
+      THREE.MeshBasicMaterial
+    >;
     offset: number;
   }>;
-  lineMaterial: THREE.MeshBasicMaterial;
-  glowMaterial: THREE.MeshBasicMaterial;
   side: "in" | "out";
   speed: number;
+  lineMaterial: THREE.ShaderMaterial;
+  glowMaterial: THREE.ShaderMaterial;
   baseLineOpacity: number;
   baseGlowOpacity: number;
 }
 
-const ZONE_LABELS: Record<FocusZone, string> = {
-  overview: "Entire platform",
-  communications: "Communications entering DSX Edge",
-  core: "DSX Edge communications platform",
-  actions: "Intelligent business actions",
-};
+interface SignalOrbProps {
+  className?: string;
+}
 
 const COLORS = {
-  blue: "#5f80b3",
-  blueLight: "#8ca9d0",
-  amber: "#d99658",
-  amberLight: "#efb67d",
-  silver: "#898889",
-  white: "#f4f2ef",
+  blue: "#4674aa",
+  blueLight: "#8fc0e3",
+  amber: "#dc7f43",
+  amberLight: "#f0b173",
+  silver: "#9aa7b4",
+  white: "#f7fbff",
 } as const;
 
 function seededRandom(seed: number) {
@@ -46,9 +55,90 @@ function seededRandom(seed: number) {
   };
 }
 
+function createRadialTexture(
+  stops: Array<[number, string]>,
+  size = 256,
+) {
+  const canvas = document.createElement("canvas");
+  canvas.width = size;
+  canvas.height = size;
+
+  const context = canvas.getContext("2d");
+  if (!context) {
+    throw new Error("Unable to create DSX Edge canvas texture.");
+  }
+
+  const center = size / 2;
+  const gradient = context.createRadialGradient(
+    center,
+    center,
+    0,
+    center,
+    center,
+    center,
+  );
+
+  stops.forEach(([position, color]) => {
+    gradient.addColorStop(position, color);
+  });
+
+  context.fillStyle = gradient;
+  context.fillRect(0, 0, size, size);
+
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.colorSpace = THREE.SRGBColorSpace;
+  return texture;
+}
+
+function createWordmarkTexture() {
+  const canvas = document.createElement("canvas");
+  canvas.width = 768;
+  canvas.height = 384;
+
+  const context = canvas.getContext("2d");
+  if (!context) {
+    throw new Error("Unable to create DSX Edge wordmark texture.");
+  }
+
+  context.clearRect(0, 0, canvas.width, canvas.height);
+  context.textAlign = "center";
+  context.textBaseline = "middle";
+
+  context.shadowColor = "rgba(7, 29, 54, 0.9)";
+  context.shadowBlur = 28;
+
+  context.fillStyle = "#f8fbff";
+  context.font =
+    '700 116px Inter, Arial, Helvetica, sans-serif';
+  context.fillText("DSX", canvas.width / 2, 120);
+  context.fillText("EDGE", canvas.width / 2, 230);
+
+  context.shadowBlur = 10;
+  context.fillStyle = "#b9d6ec";
+  context.font =
+    '600 26px Inter, Arial, Helvetica, sans-serif';
+  context.fillText(
+    "COMMUNICATIONS PLATFORM",
+    canvas.width / 2,
+    321,
+  );
+
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.colorSpace = THREE.SRGBColorSpace;
+  texture.minFilter = THREE.LinearFilter;
+  texture.magFilter = THREE.LinearFilter;
+  return texture;
+}
+
 function disposeScene(scene: THREE.Scene) {
+  const disposedTextures = new Set<THREE.Texture>();
+
   scene.traverse((object) => {
-    if (object instanceof THREE.Mesh || object instanceof THREE.Points || object instanceof THREE.Line) {
+    if (
+      object instanceof THREE.Mesh ||
+      object instanceof THREE.Points ||
+      object instanceof THREE.Line
+    ) {
       object.geometry?.dispose();
 
       const materials = Array.isArray(object.material)
@@ -61,55 +151,121 @@ function disposeScene(scene: THREE.Scene) {
           alphaMap?: THREE.Texture;
         };
 
-        candidate.map?.dispose();
-        candidate.alphaMap?.dispose();
+        if (candidate.map && !disposedTextures.has(candidate.map)) {
+          candidate.map.dispose();
+          disposedTextures.add(candidate.map);
+        }
+
+        if (
+          candidate.alphaMap &&
+          !disposedTextures.has(candidate.alphaMap)
+        ) {
+          candidate.alphaMap.dispose();
+          disposedTextures.add(candidate.alphaMap);
+        }
+
         material.dispose();
       });
     }
 
     if (object instanceof THREE.Sprite) {
-      object.material.map?.dispose();
+      if (
+        object.material.map &&
+        !disposedTextures.has(object.material.map)
+      ) {
+        object.material.map.dispose();
+        disposedTextures.add(object.material.map);
+      }
+
       object.material.dispose();
     }
   });
 }
 
-export default function SignalOrb() {
+export default function SignalOrb({
+  className = "",
+}: SignalOrbProps) {
   const stageRef = useRef<HTMLDivElement>(null);
-  const canvasMountRef = useRef<HTMLDivElement>(null);
-  const focusRef = useRef<FocusZone>("overview");
+  const mountRef = useRef<HTMLDivElement>(null);
+  const pointerRef = useRef({ x: 0, y: 0 });
   const pausedRef = useRef(false);
-  const pointerTargetRef = useRef({ x: 0, y: 0 });
+  const visibleRef = useRef(true);
+  const focusRef =
+    useRef<FocusZone>("overview");
 
-  const [focus, setFocus] = useState<FocusZone>("overview");
+  const [paused, setPaused] = useState(false);
   const [ready, setReady] = useState(false);
+  const [focus, setFocus] =
+    useState<FocusZone>("overview");
 
   const changeFocus = (zone: FocusZone) => {
     focusRef.current = zone;
     setFocus(zone);
   };
 
-
-  const handlePointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
+  const handlePointerMove = (
+    event: ReactPointerEvent<HTMLDivElement>,
+  ) => {
     const rect = event.currentTarget.getBoundingClientRect();
-    const normalizedX = ((event.clientX - rect.left) / rect.width) * 2 - 1;
-    const normalizedY = -(((event.clientY - rect.top) / rect.height) * 2 - 1);
 
-    pointerTargetRef.current.y = normalizedX * 0.042;
-    pointerTargetRef.current.x = normalizedY * -0.028;
+    const normalizedX =
+      ((event.clientX - rect.left) / rect.width) * 2 - 1;
+
+    const normalizedY =
+      -(((event.clientY - rect.top) / rect.height) * 2 - 1);
+
+    pointerRef.current = {
+      x: normalizedY * -0.018,
+      y: normalizedX * 0.028,
+    };
   };
 
   const handlePointerLeave = () => {
-    pointerTargetRef.current = { x: 0, y: 0 };
+    pointerRef.current = { x: 0, y: 0 };
     changeFocus("overview");
+  };
+
+  const toggleMotion = () => {
+    const nextPaused = !pausedRef.current;
+    pausedRef.current = nextPaused;
+    setPaused(nextPaused);
   };
 
   useEffect(() => {
     const stage = stageRef.current;
-    const canvasMount = canvasMountRef.current;
+    const mount = mountRef.current;
 
-    if (!stage || !canvasMount) return;
+    if (!stage || !mount) return;
 
+    const reducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+
+    pausedRef.current = reducedMotion;
+    setPaused(reducedMotion);
+
+    const scene = new THREE.Scene();
+
+    const camera = new THREE.PerspectiveCamera(
+      32,
+      1,
+      0.1,
+      100,
+    );
+    camera.position.set(0, 0, 8.6);
+
+    const renderer = new THREE.WebGLRenderer({
+      antialias: true,
+      alpha: true,
+      powerPreference: "high-performance",
+    });
+
+    renderer.setPixelRatio(
+      Math.min(window.devicePixelRatio || 1, 1.5),
+    );
+    renderer.setClearColor(0x000000, 0);
+    renderer.outputColorSpace = THREE.SRGBColorSpace;
+    mount.appendChild(renderer.domElement);
 
     const blue = new THREE.Color(COLORS.blue);
     const blueLight = new THREE.Color(COLORS.blueLight);
@@ -118,113 +274,184 @@ export default function SignalOrb() {
     const silver = new THREE.Color(COLORS.silver);
     const white = new THREE.Color(COLORS.white);
 
-    const scene = new THREE.Scene();
-
-    const camera = new THREE.PerspectiveCamera(34, 1, 0.1, 100);
-    camera.position.set(0, 0, 8.9);
-
-    const renderer = new THREE.WebGLRenderer({
-      antialias: true,
-      alpha: true,
-      powerPreference: "high-performance",
-    });
-
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
-    renderer.setClearColor(0x000000, 0);
-    renderer.outputColorSpace = THREE.SRGBColorSpace;
-    canvasMount.appendChild(renderer.domElement);
-
     const root = new THREE.Group();
-    root.position.set(0, -0.03, 0);
-    root.scale.setScalar(0.96);
+    root.position.set(0, -0.02, 0);
+    root.scale.setScalar(0.90);
     scene.add(root);
 
     const coreMaterial = new THREE.ShaderMaterial({
       uniforms: {
         uTime: { value: 0 },
-        uHover: { value: 0 },
         uBlue: { value: blue.clone() },
         uBlueLight: { value: blueLight.clone() },
         uAmber: { value: amber.clone() },
         uAmberLight: { value: amberLight.clone() },
+        uCoreFocus: { value: 0 },
+        uCommunicationsFocus: { value: 0 },
+        uActionsFocus: { value: 0 },
       },
       vertexShader: `
-        varying vec3 vNormalView;
+        varying vec3 vWorldNormal;
         varying vec3 vWorldPosition;
         varying vec3 vLocalPosition;
 
         void main() {
           vLocalPosition = position;
-          vNormalView = normalize(normalMatrix * normal);
+          vWorldNormal = normalize(mat3(modelMatrix) * normal);
 
           vec4 worldPosition = modelMatrix * vec4(position, 1.0);
           vWorldPosition = worldPosition.xyz;
 
-          gl_Position = projectionMatrix * viewMatrix * worldPosition;
+          gl_Position =
+            projectionMatrix * viewMatrix * worldPosition;
         }
       `,
       fragmentShader: `
         uniform float uTime;
-        uniform float uHover;
         uniform vec3 uBlue;
         uniform vec3 uBlueLight;
         uniform vec3 uAmber;
         uniform vec3 uAmberLight;
+        uniform float uCoreFocus;
+        uniform float uCommunicationsFocus;
+        uniform float uActionsFocus;
 
-        varying vec3 vNormalView;
+        varying vec3 vWorldNormal;
         varying vec3 vWorldPosition;
         varying vec3 vLocalPosition;
 
         void main() {
-          vec3 viewDirection = normalize(cameraPosition - vWorldPosition);
+          vec3 normal = normalize(vWorldNormal);
+          vec3 viewDirection =
+            normalize(cameraPosition - vWorldPosition);
 
           float fresnel = pow(
-            1.0 - max(dot(vNormalView, viewDirection), 0.0),
-            2.75
+            1.0 - max(dot(normal, viewDirection), 0.0),
+            2.65
           );
 
-          float side = smoothstep(-0.45, 0.65, vLocalPosition.x);
-
-          float quietWave = 0.5 + 0.5 * sin(
-            vLocalPosition.y * 6.0 +
-            vLocalPosition.z * 3.0 +
-            uTime * 0.28
+          float topLight = smoothstep(
+            -0.75,
+            1.0,
+            vLocalPosition.y
           );
 
-          float fineField = 0.5 + 0.5 * sin(
-            (
-              vLocalPosition.x * 0.8 +
-              vLocalPosition.y +
-              vLocalPosition.z * 0.55
-            ) * 17.0 +
-            uTime * 0.38
+          float frontLight = smoothstep(
+            -0.55,
+            1.0,
+            vLocalPosition.z
           );
 
-          float fieldLines = smoothstep(0.96, 1.0, fineField);
+          float actionSide = smoothstep(
+            0.05,
+            0.95,
+            vLocalPosition.x
+          );
 
-          vec3 coolBody = vec3(0.020, 0.075, 0.125);
-          vec3 deepBody = vec3(0.008, 0.030, 0.060);
+          vec3 deepMarine = vec3(0.028, 0.105, 0.176);
+          vec3 steelBlue = vec3(0.070, 0.245, 0.375);
 
           vec3 body = mix(
-            coolBody,
-            deepBody,
-            smoothstep(-0.3, 0.8, -vLocalPosition.y)
+            deepMarine,
+            steelBlue,
+            topLight * 0.62 + frontLight * 0.22
           );
 
-          vec3 edgeColor = mix(
+          body += uBlue * 0.040;
+
+          vec3 tunnelDirection =
+            normalize(vec3(-0.70, 0.56, 0.72));
+
+          float tunnelReflection = pow(
+            max(dot(normal, tunnelDirection), 0.0),
+            2.15
+          );
+
+          body += uBlueLight *
+            tunnelReflection *
+            0.335;
+
+          vec3 frontalDirection =
+            normalize(vec3(-0.24, 0.20, 1.0));
+
+          float frontalReflection = pow(
+            max(dot(normal, frontalDirection), 0.0),
+            2.8
+          );
+
+          body += uBlueLight *
+            frontalReflection *
+            0.115;
+
+          float communicationSide =
+            1.0 -
+            smoothstep(
+              -0.92,
+              0.10,
+              vLocalPosition.x
+            );
+
+          body += uBlueLight *
+            communicationSide *
+            uCommunicationsFocus *
+            (0.035 + fresnel * 0.075);
+
+          body += uAmberLight *
+            actionSide *
+            uActionsFocus *
+            (0.026 + fresnel * 0.095);
+
+          body += uBlueLight *
+            uCoreFocus *
+            (0.035 + tunnelReflection * 0.07);
+
+          vec3 rimColor = mix(
             uBlueLight,
             uAmberLight,
-            side
+            actionSide
           );
+
+          float slowWave = 0.5 + 0.5 * sin(
+            vLocalPosition.y * 5.7 +
+            vLocalPosition.z * 3.2 +
+            uTime * 0.25
+          );
+
+          float field = 0.5 + 0.5 * sin(
+            (
+              vLocalPosition.x * 0.78 +
+              vLocalPosition.y +
+              vLocalPosition.z * 0.52
+            ) * 18.0 +
+            uTime * 0.34
+          );
+
+          float fieldLines =
+            smoothstep(0.972, 1.0, field);
+
           vec3 color = body;
 
-          color += edgeColor * fresnel *
-            (0.55 + quietWave * 0.10 + uHover * 0.17);
+          color += rimColor *
+            fresnel *
+            (
+              0.57 +
+              slowWave * 0.09 +
+              uCoreFocus * 0.10
+            );
 
-          color += edgeColor * fieldLines *
-            (0.02 + uHover * 0.015);
+          color += rimColor *
+            fieldLines *
+            0.022;
 
-          gl_FragColor = vec4(color, 0.99);
+          color += uAmber *
+            actionSide *
+            fresnel *
+            (
+              0.070 +
+              uActionsFocus * 0.085
+            );
+
+          gl_FragColor = vec4(color, 0.985);
         }
       `,
       transparent: true,
@@ -232,78 +459,90 @@ export default function SignalOrb() {
     });
 
     const core = new THREE.Mesh(
-      new THREE.IcosahedronGeometry(1.38, 7),
+      new THREE.SphereGeometry(1.2, 96, 64),
       coreMaterial,
     );
     root.add(core);
 
     const wireMaterial = new THREE.MeshBasicMaterial({
-      color: silver,
+      color: blueLight,
       wireframe: true,
       transparent: true,
-      opacity: 0.05,
+      opacity: 0.066,
       depthWrite: false,
     });
 
     const wire = new THREE.Mesh(
-      new THREE.IcosahedronGeometry(1.405, 4),
+      new THREE.IcosahedronGeometry(1.212, 5),
       wireMaterial,
     );
     root.add(wire);
 
-    const makeHaloTexture = () => {
-      const canvas = document.createElement("canvas");
-      canvas.width = 256;
-      canvas.height = 256;
-
-      const context = canvas.getContext("2d");
-      if (!context) {
-        throw new Error("Unable to create the DSX Edge halo texture.");
-      }
-
-      const gradient = context.createRadialGradient(
-        128,
-        128,
-        0,
-        128,
-        128,
-        128,
-      );
-
-      gradient.addColorStop(0, "rgba(95, 128, 179, 0.19)");
-      gradient.addColorStop(0.45, "rgba(95, 128, 179, 0.065)");
-      gradient.addColorStop(0.72, "rgba(217, 150, 88, 0.022)");
-      gradient.addColorStop(1, "rgba(0, 0, 0, 0)");
-
-      context.fillStyle = gradient;
-      context.fillRect(0, 0, 256, 256);
-
-      const texture = new THREE.CanvasTexture(canvas);
-      texture.colorSpace = THREE.SRGBColorSpace;
-      return texture;
-    };
-
     const haloMaterial = new THREE.SpriteMaterial({
-      map: makeHaloTexture(),
+      map: createRadialTexture([
+        [0, "rgba(111, 173, 222, 0.15)"],
+        [0.43, "rgba(95, 145, 195, 0.052)"],
+        [0.72, "rgba(217, 150, 88, 0.014)"],
+        [1, "rgba(0, 0, 0, 0)"],
+      ]),
       transparent: true,
-      opacity: 0.68,
+      opacity: 0.44,
       blending: THREE.AdditiveBlending,
       depthWrite: false,
     });
 
     const halo = new THREE.Sprite(haloMaterial);
-    halo.scale.set(4.65, 4.65, 1);
-    halo.position.z = -0.32;
+    halo.scale.set(4.35, 4.35, 1);
+    halo.position.z = -0.42;
     root.add(halo);
 
-    const random = seededRandom(731);
-    // Always construct the complete scene. Reduced-motion controls playback,
-    // so pressing Resume can animate everything without rebuilding WebGL objects.
-    const particleCount = 118;
-    const particlePositions = new Float32Array(particleCount * 3);
+    const floorShadowMaterial = new THREE.SpriteMaterial({
+      map: createRadialTexture([
+        [0, "rgba(44, 104, 159, 0.30)"],
+        [0.42, "rgba(44, 104, 159, 0.11)"],
+        [1, "rgba(44, 104, 159, 0)"],
+      ]),
+      transparent: true,
+      opacity: 0.48,
+      depthWrite: false,
+    });
 
-    for (let index = 0; index < particleCount; index += 1) {
-      const radius = Math.cbrt(random()) * 1.16;
+    const floorShadow = new THREE.Sprite(
+      floorShadowMaterial,
+    );
+    floorShadow.position.set(0, -1.63, -0.5);
+    floorShadow.scale.set(3.6, 0.54, 1);
+    root.add(floorShadow);
+
+    const reflectionMaterial = new THREE.SpriteMaterial({
+      map: createRadialTexture([
+        [0, "rgba(128, 190, 230, 0.14)"],
+        [0.38, "rgba(76, 139, 190, 0.052)"],
+        [1, "rgba(76, 139, 190, 0)"],
+      ]),
+      transparent: true,
+      opacity: 0.34,
+      depthWrite: false,
+    });
+
+    const reflection = new THREE.Sprite(
+      reflectionMaterial,
+    );
+    reflection.position.set(0, -1.88, -0.7);
+    reflection.scale.set(1.8, 0.82, 1);
+    root.add(reflection);
+
+    const random = seededRandom(731);
+    const particleCount = 132;
+    const particlePositions =
+      new Float32Array(particleCount * 3);
+
+    for (
+      let index = 0;
+      index < particleCount;
+      index += 1
+    ) {
+      const radius = Math.cbrt(random()) * 1.0;
       const theta = random() * Math.PI * 2;
       const phi = Math.acos(2 * random() - 1);
 
@@ -320,23 +559,26 @@ export default function SignalOrb() {
     const particleGeometry = new THREE.BufferGeometry();
     particleGeometry.setAttribute(
       "position",
-      new THREE.BufferAttribute(particlePositions, 3),
+      new THREE.BufferAttribute(
+        particlePositions,
+        3,
+      ),
     );
 
     const particleMaterial = new THREE.PointsMaterial({
       color: white,
-      size: 0.016,
+      size: 0.017,
       transparent: true,
-      opacity: 0.29,
+      opacity: 0.42,
       depthWrite: false,
       blending: THREE.AdditiveBlending,
     });
 
-    const innerParticles = new THREE.Points(
+    const particles = new THREE.Points(
       particleGeometry,
       particleMaterial,
     );
-    root.add(innerParticles);
+    root.add(particles);
 
     const createEllipse = (
       radiusX: number,
@@ -348,8 +590,13 @@ export default function SignalOrb() {
     ) => {
       const points: THREE.Vector3[] = [];
 
-      for (let index = 0; index <= 150; index += 1) {
-        const angle = (index / 150) * Math.PI * 2;
+      for (
+        let index = 0;
+        index <= 160;
+        index += 1
+      ) {
+        const angle =
+          (index / 160) * Math.PI * 2;
 
         points.push(
           new THREE.Vector3(
@@ -360,15 +607,17 @@ export default function SignalOrb() {
         );
       }
 
-      const material = new THREE.LineBasicMaterial({
-        color,
-        transparent: true,
-        opacity,
-        depthWrite: false,
-      });
+      const material =
+        new THREE.LineBasicMaterial({
+          color,
+          transparent: true,
+          opacity,
+          depthWrite: false,
+        });
 
       const line = new THREE.LineLoop(
-        new THREE.BufferGeometry().setFromPoints(points),
+        new THREE.BufferGeometry()
+          .setFromPoints(points),
         material,
       );
 
@@ -376,49 +625,51 @@ export default function SignalOrb() {
       line.rotation.y = rotationY;
       root.add(line);
 
-      return { line, material, baseOpacity: opacity };
+      return line;
     };
 
     const orbitA = createEllipse(
-      2.38,
-      0.75,
+      1.62,
+      0.44,
       -0.22,
       0.18,
-      blue,
-      0.21,
+      blueLight,
+      0.145,
     );
 
     const orbitB = createEllipse(
-      2.16,
-      0.92,
+      1.54,
+      0.51,
       0.65,
       -0.25,
       amber,
-      0.12,
+      0.065,
     );
 
     const orbitC = createEllipse(
-      2.45,
-      0.64,
+      1.70,
+      0.38,
       -0.88,
       0.15,
       silver,
-      0.1,
+      0.048,
     );
 
     const foundation = new THREE.Group();
-    foundation.position.set(0, -1.88, -0.2);
+    foundation.position.set(0, -1.62, -0.32);
     root.add(foundation);
 
+    const foundationMaterials: THREE.LineBasicMaterial[] = [];
+
     [
-      { y: 0.36, rx: 1.55, ry: 0.3, opacity: 0.23 },
-      { y: 0.02, rx: 1.42, ry: 0.28, opacity: 0.17 },
-      { y: -0.3, rx: 1.28, ry: 0.25, opacity: 0.12 },
+      { y: 0.28, rx: 1.48, ry: 0.27, opacity: 0.18 },
+      { y: 0.00, rx: 1.34, ry: 0.24, opacity: 0.13 },
+      { y: -0.26, rx: 1.18, ry: 0.21, opacity: 0.085 },
     ].forEach((layer, layerIndex) => {
       const points: THREE.Vector3[] = [];
 
-      for (let pointIndex = 0; pointIndex <= 110; pointIndex += 1) {
-        const angle = (pointIndex / 110) * Math.PI * 2;
+      for (let index = 0; index <= 128; index += 1) {
+        const angle = (index / 128) * Math.PI * 2;
 
         points.push(
           new THREE.Vector3(
@@ -436,6 +687,8 @@ export default function SignalOrb() {
         depthWrite: false,
       });
 
+      foundationMaterials.push(material);
+
       foundation.add(
         new THREE.LineLoop(
           new THREE.BufferGeometry().setFromPoints(points),
@@ -446,70 +699,155 @@ export default function SignalOrb() {
 
     const flows: Flow[] = [];
 
+    const createRailMaterial = (
+      color: THREE.Color,
+      side: "in" | "out",
+      opacity: number,
+    ) =>
+      new THREE.ShaderMaterial({
+        uniforms: {
+          uColor: { value: color.clone() },
+          uOpacity: { value: opacity },
+          uInbound: { value: side === "in" ? 1 : 0 },
+        },
+        vertexShader: `
+          varying vec2 vRailUv;
+
+          void main() {
+            vRailUv = uv;
+
+            gl_Position =
+              projectionMatrix *
+              modelViewMatrix *
+              vec4(position, 1.0);
+          }
+        `,
+        fragmentShader: `
+          uniform vec3 uColor;
+          uniform float uOpacity;
+          uniform float uInbound;
+
+          varying vec2 vRailUv;
+
+          void main() {
+            float travel = mix(
+              1.0 - vRailUv.x,
+              vRailUv.x,
+              uInbound
+            );
+
+            float endpointFade =
+              smoothstep(0.0, 0.055, vRailUv.x) *
+              smoothstep(1.0, 0.945, vRailUv.x);
+
+            float energy = mix(
+              0.18,
+              1.0,
+              pow(travel, 0.72)
+            );
+
+            float centerHighlight =
+              0.92 +
+              0.08 *
+              sin(vRailUv.x * 18.8495559);
+
+            float alpha =
+              uOpacity *
+              endpointFade *
+              energy *
+              centerHighlight;
+
+            gl_FragColor = vec4(uColor, alpha);
+          }
+        `,
+        transparent: true,
+        depthWrite: false,
+        blending: THREE.AdditiveBlending,
+      });
+
     const createFlow = ({
       start,
       end,
       color,
       side,
-      bendY,
-      bendZ,
       speed,
       packetCount,
+      bendY,
+      bendZ,
     }: {
       start: [number, number, number];
       end: [number, number, number];
       color: THREE.Color;
       side: "in" | "out";
-      bendY: number;
-      bendZ: number;
       speed: number;
       packetCount: number;
+      bendY: number;
+      bendZ: number;
     }) => {
-      const startPoint = new THREE.Vector3(...start);
-      const endPoint = new THREE.Vector3(...end);
+      const startPoint =
+        new THREE.Vector3(...start);
 
-      const controlA = startPoint.clone().lerp(endPoint, 0.34);
-      const controlB = startPoint.clone().lerp(endPoint, 0.7);
+      const endPoint =
+        new THREE.Vector3(...end);
+
+      const controlA = startPoint
+        .clone()
+        .lerp(endPoint, 0.38);
+
+      const controlB = startPoint
+        .clone()
+        .lerp(endPoint, 0.76);
 
       controlA.y += bendY;
       controlA.z += bendZ;
 
-      controlB.y -= bendY * 0.34;
-      controlB.z -= bendZ * 0.35;
+      controlB.y -= bendY * 0.12;
+      controlB.z -= bendZ * 0.12;
 
-      const curve = new THREE.CatmullRomCurve3([
-        startPoint,
-        controlA,
-        controlB,
-        endPoint,
-      ]);
+      const curve =
+        new THREE.CatmullRomCurve3([
+          startPoint,
+          controlA,
+          controlB,
+          endPoint,
+        ]);
 
-      const lineMaterial = new THREE.MeshBasicMaterial({
-        color,
-        transparent: true,
-        opacity: 0.34,
-        depthWrite: false,
-        blending: THREE.AdditiveBlending,
-      });
+      const lineMaterial =
+        createRailMaterial(
+          color,
+          side,
+          0.64,
+        );
 
-      const glowMaterial = new THREE.MeshBasicMaterial({
-        color,
-        transparent: true,
-        opacity: 0.022,
-        depthWrite: false,
-        blending: THREE.AdditiveBlending,
-      });
+      const glowMaterial =
+        createRailMaterial(
+          color,
+          side,
+          0.090,
+        );
 
       root.add(
         new THREE.Mesh(
-          new THREE.TubeGeometry(curve, 68, 0.008, 6, false),
+          new THREE.TubeGeometry(
+            curve,
+            80,
+            0.0085,
+            8,
+            false,
+          ),
           lineMaterial,
         ),
       );
 
       root.add(
         new THREE.Mesh(
-          new THREE.TubeGeometry(curve, 68, 0.025, 6, false),
+          new THREE.TubeGeometry(
+            curve,
+            80,
+            0.027,
+            8,
+            false,
+          ),
           glowMaterial,
         ),
       );
@@ -517,16 +855,22 @@ export default function SignalOrb() {
       const packets = Array.from(
         { length: packetCount },
         (_, index) => {
-          const packetMaterial = new THREE.MeshBasicMaterial({
-            color,
-            transparent: true,
-            opacity: 0.9,
-            depthWrite: false,
-            blending: THREE.AdditiveBlending,
-          });
+          const packetMaterial =
+            new THREE.MeshBasicMaterial({
+              color,
+              transparent: true,
+              opacity: 0.95,
+              depthWrite: false,
+              blending:
+                THREE.AdditiveBlending,
+            });
 
           const packet = new THREE.Mesh(
-            new THREE.SphereGeometry(0.031, 9, 9),
+            new THREE.SphereGeometry(
+              0.025,
+              12,
+              12,
+            ),
             packetMaterial,
           );
 
@@ -542,107 +886,111 @@ export default function SignalOrb() {
       flows.push({
         curve,
         packets,
-        lineMaterial,
-        glowMaterial,
         side,
         speed,
-        baseLineOpacity: 0.34,
-        baseGlowOpacity: 0.022,
+        lineMaterial,
+        glowMaterial,
+        baseLineOpacity: 0.64,
+        baseGlowOpacity: 0.090,
       });
     };
 
     createFlow({
-      start: [-4.1, 1.05, 0.18],
-      end: [-1.03, 0.62, 0.02],
+      start: [-3.02, 0.72, -0.10],
+      end: [-1.16, 0.38, 0.06],
       color: blue,
       side: "in",
-      bendY: 0.4,
-      bendZ: 0.16,
-      speed: 0.085,
-      packetCount: 3,
+      speed: 0.102,
+      packetCount: 2,
+      bendY: 0.045,
+      bendZ: 0.05,
     });
 
     createFlow({
-      start: [-4.1, 0.35, -0.05],
-      end: [-1.16, 0.18, 0.06],
+      start: [-3.10, 0.0, -0.07],
+      end: [-1.20, 0.0, 0.08],
       color: blueLight,
       side: "in",
-      bendY: 0.17,
-      bendZ: -0.1,
-      speed: 0.105,
-      packetCount: 4,
+      speed: 0.122,
+      packetCount: 3,
+      bendY: 0.0,
+      bendZ: -0.035,
     });
 
     createFlow({
-      start: [-4.1, -0.35, 0.08],
-      end: [-1.15, -0.2, -0.02],
+      start: [-3.02, -0.72, -0.10],
+      end: [-1.16, -0.38, 0.06],
       color: blue,
       side: "in",
-      bendY: -0.11,
-      bendZ: 0.16,
-      speed: 0.092,
-      packetCount: 4,
+      speed: 0.096,
+      packetCount: 2,
+      bendY: -0.045,
+      bendZ: 0.05,
     });
 
     createFlow({
-      start: [-4.1, -1.02, -0.1],
-      end: [-1.0, -0.58, 0.04],
-      color: blue,
-      side: "in",
-      bendY: -0.36,
-      bendZ: -0.14,
-      speed: 0.073,
-      packetCount: 3,
-    });
-
-    createFlow({
-      start: [1.03, 0.62, 0.02],
-      end: [4.1, 1.05, 0.18],
+      start: [1.16, 0.38, 0.06],
+      end: [3.02, 0.72, -0.10],
       color: amberLight,
       side: "out",
-      bendY: 0.4,
-      bendZ: 0.16,
-      speed: 0.098,
+      speed: 0.108,
+      packetCount: 2,
+      bendY: 0.045,
+      bendZ: 0.05,
+    });
+
+    createFlow({
+      start: [1.20, 0.0, 0.08],
+      end: [3.10, 0.0, -0.07],
+      color: amber,
+      side: "out",
+      speed: 0.128,
       packetCount: 3,
+      bendY: 0.0,
+      bendZ: -0.035,
     });
 
     createFlow({
-      start: [1.16, 0.18, 0.06],
-      end: [4.1, 0.35, -0.05],
-      color: amber,
-      side: "out",
-      bendY: 0.17,
-      bendZ: -0.1,
-      speed: 0.112,
-      packetCount: 4,
-    });
-
-    createFlow({
-      start: [1.15, -0.2, -0.02],
-      end: [4.1, -0.35, 0.08],
-      color: amber,
-      side: "out",
-      bendY: -0.11,
-      bendZ: 0.16,
-      speed: 0.091,
-      packetCount: 4,
-    });
-
-    createFlow({
-      start: [1.0, -0.58, 0.04],
-      end: [4.1, -1.02, -0.1],
+      start: [1.16, -0.38, 0.06],
+      end: [3.02, -0.72, -0.10],
       color: amberLight,
       side: "out",
-      bendY: -0.36,
-      bendZ: -0.14,
-      speed: 0.074,
-      packetCount: 3,
+      speed: 0.101,
+      packetCount: 2,
+      bendY: -0.045,
+      bendZ: 0.05,
     });
 
-    let elapsed = 0;
+    const wordmarkMaterial =
+      new THREE.SpriteMaterial({
+        map: createWordmarkTexture(),
+        transparent: true,
+        opacity: 0.96,
+        depthTest: false,
+        depthWrite: false,
+      });
 
+    const wordmark =
+      new THREE.Sprite(wordmarkMaterial);
+
+    wordmark.position.set(0, -0.01, 1.27);
+    wordmark.scale.set(1.26, 0.63, 1);
+    root.add(wordmark);
+
+    const wordmarkBaseScale =
+      wordmark.scale.clone();
+
+    const orbitAMaterial =
+      orbitA.material as THREE.LineBasicMaterial;
+
+    const orbitBMaterial =
+      orbitB.material as THREE.LineBasicMaterial;
+
+    const orbitCMaterial =
+      orbitC.material as THREE.LineBasicMaterial;
+
+    const packetAxis = new THREE.Vector3(0, 1, 0);
     const clock = new THREE.Clock();
-    const targetScale = new THREE.Vector3(1, 1, 1);
 
     const resize = () => {
       const width = stage.clientWidth;
@@ -650,165 +998,344 @@ export default function SignalOrb() {
 
       camera.aspect = width / height;
       camera.updateProjectionMatrix();
-      renderer.setSize(width, height, false);
+
+      renderer.setSize(
+        width,
+        height,
+        false,
+      );
     };
 
-    const resizeObserver = new ResizeObserver(resize);
+    const resizeObserver =
+      new ResizeObserver(resize);
+
     resizeObserver.observe(stage);
     resize();
 
-    const frame = () => {
+    const visibilityObserver =
+      new IntersectionObserver(
+        ([entry]) => {
+          visibleRef.current =
+            entry.isIntersecting;
+        },
+        { threshold: 0.05 },
+      );
 
-      const delta = Math.min(clock.getDelta(), 0.05);
+    visibilityObserver.observe(stage);
+
+    renderer.setAnimationLoop(() => {
+      const delta = Math.min(
+        clock.getDelta(),
+        0.05,
+      );
+
+      if (
+        !pausedRef.current &&
+        visibleRef.current
+      ) {
+        coreMaterial.uniforms.uTime.value +=
+          delta;
+
+        const elapsed =
+          coreMaterial.uniforms.uTime.value;
+
+        particles.rotation.y =
+          elapsed * 0.034;
+
+        particles.rotation.x =
+          Math.sin(elapsed * 0.1) * 0.035;
+
+        orbitA.rotation.z =
+          elapsed * 0.034;
+
+        orbitB.rotation.z =
+          -elapsed * 0.026;
+
+        orbitC.rotation.z =
+          elapsed * 0.018;
+
+        wire.rotation.y =
+          elapsed * 0.022;
+
+        flows.forEach((flow) => {
+          flow.packets.forEach((packet) => {
+            const progress =
+              (
+                elapsed * flow.speed +
+                packet.offset
+              ) % 1;
+
+            const point =
+              flow.curve.getPointAt(
+                progress,
+              );
+
+            const tangent =
+              flow.curve
+                .getTangentAt(progress)
+                .normalize();
+
+            const envelope =
+              Math.sin(
+                progress * Math.PI,
+              );
+
+            packet.mesh.position.copy(point);
+
+            packet.mesh.quaternion
+              .setFromUnitVectors(
+                packetAxis,
+                tangent,
+              );
+
+            packet.mesh.scale.set(
+              0.70,
+              1.75 +
+                envelope * 0.70,
+              0.70,
+            );
+
+            packet.mesh.material.opacity =
+              0.48 +
+              envelope * 0.48;
+          });
+        });
+      }
+
       const activeZone = focusRef.current;
 
-      elapsed += delta;
+      const coreFocusTarget =
+        activeZone === "core" ? 1 : 0;
 
-      coreMaterial.uniforms.uTime.value = elapsed;
-      innerParticles.rotation.y = elapsed * 0.032;
-      innerParticles.rotation.x =
-        Math.sin(elapsed * 0.11) * 0.04;
+      const communicationsFocusTarget =
+        activeZone === "communications" ? 1 : 0;
 
-      orbitA.line.rotation.z = elapsed * 0.042;
-      orbitB.line.rotation.z = -elapsed * 0.031;
-      orbitC.line.rotation.z = elapsed * 0.022;
+      const actionsFocusTarget =
+        activeZone === "actions" ? 1 : 0;
 
-      wire.rotation.y = elapsed * 0.028;
+      coreMaterial.uniforms.uCoreFocus.value +=
+        (
+          coreFocusTarget -
+          coreMaterial.uniforms.uCoreFocus.value
+        ) * 0.09;
 
-      flows.forEach((flow) => {
-        flow.packets.forEach((packet) => {
-          const progress =
-            (elapsed * flow.speed + packet.offset) % 1;
+      coreMaterial.uniforms
+        .uCommunicationsFocus.value +=
+        (
+          communicationsFocusTarget -
+          coreMaterial.uniforms
+            .uCommunicationsFocus.value
+        ) * 0.09;
 
-          const point = flow.curve.getPointAt(progress);
-          const envelope = Math.sin(progress * Math.PI);
+      coreMaterial.uniforms.uActionsFocus.value +=
+        (
+          actionsFocusTarget -
+          coreMaterial.uniforms.uActionsFocus.value
+        ) * 0.09;
 
-          packet.mesh.position.copy(point);
-          packet.mesh.scale.setScalar(0.7 + envelope * 0.38);
-          packet.mesh.material.opacity =
-            0.42 + envelope * 0.46;
-        });
-      });
+      const coreScaleTarget =
+        activeZone === "core"
+          ? 1.038
+          : 1;
 
-      const coreHoverTarget = activeZone === "core" ? 1 : 0;
+      const coreScale =
+        THREE.MathUtils.lerp(
+          core.scale.x,
+          coreScaleTarget,
+          0.09,
+        );
 
-      coreMaterial.uniforms.uHover.value +=
-        (coreHoverTarget -
-          coreMaterial.uniforms.uHover.value) *
-        0.08;
+      core.scale.setScalar(coreScale);
+      wire.scale.setScalar(coreScale);
+      particles.scale.setScalar(coreScale);
 
-      const coreScale = activeZone === "core" ? 1.035 : 1;
-      targetScale.setScalar(coreScale);
+      const wordmarkScale =
+        activeZone === "core"
+          ? 1.045
+          : 1;
 
-      core.scale.lerp(targetScale, 0.08);
-      wire.scale.copy(core.scale);
+      wordmark.scale.lerp(
+        wordmarkBaseScale
+          .clone()
+          .multiplyScalar(wordmarkScale),
+        0.09,
+      );
 
-      const haloOpacityTarget =
-        activeZone === "core" ? 0.86 : 0.68;
+      const haloTarget =
+        activeZone === "core"
+          ? 0.62
+          : 0.44;
 
       haloMaterial.opacity +=
-        (haloOpacityTarget - haloMaterial.opacity) * 0.08;
+        (
+          haloTarget -
+          haloMaterial.opacity
+        ) * 0.09;
 
-      root.rotation.x +=
-        (pointerTargetRef.current.x - root.rotation.x) *
-        Math.min(delta * 2.6, 1);
+      const particleTarget =
+        activeZone === "core"
+          ? 0.56
+          : 0.42;
 
-      root.rotation.y +=
-        (pointerTargetRef.current.y - root.rotation.y) *
-        Math.min(delta * 2.6, 1);
+      particleMaterial.opacity +=
+        (
+          particleTarget -
+          particleMaterial.opacity
+        ) * 0.09;
 
       flows.forEach((flow) => {
         const emphasized =
-          (activeZone === "communications" &&
-            flow.side === "in") ||
-          (activeZone === "actions" &&
-            flow.side === "out");
+          (
+            activeZone === "communications" &&
+            flow.side === "in"
+          ) ||
+          (
+            activeZone === "actions" &&
+            flow.side === "out"
+          );
 
         const dimmed =
-          (activeZone === "communications" &&
-            flow.side === "out") ||
-          (activeZone === "actions" &&
-            flow.side === "in");
+          (
+            activeZone === "communications" &&
+            flow.side === "out"
+          ) ||
+          (
+            activeZone === "actions" &&
+            flow.side === "in"
+          ) ||
+          activeZone === "core";
 
-        const targetLineOpacity = emphasized
-          ? 0.58
+        const lineTarget = emphasized
+          ? 0.96
           : dimmed
-            ? 0.07
+            ? 0.17
             : flow.baseLineOpacity;
 
-        const targetGlowOpacity = emphasized
-          ? 0.052
+        const glowTarget = emphasized
+          ? 0.19
           : dimmed
-            ? 0.004
+            ? 0.022
             : flow.baseGlowOpacity;
 
-        flow.lineMaterial.opacity +=
-          (targetLineOpacity -
-            flow.lineMaterial.opacity) *
-          0.08;
+        const lineOpacity =
+          flow.lineMaterial.uniforms
+            .uOpacity.value as number;
 
-        flow.glowMaterial.opacity +=
-          (targetGlowOpacity -
-            flow.glowMaterial.opacity) *
-          0.08;
+        const glowOpacity =
+          flow.glowMaterial.uniforms
+            .uOpacity.value as number;
+
+        flow.lineMaterial.uniforms
+          .uOpacity.value =
+          THREE.MathUtils.lerp(
+            lineOpacity,
+            lineTarget,
+            0.09,
+          );
+
+        flow.glowMaterial.uniforms
+          .uOpacity.value =
+          THREE.MathUtils.lerp(
+            glowOpacity,
+            glowTarget,
+            0.09,
+          );
 
         flow.packets.forEach((packet) => {
-          packet.mesh.visible = !dimmed;
+          packet.mesh.visible =
+            !dimmed || emphasized;
         });
       });
 
-      orbitA.material.opacity +=
-        (
-          orbitA.baseOpacity +
-          (activeZone === "communications" ? 0.12 : 0) -
-          orbitA.material.opacity
-        ) * 0.08;
+      orbitAMaterial.opacity =
+        THREE.MathUtils.lerp(
+          orbitAMaterial.opacity,
+          activeZone === "communications"
+            ? 0.245
+            : activeZone === "core"
+              ? 0.19
+              : 0.145,
+          0.09,
+        );
 
-      orbitB.material.opacity +=
+      orbitBMaterial.opacity =
+        THREE.MathUtils.lerp(
+          orbitBMaterial.opacity,
+          activeZone === "actions"
+            ? 0.15
+            : activeZone === "core"
+              ? 0.095
+              : 0.065,
+          0.09,
+        );
+
+      orbitCMaterial.opacity =
+        THREE.MathUtils.lerp(
+          orbitCMaterial.opacity,
+          activeZone === "core"
+            ? 0.085
+            : 0.048,
+          0.09,
+        );
+
+      foundationMaterials.forEach((material, index) => {
+        const baseOpacity = [0.18, 0.13, 0.085][index] ?? 0.08;
+        const targetOpacity =
+          activeZone === "core"
+            ? baseOpacity * 1.28
+            : baseOpacity;
+
+        material.opacity = THREE.MathUtils.lerp(
+          material.opacity,
+          targetOpacity,
+          0.09,
+        );
+      });
+
+      root.rotation.x +=
         (
-          orbitB.baseOpacity +
-          (activeZone === "actions" ? 0.1 : 0) -
-          orbitB.material.opacity
-        ) * 0.08;
+          pointerRef.current.x -
+          root.rotation.x
+        ) *
+        Math.min(delta * 2.4, 1);
+
+      root.rotation.y +=
+        (
+          pointerRef.current.y -
+          root.rotation.y
+        ) *
+        Math.min(delta * 2.4, 1);
 
       renderer.render(scene, camera);
-    };
-
-    (window as typeof window & {
-      __DSX_ORB_DEBUG__?: {
-        renderer: THREE.WebGLRenderer;
-        scene: THREE.Scene;
-        flows: Flow[];
-        getElapsed: () => number;
-      };
-    }).__DSX_ORB_DEBUG__ = {
-      renderer,
-      scene,
-      flows,
-      getElapsed: () => elapsed,
-    };
+    });
 
     setReady(true);
-    renderer.setAnimationLoop(frame);
 
     return () => {
       renderer.setAnimationLoop(null);
       resizeObserver.disconnect();
+      visibilityObserver.disconnect();
+
       disposeScene(scene);
       renderer.dispose();
 
-      if (renderer.domElement.parentElement === canvasMount) {
-        canvasMount.removeChild(renderer.domElement);
+      if (
+        renderer.domElement.parentElement ===
+        mount
+      ) {
+        mount.removeChild(
+          renderer.domElement,
+        );
       }
     };
   }, []);
 
   return (
     <section
-      className="dsx-orb"
+      className={`dsx-orb ${className}`}
       data-ready={ready}
       data-zone={focus}
-      aria-labelledby="dsx-orb-title"
+      aria-label="DSX Edge communications platform"
     >
       <div
         ref={stageRef}
@@ -817,132 +1344,20 @@ export default function SignalOrb() {
         onPointerLeave={handlePointerLeave}
       >
         <div
-          ref={canvasMountRef}
+          ref={mountRef}
           className="dsx-orb__canvas"
           aria-hidden="true"
         />
 
-        <svg
+        <div
           className="dsx-orb__fallback"
-          viewBox="0 0 1000 620"
-          role="img"
-          aria-labelledby="dsx-orb-title dsx-orb-description"
+          aria-hidden={ready}
         >
-          <title id="dsx-orb-title">
-            DSX Edge communications platform
-          </title>
-
-          <desc id="dsx-orb-description">
-            Communications enter DSX Edge and become intelligent
-            business actions through a 3CX-based PBX, SIP, and hosted
-            infrastructure platform.
-          </desc>
-
-          <defs>
-            <radialGradient
-              id="dsx-static-core"
-              cx="40%"
-              cy="34%"
-              r="72%"
-            >
-              <stop
-                offset="0"
-                stopColor={COLORS.blueLight}
-                stopOpacity="0.28"
-              />
-              <stop
-                offset="0.58"
-                stopColor="#10151d"
-                stopOpacity="0.98"
-              />
-              <stop offset="1" stopColor="#090a0c" />
-            </radialGradient>
-
-            <linearGradient
-              id="dsx-static-rim"
-              x1="0"
-              y1="0"
-              x2="1"
-              y2="0"
-            >
-              <stop offset="0" stopColor={COLORS.blue} />
-              <stop offset="0.54" stopColor={COLORS.blueLight} />
-              <stop offset="1" stopColor={COLORS.amber} />
-            </linearGradient>
-          </defs>
-
-          <g
-            fill="none"
-            strokeLinecap="round"
-          >
-            <path
-              d="M90 235 C245 235 330 265 420 298"
-              stroke={COLORS.blue}
-              strokeOpacity="0.48"
-            />
-            <path
-              d="M70 310 C240 310 330 310 420 310"
-              stroke={COLORS.blueLight}
-              strokeOpacity="0.64"
-            />
-            <path
-              d="M90 385 C245 385 330 350 420 322"
-              stroke={COLORS.blue}
-              strokeOpacity="0.42"
-            />
-
-            <path
-              d="M580 298 C670 265 755 235 910 235"
-              stroke={COLORS.amberLight}
-              strokeOpacity="0.45"
-            />
-            <path
-              d="M580 310 C670 310 760 310 930 310"
-              stroke={COLORS.amber}
-              strokeOpacity="0.58"
-            />
-            <path
-              d="M580 322 C670 350 755 385 910 385"
-              stroke={COLORS.amberLight}
-              strokeOpacity="0.4"
-            />
-
-            <ellipse
-              cx="500"
-              cy="310"
-              rx="215"
-              ry="80"
-              stroke={COLORS.blue}
-              strokeOpacity="0.18"
-            />
-
-            <ellipse
-              cx="500"
-              cy="310"
-              rx="202"
-              ry="112"
-              stroke={COLORS.amber}
-              strokeOpacity="0.12"
-              transform="rotate(36 500 310)"
-            />
-          </g>
-
-          <circle
-            cx="500"
-            cy="310"
-            r="112"
-            fill="url(#dsx-static-core)"
-            stroke="url(#dsx-static-rim)"
-            strokeWidth="2"
-          />
-
-          <circle
-            cx="500"
-            cy="310"
-            r="4"
-            fill={COLORS.white}
-          />
-        </svg>
+          <div className="dsx-orb__fallback-core">
+            <strong>DSX<br />EDGE</strong>
+            <span>Communications platform</span>
+          </div>
+        </div>
 
         <div className="dsx-orb__label dsx-orb__label--incoming">
           <div className="dsx-orb__kicker">
@@ -952,8 +1367,7 @@ export default function SignalOrb() {
             The starting point
           </div>
           <div className="dsx-orb__label-copy">
-            Calls, messages, routing events, web chat, and customer
-            inquiries.
+            Calls, messages, routing events, web chat, and customer inquiries.
           </div>
         </div>
 
@@ -969,46 +1383,52 @@ export default function SignalOrb() {
           </div>
         </div>
 
-        <div className="dsx-orb__label dsx-orb__core-label">
-          <strong>DSX EDGE</strong>
-          <span>Communications platform</span>
-        </div>
-
-        <div className="dsx-orb__label dsx-orb__foundation-label">
-          <div className="dsx-orb__kicker">Built on</div>
-          <div className="dsx-orb__label-title">
-            3CX · PBX · SIP · Hosted Infrastructure
-          </div>
-        </div>
-
         <button
           type="button"
-          className="dsx-orb__hit-zone dsx-orb__hit-zone--left"
+          className="dsx-orb__zone dsx-orb__zone--left"
           aria-label="Focus incoming communications"
           aria-pressed={focus === "communications"}
-          onPointerEnter={() => changeFocus("communications")}
-          onFocus={() => changeFocus("communications")}
-          onClick={() => changeFocus("communications")}
+          onPointerEnter={() =>
+            changeFocus("communications")
+          }
+          onFocus={() =>
+            changeFocus("communications")
+          }
+          onBlur={() =>
+            changeFocus("overview")
+          }
         />
 
         <button
           type="button"
-          className="dsx-orb__hit-zone dsx-orb__hit-zone--core"
-          aria-label="Focus the DSX Edge communications platform"
+          className="dsx-orb__zone dsx-orb__zone--core"
+          aria-label="Focus the DSX Edge core"
           aria-pressed={focus === "core"}
-          onPointerEnter={() => changeFocus("core")}
-          onFocus={() => changeFocus("core")}
-          onClick={() => changeFocus("core")}
+          onPointerEnter={() =>
+            changeFocus("core")
+          }
+          onFocus={() =>
+            changeFocus("core")
+          }
+          onBlur={() =>
+            changeFocus("overview")
+          }
         />
 
         <button
           type="button"
-          className="dsx-orb__hit-zone dsx-orb__hit-zone--right"
-          aria-label="Focus intelligent business actions"
+          className="dsx-orb__zone dsx-orb__zone--right"
+          aria-label="Focus outgoing business actions"
           aria-pressed={focus === "actions"}
-          onPointerEnter={() => changeFocus("actions")}
-          onFocus={() => changeFocus("actions")}
-          onClick={() => changeFocus("actions")}
+          onPointerEnter={() =>
+            changeFocus("actions")
+          }
+          onFocus={() =>
+            changeFocus("actions")
+          }
+          onBlur={() =>
+            changeFocus("overview")
+          }
         />
 
         <div className="dsx-orb__mobile-summary" aria-hidden="true">
@@ -1016,12 +1436,18 @@ export default function SignalOrb() {
           <span>→</span>
           <span>Business action</span>
         </div>
-      </div>
 
-      <p className="dsx-orb__tagline">
-        <span>Above the Cloud.</span>
-        <span>Into the Business.</span>
-      </p>
+        <button
+          className="dsx-orb__motion"
+          type="button"
+          onClick={toggleMotion}
+          aria-pressed={paused}
+        >
+          {paused
+            ? "Resume motion"
+            : "Pause motion"}
+        </button>
+      </div>
     </section>
   );
 }
