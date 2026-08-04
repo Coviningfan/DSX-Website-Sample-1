@@ -661,7 +661,6 @@ export default function SignalOrb() {
     });
 
     let elapsed = 0;
-    let animationFrame = 0;
 
     const clock = new THREE.Clock();
     const targetScale = new THREE.Vector3(1, 1, 1);
@@ -680,7 +679,6 @@ export default function SignalOrb() {
     resize();
 
     const frame = () => {
-      animationFrame = window.requestAnimationFrame(frame);
 
       const delta = Math.min(clock.getDelta(), 0.05);
       const activeZone = focusRef.current;
@@ -801,11 +799,27 @@ export default function SignalOrb() {
       renderer.render(scene, camera);
     };
 
+    (window as typeof window & {
+      __DSX_ORB_DEBUG__?: {
+        renderer: THREE.WebGLRenderer;
+        scene: THREE.Scene;
+        flows: Flow[];
+        pausedRef: React.MutableRefObject<boolean>;
+        getElapsed: () => number;
+      };
+    }).__DSX_ORB_DEBUG__ = {
+      renderer,
+      scene,
+      flows,
+      pausedRef,
+      getElapsed: () => elapsed,
+    };
+
     setReady(true);
-    frame();
+    renderer.setAnimationLoop(frame);
 
     return () => {
-      window.cancelAnimationFrame(animationFrame);
+      renderer.setAnimationLoop(null);
       resizeObserver.disconnect();
       disposeScene(scene);
       renderer.dispose();
