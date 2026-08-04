@@ -167,3 +167,24 @@ body {
     cursor: pointer;
   }
 }
+
+/* Hero: tunnel image + SignalOrb blend
+   Removes the orb stage's solid dark fill so the tunnel shows through,
+   stretches the stage to fill the hero, and keeps the WebGL particles
+   readable via mix-blend-screen on the wrapper. */
+.hero-orb-blend .dsx-orb {
+  height: 100%;
+}
+.hero-orb-blend .dsx-orb__stage {
+  min-height: 100%;
+  height: 100%;
+  aspect-ratio: auto;
+  background: transparent;
+}
+.hero-orb-blend .dsx-orb__fallback {
+  /* Soften the static SVG fallback against the bright tunnel */
+  opacity: 0.55;
+}
+.hero-orb-blend .dsx-orb[data-ready="true"] .dsx-orb__fallback {
+  opacity: 0;
+}
