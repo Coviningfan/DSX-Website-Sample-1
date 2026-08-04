@@ -7,7 +7,7 @@ import DesignKitDemo from "@/pages/_design";
 
 export default function App() {
   return (
-    <ThemeProvider>
+    <ThemeProvider defaultTheme="dark">
       <BrowserRouter>
         <Navbar />
         <Routes>

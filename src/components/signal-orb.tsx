@@ -59,8 +59,8 @@ const LAYERS: Layer[] = [
     label: "Business Communications",
     short: "Communications",
     description: "Calls, routing, messaging, handsets, customer entry.",
-    color: "#60a5fa",
-    faint: "rgba(96,165,250,0.35)",
+    color: "#5b9dfd",
+    faint: "rgba(91,157,253,0.4)",
     angle: COMMUNICATIONS_ANGLE,
     rx: 206,
     ry: 66,
@@ -72,8 +72,8 @@ const LAYERS: Layer[] = [
     label: "Hosted Infrastructure",
     short: "Infrastructure",
     description: "SIP, hosting, redundancy, uptime, data center.",
-    color: "#94a3b8",
-    faint: "rgba(148,163,184,0.35)",
+    color: "#8fa5c0",
+    faint: "rgba(143,165,192,0.38)",
     angle: INFRASTRUCTURE_ANGLE,
     rx: 156,
     ry: 76,
@@ -85,8 +85,8 @@ const LAYERS: Layer[] = [
     label: "Operational Intelligence",
     short: "Intelligence",
     description: "Qualification, decision logic, automation, escalation.",
-    color: "#fb923c",
-    faint: "rgba(251,146,60,0.35)",
+    color: "#ff9540",
+    faint: "rgba(255,149,64,0.4)",
     angle: INTELLIGENCE_ANGLE,
     rx: 170,
     ry: 56,
@@ -236,7 +236,7 @@ function Core({ reducedMotion }: { reducedMotion: boolean }) {
       {/* breathing ring */}
       <motion.circle
         cx={CX} cy={CY} r={CORE_R}
-        fill="none" stroke="#60a5fa" strokeOpacity={0.3} strokeWidth={1.2}
+        fill="none" stroke="#5b9dfd" strokeOpacity={0.32} strokeWidth={1.2}
         animate={reducedMotion ? undefined : { scale: [1, 1.012, 1], opacity: [0.22, 0.42, 0.22] }}
         transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
         style={{ transformOrigin: `${CX}px ${CY}px` }}
@@ -251,7 +251,7 @@ function Core({ reducedMotion }: { reducedMotion: boolean }) {
       {/* center mark */}
       <circle cx={CX} cy={CY} r={14} fill="#0d1526" stroke="#60a5fa" strokeOpacity={0.6} strokeWidth={1.4} />
       <motion.circle
-        cx={CX} cy={CY} r={5.5} fill="#93c5fd"
+        cx={CX} cy={CY} r={5.5} fill="#9cc4ff"
         animate={reducedMotion ? undefined : { opacity: [0.75, 1, 0.75] }}
         transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut" }}
       />
@@ -288,7 +288,7 @@ export function SignalOrb() {
   return (
     <section
       ref={containerRef}
-      className="relative mx-auto aspect-square w-full max-w-[540px] select-none"
+      className="relative mx-auto aspect-square w-full max-w-[600px] select-none"
       aria-label="DSX Edge operating core"
       onPointerMove={handlePointerMove}
       onPointerLeave={resetPointer}
@@ -356,18 +356,18 @@ export function SignalOrb() {
             style={{
               left: `${(pos.x / VIEWBOX) * 100}%`,
               top: `${(pos.y / VIEWBOX) * 100}%`,
-              borderColor: isActive ? layer.color : "hsl(var(--border))",
-              backgroundColor: isActive ? "hsla(var(--card))" : "transparent",
+              borderColor: isActive ? layer.color : "var(--border)",
+              backgroundColor: isActive ? "var(--card)" : "transparent",
               boxShadow: isActive ? `0 0 22px ${layer.faint}` : "none",
             }}
             aria-pressed={isActive}
             aria-label={layer.label}
             title={layer.label}
           >
-            <span className="flex h-11 w-11 items-center justify-center">
+            <span className="flex h-12 w-12 items-center justify-center">
               <Icon
-                className="h-[18px] w-[18px] transition-colors"
-                style={{ color: isActive ? layer.color : "hsl(var(--muted-foreground))" }}
+                className="h-[20px] w-[20px] transition-colors"
+                style={{ color: isActive ? layer.color : "var(--muted-foreground)" }}
                 strokeWidth={1.7}
               />
             </span>

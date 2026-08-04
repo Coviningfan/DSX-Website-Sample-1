@@ -10,7 +10,7 @@ Migrated from the PortfolioRevamp (Replit-based) codebase to Zo Site. DSX Edge i
 
 **Font pairing:** IBM Plex Sans (body) + IBM Plex Mono (data/metrics). Loaded from Google Fonts in `index.html`.
 
-**Theme:** Dark navy foundation with blue (infrastructure/trust) and orange (action) as restrained accent roles. No gradient text, no glassmorphism, no glow effects.
+**Theme:** Near-black navy foundation (`oklch(0.10 0.012 258)`, defaulted to dark) with refined blue (`oklch(0.62 0.15 255)`) for infrastructure/trust and orange (`oklch(0.66 0.16 45)`) for action as the only accent roles. Tuned in `src/theme.json` (wired via `src/lib/zo-theme.ts` at runtime; `.dark` fallback tokens live in `src/styles.css`). No gradient text, no glassmorphism, no glow effects.
 
 **Layout:** Left-aligned editorial grid. Full-bleed elements. Rounded corners at `--radius-lg` (0.625rem). No rounded-2xl or card overload.
 

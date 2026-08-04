@@ -2,6 +2,7 @@ import React from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App";
 import "./styles.css";
+import "./lib/zo-theme";
 
 // AI agents: read README.md for navigation and contribution guidance.
 const container = document.getElementById("root");
