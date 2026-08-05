@@ -42,17 +42,17 @@ export default function Navbar() {
 
   return (
     <nav
-      className="site-nav fixed left-0 right-0 top-0 z-50 flex justify-center px-4 pt-5 pointer-events-none sm:pt-[30px]"
+      className="site-nav fixed left-0 right-0 top-0 z-50 flex justify-center px-3 pt-[max(0.75rem,env(safe-area-inset-top))] pointer-events-none sm:px-4 sm:pt-5"
     >
       <div
         ref={menuRef}
-        className="pointer-events-auto flex w-fit max-w-full items-center gap-6 rounded-2xl border border-black/10 bg-white/55 px-5 py-3 shadow-[inset_0_4px_4px_rgba(255,255,255,0.3),0_10px_28px_rgba(25,61,94,0.09)] backdrop-blur-2xl transition-[background-color,box-shadow] duration-300 hover:bg-white/70"
+        className="pointer-events-auto flex w-full max-w-full items-center justify-between gap-3 rounded-xl border border-black/10 bg-white/92 px-3 py-1.5 shadow-[0_8px_24px_rgba(25,61,94,0.1)] backdrop-blur-xl transition-[background-color,box-shadow] duration-300 sm:w-fit sm:justify-start sm:gap-6 sm:rounded-2xl sm:bg-white/70 sm:px-5 sm:py-2 md:py-3"
       >
         <Link to="/" className="flex min-h-11 items-center gap-2.5 shrink-0" aria-label="DSX Edge home">
           <img
             src="/images/dsx-edge-logo.png"
             alt="DSX Edge"
-            className="h-6 w-auto"
+            className="h-5 w-auto sm:h-6"
           />
         </Link>
 
@@ -94,7 +94,7 @@ export default function Navbar() {
       </div>
 
       {open && (
-        <div id="mobile-navigation" className="fixed top-[84px] left-4 right-4 max-h-[calc(100dvh-100px)] overflow-y-auto overscroll-contain md:hidden pointer-events-auto sm:top-[96px]">
+        <div id="mobile-navigation" className="fixed left-3 right-3 top-[calc(max(0.75rem,env(safe-area-inset-top))+3.75rem)] max-h-[calc(100dvh-5rem-env(safe-area-inset-top))] overflow-y-auto overscroll-contain md:hidden pointer-events-auto sm:left-4 sm:right-4 sm:top-[5.5rem]">
           <div className="bg-white/95 backdrop-blur-[50px] rounded-2xl border border-black/10 p-3 shadow-lg">
             <div className="flex flex-col gap-1">
               {NAV_LINKS.map((link) => (

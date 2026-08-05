@@ -34,6 +34,16 @@ Migrated from the PortfolioRevamp (Replit-based) codebase to Zo Site. DSX Edge i
 - WebGL scene is fully constructed on mount and the renderer owns its loop via `renderer.setAnimationLoop`.
 - Full WebGL cleanup on unmount (`setAnimationLoop(null)`, geometry/material disposal, context loss handler).
 
+### Responsive presentation
+
+- The fixed navigation uses a compact, safe-area-aware mobile bar and a scroll-contained menu below it. Route and hash destinations reserve the collapsed header height.
+- The homepage hero is content-driven on mobile and uses `100svh` only from tablet widths upward, preventing mobile browser chrome from creating clipping or false whitespace.
+- SignalOrb has three intentional scene modes: side explanations on wide desktop, two explanation columns below the scene on tablet/narrow desktop, and stacked explanations on mobile.
+- Orb scale is constrained by both stage width and height. The scene recenters below 760px so the sphere and all six directional rails remain visible without horizontal overflow.
+- Mobile orb touch zones do not intercept vertical scrolling. Keyboard focus zones remain available from tablet widths upward.
+- Mobile sections use a 80px baseline rhythm, increasing to 96–128px at larger breakpoints. Long workflow cards use native disclosure controls on mobile and remain fully expanded from the small breakpoint upward.
+- Motion continues while the visualization is onscreen and suspends offscreen. Reduced-motion preferences remove transition effects without hiding the operating model.
+
 ### Opportunity section
 
 - The homepage's missed-opportunity section uses an explicitly illustrative live-call timeline: incoming call, request understood, availability checked, and appointment confirmed.

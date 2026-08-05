@@ -1041,13 +1041,14 @@ export default function SignalOrb({
       const height = stage.clientHeight;
       const rootScale =
         width >= 1100
-          ? 1.34
+          ? Math.min(1.34, height / 430)
           : width >= 760
-            ? 1.12
-            : 0.88;
+            ? Math.min(1.08, height / 440)
+            : Math.min(0.78, width / 500, height / 430);
 
       camera.aspect = width / height;
       camera.updateProjectionMatrix();
+      root.position.x = width < 760 ? 0 : 0.22;
       root.scale.setScalar(rootScale);
 
       renderer.setSize(

@@ -105,7 +105,7 @@
   }
   body {
     @apply bg-background text-foreground;
-    min-width: 320px;
+    min-width: 0;
     overflow-x: clip;
     -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;
@@ -125,7 +125,7 @@
 }
 
 html {
-  scroll-padding-top: 7rem;
+  scroll-padding-top: calc(5.5rem + env(safe-area-inset-top));
 }
 
 button,
@@ -222,7 +222,6 @@ textarea {
 
 .how-it-works-orb {
   width: min(100%, 1280px);
-  min-height: 620px;
   margin-inline: auto;
 }
 
@@ -244,7 +243,7 @@ textarea {
 
   .how-it-works-orb,
   .how-it-works-orb .dsx-hero-orb__stage {
-    min-height: 480px;
+    min-height: 340px;
   }
 }
 
@@ -257,7 +256,4 @@ textarea {
     transform: none;
     transition: none;
   }
-}
-html {
-  scroll-padding-top: 7rem;
 }

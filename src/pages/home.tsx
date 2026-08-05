@@ -78,7 +78,7 @@ export default function HomePage() {
 
   return (
     <main className="min-h-screen bg-white overflow-x-hidden">
-      <section className="relative min-h-screen flex flex-col overflow-hidden">
+      <section className="relative flex min-h-[100svh] flex-col overflow-hidden pt-[env(safe-area-inset-top)] max-md:min-h-0">
         <div className="absolute inset-0 z-0 hero-tunnel-bg" aria-hidden="true">
           <img
             src="/images/dsx-edge-bkg.jpg"
@@ -88,18 +88,18 @@ export default function HomePage() {
         </div>
         <div className="absolute inset-0 z-[2] bg-gradient-to-b from-white/10 via-transparent to-[#d9ebf7]/20" />
 
-        <div className="relative z-10 flex flex-1 flex-col items-center px-4 pt-32 sm:px-6 sm:pt-36">
-          <h1 className="max-w-5xl text-center text-5xl font-bold leading-[1.05] tracking-[-2px] text-[#191919] sm:text-6xl md:text-7xl lg:text-8xl">
+        <div className="relative z-10 flex flex-1 flex-col items-center px-4 pb-8 pt-24 sm:px-6 sm:pt-32 md:pb-0 md:pt-36">
+          <h1 className="max-w-5xl text-balance text-center text-[clamp(2.65rem,12vw,4.5rem)] font-bold leading-[1.02] tracking-[-0.045em] text-[#191919] md:text-7xl lg:text-8xl">
             Every Department, Every Function, 24/7.
           </h1>
-          <p className="mt-5 text-center text-xl font-semibold text-[#0084FF] md:text-2xl">
+          <p className="mt-4 text-center text-lg font-semibold text-[#0084FF] sm:text-xl md:text-2xl">
             Business Communications That Drive Profit
           </p>
-          <p className="mt-6 max-w-2xl text-center text-lg leading-relaxed text-[#191919]/70 md:text-xl">
+          <p className="mt-4 max-w-2xl text-center text-base leading-relaxed text-[#191919]/70 sm:mt-6 sm:text-lg md:text-xl">
             A new dimension in customer interaction and service, tailored to your business.
           </p>
 
-          <div className="mt-9 flex flex-col items-center gap-4 sm:flex-row">
+          <div className="mt-7 flex flex-col items-center gap-3 sm:mt-9 sm:flex-row sm:gap-4">
             <a
               href="tel:844-379-3343"
               className="inline-flex items-center gap-2 rounded-xl bg-[#0872d6] px-6 py-3 text-sm font-semibold text-white shadow-[0_12px_30px_rgba(0,91,176,0.2)] transition-transform duration-200 hover:-translate-y-0.5"
@@ -114,7 +114,7 @@ export default function HomePage() {
           </div>
         </div>
 
-        <div className="relative z-10 mx-auto mt-12 w-full max-w-5xl px-4 sm:px-6">
+        <div className="relative z-10 mx-auto mt-4 w-full max-w-5xl px-4 sm:mt-10 sm:px-6 md:mt-12">
           <div className="relative overflow-hidden rounded-t-2xl border border-b-0 border-slate-200/80 bg-white/90 px-5 pb-0 pt-8 shadow-[0_-8px_32px_rgba(27,70,108,0.08)] backdrop-blur-md sm:px-8 sm:pt-10 md:px-12 md:pt-12">
             <div className="brand-accent-rail absolute inset-x-0 top-0" aria-hidden="true" />
             <div className="grid gap-6 md:grid-cols-2 md:gap-16">
@@ -156,7 +156,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section id="opportunity" className="relative overflow-hidden bg-[#102b43] px-4 py-24 text-white sm:px-6 md:px-10 sm:py-32">
+      <section id="opportunity" className="relative overflow-hidden bg-[#102b43] px-4 py-20 text-white sm:px-6 sm:py-24 md:px-10 md:py-32">
         <div className="pointer-events-none absolute inset-0 opacity-50" aria-hidden="true">
           <div className="absolute -left-24 top-10 h-72 w-72 rounded-full bg-[#0872d6]/15 blur-3xl" />
           <div className="absolute -right-20 bottom-0 h-64 w-64 rounded-full bg-[#e2712f]/10 blur-3xl" />
@@ -224,32 +224,22 @@ export default function HomePage() {
 
 
       {/* ── How It Works ─────────────────────────────────── */}
-      <section id="how-it-works" className="py-24 sm:py-32 px-4 sm:px-6 md:px-10 bg-white">
+      <section id="how-it-works" className="bg-white px-4 py-20 sm:px-6 sm:py-24 md:px-10 md:py-32">
         <div className="max-w-6xl mx-auto">
           <h2 className="font-bold text-3xl sm:text-4xl md:text-5xl leading-tight tracking-tight text-[#191919] text-center mb-6">
             How It Works
           </h2>
-          <p className="text-[#191919]/60 max-w-2xl mx-auto text-center leading-relaxed mb-16">
+          <p className="mx-auto mb-10 max-w-2xl text-center leading-relaxed text-[#191919]/60 sm:mb-14">
             Communications, Intelligence, and Infrastructure — integrated into a single operating layer that runs alongside your team, 24 hours a day.
           </p>
 
-          <div className="how-it-works-orb mb-16">
+          <div className="how-it-works-orb">
             <SignalOrb />
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-6">
-            {LAYERS.map((l) => (
-              <div key={l.num} className="bg-white rounded-2xl border border-gray-200 p-6 hover:border-[#0084FF]/20 transition-colors duration-200">
-                <span className="text-2xl font-bold text-[#0084FF]">{l.num}</span>
-                <h3 className="mt-2 font-semibold text-[#191919]">{l.label}</h3>
-                <p className="mt-2 text-sm text-[#191919]/60 leading-relaxed">{l.subtitle}</p>
-              </div>
-            ))}
           </div>
         </div>
       </section>
 
-      <section className="bg-white px-4 py-24 sm:px-6 md:px-10 sm:py-32">
+      <section className="bg-white px-4 py-20 sm:px-6 sm:py-24 md:px-10 md:py-32">
         <div className="mx-auto grid max-w-6xl gap-12 lg:grid-cols-2 lg:items-center">
           <div>
             <p className="mb-4 text-xs font-medium uppercase tracking-[0.2em] text-[#0084FF]">
@@ -278,7 +268,7 @@ export default function HomePage() {
       </section>
 
       {/* ── Turnkey AI ───────────────────────────────────── */}
-      <section className="py-24 sm:py-32 px-4 sm:px-6 md:px-10 bg-[#F9F8F6]">
+      <section className="bg-[#F9F8F6] px-4 py-20 sm:px-6 sm:py-24 md:px-10 md:py-32">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <p className="text-xs uppercase tracking-[0.2em] text-[#0084FF] font-medium mb-4">
@@ -318,7 +308,7 @@ export default function HomePage() {
       </section>
 
       {/* ── Every Department ──────────────────────────────── */}
-      <section className="py-24 px-4 sm:px-6 md:px-10 bg-white">
+      <section className="bg-white px-4 py-20 sm:px-6 sm:py-24 md:px-10">
         <div className="max-w-6xl mx-auto text-center">
           <p className="text-xs uppercase tracking-[0.2em] text-[#0084FF] font-medium mb-4">
             Every Department
@@ -340,7 +330,7 @@ export default function HomePage() {
       </section>
 
       {/* ── Industry Workflow Examples ────────────────────── */}
-      <section className="py-24 sm:py-32 px-4 sm:px-6 md:px-10 bg-[#F9F8F6]">
+      <section className="bg-[#F9F8F6] px-4 py-20 sm:px-6 sm:py-24 md:px-10 md:py-32">
         <div className="max-w-6xl mx-auto">
           <p className="text-xs uppercase tracking-[0.2em] text-[#0084FF] font-medium mb-4 text-center">
             Tailored to Your Business
@@ -356,14 +346,18 @@ export default function HomePage() {
             {WORKFLOW_EXAMPLES.map((ex) => {
               const Icon = ex.icon;
               return (
-                <div
+                <article
                   key={ex.title}
-                  className="bg-white rounded-2xl border border-gray-200 p-6 hover:border-[#0084FF]/20 transition-all duration-200"
+                  className="border border-gray-200 bg-white p-5 transition-colors duration-200 hover:border-[#0084FF]/20 sm:p-6"
                 >
                   <Icon className="w-8 h-8 text-[#0084FF] mb-4" />
                   <h3 className="font-semibold text-[#191919] mb-2">{ex.title}</h3>
-                  <p className="text-sm text-[#191919]/60 leading-relaxed">{ex.desc}</p>
-                </div>
+                  <details className="group sm:hidden">
+                    <summary className="cursor-pointer list-none text-sm font-medium text-[#0872d6] marker:hidden">See workflow</summary>
+                    <p className="mt-3 text-sm leading-relaxed text-[#191919]/60">{ex.desc}</p>
+                  </details>
+                  <p className="hidden text-sm leading-relaxed text-[#191919]/60 sm:block">{ex.desc}</p>
+                </article>
               );
             })}
           </div>
