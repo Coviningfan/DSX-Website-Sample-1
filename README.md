@@ -27,9 +27,10 @@ Migrated from the PortfolioRevamp (Replit-based) codebase to Zo Site. DSX Edge i
 - Orb is the interactive centerpiece of the dedicated **How It Works** section, not part of the homepage hero.
 - Internal particles travel left-to-right in six deterministic helical streams through the core and shift from blue through a brighter white core to amber. This coherent lane structure makes direction readable without enlarging the particles. Three inbound blue rails and three outbound amber rails carry luminous directional packets.
 - The six particle streams retain the first orb's continuous coherent roll while moving through the core. Focusing the communications, core, or actions zone accelerates the internal transit, with the core producing the strongest response.
-- The particle field uses 240 high-contrast points and more legible transit speed; the motion control exposes an explicit running/paused status alongside the Pause or Resume action.
+- The particle field uses 240 high-contrast points and more legible transit speed. Motion runs continuously while the visualization is onscreen; there is no visible motion toolbar.
 - The visualization is scaled so the sphere occupies roughly one-third of the desktop stage, with responsive tablet/mobile reductions that keep all six rails visible.
-- Pause/Resume, three keyboard-accessible focus zones, `prefers-reduced-motion`, and offscreen animation pausing are preserved.
+- A restrained shader-driven processing wave, independent core/shell drift, and a breathing halo represent autonomous work without adding decorative geometry.
+- Three keyboard-accessible focus zones, `prefers-reduced-motion`, and offscreen animation pausing are preserved.
 - WebGL scene is fully constructed on mount and the renderer owns its loop via `renderer.setAnimationLoop`.
 - Full WebGL cleanup on unmount (`setAnimationLoop(null)`, geometry/material disposal, context loss handler).
 

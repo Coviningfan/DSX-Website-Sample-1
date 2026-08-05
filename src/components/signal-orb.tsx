@@ -4,7 +4,6 @@ import {
   useState,
   type PointerEvent as ReactPointerEvent,
 } from "react";
-import { Pause, Play } from "lucide-react";
 import * as THREE from "three";
 import "./signal-orb.css";
 
@@ -154,7 +153,6 @@ export default function SignalOrb({
   const focusRef =
     useRef<FocusZone>("overview");
 
-  const [paused, setPaused] = useState(false);
   const [ready, setReady] = useState(false);
   const [focus, setFocus] =
     useState<FocusZone>("overview");
@@ -186,12 +184,6 @@ export default function SignalOrb({
     changeFocus("overview");
   };
 
-  const toggleMotion = () => {
-    const nextPaused = !pausedRef.current;
-    pausedRef.current = nextPaused;
-    setPaused(nextPaused);
-  };
-
   useEffect(() => {
     const stage = stageRef.current;
     const mount = mountRef.current;
@@ -203,7 +195,6 @@ export default function SignalOrb({
     ).matches;
 
     pausedRef.current = reducedMotion;
-    setPaused(reducedMotion);
 
     const scene = new THREE.Scene();
 
@@ -402,6 +393,26 @@ export default function SignalOrb({
           float fieldLines =
             smoothstep(0.972, 1.0, field);
 
+          float processWave =
+            0.5 +
+            0.5 * sin(
+              vLocalPosition.x * 8.5 -
+              uTime * 1.15 +
+              vLocalPosition.y * 2.2
+            );
+
+          float processBand =
+            smoothstep(0.82, 1.0, processWave) *
+            (1.0 - smoothstep(
+              0.18,
+              1.18,
+              length(vLocalPosition.xy)
+            ));
+
+          float processCore =
+            exp(-4.2 * dot(vLocalPosition, vLocalPosition)) *
+            (0.72 + 0.28 * sin(uTime * 1.7));
+
           vec3 color = body;
 
           color += rimColor *
@@ -415,6 +426,14 @@ export default function SignalOrb({
           color += rimColor *
             fieldLines *
             0.022;
+
+          color += mix(
+            uBlueLight,
+            uAmberLight,
+            actionSide
+          ) * processBand * 0.055;
+
+          color += uBlueLight * processCore * 0.07;
 
           /*
            * Amber is a controlled action-side reflection,
@@ -1110,6 +1129,15 @@ export default function SignalOrb({
         wire.rotation.y =
           elapsed * 0.022;
 
+        wire.rotation.x =
+          Math.sin(elapsed * 0.19) * 0.045;
+
+        core.rotation.y =
+          Math.sin(elapsed * 0.16) * 0.022;
+
+        core.rotation.x =
+          Math.cos(elapsed * 0.13) * 0.014;
+
         const packetAxis =
           new THREE.Vector3(0, 1, 0);
 
@@ -1208,7 +1236,10 @@ export default function SignalOrb({
       const haloTarget =
         activeZone === "core"
           ? 0.78
-          : 0.52;
+          : 0.5 +
+            Math.sin(
+              coreMaterial.uniforms.uTime.value * 0.72,
+            ) * 0.055;
 
       haloMaterial.opacity +=
         (
@@ -1435,22 +1466,6 @@ export default function SignalOrb({
           }
         />
 
-        <button
-          className="dsx-hero-orb__motion"
-          type="button"
-          onClick={toggleMotion}
-          aria-pressed={paused}
-          data-paused={paused}
-        >
-          <span className="dsx-hero-orb__motion-state" aria-hidden="true">
-            <span className="dsx-hero-orb__motion-indicator" />
-            {paused ? "Motion paused" : "Motion running"}
-          </span>
-          <span className="dsx-hero-orb__motion-action">
-            {paused ? <Play /> : <Pause />}
-            {paused ? "Resume" : "Pause"}
-          </span>
-        </button>
       </div>
 
       <div className="dsx-hero-orb__explainers">
