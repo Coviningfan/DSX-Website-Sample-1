@@ -1,5 +1,5 @@
 import DsxEdgeHero from "@/components/dsx-edge-hero-v4";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import SignalOrb from "@/components/signal-orb";
 import {
   Phone, ArrowRight, Wrench, Stethoscope, ShoppingCart,
