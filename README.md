@@ -28,6 +28,7 @@ Migrated from the PortfolioRevamp (Replit-based) codebase to Zo Site. DSX Edge i
 - Internal particles travel left-to-right in six deterministic helical streams through the core and shift from blue through a brighter white core to amber. This coherent lane structure makes direction readable without enlarging the particles. Three inbound blue rails and three outbound amber rails carry luminous directional packets.
 - The six particle streams retain the first orb's continuous coherent roll while moving through the core. Focusing the communications, core, or actions zone accelerates the internal transit, with the core producing the strongest response.
 - The particle field uses 240 high-contrast points and more legible transit speed; the motion control exposes an explicit running/paused status alongside the Pause or Resume action.
+- The visualization is scaled so the sphere occupies roughly one-third of the desktop stage, with responsive tablet/mobile reductions that keep all six rails visible.
 - Pause/Resume, three keyboard-accessible focus zones, `prefers-reduced-motion`, and offscreen animation pausing are preserved.
 - WebGL scene is fully constructed on mount and the renderer owns its loop via `renderer.setAnimationLoop`.
 - Full WebGL cleanup on unmount (`setAnimationLoop(null)`, geometry/material disposal, context loss handler).
@@ -53,6 +54,8 @@ Migrated from the PortfolioRevamp (Replit-based) codebase to Zo Site. DSX Edge i
 **Layout:** Left-aligned editorial grid. Full-bleed elements. Rounded corners at `--radius-lg` (0.625rem). No rounded-2xl or card overload.
 
 **Motion:** Framer Motion for subtle entrance effects on critical elements only. No universal scroll reveals. No hover lifts on cards.
+
+**Scrolling:** Route changes and hash navigation land at the exact start of their destination. Browser history restoration is manual, and section reveals do not translate or scale the document's visual position.
 
 **Surface treatment:** Solid surfaces using the brand palette. No backdrop-blur, no glass effects, no sheen sweeps.
 
