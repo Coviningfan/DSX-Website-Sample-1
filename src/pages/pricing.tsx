@@ -121,7 +121,7 @@ export default function PricingPage() {
             Adding DSX Edge AI is equivalent to adding staff —
             at a fraction of the cost.
           </h2>
-          <div className="grid sm:grid-cols-4 gap-6 text-center">
+          <div className="grid sm:grid-cols-3 gap-6 text-center">
             <div className="bg-white rounded-2xl border border-gray-200 p-6">
               <p className="text-4xl font-bold text-[#0084FF] mb-2">$0</p>
               <p className="text-sm text-[#191919]/60">Per user, forever. No seat licenses.</p>
@@ -133,10 +133,6 @@ export default function PricingPage() {
             <div className="bg-white rounded-2xl border border-gray-200 p-6">
               <p className="text-4xl font-bold text-[#0084FF] mb-2">&lt;1</p>
               <p className="text-sm text-[#191919]/60">Week to break even on a single recovered sale.</p>
-            </div>
-            <div className="bg-white rounded-2xl border border-gray-200 p-6">
-              <p className="text-4xl font-bold text-[#0084FF] mb-2">15%</p>
-              <p className="text-sm text-[#191919]/60">Typical productivity gain from offloading routine tasks.</p>
             </div>
           </div>
         </div>

@@ -11,6 +11,7 @@ interface FormData {
   employees: string;
   bestDay: string;
   bestTime: string;
+  website: string;
 }
 
 const INDUSTRY_OPTIONS = [
@@ -27,16 +28,38 @@ export default function AboutPage() {
   const [form, setForm] = useState<FormData>({
     name: "", company: "", email: "", phone: "", message: "",
     industry: "", employees: "", bestDay: "", bestTime: "",
+    website: "",
   });
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    setSubmitting(true);
+    setSubmitError("");
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(form),
+      });
+
+      if (!response.ok) throw new Error("Submission failed");
+      setSubmitted(true);
+    } catch {
+      setSubmitError("We couldn’t record your request. Please try again or call 775-624-9424.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -50,8 +73,8 @@ export default function AboutPage() {
             Serving Businesses Like Yours
           </h1>
           <p className="mt-6 text-lg text-[#191919]/60 leading-relaxed max-w-2xl">
-            Twenty years in business communications. A local team in Northern Nevada.
-            One platform that finally does what the big guys promised and never delivered.
+            For nearly 20 years, DSX has helped small and medium businesses grow by applying
+            communications technology wisely.
           </p>
         </div>
 
@@ -91,12 +114,10 @@ export default function AboutPage() {
           <div className="md:col-span-2">
             <div className="bg-[#F9F8F6] rounded-2xl p-8 md:p-10">
               <p className="text-lg text-[#191919]/60 leading-relaxed mb-8">
-                We started as a telecom provider two decades ago. We watched the industry
-                pile on features nobody asked for while ignoring the one thing businesses
-                actually needed: a system that answers the phone, routes calls intelligently,
-                and doesn&rsquo;t require an IT department to operate. DSX Edge is the result
-                of everything we learned — built locally, running on AI we control, priced
-                for businesses that can&rsquo;t afford to waste a single call.
+                We are a local team of experienced communications, data, networking, and AI
+                professionals. We are not big-company outsiders, and we do not charge consulting
+                fees to tell you what you already know. We build cost-effective systems that serve
+                the way your business actually works. When our clients succeed, we succeed.
               </p>
             </div>
           </div>
@@ -122,11 +143,16 @@ export default function AboutPage() {
               </div>
               <h3 className="font-bold text-2xl text-[#191919] mb-2">Thanks for reaching out.</h3>
               <p className="text-[#191919]/60">
-                We&rsquo;ll be in touch within one business day — usually faster.
+                Your request has been recorded. DSX Edge will use the contact details and preferred
+                time you provided to follow up.
               </p>
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="bg-white rounded-2xl border border-gray-200 p-8 md:p-10 space-y-6">
+              <div className="hidden" aria-hidden="true">
+                <label htmlFor="website">Website</label>
+                <input id="website" name="website" value={form.website} onChange={handleChange} tabIndex={-1} autoComplete="off" />
+              </div>
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-[#191919] mb-1.5">Name</label>
@@ -227,32 +253,38 @@ export default function AboutPage() {
                 <div>
                   <label className="block text-sm font-medium text-[#191919] mb-1.5">Best Day to Reach You</label>
                   <input
-                    type="text"
+                    type="date"
                     name="bestDay"
                     value={form.bestDay}
                     onChange={handleChange}
                     className="w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-white text-[#191919] text-sm focus:outline-none focus:border-[#0084FF] focus:ring-1 focus:ring-[#0084FF]/20 transition-all duration-200"
-                    placeholder="Any weekday"
                   />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-[#191919] mb-1.5">Best Times</label>
-                  <input
-                    type="text"
+                  <select
                     name="bestTime"
                     value={form.bestTime}
                     onChange={handleChange}
                     className="w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-white text-[#191919] text-sm focus:outline-none focus:border-[#0084FF] focus:ring-1 focus:ring-[#0084FF]/20 transition-all duration-200"
-                    placeholder="Mornings, 9–11am"
-                  />
+                  >
+                    <option value="">Select a time</option>
+                    <option value="Morning">Morning</option>
+                    <option value="Afternoon">Afternoon</option>
+                    <option value="Evening">Evening</option>
+                  </select>
                 </div>
               </div>
+              {submitError && (
+                <p role="alert" className="text-sm text-red-700">{submitError}</p>
+              )}
               <button
                 type="submit"
+                disabled={submitting}
                 className="w-full flex items-center justify-center gap-2 px-6 py-3 text-sm font-medium text-white bg-[#0084FF]/80 backdrop-blur-[2px] rounded-2xl hover:scale-[1.02] transition-transform duration-200"
                 style={{ boxShadow: "inset 0px 4px 4px 0px rgba(255,255,255,0.35)" }}
               >
-                Submit
+                {submitting ? "Recording Request…" : "Request My Consultation"}
                 <ArrowRight className="w-4 h-4" />
               </button>
             </form>

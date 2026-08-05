@@ -6,6 +6,15 @@ This file provides guidance when working with code in this repository. The READM
 
 Migrated from the PortfolioRevamp (Replit-based) codebase to Zo Site. DSX Edge is a business telecom/services company that builds phone systems, connects them to operations, and adds AI only where it earns its keep.
 
+### 2026-08-05 Client Presentation Readiness
+
+- The site is a five-page React application: Home, Features, Industries, Pricing, and About/Contact.
+- The homepage uses the approved tunnel hero and presents the SignalOrb in the dedicated How It Works section.
+- Homepage persuasion follows the approved mockup: missed-opportunity problem, natural conversation examples, platform explanation, turnkey implementation, department coverage, industry workflows, live demo, and consultation CTA.
+- The contact form writes validated requests to `data/contact-submissions.sqlite`; it does not claim success unless the API records the submission.
+- Only confirmed demo numbers are callable. Automotive uses 844-379-2886; other industry demo lines remain visibly pending confirmation.
+- Public publishing remains a separate approval-gated action after preview QA.
+
 ### 2026-08-04 Audit Fixes (verified live)
 
 - **Nav anchor fix:** "Features" now resolves to `#departments` (the section ID was missing, leaving dead links). All five nav links verified: Features→#departments, Industries→#industries, Pricing→#pricing, About→#about, Contact→#contact.

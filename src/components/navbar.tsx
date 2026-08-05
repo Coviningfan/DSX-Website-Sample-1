@@ -7,6 +7,7 @@ const NAV_LINKS = [
   { label: "Industries", href: "/industries" },
   { label: "Pricing", href: "/pricing" },
   { label: "About", href: "/about" },
+  { label: "Contact", href: "/about#contact" },
 ];
 
 const linkBase =
@@ -48,11 +49,11 @@ export default function Navbar() {
 
         <div className="hidden md:flex items-center gap-2">
           <Link
-            to="/about"
+            to="/about#contact"
             className="flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-white bg-[#0084FF]/80 backdrop-blur-[2px] rounded-2xl hover:scale-[1.02] transition-transform duration-200"
             style={{ boxShadow: "inset 0px 4px 4px 0px rgba(255,255,255,0.35)" }}
           >
-            Book A Demo
+            Request A Consultation
             <ArrowRight className="w-3.5 h-3.5" />
           </Link>
         </div>
@@ -81,11 +82,11 @@ export default function Navbar() {
                 </Link>
               ))}
               <Link
-                to="/about"
+                to="/about#contact"
                 onClick={() => setOpen(false)}
                 className="mt-2 flex items-center justify-center gap-1.5 px-4 py-2.5 text-sm font-medium text-white bg-[#0084FF] rounded-2xl"
               >
-                Book A Demo
+                Request A Consultation
                 <ArrowRight className="w-3.5 h-3.5" />
               </Link>
             </div>

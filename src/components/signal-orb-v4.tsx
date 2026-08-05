@@ -993,7 +993,8 @@ export default function SignalOrb({
     const orbitCMaterial =
       orbitC.material as THREE.LineBasicMaterial;
 
-    const clock = new THREE.Clock();
+    const timer = new THREE.Timer();
+    timer.connect(document);
 
     const resize = () => {
       const width = stage.clientWidth;
@@ -1027,8 +1028,9 @@ export default function SignalOrb({
     visibilityObserver.observe(stage);
 
     renderer.setAnimationLoop(() => {
+      timer.update();
       const delta = Math.min(
-        clock.getDelta(),
+        timer.getDelta(),
         0.05,
       );
 
@@ -1305,6 +1307,7 @@ export default function SignalOrb({
 
     return () => {
       renderer.setAnimationLoop(null);
+      timer.dispose();
       resizeObserver.disconnect();
       visibilityObserver.disconnect();
 

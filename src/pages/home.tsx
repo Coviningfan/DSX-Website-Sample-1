@@ -156,6 +156,37 @@ export default function HomePage() {
         </div>
       </section>
 
+      <section className="bg-[#102b43] px-4 py-24 text-white sm:px-6 md:px-10 sm:py-32">
+        <div className="mx-auto grid max-w-6xl gap-14 lg:grid-cols-[0.8fr_1.2fr] lg:items-center">
+          <div>
+            <p className="mb-4 text-xs font-medium uppercase tracking-[0.2em] text-[#f28a45]">
+              Never Miss Another Opportunity
+            </p>
+            <h2 className="text-balance text-3xl font-bold leading-tight tracking-tight sm:text-4xl md:text-5xl">
+              The most expensive call may be the one you never knew you missed.
+            </h2>
+            <p className="mt-6 max-w-xl text-pretty leading-relaxed text-white/70">
+              Customers call, click, and text when they are ready to act. DSX Edge answers routine
+              questions and completes common requests during business hours and after hours, so a
+              missed interaction does not quietly become lost revenue.
+            </p>
+          </div>
+          <div className="space-y-5">
+            <blockquote className="border-l-2 border-[#f28a45] bg-white/5 p-6 text-lg leading-relaxed text-white/90">
+              “I’ll be happy to schedule your appointment, Mrs. Smith. For Wednesday, May 5, I have
+              11:30 a.m. or 2:00 p.m. Will either work for you?”
+            </blockquote>
+            <blockquote className="border-l-2 border-[#4aa6ff] bg-white/5 p-6 text-lg leading-relaxed text-white/90">
+              “Thank you for explaining the problem. If you tell me your model number, I can identify
+              likely replacement parts and help schedule your service call.”
+            </blockquote>
+            <p className="text-sm text-white/55">
+              Natural conversation in the caller’s language, configured around your workflows and escalation rules.
+            </p>
+          </div>
+        </div>
+      </section>
+
 
       {/* ── How It Works ─────────────────────────────────── */}
       <section className="py-24 sm:py-32 px-4 sm:px-6 md:px-10 bg-white">
@@ -179,6 +210,34 @@ export default function HomePage() {
                 <p className="mt-2 text-sm text-[#191919]/60 leading-relaxed">{l.subtitle}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-white px-4 py-24 sm:px-6 md:px-10 sm:py-32">
+        <div className="mx-auto grid max-w-6xl gap-12 lg:grid-cols-2 lg:items-center">
+          <div>
+            <p className="mb-4 text-xs font-medium uppercase tracking-[0.2em] text-[#0084FF]">
+              The Easiest Way to Benefit From AI
+            </p>
+            <h2 className="text-balance text-3xl font-bold leading-tight tracking-tight text-[#191919] sm:text-4xl md:text-5xl">
+              One communications platform, configured for the work you need done.
+            </h2>
+          </div>
+          <div>
+            <p className="text-pretty text-lg leading-relaxed text-[#191919]/65">
+              DSX Edge combines business communications with AI agents that can handle customer
+              interactions, back-office tasks, and requests from customers or suppliers. It works
+              across calls, texts, email, and live chat, and connects each conversation to the next
+              action in your business.
+            </p>
+            <Link
+              to="/features"
+              className="mt-7 inline-flex items-center gap-2 rounded-xl bg-[#191919] px-6 py-3 text-sm font-medium text-white transition-colors duration-200 hover:bg-[#333]"
+            >
+              See the Full Platform
+              <ArrowRight className="h-4 w-4" />
+            </Link>
           </div>
         </div>
       </section>
@@ -307,10 +366,10 @@ export default function HomePage() {
             844-DSX-EDGE
           </a>
           <Link
-            to="/about"
+            to="/about#contact"
             className="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium text-[#191919] bg-white border border-gray-200 rounded-xl hover:bg-gray-50 transition-colors duration-200"
           >
-            BOOK A FREE CONSULTATION
+            REQUEST A CONSULTATION
             <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
@@ -339,7 +398,7 @@ export default function HomePage() {
           Tailored to Your Business
         </h2>
         <p className="text-[#191919]/60 max-w-xl mx-auto leading-relaxed mb-8">
-          You do not need to learn new software. DSX Edge fits into the way you already work. Call in, tell us about your business, and we will show you exactly how it runs — live, on your own phone line.
+          You do not need to learn new software. DSX Edge fits into the way you already work. Call in, tell us about your business, and we will show you exactly how it runs on your own phone line.
         </p>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <a
@@ -350,10 +409,10 @@ export default function HomePage() {
             844-DSX-EDGE
           </a>
           <Link
-            to="/about"
+            to="/about#contact"
             className="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium text-[#191919] bg-white border border-gray-200 rounded-xl hover:bg-gray-50 transition-colors duration-200"
           >
-            BOOK A FREE CONSULTATION
+            REQUEST A CONSULTATION
             <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
