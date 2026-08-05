@@ -64,7 +64,7 @@ export default function AboutPage() {
 
   return (
     <main className="min-h-screen bg-white">
-      <section className="relative pt-44 pb-24 px-4 sm:px-6 md:px-10 max-w-6xl mx-auto">
+      <section className="relative pt-32 pb-16 px-4 sm:px-6 sm:pt-44 sm:pb-24 md:px-10 max-w-6xl mx-auto">
         <div className="max-w-3xl">
           <p className="text-xs uppercase tracking-[0.2em] text-[#0084FF] font-medium mb-4">
             About DSX Edge
@@ -78,7 +78,7 @@ export default function AboutPage() {
           </p>
         </div>
 
-        <div className="mt-20 grid md:grid-cols-3 gap-8">
+        <div className="mt-14 grid md:grid-cols-3 gap-8 sm:mt-20">
           <div className="space-y-6">
             <div className="flex items-start gap-3">
               <MapPin className="w-5 h-5 text-[#0084FF] mt-0.5 shrink-0" />
@@ -124,7 +124,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section id="contact" className="py-24 px-4 sm:px-6 md:px-10 bg-[#F9F8F6]">
+      <section id="contact" className="py-16 px-4 sm:px-6 sm:py-24 md:px-10 bg-[#F9F8F6]">
         <div className="max-w-2xl mx-auto">
           <p className="text-xs uppercase tracking-[0.2em] text-[#0084FF] font-medium mb-4 text-center">
             Get In Touch
@@ -148,15 +148,16 @@ export default function AboutPage() {
               </p>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="bg-white rounded-2xl border border-gray-200 p-8 md:p-10 space-y-6">
+            <form onSubmit={handleSubmit} className="bg-white rounded-2xl border border-gray-200 p-5 sm:p-8 md:p-10 space-y-6">
               <div className="hidden" aria-hidden="true">
                 <label htmlFor="website">Website</label>
                 <input id="website" name="website" value={form.website} onChange={handleChange} tabIndex={-1} autoComplete="off" />
               </div>
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-[#191919] mb-1.5">Name</label>
+                  <label htmlFor="name" className="block text-sm font-medium text-[#191919] mb-1.5">Name</label>
                   <input
+                    id="name"
                     type="text"
                     name="name"
                     required
@@ -164,11 +165,13 @@ export default function AboutPage() {
                     onChange={handleChange}
                     className="w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-white text-[#191919] text-sm focus:outline-none focus:border-[#0084FF] focus:ring-1 focus:ring-[#0084FF]/20 transition-all duration-200"
                     placeholder="Your name"
+                    autoComplete="name"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-[#191919] mb-1.5">Company</label>
+                  <label htmlFor="company" className="block text-sm font-medium text-[#191919] mb-1.5">Company</label>
                   <input
+                    id="company"
                     type="text"
                     name="company"
                     required
@@ -176,13 +179,15 @@ export default function AboutPage() {
                     onChange={handleChange}
                     className="w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-white text-[#191919] text-sm focus:outline-none focus:border-[#0084FF] focus:ring-1 focus:ring-[#0084FF]/20 transition-all duration-200"
                     placeholder="Your company"
+                    autoComplete="organization"
                   />
                 </div>
               </div>
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-[#191919] mb-1.5">Email</label>
+                  <label htmlFor="email" className="block text-sm font-medium text-[#191919] mb-1.5">Email</label>
                   <input
+                    id="email"
                     type="email"
                     name="email"
                     required
@@ -190,11 +195,14 @@ export default function AboutPage() {
                     onChange={handleChange}
                     className="w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-white text-[#191919] text-sm focus:outline-none focus:border-[#0084FF] focus:ring-1 focus:ring-[#0084FF]/20 transition-all duration-200"
                     placeholder="you@company.com"
+                    autoComplete="email"
+                    inputMode="email"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-[#191919] mb-1.5">Phone</label>
+                  <label htmlFor="phone" className="block text-sm font-medium text-[#191919] mb-1.5">Phone</label>
                   <input
+                    id="phone"
                     type="tel"
                     name="phone"
                     required
@@ -202,13 +210,16 @@ export default function AboutPage() {
                     onChange={handleChange}
                     className="w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-white text-[#191919] text-sm focus:outline-none focus:border-[#0084FF] focus:ring-1 focus:ring-[#0084FF]/20 transition-all duration-200"
                     placeholder="(555) 123-4567"
+                    autoComplete="tel"
+                    inputMode="tel"
                   />
                 </div>
               </div>
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-[#191919] mb-1.5">Industry</label>
+                  <label htmlFor="industry" className="block text-sm font-medium text-[#191919] mb-1.5">Industry</label>
                   <select
+                    id="industry"
                     name="industry"
                     required
                     value={form.industry}
@@ -222,8 +233,9 @@ export default function AboutPage() {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-[#191919] mb-1.5">Number of Employees</label>
+                  <label htmlFor="employees" className="block text-sm font-medium text-[#191919] mb-1.5">Number of Employees</label>
                   <select
+                    id="employees"
                     name="employees"
                     required
                     value={form.employees}
@@ -238,8 +250,9 @@ export default function AboutPage() {
                 </div>
               </div>
               <div>
-                <label className="block text-sm font-medium text-[#191919] mb-1.5">Message</label>
+                <label htmlFor="message" className="block text-sm font-medium text-[#191919] mb-1.5">Message</label>
                 <textarea
+                  id="message"
                   name="message"
                   required
                   rows={4}
@@ -251,8 +264,9 @@ export default function AboutPage() {
               </div>
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-[#191919] mb-1.5">Best Day to Reach You</label>
+                  <label htmlFor="bestDay" className="block text-sm font-medium text-[#191919] mb-1.5">Best Day to Reach You</label>
                   <input
+                    id="bestDay"
                     type="date"
                     name="bestDay"
                     value={form.bestDay}
@@ -261,8 +275,9 @@ export default function AboutPage() {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-[#191919] mb-1.5">Best Times</label>
+                  <label htmlFor="bestTime" className="block text-sm font-medium text-[#191919] mb-1.5">Best Times</label>
                   <select
+                    id="bestTime"
                     name="bestTime"
                     value={form.bestTime}
                     onChange={handleChange}

@@ -149,7 +149,7 @@ export default function PricingPage() {
           </p>
           <a
             href="tel:844-379-3343"
-            className="inline-flex items-center gap-2 text-lg font-semibold text-[#0084FF] hover:text-[#0066CC] transition-colors duration-200 mb-8"
+            className="inline-flex min-h-11 items-center gap-2 px-2 text-lg font-semibold text-[#0084FF] hover:text-[#0066CC] transition-colors duration-200 mb-8"
           >
             <Phone className="w-5 h-5" />
             844-DSX-Edge

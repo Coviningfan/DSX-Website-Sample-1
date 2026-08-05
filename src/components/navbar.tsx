@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { Menu, X, ArrowRight } from "lucide-react";
 
@@ -17,14 +17,38 @@ const inactiveLink = "text-[#191919]/70 hover:text-[#191919]";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!open) return;
+
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setOpen(false);
+    };
+    const closeOnOutsideClick = (event: PointerEvent) => {
+      if (!menuRef.current?.contains(event.target as Node)) setOpen(false);
+    };
+
+    document.addEventListener("keydown", closeOnEscape);
+    document.addEventListener("pointerdown", closeOnOutsideClick);
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.removeEventListener("keydown", closeOnEscape);
+      document.removeEventListener("pointerdown", closeOnOutsideClick);
+      document.body.style.overflow = "";
+    };
+  }, [open]);
+
   return (
     <nav
       className="fixed left-0 right-0 top-0 z-50 flex justify-center px-4 pt-5 pointer-events-none sm:pt-[30px]"
     >
       <div
+        ref={menuRef}
         className="pointer-events-auto flex w-fit max-w-full items-center gap-6 rounded-2xl border border-black/10 bg-white/55 px-5 py-3 shadow-[inset_0_4px_4px_rgba(255,255,255,0.3),0_10px_28px_rgba(25,61,94,0.09)] backdrop-blur-2xl transition-[background-color,box-shadow] duration-300 hover:bg-white/70"
       >
-        <Link to="/" className="flex items-center gap-2.5 shrink-0">
+        <Link to="/" className="flex min-h-11 items-center gap-2.5 shrink-0" aria-label="DSX Edge home">
           <img
             src="/images/dsx-edge-logo.png"
             alt="DSX Edge"
@@ -60,23 +84,25 @@ export default function Navbar() {
 
         <button
           onClick={() => setOpen(!open)}
-          className="md:hidden p-1.5 text-[#191919]"
+          className="md:hidden flex size-11 items-center justify-center rounded-xl text-[#191919] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0084FF]"
           aria-label="Toggle menu"
+          aria-expanded={open}
+          aria-controls="mobile-navigation"
         >
           {open ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
         </button>
       </div>
 
       {open && (
-        <div className="fixed top-[calc(30px+60px)] left-4 right-4 md:hidden pointer-events-auto">
-          <div className="bg-white/90 backdrop-blur-[50px] rounded-2xl border border-black/10 p-4 shadow-lg">
+        <div id="mobile-navigation" className="fixed top-[84px] left-4 right-4 max-h-[calc(100dvh-100px)] overflow-y-auto overscroll-contain md:hidden pointer-events-auto sm:top-[96px]">
+          <div className="bg-white/95 backdrop-blur-[50px] rounded-2xl border border-black/10 p-3 shadow-lg">
             <div className="flex flex-col gap-1">
               {NAV_LINKS.map((link) => (
                 <Link
                   key={link.href}
                   to={link.href}
                   onClick={() => setOpen(false)}
-                  className="px-3 py-2.5 text-sm text-[#191919]/70 hover:text-[#191919] rounded-lg"
+                  className="flex min-h-11 items-center px-3 py-2.5 text-base text-[#191919]/70 hover:text-[#191919] rounded-lg"
                 >
                   {link.label}
                 </Link>
@@ -84,7 +110,7 @@ export default function Navbar() {
               <Link
                 to="/about#contact"
                 onClick={() => setOpen(false)}
-                className="mt-2 flex items-center justify-center gap-1.5 px-4 py-2.5 text-sm font-medium text-white bg-[#0084FF] rounded-2xl"
+                className="mt-2 flex min-h-12 items-center justify-center gap-1.5 px-4 py-2.5 text-sm font-medium text-white bg-[#0084FF] rounded-2xl"
               >
                 Request A Consultation
                 <ArrowRight className="w-3.5 h-3.5" />
