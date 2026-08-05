@@ -1,3 +1,4 @@
+import DsxEdgeHero from "@/components/dsx-edge-hero-v4";
 import { useState } from "react";
 import SignalOrb from "@/components/signal-orb";
 import {
@@ -48,7 +49,6 @@ const WORKFLOW_EXAMPLES = [
   },
 ];
 
-const TRUSTED_BY = ["Switch", "3CX", "Cisco", "Polycom", "Yealink"];
 
 export default function HomePage() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -77,93 +77,31 @@ export default function HomePage() {
     },
   ];
 
+
+  /* ── Tunnel blur: sharp in hero, gentle blur after scroll ── */
+  useEffect(() => {
+    const main = document.querySelector("main");
+    if (!main) return;
+
+    const handler = () => {
+      const hero = document.querySelector(".dsx-edge-hero");
+      if (!hero) return;
+      const rect = hero.getBoundingClientRect();
+      const exit = Math.max(0, -rect.top);
+      const h = hero.offsetHeight;
+      const progress = Math.min(exit / h, 1);
+      main.style.setProperty("--scroll-progress", progress.toString());
+    };
+
+    window.addEventListener("scroll", handler, { passive: true });
+    handler();
+    return () => window.removeEventListener("scroll", handler);
+  }, []);
+
   return (
     <main className="min-h-screen bg-white overflow-x-hidden">
-      {/* ── Hero ─────────────────────────────────────────── */}
-      <section className="relative h-screen flex flex-col overflow-hidden">
-        <div className="absolute inset-0 z-0 hero-tunnel-bg" />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/30 z-[2]" />
+      <DsxEdgeHero />
 
-        <div className="relative z-10 flex flex-col items-center flex-1 pt-32 px-4 sm:px-6">
-          <h1 className="font-bold text-5xl sm:text-6xl md:text-7xl lg:text-8xl leading-[1.05] -tracking-[2px] text-[#191919] text-center max-w-5xl">
-            Every Department, Every Function, 24/7.
-          </h1>
-          <p className="mt-4 text-xl md:text-2xl text-[#0084FF] font-semibold">
-            Business Communications That Drive Profit
-          </p>
-          <p className="mt-6 text-lg md:text-xl text-[#191919]/60 leading-relaxed max-w-2xl text-center">
-            A new dimension in customer interaction and service, tailored to your business.
-          </p>
-
-          <div className="flex flex-col sm:flex-row items-center gap-4 mt-8">
-            <a
-              href="tel:844-379-3343"
-              className="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium text-white bg-[#0084FF]/80 backdrop-blur-[2px] rounded-2xl hover:scale-[1.02] transition-transform duration-200"
-              style={{ boxShadow: "inset 0px 4px 4px 0px rgba(255,255,255,0.35)" }}
-            >
-              <Phone className="w-4 h-4" />
-              Call the Live Demo → 844-DSX-Edge
-            </a>
-            <p className="text-sm text-[#191919]/70">
-              Pick up the phone and hear it yourself
-            </p>
-          </div>
-        </div>
-
-        {/* Bottom info panel */}
-        <div className="relative z-10 mt-auto w-full max-w-5xl mx-auto px-4 sm:px-6">
-          <div className="bg-white/90 backdrop-blur-sm border border-gray-200 border-b-0 pt-8 sm:pt-12 md:pt-16 px-5 sm:px-8 md:px-12 pb-0 shadow-sm rounded-t-2xl">
-            <div className="grid md:grid-cols-2 gap-6 md:gap-16">
-              <div>
-                <p className="text-[11px] uppercase tracking-[0.2em] text-[#191919]/50 font-medium">
-                  What does DSX Edge do?
-                </p>
-                <h2 className="mt-3 text-2xl sm:text-3xl md:text-4xl font-bold leading-tight tracking-tight text-[#191919]">
-                  Conversations that build momentum
-                </h2>
-              </div>
-              <div className="flex items-end">
-                <p className="text-sm md:text-[15px] text-[#191919]/70 leading-relaxed">
-                  Conversational AI built for real businesses. Agents that hold a real conversation, plug into the systems you run, and show their work — across voice, SMS, and email.
-                </p>
-              </div>
-            </div>
-
-            <div className="mt-6 sm:mt-8 md:mt-10 h-px bg-gray-200 w-full" />
-
-            <div className="grid sm:grid-cols-3 gap-0.5">
-              {LAYERS.map((item, i) => (
-                <button
-                  key={item.num}
-                  onClick={() => openModal(i)}
-                  className="group flex items-center justify-between bg-[#F4F3F3] hover:bg-[#eaeaea] transition-all duration-200 px-4 sm:px-6 py-3.5 sm:py-4 text-left"
-                >
-                  <div className="flex items-center gap-2">
-                    <span className="text-[#191919]/40 font-medium">{item.num}</span>
-                    <span className="text-[#191919]/30 mx-1">/</span>
-                    <span className="font-medium text-[#191919]">{item.label}</span>
-                  </div>
-                  <ArrowRight className="w-4 h-4 text-gray-400 group-hover:text-gray-700 group-hover:translate-x-0.5 transition-all duration-200" />
-                </button>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── Proof Rail ───────────────────────────────────── */}
-      <section className="py-16 px-4 sm:px-6 md:px-10 bg-white">
-        <div className="max-w-6xl mx-auto text-center">
-          <p className="text-[11px] uppercase tracking-[0.2em] text-[#191919]/40 font-medium mb-4">
-            Trusted by
-          </p>
-          <div className="flex flex-wrap items-center justify-center gap-12 md:gap-24">
-            {TRUSTED_BY.map((b) => (
-              <span key={b} className="text-lg font-medium text-[#191919]/30">{b}</span>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* ── How It Works ─────────────────────────────────── */}
       <section className="py-24 sm:py-32 px-4 sm:px-6 md:px-10 bg-white">

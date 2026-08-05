@@ -16,14 +16,11 @@ export default function Footer() {
           <div className="lg:col-span-2">
             <Link to="/" className="flex items-center gap-2.5 mb-4">
               <img
-                src="/images/pegasus.svg"
+                src="/images/dsx-edge-logo.png"
                 alt="DSX Edge"
-                className="w-6 h-6"
-                style={{ filter: "brightness(0) invert(1)" }}
+                className="h-6 w-auto"
+
               />
-              <span className="font-semibold text-base tracking-tight text-white">
-                DSX Edge
-              </span>
             </Link>
             <p className="text-sm text-white/50 leading-relaxed max-w-sm">
               Business communications, rethought. Conversational AI that handles calls,
