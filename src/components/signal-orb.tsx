@@ -1048,6 +1048,8 @@ export default function SignalOrb({
 
     visibilityObserver.observe(stage);
 
+    let particleElapsed = 0;
+
     renderer.setAnimationLoop(() => {
       timer.update();
       const delta = Math.min(
@@ -1059,13 +1061,24 @@ export default function SignalOrb({
         !pausedRef.current &&
         visibleRef.current
       ) {
+        const activeZone = focusRef.current;
+        const particleSpeed =
+          activeZone === "core"
+            ? 1.35
+            : activeZone === "communications" ||
+                activeZone === "actions"
+              ? 1.16
+              : 1;
+
         coreMaterial.uniforms.uTime.value +=
           delta;
+
+        particleElapsed += delta * particleSpeed;
 
         const elapsed =
           coreMaterial.uniforms.uTime.value;
 
-        updateParticleFlow(elapsed);
+        updateParticleFlow(particleElapsed);
         (
           particleGeometry.getAttribute(
             "position",
@@ -1078,10 +1091,11 @@ export default function SignalOrb({
         ).needsUpdate = true;
 
         particles.rotation.y =
-          Math.sin(elapsed * 0.12) * 0.08;
+          particleElapsed * 0.055 +
+          Math.sin(particleElapsed * 0.12) * 0.035;
 
         particles.rotation.x =
-          Math.sin(elapsed * 0.11) * 0.04;
+          Math.sin(particleElapsed * 0.16) * 0.055;
 
         orbitA.rotation.z =
           elapsed * 0.034;
