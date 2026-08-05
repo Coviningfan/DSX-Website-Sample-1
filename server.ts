@@ -3,10 +3,44 @@ import type { ViteDevServer } from "vite";
 import { createServer as createViteServer } from "vite";
 import config from "./zosite.json";
 import { Hono } from "hono";
+import { Database } from "bun:sqlite";
+import { mkdirSync } from "node:fs";
+import { z } from "zod";
 
 // AI agents: read README.md for navigation and contribution guidance.
 type Mode = "development" | "production";
 const app = new Hono();
+
+const contactSchema = z.object({
+  name: z.string().trim().min(1).max(100),
+  company: z.string().trim().min(1).max(150),
+  email: z.string().trim().email().max(254),
+  phone: z.string().trim().min(7).max(30),
+  message: z.string().trim().min(10).max(3000),
+  industry: z.string().trim().min(1).max(100),
+  employees: z.string().trim().min(1).max(50),
+  bestDay: z.string().trim().max(50),
+  bestTime: z.string().trim().max(50),
+  website: z.string().max(0).optional(),
+});
+
+mkdirSync("./data", { recursive: true });
+const contactDb = new Database("./data/contact-submissions.sqlite");
+contactDb.run(`
+  CREATE TABLE IF NOT EXISTS contact_submissions (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    created_at TEXT NOT NULL,
+    name TEXT NOT NULL,
+    company TEXT NOT NULL,
+    email TEXT NOT NULL,
+    phone TEXT NOT NULL,
+    message TEXT NOT NULL,
+    industry TEXT NOT NULL,
+    employees TEXT NOT NULL,
+    best_day TEXT,
+    best_time TEXT
+  )
+`);
 
 const mode: Mode =
   process.env.NODE_ENV === "production" ? "production" : "development";
@@ -15,6 +49,33 @@ const mode: Mode =
  * Add any API routes here.
  */
 app.get("/api/hello-zo", (c) => c.json({ msg: "Hello from Zo" }));
+app.post("/api/contact", async (c) => {
+  const parsed = contactSchema.safeParse(await c.req.json().catch(() => null));
+  if (!parsed.success) {
+    return c.json({ error: "Please check the form and try again." }, 400);
+  }
+
+  const submission = parsed.data;
+  contactDb.run(
+    `INSERT INTO contact_submissions
+      (created_at, name, company, email, phone, message, industry, employees, best_day, best_time)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+    [
+      new Date().toISOString(),
+      submission.name,
+      submission.company,
+      submission.email,
+      submission.phone,
+      submission.message,
+      submission.industry,
+      submission.employees,
+      submission.bestDay,
+      submission.bestTime,
+    ],
+  );
+
+  return c.json({ ok: true }, 201);
+});
 
 if (mode === "production") {
   configureProduction(app);

@@ -37,8 +37,8 @@ interface SignalOrbProps {
 const COLORS = {
   blue: "#4674aa",
   blueLight: "#8fc0e3",
-  amber: "#e2712f",
-  amberLight: "#ffad55",
+  amber: "#dc7f43",
+  amberLight: "#f0b173",
   silver: "#9aa7b4",
   white: "#f7fbff",
 } as const;
@@ -87,6 +87,47 @@ function createRadialTexture(
 
   const texture = new THREE.CanvasTexture(canvas);
   texture.colorSpace = THREE.SRGBColorSpace;
+  return texture;
+}
+
+function createWordmarkTexture() {
+  const canvas = document.createElement("canvas");
+  canvas.width = 768;
+  canvas.height = 384;
+
+  const context = canvas.getContext("2d");
+  if (!context) {
+    throw new Error("Unable to create DSX Edge wordmark texture.");
+  }
+
+  context.clearRect(0, 0, canvas.width, canvas.height);
+  context.textAlign = "center";
+  context.textBaseline = "middle";
+
+  context.shadowColor = "rgba(7, 29, 54, 0.9)";
+  context.shadowBlur = 28;
+
+  context.fillStyle = "#f8fbff";
+  context.font =
+    '700 116px Inter, Arial, Helvetica, sans-serif';
+  context.fillText("DSX", canvas.width / 2, 120);
+  context.fillText("EDGE", canvas.width / 2, 230);
+
+  context.shadowBlur = 10;
+  context.fillStyle = "#b9d6ec";
+  context.font =
+    '600 26px Inter, Arial, Helvetica, sans-serif';
+  context.letterSpacing = "7px";
+  context.fillText(
+    "COMMUNICATIONS PLATFORM",
+    canvas.width / 2,
+    321,
+  );
+
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.colorSpace = THREE.SRGBColorSpace;
+  texture.minFilter = THREE.LinearFilter;
+  texture.magFilter = THREE.LinearFilter;
   return texture;
 }
 
@@ -148,10 +189,12 @@ export default function SignalOrb({
   const stageRef = useRef<HTMLDivElement>(null);
   const mountRef = useRef<HTMLDivElement>(null);
   const pointerRef = useRef({ x: 0, y: 0 });
+  const pausedRef = useRef(false);
   const visibleRef = useRef(true);
   const focusRef =
     useRef<FocusZone>("overview");
 
+  const [paused, setPaused] = useState(false);
   const [ready, setReady] = useState(false);
   const [focus, setFocus] =
     useState<FocusZone>("overview");
@@ -183,11 +226,24 @@ export default function SignalOrb({
     changeFocus("overview");
   };
 
+  const toggleMotion = () => {
+    const nextPaused = !pausedRef.current;
+    pausedRef.current = nextPaused;
+    setPaused(nextPaused);
+  };
+
   useEffect(() => {
     const stage = stageRef.current;
     const mount = mountRef.current;
 
     if (!stage || !mount) return;
+
+    const reducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+
+    pausedRef.current = reducedMotion;
+    setPaused(reducedMotion);
 
     const scene = new THREE.Scene();
 
@@ -386,26 +442,6 @@ export default function SignalOrb({
           float fieldLines =
             smoothstep(0.972, 1.0, field);
 
-          float processWave =
-            0.5 +
-            0.5 * sin(
-              vLocalPosition.x * 8.5 -
-              uTime * 1.15 +
-              vLocalPosition.y * 2.2
-            );
-
-          float processBand =
-            smoothstep(0.82, 1.0, processWave) *
-            (1.0 - smoothstep(
-              0.18,
-              1.18,
-              length(vLocalPosition.xy)
-            ));
-
-          float processCore =
-            exp(-4.2 * dot(vLocalPosition, vLocalPosition)) *
-            (0.72 + 0.28 * sin(uTime * 1.7));
-
           vec3 color = body;
 
           color += rimColor *
@@ -419,14 +455,6 @@ export default function SignalOrb({
           color += rimColor *
             fieldLines *
             0.022;
-
-          color += mix(
-            uBlueLight,
-            uAmberLight,
-            actionSide
-          ) * processBand * 0.12;
-
-          color += uBlueLight * processCore * 0.13;
 
           /*
            * Amber is a controlled action-side reflection,
@@ -526,112 +554,28 @@ export default function SignalOrb({
     root.add(reflection);
 
     const random = seededRandom(731);
-    const particleCount = 240;
+    const particleCount = 132;
     const particlePositions =
       new Float32Array(particleCount * 3);
-    const particleColors =
-      new Float32Array(particleCount * 3);
-    const particlePhases = new Float32Array(particleCount);
-    const particleRadii = new Float32Array(particleCount);
-    const particleAngles = new Float32Array(particleCount);
-    const particleDrift = new Float32Array(particleCount);
-    const particleSpin = new Float32Array(particleCount);
-    const particleLanes = new Uint8Array(particleCount);
 
     for (
       let index = 0;
       index < particleCount;
       index += 1
     ) {
-      particlePhases[index] = random();
-      particleRadii[index] = 0.24 + random() * 0.42;
-      particleAngles[index] = random() * 0.42 - 0.21;
-      particleDrift[index] = 0.2 + random() * 0.075;
-      particleSpin[index] = 0.22 + random() * 0.16;
-      particleLanes[index] = index % 6;
+      const radius = Math.cbrt(random()) * 1.0;
+      const theta = random() * Math.PI * 2;
+      const phi = Math.acos(2 * random() - 1);
+
+      particlePositions[index * 3] =
+        radius * Math.sin(phi) * Math.cos(theta);
+
+      particlePositions[index * 3 + 1] =
+        radius * Math.sin(phi) * Math.sin(theta);
+
+      particlePositions[index * 3 + 2] =
+        radius * Math.cos(phi);
     }
-
-    const updateParticleFlow = (elapsed: number) => {
-      for (
-        let index = 0;
-        index < particleCount;
-        index += 1
-      ) {
-        const progress =
-          (particlePhases[index] +
-            elapsed * particleDrift[index]) %
-          1;
-        const x = -0.96 + progress * 1.92;
-        const crossSection = Math.sqrt(
-          Math.max(0.04, 1 - x * x),
-        );
-        const laneAngle =
-          (particleLanes[index] / 6) * Math.PI * 2;
-        const angle =
-          laneAngle +
-          particleAngles[index] +
-          progress * Math.PI * 1.75 +
-          elapsed * particleSpin[index];
-        const radius =
-          particleRadii[index] * crossSection;
-        const pulse =
-          0.92 +
-          Math.sin(
-            elapsed * 2.1 +
-              particleLanes[index] * 1.05,
-          ) *
-            0.08;
-
-        particlePositions[index * 3] = x;
-        particlePositions[index * 3 + 1] =
-          Math.sin(angle) * radius * pulse;
-        particlePositions[index * 3 + 2] =
-          Math.cos(angle) * radius * pulse;
-
-        const colorProgress = progress * 2;
-        const startColor = progress < 0.5 ? blueLight : white;
-        const endColor = progress < 0.5 ? white : amberLight;
-        const colorMix = progress < 0.5
-          ? colorProgress
-          : colorProgress - 1;
-
-        const coreLift =
-          1 +
-          Math.max(0, 1 - Math.abs(progress - 0.5) * 5) *
-            0.42;
-
-        const processPulse = Math.pow(
-          0.5 +
-            0.5 *
-              Math.sin(
-                progress * Math.PI * 10 -
-                  elapsed * 4.2 +
-                  particleLanes[index] * 0.72,
-              ),
-          8,
-        );
-
-        const autonomousLift = 1 + processPulse * 1.15;
-
-        particleColors[index * 3] = THREE.MathUtils.lerp(
-          startColor.r,
-          endColor.r,
-          colorMix,
-        ) * coreLift * autonomousLift;
-        particleColors[index * 3 + 1] = THREE.MathUtils.lerp(
-          startColor.g,
-          endColor.g,
-          colorMix,
-        ) * coreLift * autonomousLift;
-        particleColors[index * 3 + 2] = THREE.MathUtils.lerp(
-          startColor.b,
-          endColor.b,
-          colorMix,
-        ) * coreLift * autonomousLift;
-      }
-    };
-
-    updateParticleFlow(0);
 
     const particleGeometry = new THREE.BufferGeometry();
     particleGeometry.setAttribute(
@@ -641,18 +585,12 @@ export default function SignalOrb({
         3,
       ),
     );
-    particleGeometry.setAttribute(
-      "color",
-      new THREE.BufferAttribute(particleColors, 3),
-    );
 
     const particleMaterial = new THREE.PointsMaterial({
       color: white,
-      size: 0.052,
+      size: 0.017,
       transparent: true,
-      opacity: 0.94,
-      vertexColors: true,
-      depthTest: false,
+      opacity: 0.42,
       depthWrite: false,
       blending: THREE.AdditiveBlending,
     });
@@ -661,7 +599,6 @@ export default function SignalOrb({
       particleGeometry,
       particleMaterial,
     );
-    particles.renderOrder = 5;
     root.add(particles);
 
     const createEllipse = (
@@ -870,14 +807,14 @@ export default function SignalOrb({
         createRailMaterial(
           color,
           side,
-          0.84,
+          0.64,
         );
 
       const glowMaterial =
         createRailMaterial(
           color,
           side,
-          0.16,
+          0.090,
         );
 
       root.add(
@@ -885,7 +822,7 @@ export default function SignalOrb({
           new THREE.TubeGeometry(
             curve,
             80,
-            0.015,
+            0.0085,
             8,
             false,
           ),
@@ -898,7 +835,7 @@ export default function SignalOrb({
           new THREE.TubeGeometry(
             curve,
             80,
-            0.05,
+            0.027,
             8,
             false,
           ),
@@ -926,7 +863,7 @@ export default function SignalOrb({
            */
           const packet = new THREE.Mesh(
             new THREE.SphereGeometry(
-              0.044,
+              0.025,
               12,
               12,
             ),
@@ -950,7 +887,7 @@ export default function SignalOrb({
         lineMaterial,
         glowMaterial,
         baseLineOpacity: 0.64,
-        baseGlowOpacity: 0.13,
+        baseGlowOpacity: 0.090,
       });
     };
 
@@ -964,7 +901,7 @@ export default function SignalOrb({
       color: blue,
       side: "in",
       speed: 0.102,
-      packetCount: 3,
+      packetCount: 2,
       bendY: 0.045,
       bendZ: 0.05,
     });
@@ -974,8 +911,8 @@ export default function SignalOrb({
       end: [-1.20, 0.0, 0.08],
       color: blueLight,
       side: "in",
-      speed: 0.19,
-      packetCount: 4,
+      speed: 0.122,
+      packetCount: 3,
       bendY: 0.0,
       bendZ: -0.035,
     });
@@ -985,8 +922,8 @@ export default function SignalOrb({
       end: [-1.16, -0.38, 0.06],
       color: blue,
       side: "in",
-      speed: 0.17,
-      packetCount: 3,
+      speed: 0.096,
+      packetCount: 2,
       bendY: -0.045,
       bendZ: 0.05,
     });
@@ -996,8 +933,8 @@ export default function SignalOrb({
       end: [3.02, 0.72, -0.10],
       color: amberLight,
       side: "out",
-      speed: 0.175,
-      packetCount: 3,
+      speed: 0.108,
+      packetCount: 2,
       bendY: 0.045,
       bendZ: 0.05,
     });
@@ -1007,8 +944,8 @@ export default function SignalOrb({
       end: [3.10, 0.0, -0.07],
       color: amber,
       side: "out",
-      speed: 0.2,
-      packetCount: 4,
+      speed: 0.128,
+      packetCount: 3,
       bendY: 0.0,
       bendZ: -0.035,
     });
@@ -1018,11 +955,34 @@ export default function SignalOrb({
       end: [3.02, -0.72, -0.10],
       color: amberLight,
       side: "out",
-      speed: 0.17,
-      packetCount: 3,
+      speed: 0.101,
+      packetCount: 2,
       bendY: -0.045,
       bendZ: 0.05,
     });
+
+    /*
+     * The wordmark now exists inside the WebGL scene.
+     * It follows the core rather than floating as unrelated HTML.
+     */
+    const wordmarkMaterial =
+      new THREE.SpriteMaterial({
+        map: createWordmarkTexture(),
+        transparent: true,
+        opacity: 0.96,
+        depthTest: false,
+        depthWrite: false,
+      });
+
+    const wordmark =
+      new THREE.Sprite(wordmarkMaterial);
+
+    wordmark.position.set(0, -0.01, 1.27);
+    wordmark.scale.set(1.26, 0.63, 1);
+    root.add(wordmark);
+
+    const wordmarkBaseScale =
+      wordmark.scale.clone();
 
     const orbitAMaterial =
       orbitA.material as THREE.LineBasicMaterial;
@@ -1039,17 +999,9 @@ export default function SignalOrb({
     const resize = () => {
       const width = stage.clientWidth;
       const height = stage.clientHeight;
-      const rootScale =
-        width >= 1100
-          ? Math.min(1.34, height / 430)
-          : width >= 760
-            ? Math.min(1.08, height / 440)
-            : Math.min(0.78, width / 500, height / 430);
 
       camera.aspect = width / height;
       camera.updateProjectionMatrix();
-      root.position.x = width < 760 ? 0 : 0.22;
-      root.scale.setScalar(rootScale);
 
       renderer.setSize(
         width,
@@ -1075,8 +1027,6 @@ export default function SignalOrb({
 
     visibilityObserver.observe(stage);
 
-    let particleElapsed = 0;
-
     renderer.setAnimationLoop(() => {
       timer.update();
       const delta = Math.min(
@@ -1084,42 +1034,21 @@ export default function SignalOrb({
         0.05,
       );
 
-      if (visibleRef.current) {
-        const activeZone = focusRef.current;
-        const particleSpeed =
-          activeZone === "core"
-            ? 1.35
-            : activeZone === "communications" ||
-                activeZone === "actions"
-              ? 1.16
-              : 1;
-
+      if (
+        !pausedRef.current &&
+        visibleRef.current
+      ) {
         coreMaterial.uniforms.uTime.value +=
           delta;
-
-        particleElapsed += delta * particleSpeed;
 
         const elapsed =
           coreMaterial.uniforms.uTime.value;
 
-        updateParticleFlow(particleElapsed);
-        (
-          particleGeometry.getAttribute(
-            "position",
-          ) as THREE.BufferAttribute
-        ).needsUpdate = true;
-        (
-          particleGeometry.getAttribute(
-            "color",
-          ) as THREE.BufferAttribute
-        ).needsUpdate = true;
-
         particles.rotation.y =
-          particleElapsed * 0.055 +
-          Math.sin(particleElapsed * 0.12) * 0.035;
+          elapsed * 0.034;
 
         particles.rotation.x =
-          Math.sin(particleElapsed * 0.16) * 0.055;
+          Math.sin(elapsed * 0.1) * 0.035;
 
         orbitA.rotation.z =
           elapsed * 0.034;
@@ -1133,15 +1062,6 @@ export default function SignalOrb({
         wire.rotation.y =
           elapsed * 0.022;
 
-        wire.rotation.x =
-          Math.sin(elapsed * 0.19) * 0.045;
-
-        core.rotation.y =
-          Math.sin(elapsed * 0.16) * 0.022;
-
-        core.rotation.x =
-          Math.cos(elapsed * 0.13) * 0.014;
-
         const packetAxis =
           new THREE.Vector3(0, 1, 0);
 
@@ -1149,7 +1069,7 @@ export default function SignalOrb({
           flow.packets.forEach((packet) => {
             const progress =
               (
-                elapsed * flow.speed * 1.55 +
+                elapsed * flow.speed +
                 packet.offset
               ) % 1;
 
@@ -1177,10 +1097,10 @@ export default function SignalOrb({
               );
 
             packet.mesh.scale.set(
-              0.82,
-              2.15 +
-                envelope * 0.9,
-              0.82,
+              0.70,
+              1.75 +
+                envelope * 0.70,
+              0.70,
             );
 
             packet.mesh.material.opacity =
@@ -1224,10 +1144,7 @@ export default function SignalOrb({
       const coreScaleTarget =
         activeZone === "core"
           ? 1.038
-          : 1 +
-            Math.sin(
-              coreMaterial.uniforms.uTime.value * 1.05,
-            ) * 0.012;
+          : 1;
 
       const coreScale =
         THREE.MathUtils.lerp(
@@ -1240,13 +1157,22 @@ export default function SignalOrb({
       wire.scale.setScalar(coreScale);
       particles.scale.setScalar(coreScale);
 
+      const wordmarkScale =
+        activeZone === "core"
+          ? 1.045
+          : 1;
+
+      wordmark.scale.lerp(
+        wordmarkBaseScale
+          .clone()
+          .multiplyScalar(wordmarkScale),
+        0.09,
+      );
+
       const haloTarget =
         activeZone === "core"
-          ? 0.78
-          : 0.5 +
-            Math.sin(
-              coreMaterial.uniforms.uTime.value * 0.72,
-            ) * 0.055;
+          ? 0.62
+          : 0.44;
 
       haloMaterial.opacity +=
         (
@@ -1256,20 +1182,14 @@ export default function SignalOrb({
 
       const particleTarget =
         activeZone === "core"
-          ? 1
-          : 0.94;
+          ? 0.56
+          : 0.42;
 
       particleMaterial.opacity +=
         (
           particleTarget -
           particleMaterial.opacity
         ) * 0.09;
-
-      particleMaterial.size =
-        0.052 +
-        Math.sin(
-          coreMaterial.uniforms.uTime.value * 1.35,
-        ) * 0.007;
 
       flows.forEach((flow) => {
         const emphasized =
@@ -1294,15 +1214,15 @@ export default function SignalOrb({
           activeZone === "core";
 
         const lineTarget = emphasized
-          ? 1
+          ? 0.96
           : dimmed
-            ? 0.12
+            ? 0.17
             : flow.baseLineOpacity;
 
         const glowTarget = emphasized
-          ? 0.28
+          ? 0.19
           : dimmed
-            ? 0.016
+            ? 0.022
             : flow.baseGlowOpacity;
 
         const lineOpacity =
@@ -1339,10 +1259,10 @@ export default function SignalOrb({
         THREE.MathUtils.lerp(
           orbitAMaterial.opacity,
           activeZone === "communications"
-            ? 0.34
+            ? 0.245
             : activeZone === "core"
-              ? 0.28
-              : 0.2,
+              ? 0.19
+              : 0.145,
           0.09,
         );
 
@@ -1350,10 +1270,10 @@ export default function SignalOrb({
         THREE.MathUtils.lerp(
           orbitBMaterial.opacity,
           activeZone === "actions"
-            ? 0.24
+            ? 0.15
             : activeZone === "core"
-              ? 0.17
-              : 0.11,
+              ? 0.095
+              : 0.065,
           0.09,
         );
 
@@ -1361,8 +1281,8 @@ export default function SignalOrb({
         THREE.MathUtils.lerp(
           orbitCMaterial.opacity,
           activeZone === "core"
-            ? 0.15
-            : 0.075,
+            ? 0.085
+            : 0.048,
           0.09,
         );
 
@@ -1428,7 +1348,10 @@ export default function SignalOrb({
           className="dsx-hero-orb__fallback"
           aria-hidden={ready}
         >
-          <div className="dsx-hero-orb__fallback-core" />
+          <div className="dsx-hero-orb__fallback-core">
+            <strong>DSX<br />EDGE</strong>
+            <span>Communications platform</span>
+          </div>
         </div>
 
         <button
@@ -1479,20 +1402,16 @@ export default function SignalOrb({
           }
         />
 
-      </div>
-
-      <div className="dsx-hero-orb__explainers">
-        <div className="dsx-hero-orb__explainer dsx-hero-orb__explainer--left">
-          <p className="dsx-hero-orb__label">Communications enter</p>
-          <h3>The starting point</h3>
-          <p>Calls, messages, routing events, web chat, and customer inquiries.</p>
-        </div>
-
-        <div className="dsx-hero-orb__explainer dsx-hero-orb__explainer--right">
-          <p className="dsx-hero-orb__label">Intelligent actions leave</p>
-          <h3>The business responds</h3>
-          <p>CRM updates, scheduling, routing, follow-up, and reporting.</p>
-        </div>
+        <button
+          className="dsx-hero-orb__motion"
+          type="button"
+          onClick={toggleMotion}
+          aria-pressed={paused}
+        >
+          {paused
+            ? "Resume motion"
+            : "Pause motion"}
+        </button>
       </div>
     </section>
   );

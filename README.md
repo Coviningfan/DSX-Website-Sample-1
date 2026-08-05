@@ -6,6 +6,15 @@ This file provides guidance when working with code in this repository. The READM
 
 Migrated from the PortfolioRevamp (Replit-based) codebase to Zo Site. DSX Edge is a business telecom/services company that builds phone systems, connects them to operations, and adds AI only where it earns its keep.
 
+### 2026-08-05 Client Presentation Readiness
+
+- The site is a five-page React application: Home, Features, Industries, Pricing, and About/Contact.
+- The homepage uses the approved tunnel hero and presents the SignalOrb in the dedicated How It Works section.
+- Homepage persuasion follows the approved mockup: missed-opportunity problem, natural conversation examples, platform explanation, turnkey implementation, department coverage, industry workflows, live demo, and consultation CTA.
+- The contact form writes validated requests to `data/contact-submissions.sqlite`; it does not claim success unless the API records the submission.
+- Only confirmed demo numbers are callable. Automotive uses 844-379-2886; other industry demo lines remain visibly pending confirmation.
+- Public publishing remains a separate approval-gated action after preview QA.
+
 ### 2026-08-04 Audit Fixes (verified live)
 
 - **Nav anchor fix:** "Features" now resolves to `#departments` (the section ID was missing, leaving dead links). All five nav links verified: Features→#departments, Industries→#industries, Pricing→#pricing, About→#about, Contact→#contact.
@@ -15,9 +24,30 @@ Migrated from the PortfolioRevamp (Replit-based) codebase to Zo Site. DSX Edge i
 
 ### SignalOrb runtime decisions (Three.js)
 
-- Orb is a **background hero element** behind the hero copy, always animating on load — no toolbar, no pause button, no widget chrome.
-- WebGL scene fully constructed on mount; reduced-motion does not zero out packets (that bug caused an empty scene); playback-only pausing removed entirely. Renderer owns its loop via `renderer.setAnimationLoop`.
+- Orb is the interactive centerpiece of the dedicated **How It Works** section, not part of the homepage hero.
+- Internal particles travel left-to-right in six deterministic helical streams through the core and shift from blue through a brighter white core to amber. This coherent lane structure makes direction readable without enlarging the particles. Three inbound blue rails and three outbound amber rails carry luminous directional packets.
+- The six particle streams retain the first orb's continuous coherent roll while moving through the core. Focusing the communications, core, or actions zone accelerates the internal transit, with the core producing the strongest response.
+- The particle field uses 240 high-contrast points and more legible transit speed. Motion runs continuously while the visualization is onscreen; there is no visible motion toolbar.
+- The visualization is scaled so the sphere occupies roughly one-third of the desktop stage, with responsive tablet/mobile reductions that keep all six rails visible.
+- A visible shader-driven processing sweep, traveling pulse clusters within the six particle lanes, independent core/shell drift, and a restrained breathing cycle represent autonomous work without adding decorative geometry.
+- Three keyboard-accessible focus zones and offscreen animation suspension are preserved. The active orb has no paused state and always advances while onscreen.
+- WebGL scene is fully constructed on mount and the renderer owns its loop via `renderer.setAnimationLoop`.
 - Full WebGL cleanup on unmount (`setAnimationLoop(null)`, geometry/material disposal, context loss handler).
+
+### Responsive presentation
+
+- The fixed navigation uses a compact, safe-area-aware mobile bar and a scroll-contained menu below it. Route and hash destinations reserve the collapsed header height.
+- The homepage hero is content-driven on mobile and uses `100svh` only from tablet widths upward, preventing mobile browser chrome from creating clipping or false whitespace.
+- SignalOrb has three intentional scene modes: side explanations on wide desktop, two explanation columns below the scene on tablet/narrow desktop, and stacked explanations on mobile.
+- Orb scale is constrained by both stage width and height. The scene recenters below 760px so the sphere and all six directional rails remain visible without horizontal overflow.
+- Mobile orb touch zones do not intercept vertical scrolling. Keyboard focus zones remain available from tablet widths upward.
+- Mobile sections use a 80px baseline rhythm, increasing to 96–128px at larger breakpoints. Long workflow cards use native disclosure controls on mobile and remain fully expanded from the small breakpoint upward.
+- Motion continues while the visualization is onscreen and suspends offscreen. Reduced-motion preferences remove transition effects without hiding the operating model.
+
+### Opportunity section
+
+- The homepage's missed-opportunity section uses an explicitly illustrative live-call timeline: incoming call, request understood, availability checked, and appointment confirmed.
+- Example timestamps are presentation devices, not performance guarantees or measured customer results.
 
 ### Hero blend (2026-08-04)
 
@@ -35,6 +65,8 @@ Migrated from the PortfolioRevamp (Replit-based) codebase to Zo Site. DSX Edge i
 **Layout:** Left-aligned editorial grid. Full-bleed elements. Rounded corners at `--radius-lg` (0.625rem). No rounded-2xl or card overload.
 
 **Motion:** Framer Motion for subtle entrance effects on critical elements only. No universal scroll reveals. No hover lifts on cards.
+
+**Scrolling:** Route changes and hash navigation land at the exact start of their destination. Browser history restoration is manual, and section reveals do not translate or scale the document's visual position.
 
 **Surface treatment:** Solid surfaces using the brand palette. No backdrop-blur, no glass effects, no sheen sweeps.
 
@@ -571,7 +603,7 @@ The site exports `{ fetch, port }` from `server.ts` for Zo's deployment system. 
 
 ### Audio Aug 4 2026 — Design audit + SignalOrb state
 
-- **SignalOrb** (`src/components/signal-orb.tsx` + `signal-orb.css`): Three.js WebGL orb. Serves as the hero **background element** (`pointer-events-none absolute inset-0 -z-0` in `#hero`), always animating (packets, particles, shader time, orbit rings). No toolbar, no pause/resume UI — motion starts on load and never pauses. Debug handle `window.__DSX_ORB_DEBUG__` exposes renderer/scene/flows/pausedRef/elapsed.
+- **SignalOrb** (`src/components/signal-orb.tsx` + `signal-orb.css`): Three.js WebGL operating-model visualization in the dedicated **How It Works** section. Packets, particles, shader time, orbital rings, and autonomous process pulses always advance while onscreen. There is no toolbar or pause state; IntersectionObserver suspends rendering only when the stage is offscreen.
 - **Homepage sections** (`src/pages/home.tsx`, single page, anchor nav): hero (orb bg + "Every Department, Every Function, 24/7." + 844-DSX-Edge) → proof rail → #departments (Features) → natural-dialogue examples → #demo ("Try It for Yourself") → turnkey-AI → #industries → #features → #pricing (descriptive, no tiers) → #about → #contact.
 - Nav (Features/Industries/Pricing/About/Contact) anchors to section IDs; footer is 4-col with logo, only working links.
 - **Verified claims only:** all stats/contact info cross-checked against the original PortfolioRevamp codebase (`99.9%` uptime SLA, `100K+/mo` minutes, `12+ yrs`, `3CX Platinum`, `hello@dsxedge.com`). No invented data-center or volume claims.

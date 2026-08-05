@@ -14,16 +14,13 @@ export default function Footer() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-10 py-16">
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
           <div className="lg:col-span-2">
-            <Link to="/" className="flex items-center gap-2.5 mb-4">
+            <Link to="/" className="inline-flex min-h-11 items-center gap-2.5 mb-4" aria-label="DSX Edge home">
               <img
-                src="/images/pegasus.svg"
+                src="/images/dsx-edge-logo.png"
                 alt="DSX Edge"
-                className="w-6 h-6"
-                style={{ filter: "brightness(0) invert(1)" }}
+                className="h-6 w-auto"
+
               />
-              <span className="font-semibold text-base tracking-tight text-white">
-                DSX Edge
-              </span>
             </Link>
             <p className="text-sm text-white/50 leading-relaxed max-w-sm">
               Business communications, rethought. Conversational AI that handles calls,
@@ -40,7 +37,7 @@ export default function Footer() {
                 <li key={page.href}>
                   <Link
                     to={page.href}
-                    className="text-sm text-white/50 hover:text-white transition-colors duration-200"
+                    className="inline-flex min-h-11 items-center text-sm text-white/60 hover:text-white transition-colors duration-200"
                   >
                     {page.label}
                   </Link>
@@ -55,17 +52,17 @@ export default function Footer() {
             </p>
             <ul className="space-y-2.5 text-sm text-white/50">
               <li>
-                <a href="tel:775-624-9424" className="hover:text-white transition-colors duration-200">
+                <a href="tel:775-624-9424" className="inline-flex min-h-11 items-center hover:text-white transition-colors duration-200">
                   775-624-9424
                 </a>
               </li>
               <li>
-                <a href="mailto:info@dsxedge.com" className="hover:text-white transition-colors duration-200">
+                <a href="mailto:info@dsxedge.com" className="inline-flex min-h-11 items-center hover:text-white transition-colors duration-200">
                   info@dsxedge.com
                 </a>
               </li>
               <li>
-                <a href="mailto:sales@dsxedge.com" className="hover:text-white transition-colors duration-200">
+                <a href="mailto:sales@dsxedge.com" className="inline-flex min-h-11 items-center hover:text-white transition-colors duration-200">
                   sales@dsxedge.com
                 </a>
               </li>

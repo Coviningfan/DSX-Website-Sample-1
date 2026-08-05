@@ -2,7 +2,7 @@ import { useState } from "react";
 import SignalOrb from "@/components/signal-orb";
 import {
   Phone, ArrowRight, Wrench, Stethoscope, ShoppingCart,
-  Truck, Home, GraduationCap, Zap, ChevronRight,
+  Truck, Home, Hotel, Zap, ChevronRight,
   MessageCircle, HelpCircle, ClipboardList,
 } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -42,13 +42,12 @@ const WORKFLOW_EXAMPLES = [
     desc: "Ask about the property and prepare a quote. Schedule, cancel, or reschedule appointments. Pause or restart recurring service. Answer billing questions. Confirm appointments and service by phone.",
   },
   {
-    icon: GraduationCap,
+    icon: Hotel,
     title: "Hotels & Hospitality",
     desc: "Handle reservations, check-in confirmations, concierge requests, room-service orders, and guest follow-up. Upsell upgrades and amenities at the right moment — without you training anyone.",
   },
 ];
 
-const TRUSTED_BY = ["Switch", "3CX", "Cisco", "Polycom", "Yealink"];
 
 export default function HomePage() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -79,71 +78,77 @@ export default function HomePage() {
 
   return (
     <main className="min-h-screen bg-white overflow-x-hidden">
-      {/* ── Hero ─────────────────────────────────────────── */}
-      <section className="relative h-screen flex flex-col overflow-hidden">
-        <div className="absolute inset-0 z-0 hero-tunnel-bg" />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/30 z-[2]" />
+      <section className="relative flex min-h-[100svh] flex-col overflow-hidden pt-[env(safe-area-inset-top)] max-md:min-h-0">
+        <div className="absolute inset-0 z-0 hero-tunnel-bg" aria-hidden="true">
+          <img
+            src="/images/dsx-edge-bkg.jpg"
+            alt=""
+            className="relative z-[1] block h-full w-full object-contain object-center"
+          />
+        </div>
+        <div className="absolute inset-0 z-[2] bg-gradient-to-b from-white/10 via-transparent to-[#d9ebf7]/20" />
 
-        <div className="relative z-10 flex flex-col items-center flex-1 pt-32 px-4 sm:px-6">
-          <h1 className="font-bold text-5xl sm:text-6xl md:text-7xl lg:text-8xl leading-[1.05] -tracking-[2px] text-[#191919] text-center max-w-5xl">
+        <div className="relative z-10 flex flex-1 flex-col items-center px-4 pb-8 pt-24 sm:px-6 sm:pt-32 md:pb-0 md:pt-36">
+          <h1 className="max-w-5xl text-balance text-center text-[clamp(2.65rem,12vw,4.5rem)] font-bold leading-[1.02] tracking-[-0.045em] text-[#191919] md:text-7xl lg:text-8xl">
             Every Department, Every Function, 24/7.
           </h1>
-          <p className="mt-4 text-xl md:text-2xl text-[#0084FF] font-semibold">
+          <p className="mt-4 text-center text-lg font-semibold text-[#0084FF] sm:text-xl md:text-2xl">
             Business Communications That Drive Profit
           </p>
-          <p className="mt-6 text-lg md:text-xl text-[#191919]/60 leading-relaxed max-w-2xl text-center">
+          <p className="mt-4 max-w-2xl text-center text-base leading-relaxed text-[#191919]/70 sm:mt-6 sm:text-lg md:text-xl">
             A new dimension in customer interaction and service, tailored to your business.
           </p>
 
-          <div className="flex flex-col sm:flex-row items-center gap-4 mt-8">
+          <div className="mt-7 flex flex-col items-center gap-3 sm:mt-9 sm:flex-row sm:gap-4">
             <a
               href="tel:844-379-3343"
-              className="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium text-white bg-[#0084FF]/80 backdrop-blur-[2px] rounded-2xl hover:scale-[1.02] transition-transform duration-200"
-              style={{ boxShadow: "inset 0px 4px 4px 0px rgba(255,255,255,0.35)" }}
+              className="inline-flex items-center gap-2 rounded-xl bg-[#0872d6] px-6 py-3 text-sm font-semibold text-white shadow-[0_12px_30px_rgba(0,91,176,0.2)] transition-transform duration-200 hover:-translate-y-0.5"
             >
-              <Phone className="w-4 h-4" />
-              Call the Live Demo → 844-DSX-Edge
+              <Phone className="h-4 w-4" />
+              Call the Live Demo · 844-DSX-EDGE
             </a>
-            <p className="text-sm text-[#191919]/70">
+            <p className="inline-flex items-center gap-2 text-sm font-medium text-[#191919]/80">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#e2712f]" aria-hidden="true" />
               Pick up the phone and hear it yourself
             </p>
           </div>
         </div>
 
-        {/* Bottom info panel */}
-        <div className="relative z-10 mt-auto w-full max-w-5xl mx-auto px-4 sm:px-6">
-          <div className="bg-white/90 backdrop-blur-sm border border-gray-200 border-b-0 pt-8 sm:pt-12 md:pt-16 px-5 sm:px-8 md:px-12 pb-0 shadow-sm rounded-t-2xl">
-            <div className="grid md:grid-cols-2 gap-6 md:gap-16">
+        <div className="relative z-10 mx-auto mt-4 w-full max-w-5xl px-4 sm:mt-10 sm:px-6 md:mt-12">
+          <div className="relative overflow-hidden rounded-t-2xl border border-b-0 border-slate-200/80 bg-white/90 px-5 pb-0 pt-8 shadow-[0_-8px_32px_rgba(27,70,108,0.08)] backdrop-blur-md sm:px-8 sm:pt-10 md:px-12 md:pt-12">
+            <div className="brand-accent-rail absolute inset-x-0 top-0" aria-hidden="true" />
+            <div className="grid gap-6 md:grid-cols-2 md:gap-16">
               <div>
-                <p className="text-[11px] uppercase tracking-[0.2em] text-[#191919]/50 font-medium">
+                <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-[#191919]/50">
                   What does DSX Edge do?
                 </p>
-                <h2 className="mt-3 text-2xl sm:text-3xl md:text-4xl font-bold leading-tight tracking-tight text-[#191919]">
+                <h2 className="mt-3 text-2xl font-bold leading-tight tracking-tight text-[#191919] sm:text-3xl md:text-4xl">
                   Conversations that build momentum
                 </h2>
               </div>
               <div className="flex items-end">
-                <p className="text-sm md:text-[15px] text-[#191919]/70 leading-relaxed">
-                  Conversational AI built for real businesses. Agents that hold a real conversation, plug into the systems you run, and show their work — across voice, SMS, and email.
+                <p className="text-sm leading-relaxed text-[#191919]/70 md:text-[15px]">
+                  Conversational AI built for real businesses. Agents hold real conversations, connect to the systems you run, and complete work across voice, SMS, and email.
                 </p>
               </div>
             </div>
 
-            <div className="mt-6 sm:mt-8 md:mt-10 h-px bg-gray-200 w-full" />
+            <div className="mt-7 h-px w-full bg-slate-200 sm:mt-9" />
 
-            <div className="grid sm:grid-cols-3 gap-0.5">
-              {LAYERS.map((item, i) => (
+            <div className="grid gap-0.5 sm:grid-cols-3">
+              {LAYERS.map((item, index) => (
                 <button
                   key={item.num}
-                  onClick={() => openModal(i)}
-                  className="group flex items-center justify-between bg-[#F4F3F3] hover:bg-[#eaeaea] transition-all duration-200 px-4 sm:px-6 py-3.5 sm:py-4 text-left"
+                  type="button"
+                  onClick={() => openModal(index)}
+                  className="group flex items-center justify-between bg-[#F4F3F3] px-4 py-4 text-left transition-colors duration-200 hover:bg-[#e9eef2] sm:px-6"
                 >
-                  <div className="flex items-center gap-2">
-                    <span className="text-[#191919]/40 font-medium">{item.num}</span>
-                    <span className="text-[#191919]/30 mx-1">/</span>
+                  <span className="flex items-center gap-2">
+                    <span className="font-medium text-[#191919]/40">{item.num}</span>
+                    <span className="text-[#191919]/30">/</span>
                     <span className="font-medium text-[#191919]">{item.label}</span>
-                  </div>
-                  <ArrowRight className="w-4 h-4 text-gray-400 group-hover:text-gray-700 group-hover:translate-x-0.5 transition-all duration-200" />
+                  </span>
+                  <ArrowRight className="h-4 w-4 text-[#c85f1f] transition-transform duration-200 group-hover:translate-x-0.5 group-hover:text-[#e2712f]" />
                 </button>
               ))}
             </div>
@@ -151,48 +156,119 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── Proof Rail ───────────────────────────────────── */}
-      <section className="py-16 px-4 sm:px-6 md:px-10 bg-white">
-        <div className="max-w-6xl mx-auto text-center">
-          <p className="text-[11px] uppercase tracking-[0.2em] text-[#191919]/40 font-medium mb-4">
-            Trusted by
-          </p>
-          <div className="flex flex-wrap items-center justify-center gap-12 md:gap-24">
-            {TRUSTED_BY.map((b) => (
-              <span key={b} className="text-lg font-medium text-[#191919]/30">{b}</span>
-            ))}
+      <section id="opportunity" className="relative overflow-hidden bg-[#102b43] px-4 py-20 text-white sm:px-6 sm:py-24 md:px-10 md:py-32">
+        <div className="pointer-events-none absolute inset-0 opacity-50" aria-hidden="true">
+          <div className="absolute -left-24 top-10 h-72 w-72 rounded-full bg-[#0872d6]/15 blur-3xl" />
+          <div className="absolute -right-20 bottom-0 h-64 w-64 rounded-full bg-[#e2712f]/10 blur-3xl" />
+        </div>
+        <div className="relative mx-auto grid max-w-6xl gap-14 lg:grid-cols-[0.78fr_1.22fr] lg:items-center">
+          <div>
+            <p className="mb-4 text-xs font-medium uppercase tracking-[0.2em] text-[#f28a45]">
+              Never Miss Another Opportunity
+            </p>
+            <h2 className="text-balance text-3xl font-bold leading-tight tracking-tight sm:text-4xl md:text-5xl">
+              The most expensive call may be the one you never knew you missed.
+            </h2>
+            <p className="mt-6 max-w-xl text-pretty leading-relaxed text-white/70">
+              Customers call, click, and text when they are ready to act. DSX Edge answers routine
+              questions and completes common requests during business hours and after hours, so a
+              missed interaction does not quietly become lost revenue.
+            </p>
+          </div>
+          <div className="border border-white/12 bg-[#153650] shadow-[0_28px_80px_rgba(3,18,31,0.28)]">
+            <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 px-5 py-4 sm:px-6">
+              <div>
+                <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-white/45">Example call flow</p>
+                <p className="mt-1 text-sm font-medium text-white/85">After-hours appointment request</p>
+              </div>
+              <span className="inline-flex items-center gap-2 text-xs font-medium text-[#9fd3ff]">
+                <span className="h-2 w-2 rounded-full bg-[#55b4ff] shadow-[0_0_14px_rgba(85,180,255,0.75)]" aria-hidden="true" />
+                Request active
+              </span>
+            </div>
+
+            <ol className="relative px-5 py-2 sm:px-6" aria-label="Example after-hours call progression">
+              {[
+                ["00:00", "Incoming call", "A customer calls after business hours."],
+                ["00:02", "Request understood", "“I need to move my appointment to Wednesday afternoon.”"],
+                ["00:12", "Availability checked", "Two open times are found using the business schedule."],
+                ["00:18", "Appointment confirmed", "The calendar is updated and the customer receives confirmation."],
+              ].map(([time, title, detail], index) => (
+                <li key={title} className="relative grid grid-cols-[3.5rem_1rem_1fr] gap-3 border-b border-white/8 py-5 last:border-b-0 sm:grid-cols-[4rem_1rem_1fr]">
+                  <span className="pt-0.5 font-mono text-[11px] text-white/48">{time}</span>
+                  <span className="relative mt-1 flex justify-center" aria-hidden="true">
+                    {index < 3 && <span className="absolute left-1/2 top-3 h-[calc(100%+1.6rem)] w-px -translate-x-1/2 bg-gradient-to-b from-[#4aa6ff]/70 to-[#e2712f]/30" />}
+                    <span className={`relative z-10 h-2.5 w-2.5 rounded-full ${index === 3 ? "bg-[#f28a45] shadow-[0_0_16px_rgba(242,138,69,0.7)]" : "bg-[#69baff]"}`} />
+                  </span>
+                  <div>
+                    <p className="text-sm font-semibold text-white">{title}</p>
+                    <p className="mt-1 text-sm leading-relaxed text-white/72">{detail}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+
+            <div className="grid gap-3 border-t border-white/10 bg-white/[0.045] px-5 py-4 sm:grid-cols-[1fr_auto] sm:items-center sm:px-6">
+              <div>
+                <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/42">Business result</p>
+                <p className="mt-1 text-sm text-white/78">The request is captured, the schedule is updated, and the customer receives confirmation.</p>
+              </div>
+              <span className="inline-flex w-fit items-center gap-2 text-xs font-semibold uppercase tracking-[0.12em] text-[#f7a66f]">
+                <span className="h-1.5 w-1.5 rounded-full bg-[#f28a45]" aria-hidden="true" />
+                Completed
+              </span>
+            </div>
           </div>
         </div>
       </section>
 
+
       {/* ── How It Works ─────────────────────────────────── */}
-      <section className="py-24 sm:py-32 px-4 sm:px-6 md:px-10 bg-white">
+      <section id="how-it-works" className="bg-white px-4 py-20 sm:px-6 sm:py-24 md:px-10 md:py-32">
         <div className="max-w-6xl mx-auto">
           <h2 className="font-bold text-3xl sm:text-4xl md:text-5xl leading-tight tracking-tight text-[#191919] text-center mb-6">
             How It Works
           </h2>
-          <p className="text-[#191919]/60 max-w-2xl mx-auto text-center leading-relaxed mb-16">
+          <p className="mx-auto mb-10 max-w-2xl text-center leading-relaxed text-[#191919]/60 sm:mb-14">
             Communications, Intelligence, and Infrastructure — integrated into a single operating layer that runs alongside your team, 24 hours a day.
           </p>
 
-          <div className="flex justify-center mb-16">
+          <div className="how-it-works-orb">
             <SignalOrb />
           </div>
+        </div>
+      </section>
 
-          <div className="grid md:grid-cols-3 gap-6">
-            {LAYERS.map((l) => (
-              <div key={l.num} className="bg-white rounded-2xl border border-gray-200 p-6 hover:border-[#0084FF]/20 transition-colors duration-200">
-                <span className="text-2xl font-bold text-[#0084FF]">{l.num}</span>
-                <h3 className="mt-2 font-semibold text-[#191919]">{l.label}</h3>
-                <p className="mt-2 text-sm text-[#191919]/60 leading-relaxed">{l.subtitle}</p>
-              </div>
-            ))}
+      <section className="bg-white px-4 py-20 sm:px-6 sm:py-24 md:px-10 md:py-32">
+        <div className="mx-auto grid max-w-6xl gap-12 lg:grid-cols-2 lg:items-center">
+          <div>
+            <p className="mb-4 text-xs font-medium uppercase tracking-[0.2em] text-[#0084FF]">
+              The Easiest Way to Benefit From AI
+            </p>
+            <h2 className="text-balance text-3xl font-bold leading-tight tracking-tight text-[#191919] sm:text-4xl md:text-5xl">
+              One communications platform, configured for the work you need done.
+            </h2>
+          </div>
+          <div>
+            <p className="text-pretty text-lg leading-relaxed text-[#191919]/65">
+              DSX Edge combines business communications with AI agents that can handle customer
+              interactions, back-office tasks, and requests from customers or suppliers. It works
+              across calls, texts, email, and live chat, and connects each conversation to the next
+              action in your business.
+            </p>
+            <Link
+              to="/features"
+              className="mt-7 inline-flex items-center gap-2 rounded-xl bg-[#191919] px-6 py-3 text-sm font-medium text-white transition-colors duration-200 hover:bg-[#333]"
+            >
+              See the Full Platform
+              <ArrowRight className="h-4 w-4" />
+            </Link>
           </div>
         </div>
       </section>
 
       {/* ── Turnkey AI ───────────────────────────────────── */}
-      <section className="py-24 sm:py-32 px-4 sm:px-6 md:px-10 bg-[#F9F8F6]">
+      <section className="bg-[#F9F8F6] px-4 py-20 sm:px-6 sm:py-24 md:px-10 md:py-32">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <p className="text-xs uppercase tracking-[0.2em] text-[#0084FF] font-medium mb-4">
@@ -232,7 +308,7 @@ export default function HomePage() {
       </section>
 
       {/* ── Every Department ──────────────────────────────── */}
-      <section className="py-24 px-4 sm:px-6 md:px-10 bg-white">
+      <section className="bg-white px-4 py-20 sm:px-6 sm:py-24 md:px-10">
         <div className="max-w-6xl mx-auto text-center">
           <p className="text-xs uppercase tracking-[0.2em] text-[#0084FF] font-medium mb-4">
             Every Department
@@ -254,7 +330,7 @@ export default function HomePage() {
       </section>
 
       {/* ── Industry Workflow Examples ────────────────────── */}
-      <section className="py-24 sm:py-32 px-4 sm:px-6 md:px-10 bg-[#F9F8F6]">
+      <section className="bg-[#F9F8F6] px-4 py-20 sm:px-6 sm:py-24 md:px-10 md:py-32">
         <div className="max-w-6xl mx-auto">
           <p className="text-xs uppercase tracking-[0.2em] text-[#0084FF] font-medium mb-4 text-center">
             Tailored to Your Business
@@ -270,14 +346,18 @@ export default function HomePage() {
             {WORKFLOW_EXAMPLES.map((ex) => {
               const Icon = ex.icon;
               return (
-                <div
+                <article
                   key={ex.title}
-                  className="bg-white rounded-2xl border border-gray-200 p-6 hover:border-[#0084FF]/20 transition-all duration-200"
+                  className="border border-gray-200 bg-white p-5 transition-colors duration-200 hover:border-[#0084FF]/20 sm:p-6"
                 >
                   <Icon className="w-8 h-8 text-[#0084FF] mb-4" />
                   <h3 className="font-semibold text-[#191919] mb-2">{ex.title}</h3>
-                  <p className="text-sm text-[#191919]/60 leading-relaxed">{ex.desc}</p>
-                </div>
+                  <details className="group sm:hidden">
+                    <summary className="cursor-pointer list-none text-sm font-medium text-[#0872d6] marker:hidden">See workflow</summary>
+                    <p className="mt-3 text-sm leading-relaxed text-[#191919]/60">{ex.desc}</p>
+                  </details>
+                  <p className="hidden text-sm leading-relaxed text-[#191919]/60 sm:block">{ex.desc}</p>
+                </article>
               );
             })}
           </div>
@@ -315,10 +395,10 @@ export default function HomePage() {
             844-DSX-EDGE
           </a>
           <Link
-            to="/about"
+            to="/about#contact"
             className="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium text-[#191919] bg-white border border-gray-200 rounded-xl hover:bg-gray-50 transition-colors duration-200"
           >
-            BOOK A FREE CONSULTATION
+            REQUEST A CONSULTATION
             <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
@@ -330,7 +410,7 @@ export default function HomePage() {
           See DSX Edge for Your Industry
         </h2>
         <p className="text-[#191919]/60 max-w-lg mx-auto leading-relaxed mb-8">
-          Automotive, Construction, Education, Finance, Government, Healthcare, Hotels, Manufacturing, Nonprofit, Professional Services, Real Estate, Retail, Transportation, Wholesale. 14 industries. One platform.
+          Automotive, construction, education, finance, government, healthcare, hospitality, manufacturing, nonprofit, professional services, real estate, retail, transportation, wholesale, and many more.
         </p>
         <Link
           to="/industries"
@@ -347,7 +427,7 @@ export default function HomePage() {
           Tailored to Your Business
         </h2>
         <p className="text-[#191919]/60 max-w-xl mx-auto leading-relaxed mb-8">
-          You do not need to learn new software. DSX Edge fits into the way you already work. Call in, tell us about your business, and we will show you exactly how it runs — live, on your own phone line.
+          You do not need to learn new software. DSX Edge fits into the way you already work. Call in, tell us about your business, and we will show you exactly how it runs on your own phone line.
         </p>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <a
@@ -358,10 +438,10 @@ export default function HomePage() {
             844-DSX-EDGE
           </a>
           <Link
-            to="/about"
+            to="/about#contact"
             className="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium text-[#191919] bg-white border border-gray-200 rounded-xl hover:bg-gray-50 transition-colors duration-200"
           >
-            BOOK A FREE CONSULTATION
+            REQUEST A CONSULTATION
             <ArrowRight className="w-4 h-4" />
           </Link>
         </div>

@@ -1,0 +1,175 @@
+.dsx-hero-orb {
+  --dsx-blue: #5f80b3;
+  --dsx-blue-light: #9fc4e4;
+  --dsx-amber: #d99658;
+  --dsx-amber-light: #efb67d;
+  width: 100%;
+  height: 100%;
+}
+
+.dsx-hero-orb__stage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 520px;
+  overflow: visible;
+}
+
+.dsx-hero-orb__canvas,
+.dsx-hero-orb__fallback {
+  position: absolute;
+  inset: 0;
+}
+
+.dsx-hero-orb__canvas canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.dsx-hero-orb__fallback {
+  display: grid;
+  place-items: center;
+  opacity: 1;
+  transition: opacity 200ms ease;
+  pointer-events: none;
+}
+
+.dsx-hero-orb[data-ready="true"]
+  .dsx-hero-orb__fallback {
+  opacity: 0;
+}
+
+.dsx-hero-orb__fallback-core {
+  width: min(31vw, 250px);
+  aspect-ratio: 1;
+  display: grid;
+  place-content: center;
+  border: 1px solid rgba(159, 196, 228, 0.56);
+  border-radius: 50%;
+  background:
+    radial-gradient(
+      circle at 34% 27%,
+      rgba(88, 156, 210, 0.82),
+      rgba(11, 58, 103, 0.94) 42%,
+      rgba(4, 31, 61, 0.98) 100%
+    );
+  color: #f8fbff;
+  text-align: center;
+  box-shadow:
+    0 0 44px rgba(78, 144, 199, 0.25);
+}
+
+.dsx-hero-orb__fallback-core strong {
+  font-size: clamp(1.15rem, 2vw, 1.8rem);
+  line-height: 0.9;
+  letter-spacing: 0.09em;
+}
+
+.dsx-hero-orb__fallback-core span {
+  margin-top: 0.65rem;
+  color: #bdd8ec;
+  font-size: 0.55rem;
+  letter-spacing: 0.17em;
+  text-transform: uppercase;
+}
+
+.dsx-hero-orb__motion {
+  position: absolute;
+  z-index: 5;
+  right: 0.75rem;
+  bottom: 0.75rem;
+  padding: 0.5rem 0.72rem;
+  border: 1px solid rgba(31, 92, 150, 0.22);
+  border-radius: 999px;
+  background: rgba(248, 252, 255, 0.66);
+  color: #2a5b89;
+  font: 600 0.71rem/1 system-ui, sans-serif;
+  backdrop-filter: blur(10px);
+  cursor: pointer;
+}
+
+.dsx-hero-orb__motion:hover {
+  border-color: rgba(31, 92, 150, 0.42);
+  background: rgba(248, 252, 255, 0.8);
+}
+
+.dsx-hero-orb__motion:focus-visible {
+  outline: 2px solid var(--dsx-blue);
+  outline-offset: 2px;
+}
+
+@media (max-width: 760px) {
+  .dsx-hero-orb__stage {
+    min-height: 430px;
+  }
+
+  .dsx-hero-orb__fallback-core {
+    width: min(53vw, 230px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dsx-hero-orb__motion {
+    display: none;
+  }
+
+  .dsx-hero-orb__fallback {
+    transition: none;
+  }
+}
+
+
+/* Restored three-zone interaction from the approved original orb. */
+.dsx-hero-orb__zone {
+  position: absolute;
+  z-index: 3;
+  top: 0;
+  bottom: 0;
+  border: 0;
+  background: transparent;
+  padding: 0;
+}
+
+.dsx-hero-orb__zone--left {
+  left: 0;
+  width: 35%;
+  cursor: default;
+}
+
+.dsx-hero-orb__zone--core {
+  left: 35%;
+  width: 30%;
+  cursor: pointer;
+}
+
+.dsx-hero-orb__zone--right {
+  right: 0;
+  width: 35%;
+  cursor: default;
+}
+
+.dsx-hero-orb__zone:focus-visible {
+  outline: 2px solid var(--dsx-blue);
+  outline-offset: -3px;
+  border-radius: 0.75rem;
+}
+
+.dsx-hero-orb[data-zone="communications"]
+  .dsx-hero-orb__stage {
+  filter: saturate(1.025);
+}
+
+.dsx-hero-orb[data-zone="actions"]
+  .dsx-hero-orb__stage {
+  filter: saturate(1.035);
+}
+
+.dsx-hero-orb[data-zone="core"]
+  .dsx-hero-orb__stage {
+  filter: brightness(1.025);
+}
+
+.dsx-hero-orb__motion {
+  z-index: 6;
+}

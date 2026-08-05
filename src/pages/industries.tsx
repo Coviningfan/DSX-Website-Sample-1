@@ -5,8 +5,6 @@ import { Link } from "react-router-dom";
 const INDUSTRIES = [
   {
     name: "Automotive",
-    voice: "Pete",
-    phone: "844-DSX-AUTO (844-379-2886)",
     bullets: [
       "Answer a call or text from an existing customer by name. Ask which vehicle they are calling about and what service they need.",
       "For a new customer, get their name, contact information, and vehicle info and add it to the shop's database.",
@@ -22,8 +20,6 @@ const INDUSTRIES = [
   },
   {
     name: "Construction",
-    voice: "Mike",
-    phone: "844-DSX-CONS (844-379-2667)",
     bullets: [
       "Answer a call from a subcontractor and confirm the schedule for next week's concrete pour, then text them the gate code.",
       "Take an incoming bid request: ask about the project scope, timeline, and plans available, then create a bid ticket and notify the estimator.",
@@ -37,8 +33,6 @@ const INDUSTRIES = [
   },
   {
     name: "Education",
-    voice: "Sarah",
-    phone: "844-DSX-EDUC (844-379-3382)",
     bullets: [
       "Answer a parent's call about enrollment requirements for their incoming kindergartner — walk them through the forms, required documents, and deadlines.",
       "Take an absence report: ask which student, which grade, the date, and the reason, then log it into the attendance system and notify the teacher.",
@@ -52,8 +46,6 @@ const INDUSTRIES = [
   },
   {
     name: "Financial Services",
-    voice: "Diane",
-    phone: "844-DSX-FIN (844-379-3346)",
     bullets: [
       "Answer a client calling about their account balance: verify their identity, pull the current balance and last three transactions, and read them aloud.",
       "Schedule an annual review meeting based on the client's preferred time and the advisor's calendar — send a confirmation email with a calendar invite.",
@@ -67,8 +59,6 @@ const INDUSTRIES = [
   },
   {
     name: "Healthcare",
-    voice: "Dr. Chen",
-    phone: "844-DSX-MED (844-379-3633)",
     bullets: [
       "Answer a patient calling to schedule an appointment: ask about their condition, check provider availability, and book based on urgency and preference.",
       "Call a patient the day before to confirm their appointment time and location, and ask them to bring their insurance card and medication list.",
@@ -82,8 +72,6 @@ const INDUSTRIES = [
   },
   {
     name: "Hotels & Hospitality",
-    voice: "Maria",
-    phone: "844-DSX-STAY (844-379-7829)",
     bullets: [
       "Answer a guest calling to book a room: ask about dates, number of guests, bed preference, and any special requests, then check availability and confirm the reservation.",
       "When a guest calls about a late check-out, check the housekeeping schedule for that room and extend if available — or offer luggage storage and lobby access.",
@@ -97,8 +85,6 @@ const INDUSTRIES = [
   },
   {
     name: "Manufacturing",
-    voice: "Tom",
-    phone: "844-DSX-MFG (844-379-3634)",
     bullets: [
       "Take an incoming order from a distributor: confirm SKUs, quantities, and pricing, check inventory availability, and create the sales order with a promised ship date.",
       "When a raw material shipment is delayed, call the supplier for the new ETA, update the production schedule, and notify the shift supervisor by text.",
@@ -112,8 +98,6 @@ const INDUSTRIES = [
   },
   {
     name: "Nonprofit",
-    voice: "Rachel",
-    phone: "844-DSX-GIVE (844-379-4483)",
     bullets: [
       "Answer a donor calling to make a contribution: take their payment information, confirm the designation, send a receipt by email, and log the gift into the CRM.",
       "When a monthly donor's card expires, call to update the payment method before the next recurring gift is declined.",
@@ -127,8 +111,6 @@ const INDUSTRIES = [
   },
   {
     name: "Professional Services",
-    voice: "David",
-    phone: "844-DSX-PRO (844-379-3776)",
     bullets: [
       "Answer a prospective client calling about your firm: ask about their situation, explain which practice areas are relevant, and schedule a consultation with the right attorney or partner.",
       "When a client calls for a document status update, pull their matter file and tell them exactly where things stand — 'The filing was submitted Tuesday. Current processing time is 5–7 business days.'",
@@ -142,8 +124,6 @@ const INDUSTRIES = [
   },
   {
     name: "Real Estate",
-    voice: "Lisa",
-    phone: "844-DSX-REAL (844-379-7325)",
     bullets: [
       "Answer a call from a buyer inquiring about a listing: confirm they're pre-qualified, ask about their timeline and must-haves, and schedule a showing with the listing agent.",
       "When a buyer texts 'What's the asking price for 124 Maple?', reply with the price, square footage, bed/bath count, and the next open house date.",
@@ -157,8 +137,6 @@ const INDUSTRIES = [
   },
   {
     name: "Retail",
-    voice: "Kevin",
-    phone: "844-DSX-SHOP (844-379-7467)",
     bullets: [
       "Answer a customer calling about their order: pull the order by number or email, tell them exactly where it is — 'In the warehouse, shipping label printed, expected to go out Thursday' — and offer to text them the tracking link.",
       "Take an incoming phone order: ask for the SKU or product name, confirm the price, check inventory at the nearest store, and process the order for pickup or delivery.",
@@ -172,8 +150,6 @@ const INDUSTRIES = [
   },
   {
     name: "Transportation & Logistics",
-    voice: "Alex",
-    phone: "844-DSX-MOVE (844-379-6683)",
     bullets: [
       "Answer a shipper's call for a rate quote: ask about the origin, destination, freight class, weight, and pickup window, then pull the rate from the pricing engine and give the quote verbally with a follow-up email.",
       "When a customer calls about a delayed shipment, pull the GPS tracking data from the carrier, explain the delay — 'Weather shut down I-80 near Truckee, driver is holding at the rest stop. New ETA is 4:30 PM' — and ask if that still works.",
@@ -187,8 +163,6 @@ const INDUSTRIES = [
   },
   {
     name: "Wholesale",
-    voice: "Nina",
-    phone: "844-DSX-WHOL (844-379-9465)",
     bullets: [
       "Take an incoming order from a retailer: confirm their account number, walk through the order line by line, check stock availability in real time, and offer substitutes for any out-of-stock items.",
       "When a customer's usual item is on backorder, suggest the alternative SKU that's in stock, explain the minor difference, and offer a one-time discount on the substitute.",
@@ -202,8 +176,6 @@ const INDUSTRIES = [
   },
   {
     name: "Municipalities",
-    voice: "Chris",
-    phone: "844-DSX-GOV (844-379-3468)",
     bullets: [
       "Answer a resident calling about their water bill: verify their account, explain the current charges, and walk through the tiered rate structure — including any conservation credits applied this month.",
       "Handle a building-permit inquiry: ask about the project type and scope, check zoning rules for that parcel, explain which permits are required, and email the application forms.",
@@ -216,8 +188,6 @@ const INDUSTRIES = [
     ],
   },
 ];
-
-const TRUSTED_BY = ["Switch", "3CX", "Cisco", "Polycom", "Yealink"];
 
 export default function IndustriesPage() {
   const [open, setOpen] = useState<number | null>(0);
@@ -234,7 +204,7 @@ export default function IndustriesPage() {
             How We Serve Your Business
           </h1>
           <p className="mt-6 text-lg text-[#191919]/60 leading-relaxed max-w-2xl">
-            DSX Edge is customized to your individual business — your products, your workflows,
+            DSX Edge is customized to your individual business: your products, your workflows,
             your customers, your pricing. The examples below show some of the business activities
             we handle autonomously during business hours, so your staff can focus on the work
             that builds your business, and after hours, so you never miss an opportunity.
@@ -279,32 +249,26 @@ export default function IndustriesPage() {
                   </ul>
 
                   <div className="mt-8 bg-[#F4F3F3] rounded-xl p-5">
-                    <p className="text-sm text-[#191919]/50 mb-1">Try it for yourself</p>
-                    <a
-                      href={`tel:${ind.phone.replace(/[^0-9]/g, "").slice(0, 10)}`}
-                      className="inline-flex items-center gap-2 font-semibold text-[#0084FF] hover:text-[#0066CC] transition-colors duration-200"
-                    >
-                      <Phone className="w-4 h-4" />
-                      Call {ind.phone} and talk with {ind.voice}
-                    </a>
+                    {i === 0 ? (
+                      <>
+                        <p className="text-sm text-[#191919]/50 mb-1">Try it for yourself</p>
+                        <a
+                          href="tel:8443792886"
+                          className="inline-flex items-center gap-2 font-semibold text-[#0084FF] hover:text-[#0066CC] transition-colors duration-200"
+                        >
+                          <Phone className="w-4 h-4" />
+                          Call 844-DSX-AUTO (844-379-2886) and talk with Pete
+                        </a>
+                      </>
+                    ) : (
+                      <p className="text-sm text-[#191919]/60">
+                        This industry demo line is being prepared for the client presentation.
+                      </p>
+                    )}
                   </div>
                 </div>
               )}
             </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Trusted By */}
-      <section className="py-16 px-4 sm:px-6 md:px-10 bg-[#F9F8F6] text-center">
-        <p className="text-xs uppercase tracking-[0.2em] text-[#191919]/40 font-medium mb-4">
-          Trusted By
-        </p>
-        <div className="flex flex-wrap items-center justify-center gap-12 md:gap-16 opacity-40">
-          {TRUSTED_BY.map((brand) => (
-            <span key={brand} className="text-xl md:text-2xl font-bold text-[#191919] tracking-tight">
-              {brand}
-            </span>
           ))}
         </div>
       </section>
@@ -316,11 +280,11 @@ export default function IndustriesPage() {
             Improve your operations &amp; increase profits.
           </h2>
           <Link
-            to="/about"
+            to="/about#contact"
             className="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium text-white bg-[#0084FF]/80 backdrop-blur-[2px] rounded-2xl hover:scale-[1.02] transition-transform duration-200"
             style={{ boxShadow: "inset 0px 4px 4px 0px rgba(255,255,255,0.35)" }}
           >
-            Book A Free Consultation
+            Request A Consultation
             <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
