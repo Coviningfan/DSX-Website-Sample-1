@@ -581,7 +581,7 @@ export default function SignalOrb({
 
     const particleMaterial = new THREE.PointsMaterial({
       color: white,
-      size: 0.2,
+      size: 0.04,
       transparent: true,
       opacity: 0.7,
       depthTest: false,
