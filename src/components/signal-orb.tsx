@@ -148,7 +148,6 @@ export default function SignalOrb({
   const stageRef = useRef<HTMLDivElement>(null);
   const mountRef = useRef<HTMLDivElement>(null);
   const pointerRef = useRef({ x: 0, y: 0 });
-  const pausedRef = useRef(false);
   const visibleRef = useRef(true);
   const focusRef =
     useRef<FocusZone>("overview");
@@ -189,12 +188,6 @@ export default function SignalOrb({
     const mount = mountRef.current;
 
     if (!stage || !mount) return;
-
-    const reducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
-    ).matches;
-
-    pausedRef.current = reducedMotion;
 
     const scene = new THREE.Scene();
 
@@ -1090,10 +1083,7 @@ export default function SignalOrb({
         0.05,
       );
 
-      if (
-        !pausedRef.current &&
-        visibleRef.current
-      ) {
+      if (visibleRef.current) {
         const activeZone = focusRef.current;
         const particleSpeed =
           activeZone === "core"

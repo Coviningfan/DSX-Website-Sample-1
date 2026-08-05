@@ -30,7 +30,7 @@ Migrated from the PortfolioRevamp (Replit-based) codebase to Zo Site. DSX Edge i
 - The particle field uses 240 high-contrast points and more legible transit speed. Motion runs continuously while the visualization is onscreen; there is no visible motion toolbar.
 - The visualization is scaled so the sphere occupies roughly one-third of the desktop stage, with responsive tablet/mobile reductions that keep all six rails visible.
 - A visible shader-driven processing sweep, traveling pulse clusters within the six particle lanes, independent core/shell drift, and a restrained breathing cycle represent autonomous work without adding decorative geometry.
-- Three keyboard-accessible focus zones, `prefers-reduced-motion`, and offscreen animation pausing are preserved.
+- Three keyboard-accessible focus zones and offscreen animation suspension are preserved. The active orb has no paused state and always advances while onscreen.
 - WebGL scene is fully constructed on mount and the renderer owns its loop via `renderer.setAnimationLoop`.
 - Full WebGL cleanup on unmount (`setAnimationLoop(null)`, geometry/material disposal, context loss handler).
 
@@ -593,7 +593,7 @@ The site exports `{ fetch, port }` from `server.ts` for Zo's deployment system. 
 
 ### Audio Aug 4 2026 — Design audit + SignalOrb state
 
-- **SignalOrb** (`src/components/signal-orb.tsx` + `signal-orb.css`): Three.js WebGL orb. Serves as the hero **background element** (`pointer-events-none absolute inset-0 -z-0` in `#hero`), always animating (packets, particles, shader time, orbit rings). No toolbar, no pause/resume UI — motion starts on load and never pauses. Debug handle `window.__DSX_ORB_DEBUG__` exposes renderer/scene/flows/pausedRef/elapsed.
+- **SignalOrb** (`src/components/signal-orb.tsx` + `signal-orb.css`): Three.js WebGL operating-model visualization in the dedicated **How It Works** section. Packets, particles, shader time, orbital rings, and autonomous process pulses always advance while onscreen. There is no toolbar or pause state; IntersectionObserver suspends rendering only when the stage is offscreen.
 - **Homepage sections** (`src/pages/home.tsx`, single page, anchor nav): hero (orb bg + "Every Department, Every Function, 24/7." + 844-DSX-Edge) → proof rail → #departments (Features) → natural-dialogue examples → #demo ("Try It for Yourself") → turnkey-AI → #industries → #features → #pricing (descriptive, no tiers) → #about → #contact.
 - Nav (Features/Industries/Pricing/About/Contact) anchors to section IDs; footer is 4-col with logo, only working links.
 - **Verified claims only:** all stats/contact info cross-checked against the original PortfolioRevamp codebase (`99.9%` uptime SLA, `100K+/mo` minutes, `12+ yrs`, `3CX Platinum`, `hello@dsxedge.com`). No invented data-center or volume claims.
