@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useLayoutEffect } from "react";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import { ThemeProvider } from "@/components/theme-provider";
 import Navbar from "@/components/navbar";
@@ -14,13 +14,17 @@ import DesignKitDemo from "@/pages/_design";
 function RouteScroll() {
   const { pathname, hash } = useLocation();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
+    if (!hash) {
+      window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+      return;
+    }
+
     const frame = requestAnimationFrame(() => {
-      if (hash) {
-        document.getElementById(hash.slice(1))?.scrollIntoView({ behavior: "smooth" });
-      } else {
-        window.scrollTo({ top: 0 });
-      }
+      document.getElementById(hash.slice(1))?.scrollIntoView({
+        block: "start",
+        behavior: "smooth",
+      });
     });
 
     return () => cancelAnimationFrame(frame);

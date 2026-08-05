@@ -4,6 +4,7 @@ import {
   useState,
   type PointerEvent as ReactPointerEvent,
 } from "react";
+import { Pause, Play } from "lucide-react";
 import * as THREE from "three";
 import "./signal-orb.css";
 
@@ -513,7 +514,7 @@ export default function SignalOrb({
     root.add(reflection);
 
     const random = seededRandom(731);
-    const particleCount = 180;
+    const particleCount = 240;
     const particlePositions =
       new Float32Array(particleCount * 3);
     const particleColors =
@@ -533,7 +534,7 @@ export default function SignalOrb({
       particlePhases[index] = random();
       particleRadii[index] = 0.24 + random() * 0.42;
       particleAngles[index] = random() * 0.42 - 0.21;
-      particleDrift[index] = 0.15 + random() * 0.055;
+      particleDrift[index] = 0.2 + random() * 0.075;
       particleSpin[index] = 0.22 + random() * 0.16;
       particleLanes[index] = index % 6;
     }
@@ -622,9 +623,9 @@ export default function SignalOrb({
 
     const particleMaterial = new THREE.PointsMaterial({
       color: white,
-      size: 0.04,
+      size: 0.052,
       transparent: true,
-      opacity: 0.78,
+      opacity: 0.94,
       vertexColors: true,
       depthTest: false,
       depthWrite: false,
@@ -900,7 +901,7 @@ export default function SignalOrb({
            */
           const packet = new THREE.Mesh(
             new THREE.SphereGeometry(
-              0.034,
+              0.044,
               12,
               12,
             ),
@@ -1217,8 +1218,8 @@ export default function SignalOrb({
 
       const particleTarget =
         activeZone === "core"
-          ? 0.96
-          : 0.78;
+          ? 1
+          : 0.94;
 
       particleMaterial.opacity +=
         (
@@ -1439,10 +1440,16 @@ export default function SignalOrb({
           type="button"
           onClick={toggleMotion}
           aria-pressed={paused}
+          data-paused={paused}
         >
-          {paused
-            ? "Resume motion"
-            : "Pause motion"}
+          <span className="dsx-hero-orb__motion-state" aria-hidden="true">
+            <span className="dsx-hero-orb__motion-indicator" />
+            {paused ? "Motion paused" : "Motion running"}
+          </span>
+          <span className="dsx-hero-orb__motion-action">
+            {paused ? <Play /> : <Pause />}
+            {paused ? "Resume" : "Pause"}
+          </span>
         </button>
       </div>
 

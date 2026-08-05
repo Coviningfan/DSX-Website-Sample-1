@@ -66,15 +66,63 @@
   z-index: 5;
   right: 0.75rem;
   bottom: 0.75rem;
-  min-height: 44px;
-  padding: 0.65rem 0.85rem;
+  min-height: 48px;
+  display: grid;
+  grid-template-columns: auto auto;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.48rem 0.55rem 0.48rem 0.75rem;
   border: 1px solid rgba(31, 92, 150, 0.22);
   border-radius: 999px;
   background: rgba(248, 252, 255, 0.66);
-  color: #2a5b89;
-  font: 600 0.71rem/1 system-ui, sans-serif;
+  color: #173b5f;
+  font: 650 0.7rem/1 system-ui, sans-serif;
   backdrop-filter: blur(10px);
   cursor: pointer;
+}
+
+.dsx-hero-orb__motion-state,
+.dsx-hero-orb__motion-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.38rem;
+  white-space: nowrap;
+}
+
+.dsx-hero-orb__motion-indicator {
+  width: 0.48rem;
+  height: 0.48rem;
+  border-radius: 50%;
+  background: #16845b;
+  box-shadow: 0 0 0 4px rgba(22, 132, 91, 0.12);
+}
+
+.dsx-hero-orb__motion-action {
+  min-height: 34px;
+  padding: 0 0.68rem;
+  border-radius: 999px;
+  background: #245f94;
+  color: #fff;
+}
+
+.dsx-hero-orb__motion-action svg {
+  width: 0.78rem;
+  height: 0.78rem;
+}
+
+.dsx-hero-orb__motion[data-paused="true"] {
+  border-color: rgba(226, 113, 47, 0.34);
+}
+
+.dsx-hero-orb__motion[data-paused="true"]
+  .dsx-hero-orb__motion-indicator {
+  background: #e2712f;
+  box-shadow: 0 0 0 4px rgba(226, 113, 47, 0.13);
+}
+
+.dsx-hero-orb__motion[data-paused="true"]
+  .dsx-hero-orb__motion-action {
+  background: #c85f1f;
 }
 
 .dsx-hero-orb__motion:hover {

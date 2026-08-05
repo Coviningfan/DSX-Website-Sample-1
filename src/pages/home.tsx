@@ -187,7 +187,7 @@ export default function HomePage() {
               </span>
             </div>
 
-            <ol className="relative px-5 py-2 sm:px-6">
+            <ol className="relative px-5 py-2 sm:px-6" aria-label="Example after-hours call progression">
               {[
                 ["00:00", "Incoming call", "A customer calls after business hours."],
                 ["00:02", "Request understood", "“I need to move my appointment to Wednesday afternoon.”"],
@@ -195,22 +195,28 @@ export default function HomePage() {
                 ["00:18", "Appointment confirmed", "The calendar is updated and the customer receives confirmation."],
               ].map(([time, title, detail], index) => (
                 <li key={title} className="relative grid grid-cols-[3.5rem_1rem_1fr] gap-3 border-b border-white/8 py-5 last:border-b-0 sm:grid-cols-[4rem_1rem_1fr]">
-                  <span className="pt-0.5 font-mono text-[11px] text-white/38">{time}</span>
+                  <span className="pt-0.5 font-mono text-[11px] text-white/48">{time}</span>
                   <span className="relative mt-1 flex justify-center" aria-hidden="true">
                     {index < 3 && <span className="absolute left-1/2 top-3 h-[calc(100%+1.6rem)] w-px -translate-x-1/2 bg-gradient-to-b from-[#4aa6ff]/70 to-[#e2712f]/30" />}
                     <span className={`relative z-10 h-2.5 w-2.5 rounded-full ${index === 3 ? "bg-[#f28a45] shadow-[0_0_16px_rgba(242,138,69,0.7)]" : "bg-[#69baff]"}`} />
                   </span>
                   <div>
                     <p className="text-sm font-semibold text-white">{title}</p>
-                    <p className="mt-1 text-sm leading-relaxed text-white/62">{detail}</p>
+                    <p className="mt-1 text-sm leading-relaxed text-white/72">{detail}</p>
                   </div>
                 </li>
               ))}
             </ol>
 
-            <div className="flex items-center justify-between gap-4 border-t border-white/10 bg-white/[0.035] px-5 py-4 sm:px-6">
-              <p className="text-xs text-white/48">Conversation, scheduling, and follow-up stay connected.</p>
-              <span className="shrink-0 text-xs font-semibold uppercase tracking-[0.12em] text-[#f7a66f]">Completed</span>
+            <div className="grid gap-3 border-t border-white/10 bg-white/[0.045] px-5 py-4 sm:grid-cols-[1fr_auto] sm:items-center sm:px-6">
+              <div>
+                <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/42">Business result</p>
+                <p className="mt-1 text-sm text-white/78">The request is captured, the schedule is updated, and the customer receives confirmation.</p>
+              </div>
+              <span className="inline-flex w-fit items-center gap-2 text-xs font-semibold uppercase tracking-[0.12em] text-[#f7a66f]">
+                <span className="h-1.5 w-1.5 rounded-full bg-[#f28a45]" aria-hidden="true" />
+                Completed
+              </span>
             </div>
           </div>
         </div>

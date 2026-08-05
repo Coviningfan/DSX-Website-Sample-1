@@ -256,3 +256,6 @@ textarea {
     transition: none;
   }
 }
+html {
+  scroll-padding-top: 7rem;
+}
