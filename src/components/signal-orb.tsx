@@ -117,6 +117,7 @@ function createWordmarkTexture() {
   context.fillStyle = "#b9d6ec";
   context.font =
     '600 26px Inter, Arial, Helvetica, sans-serif';
+  context.letterSpacing = "7px";
   context.fillText(
     "COMMUNICATIONS PLATFORM",
     canvas.width / 2,
@@ -275,10 +276,14 @@ export default function SignalOrb({
     const white = new THREE.Color(COLORS.white);
 
     const root = new THREE.Group();
-    root.position.set(0, -0.02, 0);
-    root.scale.setScalar(0.90);
+    root.position.set(0.22, 0.02, 0);
+    root.scale.setScalar(0.79);
     scene.add(root);
 
+    /*
+     * A smooth sphere restores the exact circular silhouette.
+     * The triangular DSX network remains a separate, subtle shell.
+     */
     const coreMaterial = new THREE.ShaderMaterial({
       uniforms: {
         uTime: { value: 0 },
@@ -348,6 +353,10 @@ export default function SignalOrb({
             vLocalPosition.x
           );
 
+          /*
+           * Lifted marine-blue material. It remains deep and
+           * dimensional without reading as a black obstruction.
+           */
           vec3 deepMarine = vec3(0.028, 0.105, 0.176);
           vec3 steelBlue = vec3(0.070, 0.245, 0.375);
 
@@ -359,6 +368,10 @@ export default function SignalOrb({
 
           body += uBlue * 0.040;
 
+          /*
+           * Broad environmental reflection from the bright
+           * tunnel's upper-left architecture.
+           */
           vec3 tunnelDirection =
             normalize(vec3(-0.70, 0.56, 0.72));
 
@@ -443,6 +456,10 @@ export default function SignalOrb({
             fieldLines *
             0.022;
 
+          /*
+           * Amber is a controlled action-side reflection,
+           * not a second dominant color.
+           */
           color += uAmber *
             actionSide *
             fresnel *
@@ -459,7 +476,7 @@ export default function SignalOrb({
     });
 
     const core = new THREE.Mesh(
-      new THREE.SphereGeometry(1.2, 96, 64),
+      new THREE.SphereGeometry(1.2, 128, 96),
       coreMaterial,
     );
     root.add(core);
@@ -496,6 +513,10 @@ export default function SignalOrb({
     halo.position.z = -0.42;
     root.add(halo);
 
+    /*
+     * Floor contact. This makes the orb occupy the tunnel
+     * instead of floating over a flat background.
+     */
     const floorShadowMaterial = new THREE.SpriteMaterial({
       map: createRadialTexture([
         [0, "rgba(44, 104, 159, 0.30)"],
@@ -628,6 +649,10 @@ export default function SignalOrb({
       return line;
     };
 
+    /*
+     * Tight architectural rings. They frame the core instead of
+     * becoming large, faded strands around the composition.
+     */
     const orbitA = createEllipse(
       1.62,
       0.44,
@@ -654,48 +679,6 @@ export default function SignalOrb({
       silver,
       0.048,
     );
-
-    const foundation = new THREE.Group();
-    foundation.position.set(0, -1.62, -0.32);
-    root.add(foundation);
-
-    const foundationMaterials: THREE.LineBasicMaterial[] = [];
-
-    [
-      { y: 0.28, rx: 1.48, ry: 0.27, opacity: 0.18 },
-      { y: 0.00, rx: 1.34, ry: 0.24, opacity: 0.13 },
-      { y: -0.26, rx: 1.18, ry: 0.21, opacity: 0.085 },
-    ].forEach((layer, layerIndex) => {
-      const points: THREE.Vector3[] = [];
-
-      for (let index = 0; index <= 128; index += 1) {
-        const angle = (index / 128) * Math.PI * 2;
-
-        points.push(
-          new THREE.Vector3(
-            Math.cos(angle) * layer.rx,
-            Math.sin(angle) * layer.ry + layer.y,
-            0,
-          ),
-        );
-      }
-
-      const material = new THREE.LineBasicMaterial({
-        color: layerIndex === 0 ? blue : silver,
-        transparent: true,
-        opacity: layer.opacity,
-        depthWrite: false,
-      });
-
-      foundationMaterials.push(material);
-
-      foundation.add(
-        new THREE.LineLoop(
-          new THREE.BufferGeometry().setFromPoints(points),
-          material,
-        ),
-      );
-    });
 
     const flows: Flow[] = [];
 
@@ -740,6 +723,10 @@ export default function SignalOrb({
               smoothstep(0.0, 0.055, vRailUv.x) *
               smoothstep(1.0, 0.945, vRailUv.x);
 
+            /*
+             * Incoming rails become brighter as they approach the
+             * core. Outgoing rails begin bright and resolve outward.
+             */
             float energy = mix(
               0.18,
               1.0,
@@ -812,6 +799,10 @@ export default function SignalOrb({
           endPoint,
         ]);
 
+      /*
+       * A precise core rail plus a controlled luminous sheath.
+       * Both taper according to direction through the UV shader.
+       */
       const lineMaterial =
         createRailMaterial(
           color,
@@ -865,6 +856,11 @@ export default function SignalOrb({
                 THREE.AdditiveBlending,
             });
 
+          /*
+           * These begin as spheres but are stretched and oriented
+           * along the curve each frame, producing luminous dashes
+           * instead of bead-like dots.
+           */
           const packet = new THREE.Mesh(
             new THREE.SphereGeometry(
               0.025,
@@ -895,6 +891,10 @@ export default function SignalOrb({
       });
     };
 
+    /*
+     * Three clean rails per side. Their shallow perspective follows
+     * the tunnel architecture and avoids decorative wandering loops.
+     */
     createFlow({
       start: [-3.02, 0.72, -0.10],
       end: [-1.16, 0.38, 0.06],
@@ -961,6 +961,10 @@ export default function SignalOrb({
       bendZ: 0.05,
     });
 
+    /*
+     * The wordmark now exists inside the WebGL scene.
+     * It follows the core rather than floating as unrelated HTML.
+     */
     const wordmarkMaterial =
       new THREE.SpriteMaterial({
         map: createWordmarkTexture(),
@@ -989,7 +993,6 @@ export default function SignalOrb({
     const orbitCMaterial =
       orbitC.material as THREE.LineBasicMaterial;
 
-    const packetAxis = new THREE.Vector3(0, 1, 0);
     const clock = new THREE.Clock();
 
     const resize = () => {
@@ -1056,6 +1059,9 @@ export default function SignalOrb({
 
         wire.rotation.y =
           elapsed * 0.022;
+
+        const packetAxis =
+          new THREE.Vector3(0, 1, 0);
 
         flows.forEach((flow) => {
           flow.packets.forEach((packet) => {
@@ -1278,20 +1284,6 @@ export default function SignalOrb({
           0.09,
         );
 
-      foundationMaterials.forEach((material, index) => {
-        const baseOpacity = [0.18, 0.13, 0.085][index] ?? 0.08;
-        const targetOpacity =
-          activeZone === "core"
-            ? baseOpacity * 1.28
-            : baseOpacity;
-
-        material.opacity = THREE.MathUtils.lerp(
-          material.opacity,
-          targetOpacity,
-          0.09,
-        );
-      });
-
       root.rotation.x +=
         (
           pointerRef.current.x -
@@ -1332,60 +1324,36 @@ export default function SignalOrb({
 
   return (
     <section
-      className={`dsx-orb ${className}`}
+      className={`dsx-hero-orb ${className}`}
       data-ready={ready}
       data-zone={focus}
       aria-label="DSX Edge communications platform"
     >
       <div
         ref={stageRef}
-        className="dsx-orb__stage"
+        className="dsx-hero-orb__stage"
         onPointerMove={handlePointerMove}
         onPointerLeave={handlePointerLeave}
       >
         <div
           ref={mountRef}
-          className="dsx-orb__canvas"
+          className="dsx-hero-orb__canvas"
           aria-hidden="true"
         />
 
         <div
-          className="dsx-orb__fallback"
+          className="dsx-hero-orb__fallback"
           aria-hidden={ready}
         >
-          <div className="dsx-orb__fallback-core">
+          <div className="dsx-hero-orb__fallback-core">
             <strong>DSX<br />EDGE</strong>
             <span>Communications platform</span>
           </div>
         </div>
 
-        <div className="dsx-orb__label dsx-orb__label--incoming">
-          <div className="dsx-orb__kicker">
-            Communications enter
-          </div>
-          <div className="dsx-orb__label-title">
-            The starting point
-          </div>
-          <div className="dsx-orb__label-copy">
-            Calls, messages, routing events, web chat, and customer inquiries.
-          </div>
-        </div>
-
-        <div className="dsx-orb__label dsx-orb__label--outgoing">
-          <div className="dsx-orb__kicker">
-            Intelligent actions leave
-          </div>
-          <div className="dsx-orb__label-title">
-            The business responds
-          </div>
-          <div className="dsx-orb__label-copy">
-            CRM updates, scheduling, routing, follow-up, and reporting.
-          </div>
-        </div>
-
         <button
           type="button"
-          className="dsx-orb__zone dsx-orb__zone--left"
+          className="dsx-hero-orb__zone dsx-hero-orb__zone--left"
           aria-label="Focus incoming communications"
           aria-pressed={focus === "communications"}
           onPointerEnter={() =>
@@ -1401,7 +1369,7 @@ export default function SignalOrb({
 
         <button
           type="button"
-          className="dsx-orb__zone dsx-orb__zone--core"
+          className="dsx-hero-orb__zone dsx-hero-orb__zone--core"
           aria-label="Focus the DSX Edge core"
           aria-pressed={focus === "core"}
           onPointerEnter={() =>
@@ -1417,7 +1385,7 @@ export default function SignalOrb({
 
         <button
           type="button"
-          className="dsx-orb__zone dsx-orb__zone--right"
+          className="dsx-hero-orb__zone dsx-hero-orb__zone--right"
           aria-label="Focus outgoing business actions"
           aria-pressed={focus === "actions"}
           onPointerEnter={() =>
@@ -1431,14 +1399,8 @@ export default function SignalOrb({
           }
         />
 
-        <div className="dsx-orb__mobile-summary" aria-hidden="true">
-          <span>Communications</span>
-          <span>→</span>
-          <span>Business action</span>
-        </div>
-
         <button
-          className="dsx-orb__motion"
+          className="dsx-hero-orb__motion"
           type="button"
           onClick={toggleMotion}
           aria-pressed={paused}

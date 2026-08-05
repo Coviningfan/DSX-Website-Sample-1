@@ -1,6 +1,7 @@
-import SignalOrb from "@/components/signal-orb";
-import { Phone, ArrowRight, Wrench, TrendingUp, Building2, Stethoscope, ShoppingCart, Truck, Home, Zap, ChevronRight } from "lucide-react";
+import DsxEdgeHero from "@/components/dsx-edge-hero";
+import { ArrowRight, Wrench, TrendingUp, Building2, Stethoscope, ShoppingCart, Truck, Home, Hotel, Zap, ChevronRight, Phone } from "lucide-react";
 import { Link } from "react-router-dom";
+
 
 const DEPARTMENTS = [
   "Customer Service", "Order Taking", "Appointment Setting",
@@ -41,6 +42,12 @@ const WORKFLOW_EXAMPLES = [
     title: "Residential & Commercial Services",
     desc: "Ask about the property and prepare a quote. Schedule, cancel, or reschedule appointments. Pause or restart recurring service. Answer billing questions. Confirm appointments and service by phone.",
   },
+  {
+    icon: Hotel,
+    title: "Hotels & Hospitality",
+    desc: "Handle reservations, check-in confirmations, concierge requests, room-service orders, and guest follow-up. Upsell upgrades and amenities. Handle overnight front-desk overflow when no one is at the counter.",
+
+  },
 ];
 
 const TRUSTED_BY = ["Switch", "3CX", "Cisco", "Polycom", "Yealink"];
@@ -48,91 +55,7 @@ const TRUSTED_BY = ["Switch", "3CX", "Cisco", "Polycom", "Yealink"];
 export default function HomePage() {
   return (
     <main className="min-h-screen bg-white overflow-x-hidden">
-      {/* ── Hero ─────────────────────────────────────────── */}
-      <section className="relative h-screen flex flex-col overflow-hidden">
-        <div className="absolute inset-0 z-0 hero-tunnel-bg">
-          <div className="bg" />
-          <img
-            src="/images/dsx-edge-bkg.jpg"
-            alt=""
-            className="relative z-[1] w-full h-full object-contain object-center"
-          />
-        </div>
-
-        <div className="absolute inset-0 z-[5] hero-tunnel-overlay" />
-
-        <div className="relative z-10 flex flex-col items-center flex-1 pt-32 px-4 sm:px-6">
-          <h1 className="font-bold text-5xl sm:text-6xl md:text-7xl lg:text-8xl leading-[1.05] -tracking-[2px] text-[#191919] text-center max-w-5xl">
-            Every Department, Every Function, 24/7.
-          </h1>
-          <p className="mt-4 text-xl md:text-2xl text-[#0084FF] font-semibold">
-            Business Communications That Drive Profit
-          </p>
-          <p className="mt-6 text-lg md:text-xl text-[#191919]/60 leading-relaxed max-w-2xl text-center">
-            A new dimension in customer interaction and service — tailored to your business.
-          </p>
-
-          <div className="flex flex-col sm:flex-row items-center gap-4 mt-8">
-            <a
-              href="tel:844-379-3343"
-              className="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium text-white bg-[#0084FF]/80 backdrop-blur-[2px] rounded-2xl hover:scale-[1.02] transition-transform duration-200"
-              style={{ boxShadow: "inset 0px 4px 4px 0px rgba(255,255,255,0.35)" }}
-            >
-              <Phone className="w-4 h-4" />
-              Call the Live Demo → 844-DSX-Edge
-            </a>
-            <p className="text-sm text-[#191919]/50">
-              Pick up the phone and hear it yourself
-            </p>
-          </div>
-        </div>
-
-        {/* Bottom info panel */}
-        <div className="relative z-10 mt-auto w-full max-w-5xl mx-auto px-4 sm:px-6">
-          <div className="bg-white/90 backdrop-blur-sm border border-gray-200 border-b-0 pt-8 sm:pt-12 md:pt-16 px-5 sm:px-8 md:px-12 pb-0 shadow-sm rounded-t-2xl">
-            <div className="grid md:grid-cols-2 gap-6 md:gap-16">
-              <div>
-                <p className="text-[11px] uppercase tracking-[0.2em] text-[#191919]/50 font-medium">
-                  What does DSX Edge do?
-                </p>
-                <h2 className="mt-3 text-2xl sm:text-3xl md:text-4xl font-bold leading-tight tracking-tight text-[#191919]">
-                  Conversations that build momentum
-                </h2>
-              </div>
-              <div className="flex items-end">
-                <p className="text-sm md:text-[15px] text-[#191919]/70 leading-relaxed">
-                  Conversational AI built for real businesses. Agents that hold a real
-                  conversation, plug into the systems you run, and show their work —
-                  across voice, SMS, and email.
-                </p>
-              </div>
-            </div>
-
-            <div className="mt-6 sm:mt-8 md:mt-10 h-px bg-gray-200 w-full" />
-
-            <div className="grid sm:grid-cols-3 gap-0.5">
-              {[
-                { num: "01", label: "Communications" },
-                { num: "02", label: "Intelligence" },
-                { num: "03", label: "Infrastructure" },
-              ].map((item) => (
-                <Link
-                  key={item.num}
-                  to="/features"
-                  className="group flex items-center justify-between bg-[#F4F3F3] hover:bg-[#eaeaea] transition-all duration-200 px-4 sm:px-6 py-3.5 sm:py-4"
-                >
-                  <div className="flex items-center gap-2">
-                    <span className="text-[#191919]/40 font-medium">{item.num}</span>
-                    <span className="text-[#191919]/30 mx-1">/</span>
-                    <span className="font-medium text-[#191919]">{item.label}</span>
-                  </div>
-                  <ArrowRight className="w-4 h-4 text-gray-400 group-hover:text-gray-700 group-hover:translate-x-0.5 transition-all duration-200" />
-                </Link>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
+      <DsxEdgeHero />
 
       {/* ── The Easiest Way ──────────────────────────────── */}
       <section className="py-24 sm:py-32 px-4 sm:px-6 md:px-10 bg-white">
@@ -167,8 +90,10 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className="h-[600px] sm:h-[700px]">
-            <SignalOrb />
+          <div className="max-w-3xl mx-auto text-center mb-12">
+            <p className="text-[#191919]/60 leading-relaxed">
+              The SignalOrb visualizes the DSX Edge platform in real time — Communications enter from the left, Intelligence processes at the core, and Actions flow out to the right. It is the operational model that runs your business.
+            </p>
           </div>
 
           <div className="grid sm:grid-cols-3 gap-6 mt-8">
@@ -328,7 +253,7 @@ export default function HomePage() {
           </div>
 
           <p className="text-center text-lg font-semibold text-[#191919] mb-8">
-            And dozens of others.
+            14 industries. One platform.
           </p>
 
           <div className="text-center">
