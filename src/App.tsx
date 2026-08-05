@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import { ThemeProvider } from "@/components/theme-provider";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
+import ScrollMotion from "@/components/scroll-motion";
 import HomePage from "@/pages/home";
 import FeaturesPage from "@/pages/features";
 import IndustriesPage from "@/pages/industries";
@@ -33,6 +34,7 @@ export default function App() {
     <ThemeProvider defaultTheme="light">
       <BrowserRouter>
         <RouteScroll />
+        <ScrollMotion />
         <Navbar />
         <Routes>
           <Route path="/" element={<HomePage />} />

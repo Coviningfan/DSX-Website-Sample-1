@@ -172,6 +172,32 @@ textarea {
   transform: scale(1.025);
 }
 
+.hero-tunnel-bg {
+  transform: scale(calc(1 + var(--hero-motion, 0) * 0.018));
+  filter: blur(calc(var(--hero-motion, 0) * 3px));
+  transform-origin: center;
+  will-change: transform, filter;
+}
+
+.site-nav {
+  transform: translate3d(0, calc(var(--nav-motion, 0) * -4px), 0)
+    scale(calc(1 - var(--nav-motion, 0) * 0.012));
+  transform-origin: top center;
+  will-change: transform;
+}
+
+[data-scroll-motion] > :first-child {
+  opacity: 0;
+  transform: translate3d(0, var(--motion-y, 14px), 0)
+    scale(var(--motion-scale, 0.992));
+  transform-origin: center top;
+  transition: opacity 700ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+[data-scroll-motion].is-motion-visible > :first-child {
+  opacity: 1 !important;
+}
+
 .hero-tunnel-bg::after {
   content: "";
   position: absolute;
@@ -217,5 +243,16 @@ textarea {
   .how-it-works-orb,
   .how-it-works-orb .dsx-hero-orb__stage {
     min-height: 480px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-tunnel-bg,
+  .site-nav,
+  [data-scroll-motion] > :first-child {
+    filter: none;
+    opacity: 1;
+    transform: none;
+    transition: none;
   }
 }

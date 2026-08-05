@@ -42,7 +42,7 @@ export default function Navbar() {
 
   return (
     <nav
-      className="fixed left-0 right-0 top-0 z-50 flex justify-center px-4 pt-5 pointer-events-none sm:pt-[30px]"
+      className="site-nav fixed left-0 right-0 top-0 z-50 flex justify-center px-4 pt-5 pointer-events-none sm:pt-[30px]"
     >
       <div
         ref={menuRef}
