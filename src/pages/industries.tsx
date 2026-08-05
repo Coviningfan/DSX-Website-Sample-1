@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ArrowRight, Phone, ChevronDown } from "lucide-react";
+import { ArrowRight, Phone, ChevronDown, Building2, BriefcaseBusiness, Car, Construction, GraduationCap, Heart, Hotel, Landmark, Plane, ShoppingBag, Ship, Stethoscope, Truck, Wrench } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const INDUSTRIES = [
