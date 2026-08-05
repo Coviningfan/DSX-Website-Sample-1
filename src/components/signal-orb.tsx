@@ -513,7 +513,7 @@ export default function SignalOrb({
     root.add(reflection);
 
     const random = seededRandom(731);
-    const particleCount = 132;
+    const particleCount = 180;
     const particlePositions =
       new Float32Array(particleCount * 3);
 
@@ -547,9 +547,10 @@ export default function SignalOrb({
 
     const particleMaterial = new THREE.PointsMaterial({
       color: white,
-      size: 0.017,
+      size: 0.026,
       transparent: true,
-      opacity: 0.42,
+      opacity: 0.7,
+      depthTest: false,
       depthWrite: false,
       blending: THREE.AdditiveBlending,
     });
@@ -822,7 +823,7 @@ export default function SignalOrb({
            */
           const packet = new THREE.Mesh(
             new THREE.SphereGeometry(
-              0.025,
+              0.034,
               12,
               12,
             ),
@@ -846,7 +847,7 @@ export default function SignalOrb({
         lineMaterial,
         glowMaterial,
         baseLineOpacity: 0.64,
-        baseGlowOpacity: 0.090,
+        baseGlowOpacity: 0.13,
       });
     };
 
@@ -986,10 +987,10 @@ export default function SignalOrb({
           coreMaterial.uniforms.uTime.value;
 
         particles.rotation.y =
-          elapsed * 0.034;
+          elapsed * 0.11;
 
         particles.rotation.x =
-          Math.sin(elapsed * 0.1) * 0.035;
+          Math.sin(elapsed * 0.18) * 0.065;
 
         orbitA.rotation.z =
           elapsed * 0.034;
@@ -1010,7 +1011,7 @@ export default function SignalOrb({
           flow.packets.forEach((packet) => {
             const progress =
               (
-                elapsed * flow.speed +
+                elapsed * flow.speed * 1.55 +
                 packet.offset
               ) % 1;
 
@@ -1038,10 +1039,10 @@ export default function SignalOrb({
               );
 
             packet.mesh.scale.set(
-              0.70,
-              1.75 +
-                envelope * 0.70,
-              0.70,
+              0.82,
+              2.15 +
+                envelope * 0.9,
+              0.82,
             );
 
             packet.mesh.material.opacity =
@@ -1100,8 +1101,8 @@ export default function SignalOrb({
 
       const haloTarget =
         activeZone === "core"
-          ? 0.62
-          : 0.44;
+          ? 0.78
+          : 0.52;
 
       haloMaterial.opacity +=
         (
@@ -1111,8 +1112,8 @@ export default function SignalOrb({
 
       const particleTarget =
         activeZone === "core"
-          ? 0.56
-          : 0.42;
+          ? 0.96
+          : 0.7;
 
       particleMaterial.opacity +=
         (
@@ -1143,15 +1144,15 @@ export default function SignalOrb({
           activeZone === "core";
 
         const lineTarget = emphasized
-          ? 0.96
+          ? 1
           : dimmed
-            ? 0.17
+            ? 0.12
             : flow.baseLineOpacity;
 
         const glowTarget = emphasized
-          ? 0.19
+          ? 0.28
           : dimmed
-            ? 0.022
+            ? 0.016
             : flow.baseGlowOpacity;
 
         const lineOpacity =
@@ -1188,10 +1189,10 @@ export default function SignalOrb({
         THREE.MathUtils.lerp(
           orbitAMaterial.opacity,
           activeZone === "communications"
-            ? 0.245
+            ? 0.34
             : activeZone === "core"
-              ? 0.19
-              : 0.145,
+              ? 0.28
+              : 0.2,
           0.09,
         );
 
@@ -1199,10 +1200,10 @@ export default function SignalOrb({
         THREE.MathUtils.lerp(
           orbitBMaterial.opacity,
           activeZone === "actions"
-            ? 0.15
+            ? 0.24
             : activeZone === "core"
-              ? 0.095
-              : 0.065,
+              ? 0.17
+              : 0.11,
           0.09,
         );
 
@@ -1210,8 +1211,8 @@ export default function SignalOrb({
         THREE.MathUtils.lerp(
           orbitCMaterial.opacity,
           activeZone === "core"
-            ? 0.085
-            : 0.048,
+            ? 0.15
+            : 0.075,
           0.09,
         );
 
@@ -1276,10 +1277,7 @@ export default function SignalOrb({
           className="dsx-hero-orb__fallback"
           aria-hidden={ready}
         >
-          <div className="dsx-hero-orb__fallback-core">
-            <strong>DSX<br />EDGE</strong>
-            <span>Communications platform</span>
-          </div>
+          <div className="dsx-hero-orb__fallback-core" />
         </div>
 
         <button
@@ -1340,6 +1338,20 @@ export default function SignalOrb({
             ? "Resume motion"
             : "Pause motion"}
         </button>
+      </div>
+
+      <div className="dsx-hero-orb__explainers">
+        <div className="dsx-hero-orb__explainer dsx-hero-orb__explainer--left">
+          <p className="dsx-hero-orb__label">Communications enter</p>
+          <h3>The starting point</h3>
+          <p>Calls, messages, routing events, web chat, and customer inquiries.</p>
+        </div>
+
+        <div className="dsx-hero-orb__explainer dsx-hero-orb__explainer--right">
+          <p className="dsx-hero-orb__label">Intelligent actions leave</p>
+          <h3>The business responds</h3>
+          <p>CRM updates, scheduling, routing, follow-up, and reporting.</p>
+        </div>
       </div>
     </section>
   );

@@ -5,6 +5,7 @@
   --dsx-amber-light: #efb67d;
   width: 100%;
   height: 100%;
+  position: relative;
 }
 
 .dsx-hero-orb__stage {
@@ -58,20 +59,6 @@
   text-align: center;
   box-shadow:
     0 0 44px rgba(78, 144, 199, 0.25);
-}
-
-.dsx-hero-orb__fallback-core strong {
-  font-size: clamp(1.15rem, 2vw, 1.8rem);
-  line-height: 0.9;
-  letter-spacing: 0.09em;
-}
-
-.dsx-hero-orb__fallback-core span {
-  margin-top: 0.65rem;
-  color: #bdd8ec;
-  font-size: 0.55rem;
-  letter-spacing: 0.17em;
-  text-transform: uppercase;
 }
 
 .dsx-hero-orb__motion {
@@ -150,9 +137,7 @@
 }
 
 .dsx-hero-orb__zone:focus-visible {
-  outline: 2px solid var(--dsx-blue);
-  outline-offset: -3px;
-  border-radius: 0.75rem;
+  outline: none;
 }
 
 .dsx-hero-orb[data-zone="communications"]
@@ -172,4 +157,134 @@
 
 .dsx-hero-orb__motion {
   z-index: 6;
+}
+
+.dsx-hero-orb__explainers {
+  position: absolute;
+  z-index: 4;
+  inset: 0;
+  pointer-events: none;
+}
+
+.dsx-hero-orb__explainer {
+  position: absolute;
+  top: 50%;
+  width: min(19%, 220px);
+  transform: translateY(-50%);
+  color: #173b5f;
+  opacity: 0.66;
+  transition: opacity 220ms ease, transform 220ms ease;
+}
+
+.dsx-hero-orb__explainer--left {
+  left: 0;
+  text-align: left;
+}
+
+.dsx-hero-orb__explainer--right {
+  right: 0;
+  text-align: right;
+}
+
+.dsx-hero-orb__label {
+  margin: 0 0 0.55rem;
+  color: #3279b8;
+  font-size: 0.66rem;
+  font-weight: 750;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.dsx-hero-orb__explainer--right .dsx-hero-orb__label {
+  color: #b86524;
+}
+
+.dsx-hero-orb__explainer h3 {
+  margin: 0;
+  color: #143555;
+  font-size: clamp(0.95rem, 1.3vw, 1.15rem);
+  font-weight: 700;
+}
+
+.dsx-hero-orb__explainer > p:last-child {
+  margin: 0.55rem 0 0;
+  font-size: 0.78rem;
+  line-height: 1.55;
+}
+
+.dsx-hero-orb[data-zone="communications"]
+  .dsx-hero-orb__explainer--left,
+.dsx-hero-orb[data-zone="actions"]
+  .dsx-hero-orb__explainer--right {
+  opacity: 1;
+  transform: translateY(-50%) translateX(4px);
+}
+
+.dsx-hero-orb[data-zone="communications"]
+  .dsx-hero-orb__explainer--right,
+.dsx-hero-orb[data-zone="actions"]
+  .dsx-hero-orb__explainer--left {
+  opacity: 0.28;
+}
+
+.dsx-hero-orb:has(.dsx-hero-orb__zone--left:focus-visible)
+  .dsx-hero-orb__explainer--left,
+.dsx-hero-orb:has(.dsx-hero-orb__zone--right:focus-visible)
+  .dsx-hero-orb__explainer--right {
+  outline: 2px solid var(--dsx-blue);
+  outline-offset: 5px;
+  border-radius: 0.35rem;
+}
+
+.dsx-hero-orb:has(.dsx-hero-orb__zone--core:focus-visible)
+  .dsx-hero-orb__motion {
+  outline: 2px solid var(--dsx-blue);
+  outline-offset: 3px;
+}
+
+@media (max-width: 900px) {
+  .dsx-hero-orb__explainers {
+    position: relative;
+    inset: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: -1rem;
+  }
+
+  .dsx-hero-orb__explainer {
+    position: relative;
+    top: auto;
+    right: auto;
+    left: auto;
+    width: auto;
+    padding: 1rem;
+    border: 1px solid rgba(75, 119, 158, 0.16);
+    border-radius: 0.9rem;
+    background: rgba(247, 251, 254, 0.78);
+    transform: none;
+  }
+
+  .dsx-hero-orb[data-zone="communications"]
+    .dsx-hero-orb__explainer--left,
+  .dsx-hero-orb[data-zone="actions"]
+    .dsx-hero-orb__explainer--right {
+    transform: translateY(-3px);
+  }
+}
+
+@media (max-width: 560px) {
+  .dsx-hero-orb__explainers {
+    grid-template-columns: 1fr;
+  }
+
+  .dsx-hero-orb__explainer--right {
+    text-align: left;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dsx-hero-orb__explainer {
+    transition: none;
+  }
 }
