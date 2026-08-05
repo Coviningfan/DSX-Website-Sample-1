@@ -156,8 +156,12 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="bg-[#102b43] px-4 py-24 text-white sm:px-6 md:px-10 sm:py-32">
-        <div className="mx-auto grid max-w-6xl gap-14 lg:grid-cols-[0.8fr_1.2fr] lg:items-center">
+      <section id="opportunity" className="relative overflow-hidden bg-[#102b43] px-4 py-24 text-white sm:px-6 md:px-10 sm:py-32">
+        <div className="pointer-events-none absolute inset-0 opacity-50" aria-hidden="true">
+          <div className="absolute -left-24 top-10 h-72 w-72 rounded-full bg-[#0872d6]/15 blur-3xl" />
+          <div className="absolute -right-20 bottom-0 h-64 w-64 rounded-full bg-[#e2712f]/10 blur-3xl" />
+        </div>
+        <div className="relative mx-auto grid max-w-6xl gap-14 lg:grid-cols-[0.78fr_1.22fr] lg:items-center">
           <div>
             <p className="mb-4 text-xs font-medium uppercase tracking-[0.2em] text-[#f28a45]">
               Never Miss Another Opportunity
@@ -171,25 +175,50 @@ export default function HomePage() {
               missed interaction does not quietly become lost revenue.
             </p>
           </div>
-          <div className="space-y-5">
-            <blockquote className="border-l-2 border-[#f28a45] bg-white/5 p-6 text-lg leading-relaxed text-white/90">
-              “I’ll be happy to schedule your appointment, Mrs. Smith. For Wednesday, May 5, I have
-              11:30 a.m. or 2:00 p.m. Will either work for you?”
-            </blockquote>
-            <blockquote className="border-l-2 border-[#4aa6ff] bg-white/5 p-6 text-lg leading-relaxed text-white/90">
-              “Thank you for explaining the problem. If you tell me your model number, I can identify
-              likely replacement parts and help schedule your service call.”
-            </blockquote>
-            <p className="text-sm text-white/55">
-              Natural conversation in the caller’s language, configured around your workflows and escalation rules.
-            </p>
+          <div className="border border-white/12 bg-[#153650] shadow-[0_28px_80px_rgba(3,18,31,0.28)]">
+            <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 px-5 py-4 sm:px-6">
+              <div>
+                <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-white/45">Example call flow</p>
+                <p className="mt-1 text-sm font-medium text-white/85">After-hours appointment request</p>
+              </div>
+              <span className="inline-flex items-center gap-2 text-xs font-medium text-[#9fd3ff]">
+                <span className="h-2 w-2 rounded-full bg-[#55b4ff] shadow-[0_0_14px_rgba(85,180,255,0.75)]" aria-hidden="true" />
+                Request active
+              </span>
+            </div>
+
+            <ol className="relative px-5 py-2 sm:px-6">
+              {[
+                ["00:00", "Incoming call", "A customer calls after business hours."],
+                ["00:02", "Request understood", "“I need to move my appointment to Wednesday afternoon.”"],
+                ["00:12", "Availability checked", "Two open times are found using the business schedule."],
+                ["00:18", "Appointment confirmed", "The calendar is updated and the customer receives confirmation."],
+              ].map(([time, title, detail], index) => (
+                <li key={title} className="relative grid grid-cols-[3.5rem_1rem_1fr] gap-3 border-b border-white/8 py-5 last:border-b-0 sm:grid-cols-[4rem_1rem_1fr]">
+                  <span className="pt-0.5 font-mono text-[11px] text-white/38">{time}</span>
+                  <span className="relative mt-1 flex justify-center" aria-hidden="true">
+                    {index < 3 && <span className="absolute left-1/2 top-3 h-[calc(100%+1.6rem)] w-px -translate-x-1/2 bg-gradient-to-b from-[#4aa6ff]/70 to-[#e2712f]/30" />}
+                    <span className={`relative z-10 h-2.5 w-2.5 rounded-full ${index === 3 ? "bg-[#f28a45] shadow-[0_0_16px_rgba(242,138,69,0.7)]" : "bg-[#69baff]"}`} />
+                  </span>
+                  <div>
+                    <p className="text-sm font-semibold text-white">{title}</p>
+                    <p className="mt-1 text-sm leading-relaxed text-white/62">{detail}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+
+            <div className="flex items-center justify-between gap-4 border-t border-white/10 bg-white/[0.035] px-5 py-4 sm:px-6">
+              <p className="text-xs text-white/48">Conversation, scheduling, and follow-up stay connected.</p>
+              <span className="shrink-0 text-xs font-semibold uppercase tracking-[0.12em] text-[#f7a66f]">Completed</span>
+            </div>
           </div>
         </div>
       </section>
 
 
       {/* ── How It Works ─────────────────────────────────── */}
-      <section className="py-24 sm:py-32 px-4 sm:px-6 md:px-10 bg-white">
+      <section id="how-it-works" className="py-24 sm:py-32 px-4 sm:px-6 md:px-10 bg-white">
         <div className="max-w-6xl mx-auto">
           <h2 className="font-bold text-3xl sm:text-4xl md:text-5xl leading-tight tracking-tight text-[#191919] text-center mb-6">
             How It Works

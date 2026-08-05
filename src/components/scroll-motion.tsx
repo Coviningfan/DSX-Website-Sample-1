@@ -6,7 +6,7 @@ function clamp(value: number, min = 0, max = 1) {
 }
 
 export default function ScrollMotion() {
-  const { pathname } = useLocation();
+  const { pathname, hash } = useLocation();
 
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
@@ -21,6 +21,9 @@ export default function ScrollMotion() {
     let frame = 0;
 
     sections.forEach((section) => section.setAttribute("data-scroll-motion", ""));
+    if (hash) {
+      document.getElementById(hash.slice(1))?.classList.add("is-motion-visible");
+    }
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -89,7 +92,7 @@ export default function ScrollMotion() {
       hero?.style.removeProperty("--hero-motion");
       document.documentElement.style.removeProperty("--nav-motion");
     };
-  }, [pathname]);
+  }, [pathname, hash]);
 
   return null;
 }

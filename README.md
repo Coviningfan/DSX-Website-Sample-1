@@ -24,9 +24,16 @@ Migrated from the PortfolioRevamp (Replit-based) codebase to Zo Site. DSX Edge i
 
 ### SignalOrb runtime decisions (Three.js)
 
-- Orb is a **background hero element** behind the hero copy, always animating on load — no toolbar, no pause button, no widget chrome.
-- WebGL scene fully constructed on mount; reduced-motion does not zero out packets (that bug caused an empty scene); playback-only pausing removed entirely. Renderer owns its loop via `renderer.setAnimationLoop`.
+- Orb is the interactive centerpiece of the dedicated **How It Works** section, not part of the homepage hero.
+- Internal particles travel left-to-right through the core and shift from blue through white to amber. Three inbound blue rails and three outbound amber rails carry luminous directional packets.
+- Pause/Resume, three keyboard-accessible focus zones, `prefers-reduced-motion`, and offscreen animation pausing are preserved.
+- WebGL scene is fully constructed on mount and the renderer owns its loop via `renderer.setAnimationLoop`.
 - Full WebGL cleanup on unmount (`setAnimationLoop(null)`, geometry/material disposal, context loss handler).
+
+### Opportunity section
+
+- The homepage's missed-opportunity section uses an explicitly illustrative live-call timeline: incoming call, request understood, availability checked, and appointment confirmed.
+- Example timestamps are presentation devices, not performance guarantees or measured customer results.
 
 ### Hero blend (2026-08-04)
 

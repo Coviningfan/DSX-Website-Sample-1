@@ -516,6 +516,8 @@ export default function SignalOrb({
     const particleCount = 180;
     const particlePositions =
       new Float32Array(particleCount * 3);
+    const particleColors =
+      new Float32Array(particleCount * 3);
     const particlePhases = new Float32Array(particleCount);
     const particleRadii = new Float32Array(particleCount);
     const particleAngles = new Float32Array(particleCount);
@@ -530,8 +532,8 @@ export default function SignalOrb({
       particlePhases[index] = random();
       particleRadii[index] = 0.16 + random() * 0.72;
       particleAngles[index] = random() * Math.PI * 2;
-      particleDrift[index] = 0.12 + random() * 0.1;
-      particleSpin[index] = 0.75 + random() * 0.6;
+      particleDrift[index] = 0.2 + random() * 0.11;
+      particleSpin[index] = 0.38 + random() * 0.3;
     }
 
     const updateParticleFlow = (elapsed: number) => {
@@ -565,6 +567,29 @@ export default function SignalOrb({
           Math.sin(angle) * radius * pulse;
         particlePositions[index * 3 + 2] =
           Math.cos(angle) * radius * pulse;
+
+        const colorProgress = progress * 2;
+        const startColor = progress < 0.5 ? blueLight : white;
+        const endColor = progress < 0.5 ? white : amberLight;
+        const colorMix = progress < 0.5
+          ? colorProgress
+          : colorProgress - 1;
+
+        particleColors[index * 3] = THREE.MathUtils.lerp(
+          startColor.r,
+          endColor.r,
+          colorMix,
+        );
+        particleColors[index * 3 + 1] = THREE.MathUtils.lerp(
+          startColor.g,
+          endColor.g,
+          colorMix,
+        );
+        particleColors[index * 3 + 2] = THREE.MathUtils.lerp(
+          startColor.b,
+          endColor.b,
+          colorMix,
+        );
       }
     };
 
@@ -578,12 +603,17 @@ export default function SignalOrb({
         3,
       ),
     );
+    particleGeometry.setAttribute(
+      "color",
+      new THREE.BufferAttribute(particleColors, 3),
+    );
 
     const particleMaterial = new THREE.PointsMaterial({
       color: white,
       size: 0.04,
       transparent: true,
-      opacity: 0.7,
+      opacity: 0.78,
+      vertexColors: true,
       depthTest: false,
       depthWrite: false,
       blending: THREE.AdditiveBlending,
@@ -896,7 +926,7 @@ export default function SignalOrb({
       color: blue,
       side: "in",
       speed: 0.102,
-      packetCount: 2,
+      packetCount: 3,
       bendY: 0.045,
       bendZ: 0.05,
     });
@@ -906,8 +936,8 @@ export default function SignalOrb({
       end: [-1.20, 0.0, 0.08],
       color: blueLight,
       side: "in",
-      speed: 0.122,
-      packetCount: 3,
+      speed: 0.19,
+      packetCount: 4,
       bendY: 0.0,
       bendZ: -0.035,
     });
@@ -917,8 +947,8 @@ export default function SignalOrb({
       end: [-1.16, -0.38, 0.06],
       color: blue,
       side: "in",
-      speed: 0.096,
-      packetCount: 2,
+      speed: 0.17,
+      packetCount: 3,
       bendY: -0.045,
       bendZ: 0.05,
     });
@@ -928,8 +958,8 @@ export default function SignalOrb({
       end: [3.02, 0.72, -0.10],
       color: amberLight,
       side: "out",
-      speed: 0.108,
-      packetCount: 2,
+      speed: 0.175,
+      packetCount: 3,
       bendY: 0.045,
       bendZ: 0.05,
     });
@@ -939,8 +969,8 @@ export default function SignalOrb({
       end: [3.10, 0.0, -0.07],
       color: amber,
       side: "out",
-      speed: 0.128,
-      packetCount: 3,
+      speed: 0.2,
+      packetCount: 4,
       bendY: 0.0,
       bendZ: -0.035,
     });
@@ -950,8 +980,8 @@ export default function SignalOrb({
       end: [3.02, -0.72, -0.10],
       color: amberLight,
       side: "out",
-      speed: 0.101,
-      packetCount: 2,
+      speed: 0.17,
+      packetCount: 3,
       bendY: -0.045,
       bendZ: 0.05,
     });
@@ -1027,6 +1057,11 @@ export default function SignalOrb({
         (
           particleGeometry.getAttribute(
             "position",
+          ) as THREE.BufferAttribute
+        ).needsUpdate = true;
+        (
+          particleGeometry.getAttribute(
+            "color",
           ) as THREE.BufferAttribute
         ).needsUpdate = true;
 
@@ -1157,7 +1192,7 @@ export default function SignalOrb({
       const particleTarget =
         activeZone === "core"
           ? 0.96
-          : 0.7;
+          : 0.78;
 
       particleMaterial.opacity +=
         (
