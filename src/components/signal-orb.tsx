@@ -516,25 +516,59 @@ export default function SignalOrb({
     const particleCount = 180;
     const particlePositions =
       new Float32Array(particleCount * 3);
+    const particlePhases = new Float32Array(particleCount);
+    const particleRadii = new Float32Array(particleCount);
+    const particleAngles = new Float32Array(particleCount);
+    const particleDrift = new Float32Array(particleCount);
+    const particleSpin = new Float32Array(particleCount);
 
     for (
       let index = 0;
       index < particleCount;
       index += 1
     ) {
-      const radius = Math.cbrt(random()) * 1.0;
-      const theta = random() * Math.PI * 2;
-      const phi = Math.acos(2 * random() - 1);
-
-      particlePositions[index * 3] =
-        radius * Math.sin(phi) * Math.cos(theta);
-
-      particlePositions[index * 3 + 1] =
-        radius * Math.sin(phi) * Math.sin(theta);
-
-      particlePositions[index * 3 + 2] =
-        radius * Math.cos(phi);
+      particlePhases[index] = random();
+      particleRadii[index] = 0.16 + random() * 0.72;
+      particleAngles[index] = random() * Math.PI * 2;
+      particleDrift[index] = 0.12 + random() * 0.1;
+      particleSpin[index] = 0.75 + random() * 0.6;
     }
+
+    const updateParticleFlow = (elapsed: number) => {
+      for (
+        let index = 0;
+        index < particleCount;
+        index += 1
+      ) {
+        const progress =
+          (particlePhases[index] +
+            elapsed * particleDrift[index]) %
+          1;
+        const x = -0.96 + progress * 1.92;
+        const crossSection = Math.sqrt(
+          Math.max(0.04, 1 - x * x),
+        );
+        const angle =
+          particleAngles[index] +
+          elapsed * particleSpin[index];
+        const radius =
+          particleRadii[index] * crossSection;
+        const pulse =
+          0.9 +
+          Math.sin(
+            elapsed * 1.8 + index * 0.73,
+          ) *
+            0.1;
+
+        particlePositions[index * 3] = x;
+        particlePositions[index * 3 + 1] =
+          Math.sin(angle) * radius * pulse;
+        particlePositions[index * 3 + 2] =
+          Math.cos(angle) * radius * pulse;
+      }
+    };
+
+    updateParticleFlow(0);
 
     const particleGeometry = new THREE.BufferGeometry();
     particleGeometry.setAttribute(
@@ -547,7 +581,7 @@ export default function SignalOrb({
 
     const particleMaterial = new THREE.PointsMaterial({
       color: white,
-      size: 0.026,
+      size: 0.032,
       transparent: true,
       opacity: 0.7,
       depthTest: false,
@@ -559,6 +593,7 @@ export default function SignalOrb({
       particleGeometry,
       particleMaterial,
     );
+    particles.renderOrder = 5;
     root.add(particles);
 
     const createEllipse = (
@@ -986,11 +1021,12 @@ export default function SignalOrb({
         const elapsed =
           coreMaterial.uniforms.uTime.value;
 
-        particles.rotation.y =
-          elapsed * 0.11;
-
-        particles.rotation.x =
-          Math.sin(elapsed * 0.18) * 0.065;
+        updateParticleFlow(elapsed);
+        (
+          particleGeometry.getAttribute(
+            "position",
+          ) as THREE.BufferAttribute
+        ).needsUpdate = true;
 
         orbitA.rotation.z =
           elapsed * 0.034;
