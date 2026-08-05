@@ -27,7 +27,7 @@ export default function BlankDemo() {
       <div className="mx-auto max-w-3xl px-6 py-16 md:py-24">
         <header className="mb-12 text-center">
           <img
-            src="/images/pegasus.png"
+            src="/images/dsx-edge-logo.png"
             alt="Zo"
             className="mx-auto mb-6 size-16 rounded-xl opacity-80"
           />

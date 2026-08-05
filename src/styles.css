@@ -132,6 +132,33 @@
   position: absolute;
   inset: -4%;
   background: url("/images/dsx-edge-bkg.jpg") center / cover no-repeat;
-  filter: blur(24px) saturate(0.9);
-  opacity: 0.45;
+  filter: blur(14px) saturate(0.94);
+  opacity: 0.38;
+}
+
+.how-it-works-orb {
+  width: min(100%, 1280px);
+  min-height: 620px;
+  margin-inline: auto;
+}
+
+.how-it-works-orb .dsx-hero-orb__stage {
+  min-height: 620px;
+}
+
+@media (max-width: 760px) {
+  .hero-tunnel-bg::before {
+    inset: 0;
+    filter: saturate(0.94);
+    opacity: 1;
+  }
+
+  .hero-tunnel-bg > img {
+    opacity: 0;
+  }
+
+  .how-it-works-orb,
+  .how-it-works-orb .dsx-hero-orb__stage {
+    min-height: 480px;
+  }
 }

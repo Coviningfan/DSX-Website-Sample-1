@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { Menu, X, ArrowRight } from "lucide-react";
 
@@ -16,28 +16,12 @@ const inactiveLink = "text-[#191919]/70 hover:text-[#191919]";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    const onScroll = () => {
-      setScrolled(window.scrollY > window.innerHeight * 0.8);
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    onScroll();
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
   return (
     <nav
-      className={"fixed top-0 left-0 right-0 z-50 flex pointer-events-none pt-[30px] transition-all duration-500 "
-        + (scrolled ? "justify-end pr-4 sm:pr-8" : "justify-center")}
+      className="fixed left-0 right-0 top-0 z-50 flex justify-center px-4 pt-5 pointer-events-none sm:pt-[30px]"
     >
       <div
-        className={"pointer-events-auto flex items-center gap-6 px-5 py-3 rounded-2xl border w-fit max-w-[calc(100vw-2rem)] transition-all duration-500 "
-          + (scrolled
-            ? "backdrop-blur-xl bg-white/60 border-black/5 shadow-sm scale-95"
-            : "backdrop-blur-[50px] bg-white/30 border-black/10")}
-        style={scrolled ? {} : { boxShadow: "inset 0px 4px 4px 0px rgba(255,255,255,0.25)" }}
+        className="pointer-events-auto flex w-fit max-w-full items-center gap-6 rounded-2xl border border-black/10 bg-white/55 px-5 py-3 shadow-[inset_0_4px_4px_rgba(255,255,255,0.3),0_10px_28px_rgba(25,61,94,0.09)] backdrop-blur-2xl transition-[background-color,box-shadow] duration-300 hover:bg-white/70"
       >
         <Link to="/" className="flex items-center gap-2.5 shrink-0">
           <img

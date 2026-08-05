@@ -90,47 +90,6 @@ function createRadialTexture(
   return texture;
 }
 
-function createWordmarkTexture() {
-  const canvas = document.createElement("canvas");
-  canvas.width = 768;
-  canvas.height = 384;
-
-  const context = canvas.getContext("2d");
-  if (!context) {
-    throw new Error("Unable to create DSX Edge wordmark texture.");
-  }
-
-  context.clearRect(0, 0, canvas.width, canvas.height);
-  context.textAlign = "center";
-  context.textBaseline = "middle";
-
-  context.shadowColor = "rgba(7, 29, 54, 0.9)";
-  context.shadowBlur = 28;
-
-  context.fillStyle = "#f8fbff";
-  context.font =
-    '700 116px Inter, Arial, Helvetica, sans-serif';
-  context.fillText("DSX", canvas.width / 2, 120);
-  context.fillText("EDGE", canvas.width / 2, 230);
-
-  context.shadowBlur = 10;
-  context.fillStyle = "#b9d6ec";
-  context.font =
-    '600 26px Inter, Arial, Helvetica, sans-serif';
-  context.letterSpacing = "7px";
-  context.fillText(
-    "COMMUNICATIONS PLATFORM",
-    canvas.width / 2,
-    321,
-  );
-
-  const texture = new THREE.CanvasTexture(canvas);
-  texture.colorSpace = THREE.SRGBColorSpace;
-  texture.minFilter = THREE.LinearFilter;
-  texture.magFilter = THREE.LinearFilter;
-  return texture;
-}
-
 function disposeScene(scene: THREE.Scene) {
   const disposedTextures = new Set<THREE.Texture>();
 
@@ -961,29 +920,6 @@ export default function SignalOrb({
       bendZ: 0.05,
     });
 
-    /*
-     * The wordmark now exists inside the WebGL scene.
-     * It follows the core rather than floating as unrelated HTML.
-     */
-    const wordmarkMaterial =
-      new THREE.SpriteMaterial({
-        map: createWordmarkTexture(),
-        transparent: true,
-        opacity: 0.96,
-        depthTest: false,
-        depthWrite: false,
-      });
-
-    const wordmark =
-      new THREE.Sprite(wordmarkMaterial);
-
-    wordmark.position.set(0, -0.01, 1.27);
-    wordmark.scale.set(1.26, 0.63, 1);
-    root.add(wordmark);
-
-    const wordmarkBaseScale =
-      wordmark.scale.clone();
-
     const orbitAMaterial =
       orbitA.material as THREE.LineBasicMaterial;
 
@@ -998,9 +934,16 @@ export default function SignalOrb({
     const resize = () => {
       const width = stage.clientWidth;
       const height = stage.clientHeight;
+      const rootScale =
+        width >= 1100
+          ? 1.05
+          : width >= 760
+            ? 0.92
+            : 0.79;
 
       camera.aspect = width / height;
       camera.updateProjectionMatrix();
+      root.scale.setScalar(rootScale);
 
       renderer.setSize(
         width,
@@ -1154,18 +1097,6 @@ export default function SignalOrb({
       core.scale.setScalar(coreScale);
       wire.scale.setScalar(coreScale);
       particles.scale.setScalar(coreScale);
-
-      const wordmarkScale =
-        activeZone === "core"
-          ? 1.045
-          : 1;
-
-      wordmark.scale.lerp(
-        wordmarkBaseScale
-          .clone()
-          .multiplyScalar(wordmarkScale),
-        0.09,
-      );
 
       const haloTarget =
         activeZone === "core"

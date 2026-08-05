@@ -1,9 +1,8 @@
-import DsxEdgeHero from "@/components/dsx-edge-hero-v4";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import SignalOrb from "@/components/signal-orb";
 import {
   Phone, ArrowRight, Wrench, Stethoscope, ShoppingCart,
-  Truck, Home, GraduationCap, Zap, ChevronRight,
+  Truck, Home, Hotel, Zap, ChevronRight,
   MessageCircle, HelpCircle, ClipboardList,
 } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -43,7 +42,7 @@ const WORKFLOW_EXAMPLES = [
     desc: "Ask about the property and prepare a quote. Schedule, cancel, or reschedule appointments. Pause or restart recurring service. Answer billing questions. Confirm appointments and service by phone.",
   },
   {
-    icon: GraduationCap,
+    icon: Hotel,
     title: "Hotels & Hospitality",
     desc: "Handle reservations, check-in confirmations, concierge requests, room-service orders, and guest follow-up. Upsell upgrades and amenities at the right moment — without you training anyone.",
   },
@@ -77,30 +76,83 @@ export default function HomePage() {
     },
   ];
 
-
-  /* ── Tunnel blur: sharp in hero, gentle blur after scroll ── */
-  useEffect(() => {
-    const main = document.querySelector("main");
-    if (!main) return;
-
-    const handler = () => {
-      const hero = document.querySelector(".dsx-edge-hero");
-      if (!hero) return;
-      const rect = hero.getBoundingClientRect();
-      const exit = Math.max(0, -rect.top);
-      const h = hero.offsetHeight;
-      const progress = Math.min(exit / h, 1);
-      main.style.setProperty("--scroll-progress", progress.toString());
-    };
-
-    window.addEventListener("scroll", handler, { passive: true });
-    handler();
-    return () => window.removeEventListener("scroll", handler);
-  }, []);
-
   return (
     <main className="min-h-screen bg-white overflow-x-hidden">
-      <DsxEdgeHero />
+      <section className="relative min-h-screen flex flex-col overflow-hidden">
+        <div className="absolute inset-0 z-0 hero-tunnel-bg" aria-hidden="true">
+          <img
+            src="/images/dsx-edge-bkg.jpg"
+            alt=""
+            className="relative z-[1] block h-full w-full object-contain object-center"
+          />
+        </div>
+        <div className="absolute inset-0 z-[2] bg-gradient-to-b from-white/10 via-transparent to-[#d9ebf7]/20" />
+
+        <div className="relative z-10 flex flex-1 flex-col items-center px-4 pt-32 sm:px-6 sm:pt-36">
+          <h1 className="max-w-5xl text-center text-5xl font-bold leading-[1.05] tracking-[-2px] text-[#191919] sm:text-6xl md:text-7xl lg:text-8xl">
+            Every Department, Every Function, 24/7.
+          </h1>
+          <p className="mt-5 text-center text-xl font-semibold text-[#0084FF] md:text-2xl">
+            Business Communications That Drive Profit
+          </p>
+          <p className="mt-6 max-w-2xl text-center text-lg leading-relaxed text-[#191919]/70 md:text-xl">
+            A new dimension in customer interaction and service, tailored to your business.
+          </p>
+
+          <div className="mt-9 flex flex-col items-center gap-4 sm:flex-row">
+            <a
+              href="tel:844-379-3343"
+              className="inline-flex items-center gap-2 rounded-xl bg-[#0872d6] px-6 py-3 text-sm font-semibold text-white shadow-[0_12px_30px_rgba(0,91,176,0.2)] transition-transform duration-200 hover:-translate-y-0.5"
+            >
+              <Phone className="h-4 w-4" />
+              Call the Live Demo · 844-DSX-EDGE
+            </a>
+            <p className="text-sm font-medium text-[#191919]/80">
+              Pick up the phone and hear it yourself
+            </p>
+          </div>
+        </div>
+
+        <div className="relative z-10 mx-auto mt-12 w-full max-w-5xl px-4 sm:px-6">
+          <div className="rounded-t-2xl border border-b-0 border-slate-200/80 bg-white/90 px-5 pb-0 pt-8 shadow-[0_-8px_32px_rgba(27,70,108,0.08)] backdrop-blur-md sm:px-8 sm:pt-10 md:px-12 md:pt-12">
+            <div className="grid gap-6 md:grid-cols-2 md:gap-16">
+              <div>
+                <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-[#191919]/50">
+                  What does DSX Edge do?
+                </p>
+                <h2 className="mt-3 text-2xl font-bold leading-tight tracking-tight text-[#191919] sm:text-3xl md:text-4xl">
+                  Conversations that build momentum
+                </h2>
+              </div>
+              <div className="flex items-end">
+                <p className="text-sm leading-relaxed text-[#191919]/70 md:text-[15px]">
+                  Conversational AI built for real businesses. Agents hold real conversations, connect to the systems you run, and complete work across voice, SMS, and email.
+                </p>
+              </div>
+            </div>
+
+            <div className="mt-7 h-px w-full bg-slate-200 sm:mt-9" />
+
+            <div className="grid gap-0.5 sm:grid-cols-3">
+              {LAYERS.map((item, index) => (
+                <button
+                  key={item.num}
+                  type="button"
+                  onClick={() => openModal(index)}
+                  className="group flex items-center justify-between bg-[#F4F3F3] px-4 py-4 text-left transition-colors duration-200 hover:bg-[#e9eef2] sm:px-6"
+                >
+                  <span className="flex items-center gap-2">
+                    <span className="font-medium text-[#191919]/40">{item.num}</span>
+                    <span className="text-[#191919]/30">/</span>
+                    <span className="font-medium text-[#191919]">{item.label}</span>
+                  </span>
+                  <ArrowRight className="h-4 w-4 text-slate-400 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:text-slate-700" />
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
 
 
       {/* ── How It Works ─────────────────────────────────── */}
@@ -113,7 +165,7 @@ export default function HomePage() {
             Communications, Intelligence, and Infrastructure — integrated into a single operating layer that runs alongside your team, 24 hours a day.
           </p>
 
-          <div className="flex justify-center mb-16">
+          <div className="how-it-works-orb mb-16">
             <SignalOrb />
           </div>
 
@@ -268,7 +320,7 @@ export default function HomePage() {
           See DSX Edge for Your Industry
         </h2>
         <p className="text-[#191919]/60 max-w-lg mx-auto leading-relaxed mb-8">
-          Automotive, Construction, Education, Finance, Government, Healthcare, Hotels, Manufacturing, Nonprofit, Professional Services, Real Estate, Retail, Transportation, Wholesale. 14 industries. One platform.
+          Automotive, construction, education, finance, government, healthcare, hospitality, manufacturing, nonprofit, professional services, real estate, retail, transportation, wholesale, and many more.
         </p>
         <Link
           to="/industries"
