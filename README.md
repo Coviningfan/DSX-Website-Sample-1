@@ -25,7 +25,7 @@ Migrated from the PortfolioRevamp (Replit-based) codebase to Zo Site. DSX Edge i
 ### SignalOrb runtime decisions (Three.js)
 
 - Orb is the interactive centerpiece of the dedicated **How It Works** section, not part of the homepage hero.
-- Internal particles travel left-to-right through the core and shift from blue through white to amber. Three inbound blue rails and three outbound amber rails carry luminous directional packets.
+- Internal particles travel left-to-right in six deterministic helical streams through the core and shift from blue through a brighter white core to amber. This coherent lane structure makes direction readable without enlarging the particles. Three inbound blue rails and three outbound amber rails carry luminous directional packets.
 - Pause/Resume, three keyboard-accessible focus zones, `prefers-reduced-motion`, and offscreen animation pausing are preserved.
 - WebGL scene is fully constructed on mount and the renderer owns its loop via `renderer.setAnimationLoop`.
 - Full WebGL cleanup on unmount (`setAnimationLoop(null)`, geometry/material disposal, context loss handler).

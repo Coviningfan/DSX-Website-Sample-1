@@ -523,6 +523,7 @@ export default function SignalOrb({
     const particleAngles = new Float32Array(particleCount);
     const particleDrift = new Float32Array(particleCount);
     const particleSpin = new Float32Array(particleCount);
+    const particleLanes = new Uint8Array(particleCount);
 
     for (
       let index = 0;
@@ -530,10 +531,11 @@ export default function SignalOrb({
       index += 1
     ) {
       particlePhases[index] = random();
-      particleRadii[index] = 0.16 + random() * 0.72;
-      particleAngles[index] = random() * Math.PI * 2;
-      particleDrift[index] = 0.2 + random() * 0.11;
-      particleSpin[index] = 0.38 + random() * 0.3;
+      particleRadii[index] = 0.24 + random() * 0.42;
+      particleAngles[index] = random() * 0.42 - 0.21;
+      particleDrift[index] = 0.15 + random() * 0.055;
+      particleSpin[index] = 0.22 + random() * 0.16;
+      particleLanes[index] = index % 6;
     }
 
     const updateParticleFlow = (elapsed: number) => {
@@ -550,17 +552,22 @@ export default function SignalOrb({
         const crossSection = Math.sqrt(
           Math.max(0.04, 1 - x * x),
         );
+        const laneAngle =
+          (particleLanes[index] / 6) * Math.PI * 2;
         const angle =
+          laneAngle +
           particleAngles[index] +
+          progress * Math.PI * 1.75 +
           elapsed * particleSpin[index];
         const radius =
           particleRadii[index] * crossSection;
         const pulse =
-          0.9 +
+          0.92 +
           Math.sin(
-            elapsed * 1.8 + index * 0.73,
+            elapsed * 2.1 +
+              particleLanes[index] * 1.05,
           ) *
-            0.1;
+            0.08;
 
         particlePositions[index * 3] = x;
         particlePositions[index * 3 + 1] =
@@ -575,21 +582,26 @@ export default function SignalOrb({
           ? colorProgress
           : colorProgress - 1;
 
+        const coreLift =
+          1 +
+          Math.max(0, 1 - Math.abs(progress - 0.5) * 5) *
+            0.42;
+
         particleColors[index * 3] = THREE.MathUtils.lerp(
           startColor.r,
           endColor.r,
           colorMix,
-        );
+        ) * coreLift;
         particleColors[index * 3 + 1] = THREE.MathUtils.lerp(
           startColor.g,
           endColor.g,
           colorMix,
-        );
+        ) * coreLift;
         particleColors[index * 3 + 2] = THREE.MathUtils.lerp(
           startColor.b,
           endColor.b,
           colorMix,
-        );
+        ) * coreLift;
       }
     };
 
