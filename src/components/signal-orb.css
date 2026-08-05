@@ -182,7 +182,8 @@
 }
 
 .dsx-hero-orb__explainer--right {
-  right: 0;
+  right: -3%;
+  width: min(14%, 175px);
   text-align: right;
 }
 

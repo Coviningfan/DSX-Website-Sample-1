@@ -581,7 +581,7 @@ export default function SignalOrb({
 
     const particleMaterial = new THREE.PointsMaterial({
       color: white,
-      size: 0.04,
+      size: 0.2,
       transparent: true,
       opacity: 0.7,
       depthTest: false,
@@ -802,14 +802,14 @@ export default function SignalOrb({
         createRailMaterial(
           color,
           side,
-          0.64,
+          0.84,
         );
 
       const glowMaterial =
         createRailMaterial(
           color,
           side,
-          0.090,
+          0.16,
         );
 
       root.add(
@@ -817,7 +817,7 @@ export default function SignalOrb({
           new THREE.TubeGeometry(
             curve,
             80,
-            0.0085,
+            0.015,
             8,
             false,
           ),
@@ -830,7 +830,7 @@ export default function SignalOrb({
           new THREE.TubeGeometry(
             curve,
             80,
-            0.027,
+            0.05,
             8,
             false,
           ),
