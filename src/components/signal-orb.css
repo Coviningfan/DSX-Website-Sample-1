@@ -1,8 +1,8 @@
 .dsx-hero-orb {
   --dsx-blue: #5f80b3;
   --dsx-blue-light: #9fc4e4;
-  --dsx-amber: #d99658;
-  --dsx-amber-light: #efb67d;
+  --dsx-amber: #e2712f;
+  --dsx-amber-light: #ffad55;
   width: 100%;
   height: 100%;
   position: relative;
@@ -196,7 +196,7 @@
 }
 
 .dsx-hero-orb__explainer--right .dsx-hero-orb__label {
-  color: #b86524;
+  color: #c85f1f;
 }
 
 .dsx-hero-orb__explainer h3 {

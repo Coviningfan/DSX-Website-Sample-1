@@ -107,14 +107,16 @@ export default function HomePage() {
               <Phone className="h-4 w-4" />
               Call the Live Demo · 844-DSX-EDGE
             </a>
-            <p className="text-sm font-medium text-[#191919]/80">
+            <p className="inline-flex items-center gap-2 text-sm font-medium text-[#191919]/80">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#e2712f]" aria-hidden="true" />
               Pick up the phone and hear it yourself
             </p>
           </div>
         </div>
 
         <div className="relative z-10 mx-auto mt-12 w-full max-w-5xl px-4 sm:px-6">
-          <div className="rounded-t-2xl border border-b-0 border-slate-200/80 bg-white/90 px-5 pb-0 pt-8 shadow-[0_-8px_32px_rgba(27,70,108,0.08)] backdrop-blur-md sm:px-8 sm:pt-10 md:px-12 md:pt-12">
+          <div className="relative overflow-hidden rounded-t-2xl border border-b-0 border-slate-200/80 bg-white/90 px-5 pb-0 pt-8 shadow-[0_-8px_32px_rgba(27,70,108,0.08)] backdrop-blur-md sm:px-8 sm:pt-10 md:px-12 md:pt-12">
+            <div className="brand-accent-rail absolute inset-x-0 top-0" aria-hidden="true" />
             <div className="grid gap-6 md:grid-cols-2 md:gap-16">
               <div>
                 <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-[#191919]/50">
@@ -146,7 +148,7 @@ export default function HomePage() {
                     <span className="text-[#191919]/30">/</span>
                     <span className="font-medium text-[#191919]">{item.label}</span>
                   </span>
-                  <ArrowRight className="h-4 w-4 text-slate-400 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:text-slate-700" />
+                  <ArrowRight className="h-4 w-4 text-[#c85f1f] transition-transform duration-200 group-hover:translate-x-0.5 group-hover:text-[#e2712f]" />
                 </button>
               ))}
             </div>

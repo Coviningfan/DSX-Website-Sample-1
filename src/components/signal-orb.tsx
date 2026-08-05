@@ -37,8 +37,8 @@ interface SignalOrbProps {
 const COLORS = {
   blue: "#4674aa",
   blueLight: "#8fc0e3",
-  amber: "#dc7f43",
-  amberLight: "#f0b173",
+  amber: "#e2712f",
+  amberLight: "#ffad55",
   silver: "#9aa7b4",
   white: "#f7fbff",
 } as const;
@@ -581,7 +581,7 @@ export default function SignalOrb({
 
     const particleMaterial = new THREE.PointsMaterial({
       color: white,
-      size: 0.032,
+      size: 0.04,
       transparent: true,
       opacity: 0.7,
       depthTest: false,
@@ -1027,6 +1027,12 @@ export default function SignalOrb({
             "position",
           ) as THREE.BufferAttribute
         ).needsUpdate = true;
+
+        particles.rotation.y =
+          Math.sin(elapsed * 0.12) * 0.08;
+
+        particles.rotation.x =
+          Math.sin(elapsed * 0.11) * 0.04;
 
         orbitA.rotation.z =
           elapsed * 0.034;

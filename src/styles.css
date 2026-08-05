@@ -130,10 +130,31 @@
 .hero-tunnel-bg::before {
   content: "";
   position: absolute;
-  inset: -4%;
+  inset: -2%;
   background: url("/images/dsx-edge-bkg.jpg") center / cover no-repeat;
-  filter: blur(14px) saturate(0.94);
-  opacity: 0.38;
+  filter: blur(6px) saturate(0.98) brightness(1.02);
+  opacity: 0.82;
+  transform: scale(1.025);
+}
+
+.hero-tunnel-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    rgba(224, 242, 253, 0.34),
+    transparent 18%,
+    transparent 82%,
+    rgba(224, 242, 253, 0.34)
+  );
+}
+
+.brand-accent-rail {
+  height: 3px;
+  background: linear-gradient(90deg, #1688e8 0 72%, #e2712f 72% 100%);
 }
 
 .how-it-works-orb {
@@ -149,8 +170,9 @@
 @media (max-width: 760px) {
   .hero-tunnel-bg::before {
     inset: 0;
-    filter: saturate(0.94);
+    filter: saturate(0.98);
     opacity: 1;
+    transform: none;
   }
 
   .hero-tunnel-bg > img {
