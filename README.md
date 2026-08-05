@@ -29,7 +29,7 @@ Migrated from the PortfolioRevamp (Replit-based) codebase to Zo Site. DSX Edge i
 - The six particle streams retain the first orb's continuous coherent roll while moving through the core. Focusing the communications, core, or actions zone accelerates the internal transit, with the core producing the strongest response.
 - The particle field uses 240 high-contrast points and more legible transit speed. Motion runs continuously while the visualization is onscreen; there is no visible motion toolbar.
 - The visualization is scaled so the sphere occupies roughly one-third of the desktop stage, with responsive tablet/mobile reductions that keep all six rails visible.
-- A restrained shader-driven processing wave, independent core/shell drift, and a breathing halo represent autonomous work without adding decorative geometry.
+- A visible shader-driven processing sweep, traveling pulse clusters within the six particle lanes, independent core/shell drift, and a restrained breathing cycle represent autonomous work without adding decorative geometry.
 - Three keyboard-accessible focus zones, `prefers-reduced-motion`, and offscreen animation pausing are preserved.
 - WebGL scene is fully constructed on mount and the renderer owns its loop via `renderer.setAnimationLoop`.
 - Full WebGL cleanup on unmount (`setAnimationLoop(null)`, geometry/material disposal, context loss handler).

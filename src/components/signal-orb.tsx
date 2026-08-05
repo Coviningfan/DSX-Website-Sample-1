@@ -431,9 +431,9 @@ export default function SignalOrb({
             uBlueLight,
             uAmberLight,
             actionSide
-          ) * processBand * 0.055;
+          ) * processBand * 0.12;
 
-          color += uBlueLight * processCore * 0.07;
+          color += uBlueLight * processCore * 0.13;
 
           /*
            * Amber is a controlled action-side reflection,
@@ -607,21 +607,34 @@ export default function SignalOrb({
           Math.max(0, 1 - Math.abs(progress - 0.5) * 5) *
             0.42;
 
+        const processPulse = Math.pow(
+          0.5 +
+            0.5 *
+              Math.sin(
+                progress * Math.PI * 10 -
+                  elapsed * 4.2 +
+                  particleLanes[index] * 0.72,
+              ),
+          8,
+        );
+
+        const autonomousLift = 1 + processPulse * 1.15;
+
         particleColors[index * 3] = THREE.MathUtils.lerp(
           startColor.r,
           endColor.r,
           colorMix,
-        ) * coreLift;
+        ) * coreLift * autonomousLift;
         particleColors[index * 3 + 1] = THREE.MathUtils.lerp(
           startColor.g,
           endColor.g,
           colorMix,
-        ) * coreLift;
+        ) * coreLift * autonomousLift;
         particleColors[index * 3 + 2] = THREE.MathUtils.lerp(
           startColor.b,
           endColor.b,
           colorMix,
-        ) * coreLift;
+        ) * coreLift * autonomousLift;
       }
     };
 
@@ -1220,7 +1233,10 @@ export default function SignalOrb({
       const coreScaleTarget =
         activeZone === "core"
           ? 1.038
-          : 1;
+          : 1 +
+            Math.sin(
+              coreMaterial.uniforms.uTime.value * 1.05,
+            ) * 0.012;
 
       const coreScale =
         THREE.MathUtils.lerp(
@@ -1257,6 +1273,12 @@ export default function SignalOrb({
           particleTarget -
           particleMaterial.opacity
         ) * 0.09;
+
+      particleMaterial.size =
+        0.052 +
+        Math.sin(
+          coreMaterial.uniforms.uTime.value * 1.35,
+        ) * 0.007;
 
       flows.forEach((flow) => {
         const emphasized =
