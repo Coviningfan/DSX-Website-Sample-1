@@ -76,18 +76,19 @@ export default function Navbar() {
           tabIndex={logoVisible ? 0 : -1}
           className={`grid min-h-11 shrink-0 place-items-center overflow-hidden transition-[width,margin,opacity] duration-300 ease-out motion-reduce:transition-none ${
             logoVisible
-              ? "mr-0 w-[58px] opacity-100"
+              ? "mr-0 w-[82px] opacity-100"
               : "-mr-3 w-0 opacity-0 pointer-events-none sm:-mr-6"
           }`}
         >
           {logoVisible && (
-            <span className="relative block h-5 w-[58px] overflow-hidden" aria-hidden="true">
-              <img
-                src="/images/dsx-edge-logo.png"
-                alt=""
-                className="absolute -left-[8px] -top-[32px] h-auto w-[190px] max-w-none"
-              />
-            </span>
+            <img
+              src="/images/dsx-edge-logo.png"
+              alt=""
+              width="735"
+              height="339"
+              className="h-auto w-[82px] object-contain"
+              aria-hidden="true"
+            />
           )}
         </Link>
 
