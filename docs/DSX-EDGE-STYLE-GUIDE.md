@@ -13,7 +13,7 @@ DSX Edge is an established business-communications platform with telephone servi
 
 ## Color
 
-- Ink/navy: `#102b43` for high-emphasis sections and primary text on light media.
+- Ink/navy: `#102b43` for primary text and structural detail on light media, not full-page section fills.
 - Communications blue: `#1688e8` / `#0b5ea8` for direction, structure, links, and focus.
 - Action orange: `#a84916` for accessible text/actions and `#f28a45` for selective emphasis on navy.
 - Text: `#191919`; neutral surface: `#f6f8fa`. Avoid warm or pinkish off-white backgrounds.
@@ -21,7 +21,7 @@ DSX Edge is an established business-communications platform with telephone servi
 
 ## Typography and scale
 
-- Primary: IBM Plex Sans. Data labels and sequence numbers: IBM Plex Mono.
+- Display: Barlow Semi Condensed for headings. Body and interface: IBM Plex Sans. Data labels and sequence numbers: IBM Plex Mono.
 - Page `h1`: responsive 40–96px; section `h2`: 36–48px; lead: 18–24px; body: 16–18px.
 - Use tight heading tracking, balanced wrapping, readable line lengths, and one `h1` per page.
 - Mobile form controls use at least 16px text.
@@ -43,14 +43,15 @@ DSX Edge is an established business-communications platform with telephone servi
 ## Buttons, links, and form controls
 
 - Primary CTA wording: “Book a Free Consultation.”
-- Primary buttons use dark ink or controlled orange; white-on-navy is acceptable for emphasis.
+- Primary buttons use controlled orange with white text; neutral secondary actions use dark ink.
 - Links remain identifiable and receive visible focus.
 - Forms require persistent labels, server/client validation, clear error/success states, and no false success response.
 
 ## Motion
 
 - Motion supports comprehension only.
-- The industry crawl is slow, pauses on hover/focus, and becomes a static wrapped list for reduced motion.
+- The industry crawl moves continuously, includes pause/resume control, pauses on hover/focus, and becomes a static wrapped list for reduced motion.
+- On the homepage, the official logo lives in the hero on tablet/desktop. The compact fixed navigation appears after the hero exits; mobile navigation remains immediately available.
 - Avoid constant floating, layout-shifting hover scale, parallax, full-screen filters, and decorative reveals.
 - Static media is preferred when motion does not measurably improve the message.
 

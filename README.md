@@ -63,7 +63,14 @@ Migrated from the PortfolioRevamp (Replit-based) codebase to Zo Site. DSX Edge i
 
 - The dedicated Features page presents Business Communications as the shared foundation, followed by five connected operating areas: Sales, Marketing, Customer Service, Shipping & Returns, and Management.
 - Each capability leads with an operational outcome, keeps three representative functions visible, and exposes the remaining functions through a native keyboard-accessible disclosure.
-- The page uses the existing industrial blue/orange system, square technical surfaces, and one consolidated consultation action rather than a repetitive stack of equal cards.
+- The page uses a white editorial capability system with blue structural details, orange emphasis, square technical surfaces, and one consolidated consultation action rather than a repetitive stack of equal cards.
+
+### 2026-08-06 visual-system refinement
+
+- Barlow Semi Condensed is the display face; IBM Plex Sans remains the body/interface face and IBM Plex Mono remains the data face.
+- Tablet/desktop show the official logo within the hero, then reveal the compact fixed navbar after the industry crawl leaves the viewport. Mobile navigation remains immediately available.
+- The industry list is a continuous accessible carousel with pause/resume control, hover/focus pause, and a static reduced-motion presentation.
+- Major content sections use white or neutral-gray surfaces. Blue is structural; company orange identifies emphasis and primary actions.
 
 ### Opportunity section
 

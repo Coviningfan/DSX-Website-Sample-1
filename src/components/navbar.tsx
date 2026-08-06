@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import { Menu, X, ArrowRight } from "lucide-react";
 
 const NAV_LINKS = [
@@ -16,8 +16,27 @@ const activeLink = "text-[#191919] bg-black/5";
 const inactiveLink = "text-[#191919]/70 hover:text-[#191919]";
 
 export default function Navbar() {
+  const { pathname } = useLocation();
   const [open, setOpen] = useState(false);
+  const [heroVisible, setHeroVisible] = useState(pathname === "/");
   const menuRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (pathname !== "/") {
+      setHeroVisible(false);
+      return;
+    }
+
+    const hero = document.getElementById("home-hero");
+    if (!hero) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setHeroVisible(entry.isIntersecting),
+      { rootMargin: "0px 0px -99% 0px", threshold: 0 },
+    );
+    observer.observe(hero);
+    return () => observer.disconnect();
+  }, [pathname]);
 
   useEffect(() => {
     if (!open) return;
@@ -42,6 +61,7 @@ export default function Navbar() {
 
   return (
     <nav
+      data-hero-visible={heroVisible ? "true" : "false"}
       className="site-nav fixed left-0 right-0 top-0 z-50 flex justify-center px-3 pt-[max(0.75rem,env(safe-area-inset-top))] pointer-events-none sm:px-4 sm:pt-5"
     >
       <div
@@ -74,8 +94,7 @@ export default function Navbar() {
         <div className="hidden md:flex items-center gap-2">
           <Link
             to="/about#contact"
-            className="flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-white bg-[#0084FF]/80 backdrop-blur-[2px] rounded-2xl hover:scale-[1.02] transition-transform duration-200"
-            style={{ boxShadow: "inset 0px 4px 4px 0px rgba(255,255,255,0.35)" }}
+            className="flex items-center gap-1.5 rounded-xl bg-[#a84916] px-4 py-2 text-sm font-medium text-white transition-colors duration-200 hover:bg-[#87380f]"
           >
             Book a Free Consultation
             <ArrowRight className="w-3.5 h-3.5" />
@@ -110,7 +129,7 @@ export default function Navbar() {
               <Link
                 to="/about#contact"
                 onClick={() => setOpen(false)}
-                className="mt-2 flex min-h-12 items-center justify-center gap-1.5 px-4 py-2.5 text-sm font-medium text-white bg-[#0084FF] rounded-2xl"
+                className="mt-2 flex min-h-12 items-center justify-center gap-1.5 rounded-xl bg-[#a84916] px-4 py-2.5 text-sm font-medium text-white"
               >
                 Book a Free Consultation
                 <ArrowRight className="w-3.5 h-3.5" />

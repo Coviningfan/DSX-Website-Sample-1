@@ -9,6 +9,7 @@ import {
   Wrench,
 } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 const INDUSTRIES = [
   "Automotive",
@@ -78,6 +79,8 @@ function ConsultationLink({ className = "" }: { className?: string }) {
 }
 
 export default function HomePage() {
+  const [crawlPaused, setCrawlPaused] = useState(false);
+
   return (
     <main className="min-h-screen overflow-x-hidden bg-white">
       <section id="home-hero" className="relative flex min-h-[100svh] flex-col overflow-hidden pt-[env(safe-area-inset-top)] max-md:min-h-0">
@@ -93,30 +96,43 @@ export default function HomePage() {
         </div>
         <div className="hero-readability absolute inset-0 z-[1]" aria-hidden="true" />
 
+        <Link to="/" className="hero-brand absolute left-4 top-6 z-10 sm:left-6 sm:top-8 md:left-10" aria-label="DSX Edge home">
+          <img src="/images/dsx-edge-logo-official.png" alt="DSX Edge" width="472" height="188" />
+        </Link>
+
         <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-1 flex-col justify-center px-4 pb-20 pt-32 sm:px-6 sm:pt-40 md:px-10 md:pb-24">
           <div className="max-w-3xl">
             <p className="mb-5 text-xs font-semibold uppercase tracking-[0.2em] text-[#0b5ea8]">
               DSX Edge Business Communications
             </p>
-            <h1 className="text-balance text-[clamp(2.8rem,8vw,6.5rem)] font-bold leading-[0.98] tracking-[-0.045em] text-[#102b43]">
+            <h1 className="font-display text-balance text-[clamp(3rem,8vw,6.75rem)] font-bold leading-[0.9] tracking-[-0.035em] text-[#102b43]">
               Business Communications That Drive Profit
             </h1>
             <p className="mt-7 max-w-2xl text-balance text-xl font-semibold leading-snug text-[#191919] sm:text-2xl md:text-3xl">
               A New Dimension in Customer Interaction &amp; Service
             </p>
-            <p className="mt-2 text-lg text-[#191919]/75 sm:text-xl">Tailored to Your Business</p>
+            <p className="mt-5 border-l-2 border-[#a84916] pl-4 text-lg font-semibold uppercase tracking-[0.08em] text-[#191919]/75 sm:text-xl">
+              Tailored to <em className="font-bold text-[#a84916]">YOUR</em> Business
+            </p>
           </div>
         </div>
 
-        <div className="industry-crawl relative z-10 border-y border-[#102b43]/12 bg-white/90 py-3" aria-label="Industries served">
-          <div className="industry-crawl-track" aria-hidden="true">
-            {[...INDUSTRIES, ...INDUSTRIES].map((industry, index) => (
-              <span key={`${industry}-${index}`}>{industry}</span>
-            ))}
+        <div className="industry-crawl relative z-10 border-y border-[#102b43]/12 bg-white/94" aria-label="Industries served">
+          <div className="industry-crawl-viewport">
+            <div className="industry-crawl-track" data-paused={crawlPaused ? "true" : "false"} aria-hidden="true">
+              {[0, 1].map((copy) => (
+                <div className="industry-crawl-group" key={copy}>
+                  {INDUSTRIES.map((industry) => <span key={`${copy}-${industry}`}>{industry}</span>)}
+                </div>
+              ))}
+            </div>
           </div>
           <ul className="industry-crawl-static" role="list">
             {INDUSTRIES.map((industry) => <li key={industry}>{industry}</li>)}
           </ul>
+          <button type="button" className="industry-crawl-toggle" onClick={() => setCrawlPaused((paused) => !paused)} aria-pressed={crawlPaused}>
+            {crawlPaused ? "Resume industries" : "Pause industries"}
+          </button>
         </div>
       </section>
 
@@ -138,24 +154,24 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section id="opportunity" className="bg-[#102b43] px-4 py-20 text-white sm:px-6 sm:py-24 md:px-10 md:py-32">
+      <section id="opportunity" className="bg-white px-4 py-20 text-[#191919] sm:px-6 sm:py-24 md:px-10 md:py-32">
         <div className="mx-auto max-w-6xl">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#f28a45]">Never Miss Another Opportunity</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#a84916]">Never Miss Another Opportunity</p>
           <div className="mt-5 grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
             <div>
               <h2 className="text-balance text-4xl font-bold leading-tight tracking-tight sm:text-5xl">
                 Customer interaction that continues when your staff cannot.
               </h2>
-              <p className="mt-6 text-lg leading-relaxed text-white/72">
+              <p className="mt-6 text-lg leading-relaxed text-[#191919]/68">
             DSXEdge is an intelligent addition to your staff that works 24/7, never missing a call or text. It can handle many routine customer interactions autonomously. After hours it serves customers while no one is there, increasing revenue and delivering excellent customer service.
               </p>
             </div>
             <div className="space-y-5">
-              <div className="border border-white/15 bg-white/[0.04] p-6 sm:p-8">
-                <p className="font-mono text-sm uppercase tracking-[0.12em] text-white/55">The old experience</p>
-                <blockquote className="mt-4 text-xl font-semibold text-white/85">“Press 1 for sales, press 2 for accounting…”</blockquote>
+              <div className="border border-[#191919]/12 bg-[#f6f8fa] p-6 sm:p-8">
+                <p className="font-mono text-sm uppercase tracking-[0.12em] text-[#191919]/52">The old experience</p>
+                <blockquote className="mt-4 text-xl font-semibold text-[#191919]/82">“Press 1 for sales, press 2 for accounting…”</blockquote>
               </div>
-              <div className="border-l-4 border-[#f28a45] bg-white p-6 text-[#191919] sm:p-8">
+              <div className="border border-[#191919]/12 border-l-4 border-l-[#a84916] bg-white p-6 text-[#191919] sm:p-8">
                 <p className="font-mono text-sm uppercase tracking-[0.12em] text-[#0b5ea8]">The conversation now</p>
                 <blockquote className="mt-4 text-lg leading-relaxed">
                   “I’ll be happy to schedule your appointment Mrs. Smith. For Wednesday, May 5th I have 11:30am or 2:00pm. Will either work for you?”
@@ -165,7 +181,7 @@ export default function HomePage() {
                   “Thank you for explaining your problem. If you tell me your model number, I’ll order the replacement parts, and we can schedule your service call. You will find the model number inside the door, bottom left corner.”
                 </blockquote>
               </div>
-              <p className="text-pretty text-center text-sm leading-relaxed text-white/72">
+              <p className="text-pretty text-center text-sm leading-relaxed text-[#191919]/62">
                 All spoken in a natural, conversational voice indistinguishable from a live person in the caller’s language.
               </p>
             </div>
@@ -176,7 +192,7 @@ export default function HomePage() {
       <section id="demo" className="bg-white px-4 py-20 sm:px-6 sm:py-24 md:px-10">
         <div className="mx-auto flex max-w-5xl flex-col items-center justify-between gap-8 border-y border-[#191919]/12 py-10 text-center md:flex-row md:text-left">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#0b5ea8]">Live telephone demonstration</p>
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#a84916]">Live telephone demonstration</p>
             <h2 className="mt-3 text-balance text-3xl font-bold tracking-tight text-[#191919] sm:text-4xl">
               Try It for Yourself — call 844-DSX-Edge and talk with Mary
             </h2>
@@ -208,7 +224,7 @@ export default function HomePage() {
       <section className="bg-[#f6f8fa] px-4 py-20 sm:px-6 sm:py-24 md:px-10 md:py-32">
         <div className="mx-auto grid max-w-6xl gap-12 lg:grid-cols-2 lg:items-center">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#0b5ea8]">The Easiest Way for Your Business to Benefit From AI</p>
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#a84916]">The Easiest Way for Your Business to Benefit From AI</p>
             <h2 className="mt-4 text-balance text-4xl font-bold leading-tight tracking-tight text-[#191919] sm:text-5xl">
               A full-featured business communication platform with a unique AI component.
             </h2>
@@ -221,7 +237,7 @@ export default function HomePage() {
 
       <section className="bg-white px-4 py-20 sm:px-6 sm:py-24 md:px-10 md:py-32">
         <div className="mx-auto max-w-6xl border-l-4 border-[#1688e8] pl-6 sm:pl-10">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#0b5ea8]">Turnkey AI</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#a84916]">Turnkey AI</p>
           <h2 className="mt-4 max-w-4xl text-balance text-4xl font-bold tracking-tight text-[#191919] sm:text-5xl">
             We set up the platform for your specific business and your specific needs.
           </h2>
@@ -242,7 +258,7 @@ export default function HomePage() {
       <section id="workflows" className="bg-white px-4 py-20 sm:px-6 sm:py-24 md:px-10 md:py-32">
         <div className="mx-auto max-w-6xl">
           <div className="max-w-3xl">
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#0b5ea8]">Tailored to Your Business</p>
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#a84916]">Tailored to Your Business</p>
             <h2 className="mt-4 text-balance text-4xl font-bold tracking-tight text-[#191919] sm:text-5xl">See DSXEdge for Your Business</h2>
           </div>
           <div className="mt-12 divide-y divide-[#191919]/12 border-y border-[#191919]/12">
@@ -255,7 +271,7 @@ export default function HomePage() {
                       <Icon className="h-5 w-5" aria-hidden="true" />
                     </span>
                     <span className="min-w-0 flex-1 text-lg font-bold text-[#191919]">{workflow.title}</span>
-                    <span className="text-2xl text-[#c85f1f] transition-transform group-open:rotate-45" aria-hidden="true">+</span>
+                    <span className="text-2xl text-[#a84916] transition-transform group-open:rotate-45" aria-hidden="true">+</span>
                   </summary>
                   <p className="max-w-4xl pb-7 pl-[3.75rem] leading-relaxed text-[#191919]/68">{workflow.body}</p>
                 </details>
@@ -269,13 +285,13 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="bg-[#102b43] px-4 py-20 text-white sm:px-6 sm:py-24 md:px-10">
+      <section className="bg-[#f6f8fa] px-4 py-20 text-[#191919] sm:px-6 sm:py-24 md:px-10">
         <div className="mx-auto flex max-w-6xl flex-col items-start justify-between gap-8 md:flex-row md:items-center">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#f28a45]">Improve Your Operations &amp; Increase Profits</p>
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#a84916]">Improve Your Operations &amp; Increase Profits</p>
             <h2 className="mt-4 max-w-3xl text-balance text-4xl font-bold tracking-tight sm:text-5xl">Learn How DSX Edge Can Improve Your Operations &amp; Profits</h2>
           </div>
-          <ConsultationLink className="shrink-0 bg-white text-[#102b43] hover:bg-[#f6f8fa]" />
+          <ConsultationLink className="shrink-0 bg-[#a84916] text-white hover:bg-[#87380f]" />
         </div>
       </section>
     </main>

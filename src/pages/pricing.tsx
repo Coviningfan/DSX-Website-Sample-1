@@ -19,7 +19,7 @@ export default function PricingPage() {
       <section className="bg-[#f6f8fa] px-4 py-20 sm:px-6 sm:py-24 md:px-10">
         <div className="mx-auto grid max-w-6xl gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:items-center">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#0b5ea8]">High ROI</p>
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#a84916]">High ROI</p>
             <h2 className="mt-4 text-balance text-4xl font-bold tracking-tight text-[#191919] sm:text-5xl">Maximize Your Communications Spend</h2>
           </div>
           <div>
@@ -56,7 +56,7 @@ export default function PricingPage() {
               </p>
             </article>
 
-            <article className="border-t-4 border-[#c85f1f] pt-7">
+            <article className="border-t-4 border-[#a84916] pt-7">
               <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#a84916]">AI Services</p>
               <h3 className="mt-4 text-3xl font-bold tracking-tight text-[#191919]">Two cost components</h3>
               <div className="mt-7 space-y-8">
@@ -71,7 +71,7 @@ export default function PricingPage() {
                   <p className="mt-3 leading-relaxed text-[#191919]/68">Small monthly computing and storage cost that covers the AI processing and data storage, which generally comes out to 15% to 20% of your telephone service charge.</p>
                 </div>
               </div>
-              <p className="mt-7 border-l-2 border-[#c85f1f] pl-5 font-semibold leading-relaxed text-[#191919]">Together these charges are almost always less than you are paying for your current telephone service alone.</p>
+              <p className="mt-7 border-l-2 border-[#a84916] pl-5 font-semibold leading-relaxed text-[#191919]">Together these charges are almost always less than you are paying for your current telephone service alone.</p>
             </article>
           </div>
           <p className="mt-14 max-w-4xl text-lg leading-relaxed text-[#191919]/68">
@@ -80,10 +80,10 @@ export default function PricingPage() {
         </div>
       </section>
 
-      <section className="bg-[#102b43] px-4 py-20 text-white sm:px-6 sm:py-24 md:px-10">
+      <section className="bg-[#f6f8fa] px-4 py-20 text-[#191919] sm:px-6 sm:py-24 md:px-10">
         <div className="mx-auto flex max-w-6xl flex-col items-start justify-between gap-8 md:flex-row md:items-center">
           <h2 className="max-w-3xl text-balance text-4xl font-bold tracking-tight sm:text-5xl">Major Features • Minor Price • Great ROI</h2>
-          <Link to="/about#contact" className="inline-flex min-h-11 shrink-0 items-center gap-2 rounded-lg bg-white px-6 py-3 text-sm font-semibold uppercase tracking-[0.08em] text-[#102b43] hover:bg-[#f6f8fa]">
+          <Link to="/about#contact" className="inline-flex min-h-11 shrink-0 items-center gap-2 rounded-lg bg-[#a84916] px-6 py-3 text-sm font-semibold uppercase tracking-[0.08em] text-white hover:bg-[#87380f]">
             Book a Free Consultation
             <ArrowRight className="h-4 w-4" aria-hidden="true" />
           </Link>
