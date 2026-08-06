@@ -44,6 +44,11 @@ Migrated from the PortfolioRevamp (Replit-based) codebase to Zo Site. DSX Edge i
 - Mobile sections use a 80px baseline rhythm, increasing to 96–128px at larger breakpoints. Long workflow cards use native disclosure controls on mobile and remain fully expanded from the small breakpoint upward.
 - Motion continues while the visualization is onscreen and suspends offscreen. Reduced-motion preferences remove transition effects without hiding the operating model.
 
+### Final mockup homepage alignment (2026-08-06)
+
+- The homepage follows the approved content flow: business-communications hero, missed-profit problem, natural-conversation proof, Mary live demo, department/functions, platform explanation, Turnkey AI, workflow examples, and consultation.
+- The source-controlled industry crawl pauses on hover/focus and becomes a static wrapped list under reduced motion.
+
 ### Opportunity section
 
 - The homepage's missed-opportunity section uses an explicitly illustrative live-call timeline: incoming call, request understood, availability checked, and appointment confirmed.

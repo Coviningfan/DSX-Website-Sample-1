@@ -170,6 +170,53 @@ textarea {
   object-position: 50% 48%;
 }
 
+.hero-readability {
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.92) 0%, rgba(255, 255, 255, 0.7) 42%, rgba(255, 255, 255, 0.08) 72%);
+}
+
+.industry-crawl {
+  overflow: hidden;
+}
+
+.industry-crawl-track {
+  display: flex;
+  width: max-content;
+  animation: industry-crawl 42s linear infinite;
+}
+
+.industry-crawl-track span {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  color: rgb(16 43 67 / 78%);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.industry-crawl-track span::after {
+  content: "•";
+  margin-inline: 1.25rem;
+  color: #c85f1f;
+}
+
+.industry-crawl:hover .industry-crawl-track,
+.industry-crawl:focus-within .industry-crawl-track {
+  animation-play-state: paused;
+}
+
+.industry-crawl-static {
+  display: none;
+}
+
+@keyframes industry-crawl {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
 .site-nav {
   transform: translate3d(0, calc(var(--nav-motion, 0) * -4px), 0)
     scale(calc(1 - var(--nav-motion, 0) * 0.012));
@@ -210,9 +257,35 @@ textarea {
     object-position: 50% 46%;
   }
 
+  .hero-readability {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.68) 64%, rgba(255, 255, 255, 0.26) 100%);
+  }
+
   .how-it-works-orb,
   .how-it-works-orb .dsx-hero-orb__stage {
     min-height: 340px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .industry-crawl-track {
+    display: none;
+  }
+
+  .industry-crawl-static {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem 1rem;
+    margin: 0;
+    padding: 0 1rem;
+    color: rgb(16 43 67 / 78%);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    list-style: none;
+    text-transform: uppercase;
   }
 }
 
