@@ -181,11 +181,13 @@ textarea {
 .industry-crawl-track {
   display: flex;
   width: max-content;
-  animation: industry-crawl 42s linear infinite;
+  animation: industry-crawl 44s steps(11, end) infinite;
 }
 
 .industry-crawl-track span {
   display: inline-flex;
+  flex: 0 0 100vw;
+  justify-content: center;
   align-items: center;
   white-space: nowrap;
   color: rgb(16 43 67 / 78%);
@@ -197,9 +199,7 @@ textarea {
 }
 
 .industry-crawl-track span::after {
-  content: "•";
-  margin-inline: 1.25rem;
-  color: #c85f1f;
+  content: none;
 }
 
 .industry-crawl:hover .industry-crawl-track,
@@ -217,25 +217,23 @@ textarea {
   }
 }
 
+@media (min-width: 640px) {
+  .industry-crawl-track span {
+    flex-basis: 50vw;
+  }
+}
+
+@media (min-width: 1024px) {
+  .industry-crawl-track span {
+    flex-basis: 33.333333vw;
+  }
+}
+
 .site-nav {
   transform: translate3d(0, calc(var(--nav-motion, 0) * -4px), 0)
     scale(calc(1 - var(--nav-motion, 0) * 0.012));
   transform-origin: top center;
   will-change: transform;
-}
-
-[data-scroll-motion] > :first-child {
-  opacity: 0;
-  transform: translate3d(0, 14px, 0) scale(0.992);
-  transform-origin: center top;
-  transition:
-    opacity 700ms cubic-bezier(0.16, 1, 0.3, 1),
-    transform 700ms cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-[data-scroll-motion].is-motion-visible > :first-child {
-  opacity: 1 !important;
-  transform: none;
 }
 
 .brand-accent-rail {

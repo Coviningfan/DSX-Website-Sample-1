@@ -52,7 +52,7 @@ export default function Navbar() {
           <img
             src="/images/dsx-edge-logo-official.png"
             alt="DSX Edge"
-            className="h-5 w-auto sm:h-6"
+            className="h-8 w-auto sm:h-9"
           />
         </Link>
 
