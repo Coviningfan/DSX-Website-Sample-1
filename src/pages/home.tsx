@@ -123,7 +123,7 @@ export default function HomePage() {
 
   return (
     <main className="min-h-screen bg-white overflow-x-hidden">
-      <section className="relative flex min-h-[100svh] flex-col overflow-hidden pt-[env(safe-area-inset-top)] max-md:min-h-0">
+      <section id="home-hero" className="relative flex min-h-[100svh] flex-col overflow-hidden pt-[env(safe-area-inset-top)] max-md:min-h-0">
         <div className="absolute inset-0 z-0 hero-tunnel-bg" aria-hidden="true">
           <img
             src="/images/dsx-edge-bkg.webp"

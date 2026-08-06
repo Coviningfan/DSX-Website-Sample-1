@@ -61,7 +61,7 @@ Migrated from the PortfolioRevamp (Replit-based) codebase to Zo Site. DSX Edge i
 
 - The homepage uses one optimized static tunnel image with breakpoint-specific `object-position`; the duplicated blurred fill and scroll-driven blur were removed.
 - Static media remains intentional: it preserves headline readability, reduced-motion behavior, and predictable LCP while the separate SignalOrb carries meaningful system motion.
-- The full DSX Edge wordmark is centered above the hero promise at a responsive 130–160px width. The navbar uses a compact DSX-only crop of the same approved artwork so navigation chrome does not compete with the primary brand moment.
+- The full DSX Edge wordmark is centered above the hero promise at a responsive 130–160px width. The navbar remains logo-free while the homepage hero is visible, then smoothly expands to reveal a compact DSX-only crop after the hero has passed. Interior pages show the compact mark immediately.
 
 ### Phase 1 Design Decisions (Homepage Redesign)
 

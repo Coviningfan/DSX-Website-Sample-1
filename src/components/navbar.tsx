@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import { Menu, X, ArrowRight } from "lucide-react";
 
 const NAV_LINKS = [
@@ -16,7 +16,29 @@ const inactiveLink = "text-[#191919]/70 hover:text-[#191919]";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const location = useLocation();
+  const [logoVisible, setLogoVisible] = useState(location.pathname !== "/");
   const menuRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (location.pathname !== "/") {
+      setLogoVisible(true);
+      return;
+    }
+
+    const hero = document.getElementById("home-hero");
+    if (!hero) {
+      setLogoVisible(false);
+      return;
+    }
+
+    const observer = new IntersectionObserver(([entry]) => {
+      setLogoVisible(!entry.isIntersecting && entry.boundingClientRect.bottom <= 96);
+    });
+
+    observer.observe(hero);
+    return () => observer.disconnect();
+  }, [location.pathname]);
 
   useEffect(() => {
     if (!open) return;
@@ -47,14 +69,26 @@ export default function Navbar() {
         ref={menuRef}
         className="pointer-events-auto flex w-full max-w-full items-center justify-between gap-3 rounded-xl border border-black/10 bg-white/92 px-3 py-1.5 shadow-[0_8px_24px_rgba(25,61,94,0.1)] backdrop-blur-xl transition-[background-color,box-shadow] duration-300 sm:w-fit sm:justify-start sm:gap-6 sm:rounded-2xl sm:bg-white/70 sm:px-5 sm:py-2 md:py-3"
       >
-        <Link to="/" className="flex min-h-11 shrink-0 items-center" aria-label="DSX Edge home">
-          <span className="relative block h-5 w-[58px] overflow-hidden" aria-hidden="true">
-            <img
-              src="/images/dsx-edge-logo.png"
-              alt=""
-              className="absolute -left-[8px] -top-[32px] h-auto w-[190px] max-w-none"
-            />
-          </span>
+        <Link
+          to="/"
+          aria-label="DSX Edge home"
+          aria-hidden={!logoVisible}
+          tabIndex={logoVisible ? 0 : -1}
+          className={`grid min-h-11 shrink-0 place-items-center overflow-hidden transition-[width,margin,opacity] duration-300 ease-out motion-reduce:transition-none ${
+            logoVisible
+              ? "mr-0 w-[58px] opacity-100"
+              : "-mr-3 w-0 opacity-0 pointer-events-none sm:-mr-6"
+          }`}
+        >
+          {logoVisible && (
+            <span className="relative block h-5 w-[58px] overflow-hidden" aria-hidden="true">
+              <img
+                src="/images/dsx-edge-logo.png"
+                alt=""
+                className="absolute -left-[8px] -top-[32px] h-auto w-[190px] max-w-none"
+              />
+            </span>
+          )}
         </Link>
 
         <div className="hidden md:flex items-center gap-1">
