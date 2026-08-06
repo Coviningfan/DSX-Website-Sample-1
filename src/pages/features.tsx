@@ -241,7 +241,7 @@ export default function FeaturesPage() {
       <section className="px-4 py-20 sm:px-6 sm:py-24 md:px-10">
         <div className="mx-auto grid max-w-5xl gap-8 border-y border-[#191919]/12 py-10 md:grid-cols-[1fr_auto] md:items-center">
           <div>
-            <p className="text-xs font-medium uppercase tracking-[0.2em] text-[#c85f1f]">
+            <p className="text-xs font-medium uppercase tracking-[0.2em] text-[#a84916]">
               Configured for your operation
             </p>
             <h2 className="mt-3 text-balance text-3xl font-bold tracking-tight text-[#191919] sm:text-4xl">
@@ -254,7 +254,7 @@ export default function FeaturesPage() {
           </div>
           <Link
             to="/about#contact"
-            className="inline-flex min-h-12 items-center justify-center gap-2 bg-[#e2712f] px-6 py-3 text-sm font-semibold text-white transition-colors duration-200 hover:bg-[#c85f1f] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#0872d6]"
+            className="inline-flex min-h-12 items-center justify-center gap-2 bg-[#a84916] px-6 py-3 text-sm font-semibold text-white transition-colors duration-200 hover:bg-[#87380f] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#0872d6]"
           >
             Book a Free Consultation
             <ArrowRight className="h-4 w-4" aria-hidden="true" />

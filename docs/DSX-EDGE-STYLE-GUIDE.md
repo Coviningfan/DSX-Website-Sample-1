@@ -15,7 +15,7 @@ DSX Edge is an established business-communications platform with telephone servi
 
 - Ink/navy: `#102b43` for high-emphasis sections and primary text on light media.
 - Communications blue: `#1688e8` / `#0b5ea8` for direction, structure, links, and focus.
-- Action orange: `#c85f1f` / `#f28a45` for selective emphasis and high-value actions.
+- Action orange: `#a84916` for accessible text/actions and `#f28a45` for selective emphasis on navy.
 - Text: `#191919`; neutral surface: `#f6f8fa`. Avoid warm or pinkish off-white backgrounds.
 - Orange is an accent, not a dominant page background. Meaning must never depend on color alone.
 
