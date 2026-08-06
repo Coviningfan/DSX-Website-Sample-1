@@ -106,13 +106,13 @@ function CapabilityList({ items }: { items: string[] }) {
       <ul className="mt-6 space-y-3">
         {items.slice(0, 3).map((item) => (
           <li key={item} className="flex items-start gap-3 text-sm leading-relaxed text-[#191919]/68">
-            <Check className="mt-0.5 h-4 w-4 shrink-0 text-[#a84916]" aria-hidden="true" />
+            <Check className="mt-0.5 h-4 w-4 shrink-0 text-[#FC5104FA]" aria-hidden="true" />
             <span>{item}</span>
           </li>
         ))}
       </ul>
       <details className="group mt-3">
-        <summary className="inline-flex min-h-11 list-none items-center gap-2 text-sm font-semibold text-[#a84916] marker:hidden focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#0872d6]">
+        <summary className="inline-flex min-h-11 list-none items-center gap-2 text-sm font-semibold text-[#FC5104FA] marker:hidden focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#0872d6]">
           <span className="group-open:hidden">View all capabilities</span>
           <span className="hidden group-open:inline">Show fewer capabilities</span>
           <ArrowRight className="h-4 w-4 transition-transform duration-200 group-open:rotate-90 motion-reduce:transition-none" aria-hidden="true" />
@@ -120,7 +120,7 @@ function CapabilityList({ items }: { items: string[] }) {
         <ul className="space-y-3 pb-1 pt-1">
           {items.slice(3).map((item) => (
             <li key={item} className="flex items-start gap-3 text-sm leading-relaxed text-[#191919]/68">
-              <Check className="mt-0.5 h-4 w-4 shrink-0 text-[#a84916]" aria-hidden="true" />
+              <Check className="mt-0.5 h-4 w-4 shrink-0 text-[#FC5104FA]" aria-hidden="true" />
               <span>{item}</span>
             </li>
           ))}
@@ -138,7 +138,7 @@ export default function FeaturesPage() {
       <section className="px-4 pb-20 pt-36 sm:px-6 sm:pb-24 sm:pt-44 md:px-10">
         <div className="mx-auto grid max-w-6xl gap-12 lg:grid-cols-[1.2fr_0.8fr] lg:items-end">
           <div>
-            <p className="mb-4 text-xs font-medium uppercase tracking-[0.2em] text-[#a84916]">
+            <p className="mb-4 text-xs font-medium uppercase tracking-[0.2em] text-[#FC5104FA]">
               Platform Features
             </p>
             <h1 className="max-w-4xl text-balance text-4xl font-bold leading-[1.04] tracking-[-0.035em] text-[#191919] sm:text-5xl md:text-6xl">
@@ -168,14 +168,14 @@ export default function FeaturesPage() {
       <section className="bg-[#f6f8fa] px-4 py-20 text-[#191919] sm:px-6 sm:py-24 md:px-10 md:py-28">
         <div className="mx-auto max-w-6xl">
           <div className="relative border-y border-[#191919]/12 bg-white px-6 py-8 sm:px-8 sm:py-10 lg:px-10">
-            <div className="absolute inset-x-0 top-0 h-1 bg-[#a84916]" aria-hidden="true" />
+            <div className="absolute inset-x-0 top-0 h-1 bg-[#FC5104FA]" aria-hidden="true" />
             <div className="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-start lg:gap-16">
               <div className="flex items-start gap-5">
                 <span className="flex size-12 shrink-0 items-center justify-center border border-[#1688e8]/30 text-[#0b5ea8]">
                   <FoundationIcon className="h-6 w-6" aria-hidden="true" />
                 </span>
                 <div>
-                  <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#a84916]">
+                  <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#FC5104FA]">
                     Foundation / 01
                   </p>
                   <h2 className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">
@@ -195,7 +195,7 @@ export default function FeaturesPage() {
 
           <div className="mb-8 mt-16 flex items-end justify-between gap-8">
             <div>
-              <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#a84916]">
+              <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#FC5104FA]">
                 Connected operations / 02–06
               </p>
               <h2 className="mt-3 max-w-2xl text-balance text-3xl font-bold leading-tight tracking-tight sm:text-4xl">
@@ -220,7 +220,7 @@ export default function FeaturesPage() {
                     <span className="flex size-11 items-center justify-center border border-[#1688e8]/25 bg-white text-[#0b5ea8]">
                       <Icon className="h-5 w-5" aria-hidden="true" />
                     </span>
-                    <span className="font-mono text-xs tracking-[0.18em] text-[#a84916] md:mt-4 md:block">
+                    <span className="font-mono text-xs tracking-[0.18em] text-[#FC5104FA] md:mt-4 md:block">
                       {String(index + 2).padStart(2, "0")}
                     </span>
                   </div>
@@ -246,7 +246,7 @@ export default function FeaturesPage() {
       <section className="px-4 py-20 sm:px-6 sm:py-24 md:px-10">
         <div className="mx-auto grid max-w-5xl gap-8 border-y border-[#191919]/12 py-10 md:grid-cols-[1fr_auto] md:items-center">
           <div>
-            <p className="text-xs font-medium uppercase tracking-[0.2em] text-[#a84916]">
+            <p className="text-xs font-medium uppercase tracking-[0.2em] text-[#FC5104FA]">
               Configured for your operation
             </p>
             <h2 className="mt-3 text-balance text-3xl font-bold tracking-tight text-[#191919] sm:text-4xl">
@@ -259,7 +259,7 @@ export default function FeaturesPage() {
           </div>
           <Link
             to="/about#contact"
-            className="inline-flex min-h-12 items-center justify-center gap-2 bg-[#a84916] px-6 py-3 text-sm font-semibold text-white transition-colors duration-200 hover:bg-[#87380f] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#0872d6]"
+            className="inline-flex min-h-12 items-center justify-center gap-2 bg-[#FC5104FA] px-6 py-3 text-sm font-semibold text-white transition-colors duration-200 hover:bg-[#FC5104] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#0872d6]"
           >
             Book a Free Consultation
             <ArrowRight className="h-4 w-4" aria-hidden="true" />

@@ -256,7 +256,7 @@ h3 {
 .industry-crawl-group span::after {
   content: "/";
   margin-left: clamp(2rem, 5vw, 5rem);
-  color: #a84916;
+  color: #FC5104FA;
 }
 
 .industry-crawl:hover .industry-crawl-track,
@@ -318,7 +318,7 @@ h3 {
 
 .brand-accent-rail {
   height: 3px;
-  background: linear-gradient(90deg, #1688e8 0 72%, #e2712f 72% 100%);
+  background: linear-gradient(90deg, #1688e8 0 72%, #FC5104FA 72% 100%);
 }
 
 .how-it-works-orb {

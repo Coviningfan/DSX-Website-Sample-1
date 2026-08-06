@@ -38,7 +38,7 @@ export default function IndustriesPage() {
   return (
     <main className="min-h-screen overflow-x-hidden bg-white">
       <section className="mx-auto max-w-6xl px-4 pb-20 pt-36 sm:px-6 sm:pb-24 sm:pt-44 md:px-10">
-        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#a84916]">Industries</p>
+        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#FC5104FA]">Industries</p>
         <h1 className="mt-4 max-w-4xl text-balance text-4xl font-bold leading-tight tracking-tight text-[#191919] sm:text-5xl md:text-6xl">
           How We Serve Your Business
         </h1>
@@ -64,10 +64,10 @@ export default function IndustriesPage() {
                   aria-controls={panelId}
                   className="grid min-h-14 w-full min-w-0 grid-cols-[2.5rem_minmax(0,1fr)_2.75rem] items-center gap-3 py-5 text-left focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#0872d6]"
                 >
-                  <span className="font-mono text-xs text-[#a84916]">{String(index + 1).padStart(2, "0")}</span>
+                  <span className="font-mono text-xs text-[#FC5104FA]">{String(index + 1).padStart(2, "0")}</span>
                   <span className="min-w-0 text-lg font-semibold text-[#191919]">{industry}</span>
                   <span className="flex h-11 w-11 items-center justify-center" aria-hidden="true">
-                    <ChevronDown className={`h-5 w-5 text-[#a84916] transition-transform ${expanded ? "rotate-180" : ""}`} />
+                    <ChevronDown className={`h-5 w-5 text-[#FC5104FA] transition-transform ${expanded ? "rotate-180" : ""}`} />
                   </span>
                 </button>
                 {expanded && (
@@ -82,7 +82,7 @@ export default function IndustriesPage() {
                             </li>
                           ))}
                         </ul>
-                        <a href="tel:8443792886" className="mt-8 inline-flex min-h-11 items-center gap-2 font-semibold text-[#a84916] hover:text-[#87380f]">
+                        <a href="tel:8443792886" className="mt-8 inline-flex min-h-11 items-center gap-2 font-semibold text-[#FC5104FA] hover:text-[#FC5104]">
                           <Phone className="h-4 w-4" aria-hidden="true" />
                           Try It for Yourself — call 844-DSX-AUTO (844-379-2886) and talk with Pete
                         </a>
@@ -103,7 +103,7 @@ export default function IndustriesPage() {
       <section className="bg-[#f6f8fa] px-4 py-20 text-[#191919] sm:px-6 sm:py-24 md:px-10">
         <div className="mx-auto flex max-w-6xl flex-col items-start justify-between gap-8 md:flex-row md:items-center">
           <h2 className="max-w-3xl text-balance text-4xl font-bold tracking-tight sm:text-5xl">Improve Your Operations &amp; Increase Profits</h2>
-          <Link to="/about#contact" className="inline-flex min-h-11 shrink-0 items-center gap-2 rounded-lg bg-[#a84916] px-6 py-3 text-sm font-semibold uppercase tracking-[0.08em] text-white transition-colors hover:bg-[#87380f]">
+          <Link to="/about#contact" className="inline-flex min-h-11 shrink-0 items-center gap-2 rounded-lg bg-[#FC5104FA] px-6 py-3 text-sm font-semibold uppercase tracking-[0.08em] text-white transition-colors hover:bg-[#FC5104]">
             Book a Free Consultation
             <ArrowRight className="h-4 w-4" aria-hidden="true" />
           </Link>

@@ -71,7 +71,7 @@ Migrated from the PortfolioRevamp (Replit-based) codebase to Zo Site. DSX Edge i
 - Tablet/desktop show the official logo within the hero, then reveal the compact fixed navbar after the industry crawl leaves the viewport. Mobile navigation remains immediately available.
 - The industry list is a continuous accessible carousel with pause/resume control, hover/focus pause, and a static reduced-motion presentation.
 - Major content sections use white or neutral-gray surfaces. Blue is structural; company orange identifies emphasis and primary actions.
-- Public-route emphasis is standardized: eyebrows, key figures, primary actions, disclosure indicators, and emphasized links use accessible company orange (`#a84916` on light surfaces; `#f28a45` on the dark footer). Blue remains reserved for structure, informational icons, links where appropriate, and focus indication.
+- Public-route emphasis is standardized: eyebrows, key figures, primary actions, disclosure indicators, and emphasized links use company orange `#FC5104` at 98% opacity (`#FC5104FA`). Blue remains reserved for structure, informational icons, links where appropriate, and focus indication.
 
 ### Opportunity section
 
@@ -97,7 +97,7 @@ The following treatment is retained as historical context only and is superseded
 
 **Font pairing:** IBM Plex Sans (body) + IBM Plex Mono (data/metrics). Loaded from Google Fonts in `index.html`.
 
-**Theme:** Near-black navy foundation (`oklch(0.10 0.012 258)`, defaulted to dark) with refined blue (`oklch(0.62 0.15 255)`) for infrastructure/trust and orange (`oklch(0.66 0.16 45)`) for action as the only accent roles. Tuned in `src/theme.json` (wired via `src/lib/zo-theme.ts` at runtime; `.dark` fallback tokens live in `src/styles.css`). No gradient text, no glassmorphism, no glow effects.
+**Theme:** Near-black navy foundation (`oklch(0.10 0.012 258)`, defaulted to dark) with refined blue (`oklch(0.62 0.15 255)`) for infrastructure/trust and company orange (`#FC5104` at 98% opacity) for action as the only accent role. Tuned in `src/theme.json` (wired via `src/lib/zo-theme.ts` at runtime; `.dark` fallback tokens live in `src/styles.css`). No gradient text, no glassmorphism, no glow effects.
 
 **Layout:** Left-aligned editorial grid. Full-bleed elements. Rounded corners at `--radius-lg` (0.625rem). No rounded-2xl or card overload.
 

@@ -94,7 +94,7 @@ export default function Navbar() {
         <div className="hidden md:flex items-center gap-2">
           <Link
             to="/about#contact"
-            className="flex items-center gap-1.5 rounded-xl bg-[#a84916] px-4 py-2 text-sm font-medium text-white transition-colors duration-200 hover:bg-[#87380f]"
+            className="flex items-center gap-1.5 rounded-xl bg-[#FC5104FA] px-4 py-2 text-sm font-medium text-white transition-colors duration-200 hover:bg-[#FC5104]"
           >
             Book a Free Consultation
             <ArrowRight className="w-3.5 h-3.5" />
@@ -129,7 +129,7 @@ export default function Navbar() {
               <Link
                 to="/about#contact"
                 onClick={() => setOpen(false)}
-                className="mt-2 flex min-h-12 items-center justify-center gap-1.5 rounded-xl bg-[#a84916] px-4 py-2.5 text-sm font-medium text-white"
+                className="mt-2 flex min-h-12 items-center justify-center gap-1.5 rounded-xl bg-[#FC5104FA] px-4 py-2.5 text-sm font-medium text-white"
               >
                 Book a Free Consultation
                 <ArrowRight className="w-3.5 h-3.5" />

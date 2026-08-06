@@ -102,7 +102,7 @@ export default function HomePage() {
 
         <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-1 flex-col justify-center px-4 pb-20 pt-32 sm:px-6 sm:pt-40 md:px-10 md:pb-24">
           <div className="max-w-3xl">
-            <p className="mb-5 text-xs font-semibold uppercase tracking-[0.2em] text-[#a84916]">
+            <p className="mb-5 text-xs font-semibold uppercase tracking-[0.2em] text-[#FC5104FA]">
               DSX Edge Business Communications
             </p>
             <h1 className="font-display text-balance text-[clamp(3rem,8vw,6.75rem)] font-bold leading-[0.9] tracking-[-0.035em] text-[#102b43]">
@@ -111,8 +111,8 @@ export default function HomePage() {
             <p className="mt-7 max-w-2xl text-balance text-xl font-semibold leading-snug text-[#191919] sm:text-2xl md:text-3xl">
               A New Dimension in Customer Interaction &amp; Service
             </p>
-            <p className="mt-5 border-l-2 border-[#a84916] pl-4 text-lg font-semibold uppercase tracking-[0.08em] text-[#191919]/75 sm:text-xl">
-              Tailored to <em className="font-bold text-[#a84916]">YOUR</em> Business
+            <p className="mt-5 border-l-2 border-[#FC5104FA] pl-4 text-lg font-semibold uppercase tracking-[0.08em] text-[#191919]/75 sm:text-xl">
+              Tailored to <em className="font-bold text-[#FC5104FA]">YOUR</em> Business
             </p>
           </div>
         </div>
@@ -139,11 +139,11 @@ export default function HomePage() {
       <section className="bg-white px-4 py-20 sm:px-6 sm:py-24 md:px-10 md:py-32">
         <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#a84916]">The unseen cost</p>
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#FC5104FA]">The unseen cost</p>
             <h2 className="mt-4 text-balance text-4xl font-bold leading-tight tracking-tight text-[#191919] sm:text-5xl">
               Every missed call is profit that disappears
             </h2>
-            <p className="mt-4 text-2xl font-bold text-[#a84916]">Hundreds or Thousands a Month!</p>
+            <p className="mt-4 text-2xl font-bold text-[#FC5104FA]">Hundreds or Thousands a Month!</p>
           </div>
           <div className="border-l-2 border-[#1688e8] pl-6 sm:pl-8">
             <p className="text-2xl font-semibold text-[#191919]">The worst part? You never knew it happened.</p>
@@ -156,7 +156,7 @@ export default function HomePage() {
 
       <section id="opportunity" className="bg-white px-4 py-20 text-[#191919] sm:px-6 sm:py-24 md:px-10 md:py-32">
         <div className="mx-auto max-w-6xl">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#a84916]">Never Miss Another Opportunity</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#FC5104FA]">Never Miss Another Opportunity</p>
           <div className="mt-5 grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
             <div>
               <h2 className="text-balance text-4xl font-bold leading-tight tracking-tight sm:text-5xl">
@@ -171,8 +171,8 @@ export default function HomePage() {
                 <p className="font-mono text-sm uppercase tracking-[0.12em] text-[#191919]/52">The old experience</p>
                 <blockquote className="mt-4 text-xl font-semibold text-[#191919]/82">“Press 1 for sales, press 2 for accounting…”</blockquote>
               </div>
-              <div className="border border-[#191919]/12 border-l-4 border-l-[#a84916] bg-white p-6 text-[#191919] sm:p-8">
-                <p className="font-mono text-sm uppercase tracking-[0.12em] text-[#a84916]">The conversation now</p>
+              <div className="border border-[#191919]/12 border-l-4 border-l-[#FC5104FA] bg-white p-6 text-[#191919] sm:p-8">
+                <p className="font-mono text-sm uppercase tracking-[0.12em] text-[#FC5104FA]">The conversation now</p>
                 <blockquote className="mt-4 text-lg leading-relaxed">
                   “I’ll be happy to schedule your appointment Mrs. Smith. For Wednesday, May 5th I have 11:30am or 2:00pm. Will either work for you?”
                 </blockquote>
@@ -192,12 +192,12 @@ export default function HomePage() {
       <section id="demo" className="bg-white px-4 py-20 sm:px-6 sm:py-24 md:px-10">
         <div className="mx-auto flex max-w-5xl flex-col items-center justify-between gap-8 border-y border-[#191919]/12 py-10 text-center md:flex-row md:text-left">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#a84916]">Live telephone demonstration</p>
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#FC5104FA]">Live telephone demonstration</p>
             <h2 className="mt-3 text-balance text-3xl font-bold tracking-tight text-[#191919] sm:text-4xl">
               Try It for Yourself — call 844-DSX-Edge and talk with Mary
             </h2>
           </div>
-          <a href="tel:8443793343" className="inline-flex min-h-11 shrink-0 items-center gap-3 rounded-lg bg-[#a84916] px-6 py-3 font-semibold text-white transition-colors hover:bg-[#87380f]">
+          <a href="tel:8443793343" className="inline-flex min-h-11 shrink-0 items-center gap-3 rounded-lg bg-[#FC5104FA] px-6 py-3 font-semibold text-white transition-colors hover:bg-[#FC5104]">
             <Phone className="h-5 w-5" aria-hidden="true" />
             844-379-3343
           </a>
@@ -206,14 +206,14 @@ export default function HomePage() {
 
       <section id="departments" className="bg-white px-4 py-20 sm:px-6 sm:py-24 md:px-10 md:py-32">
         <div className="mx-auto max-w-6xl">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#a84916]">Across the business</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#FC5104FA]">Across the business</p>
           <h2 className="mt-4 max-w-4xl text-balance text-4xl font-bold tracking-tight text-[#191919] sm:text-5xl md:text-6xl">
             Every Department, Every Function, 24/7
           </h2>
           <div className="mt-12 grid grid-cols-1 border-l border-t border-[#191919]/12 sm:grid-cols-2 lg:grid-cols-5">
             {FUNCTIONS.map((item, index) => (
               <div key={item} className="min-w-0 border-b border-r border-[#191919]/12 p-5 sm:p-6">
-                <span className="font-mono text-xs text-[#a84916]">{String(index + 1).padStart(2, "0")}</span>
+                <span className="font-mono text-xs text-[#FC5104FA]">{String(index + 1).padStart(2, "0")}</span>
                 <p className="mt-3 text-pretty font-semibold text-[#191919]">{item}</p>
               </div>
             ))}
@@ -224,7 +224,7 @@ export default function HomePage() {
       <section className="bg-[#f6f8fa] px-4 py-20 sm:px-6 sm:py-24 md:px-10 md:py-32">
         <div className="mx-auto grid max-w-6xl gap-12 lg:grid-cols-2 lg:items-center">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#a84916]">The Easiest Way for Your Business to Benefit From AI</p>
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#FC5104FA]">The Easiest Way for Your Business to Benefit From AI</p>
             <h2 className="mt-4 text-balance text-4xl font-bold leading-tight tracking-tight text-[#191919] sm:text-5xl">
               A full-featured business communication platform with a unique AI component.
             </h2>
@@ -237,11 +237,11 @@ export default function HomePage() {
 
       <section className="bg-white px-4 py-20 sm:px-6 sm:py-24 md:px-10 md:py-32">
         <div className="mx-auto max-w-6xl border-l-4 border-[#1688e8] pl-6 sm:pl-10">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#a84916]">Turnkey AI</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#FC5104FA]">Turnkey AI</p>
           <h2 className="mt-4 max-w-4xl text-balance text-4xl font-bold tracking-tight text-[#191919] sm:text-5xl">
             We set up the platform for your specific business and your specific needs.
           </h2>
-          <p className="mt-5 text-3xl font-bold text-[#a84916] sm:text-4xl">You Just Use It.</p>
+          <p className="mt-5 text-3xl font-bold text-[#FC5104FA] sm:text-4xl">You Just Use It.</p>
         </div>
       </section>
 
@@ -258,7 +258,7 @@ export default function HomePage() {
       <section id="workflows" className="bg-white px-4 py-20 sm:px-6 sm:py-24 md:px-10 md:py-32">
         <div className="mx-auto max-w-6xl">
           <div className="max-w-3xl">
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#a84916]">Tailored to Your Business</p>
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#FC5104FA]">Tailored to Your Business</p>
             <h2 className="mt-4 text-balance text-4xl font-bold tracking-tight text-[#191919] sm:text-5xl">See DSXEdge for Your Business</h2>
           </div>
           <div className="mt-12 divide-y divide-[#191919]/12 border-y border-[#191919]/12">
@@ -271,7 +271,7 @@ export default function HomePage() {
                       <Icon className="h-5 w-5" aria-hidden="true" />
                     </span>
                     <span className="min-w-0 flex-1 text-lg font-bold text-[#191919]">{workflow.title}</span>
-                    <span className="text-2xl text-[#a84916] transition-transform group-open:rotate-45" aria-hidden="true">+</span>
+                    <span className="text-2xl text-[#FC5104FA] transition-transform group-open:rotate-45" aria-hidden="true">+</span>
                   </summary>
                   <p className="max-w-4xl pb-7 pl-[3.75rem] leading-relaxed text-[#191919]/68">{workflow.body}</p>
                 </details>
@@ -279,7 +279,7 @@ export default function HomePage() {
             })}
           </div>
           <p className="mt-8 flex items-center gap-3 text-lg font-semibold text-[#191919]">
-            <Building2 className="h-5 w-5 text-[#a84916]" aria-hidden="true" />
+            <Building2 className="h-5 w-5 text-[#FC5104FA]" aria-hidden="true" />
             And Dozens of Others
           </p>
         </div>
@@ -288,10 +288,10 @@ export default function HomePage() {
       <section className="bg-[#f6f8fa] px-4 py-20 text-[#191919] sm:px-6 sm:py-24 md:px-10">
         <div className="mx-auto flex max-w-6xl flex-col items-start justify-between gap-8 md:flex-row md:items-center">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#a84916]">Improve Your Operations &amp; Increase Profits</p>
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#FC5104FA]">Improve Your Operations &amp; Increase Profits</p>
             <h2 className="mt-4 max-w-3xl text-balance text-4xl font-bold tracking-tight sm:text-5xl">Learn How DSX Edge Can Improve Your Operations &amp; Profits</h2>
           </div>
-          <ConsultationLink className="shrink-0 bg-[#a84916] text-white hover:bg-[#87380f]" />
+          <ConsultationLink className="shrink-0 bg-[#FC5104FA] text-white hover:bg-[#FC5104]" />
         </div>
       </section>
     </main>

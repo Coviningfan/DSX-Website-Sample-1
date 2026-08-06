@@ -29,7 +29,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <p className="mb-4 text-xs font-medium uppercase tracking-[0.2em] text-[#f28a45]">
+            <p className="mb-4 text-xs font-medium uppercase tracking-[0.2em] text-[#FC5104FA]">
               Pages
             </p>
             <ul className="space-y-2.5">
@@ -37,7 +37,7 @@ export default function Footer() {
                 <li key={page.href}>
                   <Link
                     to={page.href}
-                    className="inline-flex min-h-11 items-center text-sm text-white/60 transition-colors duration-200 hover:text-[#f28a45]"
+                    className="inline-flex min-h-11 items-center text-sm text-white/60 transition-colors duration-200 hover:text-[#FC5104FA]"
                   >
                     {page.label}
                   </Link>
@@ -47,22 +47,22 @@ export default function Footer() {
           </div>
 
           <div>
-            <p className="mb-4 text-xs font-medium uppercase tracking-[0.2em] text-[#f28a45]">
+            <p className="mb-4 text-xs font-medium uppercase tracking-[0.2em] text-[#FC5104FA]">
               Contact
             </p>
             <ul className="space-y-2.5 text-sm text-white/50">
               <li>
-                <a href="tel:775-624-9424" className="inline-flex min-h-11 items-center transition-colors duration-200 hover:text-[#f28a45]">
+                <a href="tel:775-624-9424" className="inline-flex min-h-11 items-center transition-colors duration-200 hover:text-[#FC5104FA]">
                   775-624-9424
                 </a>
               </li>
               <li>
-                <a href="mailto:info@dsxedge.com" className="inline-flex min-h-11 items-center transition-colors duration-200 hover:text-[#f28a45]">
+                <a href="mailto:info@dsxedge.com" className="inline-flex min-h-11 items-center transition-colors duration-200 hover:text-[#FC5104FA]">
                   info@dsxedge.com
                 </a>
               </li>
               <li>
-                <a href="mailto:sales@dsxedge.com" className="inline-flex min-h-11 items-center transition-colors duration-200 hover:text-[#f28a45]">
+                <a href="mailto:sales@dsxedge.com" className="inline-flex min-h-11 items-center transition-colors duration-200 hover:text-[#FC5104FA]">
                   sales@dsxedge.com
                 </a>
               </li>

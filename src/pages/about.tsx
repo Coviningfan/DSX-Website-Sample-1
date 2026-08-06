@@ -67,7 +67,7 @@ export default function AboutPage() {
     <main className="min-h-screen bg-white">
       <section className="relative pt-32 pb-16 px-4 sm:px-6 sm:pt-44 sm:pb-24 md:px-10 max-w-6xl mx-auto">
         <div className="max-w-3xl">
-          <p className="text-xs uppercase tracking-[0.2em] text-[#a84916] font-medium mb-4">
+          <p className="text-xs uppercase tracking-[0.2em] text-[#FC5104FA] font-medium mb-4">
             About DSX Edge
           </p>
           <h1 className="font-bold text-4xl sm:text-5xl md:text-6xl leading-[1.1] tracking-tight text-[#191919]">
@@ -126,7 +126,7 @@ export default function AboutPage() {
 
       <section id="contact" className="py-16 px-4 sm:px-6 sm:py-24 md:px-10 bg-[#F9F8F6]">
         <div className="max-w-2xl mx-auto">
-          <p className="text-xs uppercase tracking-[0.2em] text-[#a84916] font-medium mb-4 text-center">
+          <p className="text-xs uppercase tracking-[0.2em] text-[#FC5104FA] font-medium mb-4 text-center">
             Get In Touch
           </p>
           <h2 className="font-bold text-3xl sm:text-4xl leading-tight tracking-tight text-[#191919] mb-4 text-center">
@@ -299,7 +299,7 @@ export default function AboutPage() {
               <button
                 type="submit"
                 disabled={submitting}
-                className="flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-[#a84916] px-6 py-3 text-sm font-semibold text-white transition-colors duration-200 hover:bg-[#87380f] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#0872d6] disabled:opacity-60"
+                className="flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-[#FC5104FA] px-6 py-3 text-sm font-semibold text-white transition-colors duration-200 hover:bg-[#FC5104] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#0872d6] disabled:opacity-60"
               >
                 {submitting ? "Recording Request…" : "Request My Consultation"}
                 <ArrowRight className="w-4 h-4" />
