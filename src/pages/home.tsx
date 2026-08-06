@@ -9,7 +9,6 @@ import {
   Wrench,
 } from "lucide-react";
 import { Link } from "react-router-dom";
-import SignalOrb from "@/components/signal-orb";
 
 const INDUSTRIES = [
   "Automotive",
@@ -257,15 +256,6 @@ export default function HomePage() {
             <Building2 className="h-5 w-5 text-[#0b5ea8]" aria-hidden="true" />
             And Dozens of Others
           </p>
-        </div>
-      </section>
-
-      <section id="how-it-works" className="bg-white px-4 py-20 sm:px-6 sm:py-24 md:px-10 md:py-32">
-        <div className="mx-auto max-w-6xl">
-          <h2 className="text-center text-4xl font-bold tracking-tight text-[#191919] sm:text-5xl">How It Works</h2>
-          <div className="how-it-works-orb mt-12">
-            <SignalOrb />
-          </div>
         </div>
       </section>
 

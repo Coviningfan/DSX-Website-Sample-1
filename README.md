@@ -48,6 +48,7 @@ Migrated from the PortfolioRevamp (Replit-based) codebase to Zo Site. DSX Edge i
 
 - The homepage follows the approved content flow: business-communications hero, missed-profit problem, natural-conversation proof, Mary live demo, department/functions, platform explanation, Turnkey AI, workflow examples, and consultation.
 - The source-controlled industry crawl pauses on hover/focus and becomes a static wrapped list under reduced motion.
+- SignalOrb and its selector panel are no longer imported by the public homepage. The reusable implementation remains preserved in `src/components/signal-orb.tsx` and `src/components/signal-orb.css`.
 
 ### Opportunity section
 
