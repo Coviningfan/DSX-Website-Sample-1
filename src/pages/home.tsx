@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import SignalOrb from "@/components/signal-orb";
 import {
   Phone, ArrowRight, Wrench, Stethoscope, ShoppingCart,
@@ -57,6 +58,17 @@ export default function HomePage() {
     setActiveLayer(layer);
     setModalOpen(true);
   };
+
+  useEffect(() => {
+    if (!modalOpen || window.matchMedia("(min-width: 640px)").matches) return;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [modalOpen]);
 
   const LAYERS = [
     {
@@ -448,7 +460,7 @@ export default function HomePage() {
       </section>
 
       {/* ── Modal ─────────────────────────────────────────── */}
-      {modalOpen && (
+      {modalOpen && createPortal(
         <div
           className="fixed inset-0 z-50 flex items-center justify-center px-4"
           onClick={() => setModalOpen(false)}
@@ -490,7 +502,8 @@ export default function HomePage() {
               Close
             </button>
           </div>
-        </div>
+        </div>,
+        document.body,
       )}
     </main>
   );
