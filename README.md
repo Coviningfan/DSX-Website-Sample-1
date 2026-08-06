@@ -58,6 +58,12 @@ Migrated from the PortfolioRevamp (Replit-based) codebase to Zo Site. DSX Edge i
 - The source-controlled industry crawl pauses on hover/focus and becomes a static wrapped list under reduced motion.
 - SignalOrb and its selector panel are no longer imported by the public homepage. The reusable implementation remains preserved in `src/components/signal-orb.tsx` and `src/components/signal-orb.css`.
 
+### Features page
+
+- The dedicated Features page presents Business Communications as the shared foundation, followed by five connected operating areas: Sales, Marketing, Customer Service, Shipping & Returns, and Management.
+- Each capability leads with an operational outcome, keeps three representative functions visible, and exposes the remaining functions through a native keyboard-accessible disclosure.
+- The page uses the existing industrial blue/orange system, square technical surfaces, and one consolidated consultation action rather than a repetitive stack of equal cards.
+
 ### Opportunity section
 
 - The homepage's missed-opportunity section uses an explicitly illustrative live-call timeline: incoming call, request understood, availability checked, and appointment confirmed.
