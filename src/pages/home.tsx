@@ -81,9 +81,12 @@ export default function HomePage() {
       <section className="relative flex min-h-[100svh] flex-col overflow-hidden pt-[env(safe-area-inset-top)] max-md:min-h-0">
         <div className="absolute inset-0 z-0 hero-tunnel-bg" aria-hidden="true">
           <img
-            src="/images/dsx-edge-bkg.jpg"
+            src="/images/dsx-edge-bkg.webp"
             alt=""
-            className="relative z-[1] block h-full w-full object-contain object-center"
+            width="2560"
+            height="1435"
+            fetchPriority="high"
+            className="block h-full w-full object-cover"
           />
         </div>
         <div className="absolute inset-0 z-[2] bg-gradient-to-b from-white/10 via-transparent to-[#d9ebf7]/20" />
