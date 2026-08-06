@@ -5,7 +5,7 @@ export default function PricingPage() {
   return (
     <main className="min-h-screen overflow-x-hidden bg-white">
       <section className="mx-auto max-w-6xl px-4 pb-20 pt-36 sm:px-6 sm:pb-24 sm:pt-44 md:px-10">
-        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#0b5ea8]">Pricing</p>
+        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#a84916]">Pricing</p>
         <h1 className="mt-4 max-w-4xl text-balance text-4xl font-bold leading-tight tracking-tight text-[#191919] sm:text-5xl md:text-6xl">Power Your Business</h1>
         <p className="mt-5 text-balance text-2xl font-bold text-[#a84916] sm:text-3xl">Major Features • Minor Price • Great ROI</p>
         <div className="mt-10 max-w-3xl border-l-4 border-[#1688e8] pl-6 sm:pl-8">
@@ -36,7 +36,7 @@ export default function PricingPage() {
           <h2 className="text-4xl font-bold tracking-tight text-[#191919] sm:text-5xl">Pricing</h2>
           <div className="mt-12 grid gap-12 lg:grid-cols-2 lg:gap-16">
             <article className="border-t-4 border-[#1688e8] pt-7">
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#0b5ea8]">Telephone Service</p>
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#a84916]">Telephone Service</p>
               <h3 className="mt-4 text-3xl font-bold tracking-tight text-[#191919]">We Never Charge Per User!</h3>
               <p className="mt-5 leading-relaxed text-[#191919]/68">
                 Telephone Service is priced based on the concurrent call capacity you need and how you use your phones, not on the number of people, extensions or “lines” – We Never Charge Per User!
@@ -48,7 +48,7 @@ export default function PricingPage() {
                   "The number of people you have - not only the people in your main location, but also in any other locations around the country or even around the world",
                   "Your usage profile - how are your phones used, for what, and how often.",
                 ].map((item) => (
-                  <li key={item} className="flex gap-3 leading-relaxed text-[#191919]/68"><Check className="mt-1 h-4 w-4 shrink-0 text-[#0b5ea8]" aria-hidden="true" />{item}</li>
+                  <li key={item} className="flex gap-3 leading-relaxed text-[#191919]/68"><Check className="mt-1 h-4 w-4 shrink-0 text-[#a84916]" aria-hidden="true" />{item}</li>
                 ))}
               </ul>
               <p className="mt-6 leading-relaxed text-[#191919]/68">
@@ -62,12 +62,12 @@ export default function PricingPage() {
               <div className="mt-7 space-y-8">
                 <div>
                   <p className="font-semibold text-[#191919]">Customization and training</p>
-                  <p className="mt-2 text-3xl font-bold text-[#0b5ea8]">$300 to $1,000</p>
+                  <p className="mt-2 text-3xl font-bold text-[#a84916]">$300 to $1,000</p>
                   <p className="mt-3 leading-relaxed text-[#191919]/68">Customization and training costs to perfectly match the AI agents to your business, generally $300 to $1000 depending on which and how many business functions you automate.</p>
                 </div>
                 <div>
                   <p className="font-semibold text-[#191919]">Monthly computing and storage</p>
-                  <p className="mt-2 text-3xl font-bold text-[#0b5ea8]">15% to 20%</p>
+                  <p className="mt-2 text-3xl font-bold text-[#a84916]">15% to 20%</p>
                   <p className="mt-3 leading-relaxed text-[#191919]/68">Small monthly computing and storage cost that covers the AI processing and data storage, which generally comes out to 15% to 20% of your telephone service charge.</p>
                 </div>
               </div>

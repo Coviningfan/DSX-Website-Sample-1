@@ -106,7 +106,7 @@ function CapabilityList({ items }: { items: string[] }) {
       <ul className="mt-6 space-y-3">
         {items.slice(0, 3).map((item) => (
           <li key={item} className="flex items-start gap-3 text-sm leading-relaxed text-[#191919]/68">
-            <Check className="mt-0.5 h-4 w-4 shrink-0 text-[#0b5ea8]" aria-hidden="true" />
+            <Check className="mt-0.5 h-4 w-4 shrink-0 text-[#a84916]" aria-hidden="true" />
             <span>{item}</span>
           </li>
         ))}
@@ -138,7 +138,7 @@ export default function FeaturesPage() {
       <section className="px-4 pb-20 pt-36 sm:px-6 sm:pb-24 sm:pt-44 md:px-10">
         <div className="mx-auto grid max-w-6xl gap-12 lg:grid-cols-[1.2fr_0.8fr] lg:items-end">
           <div>
-            <p className="mb-4 text-xs font-medium uppercase tracking-[0.2em] text-[#0872d6]">
+            <p className="mb-4 text-xs font-medium uppercase tracking-[0.2em] text-[#a84916]">
               Platform Features
             </p>
             <h1 className="max-w-4xl text-balance text-4xl font-bold leading-[1.04] tracking-[-0.035em] text-[#191919] sm:text-5xl md:text-6xl">

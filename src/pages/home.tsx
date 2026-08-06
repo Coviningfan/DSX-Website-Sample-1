@@ -102,7 +102,7 @@ export default function HomePage() {
 
         <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-1 flex-col justify-center px-4 pb-20 pt-32 sm:px-6 sm:pt-40 md:px-10 md:pb-24">
           <div className="max-w-3xl">
-            <p className="mb-5 text-xs font-semibold uppercase tracking-[0.2em] text-[#0b5ea8]">
+            <p className="mb-5 text-xs font-semibold uppercase tracking-[0.2em] text-[#a84916]">
               DSX Edge Business Communications
             </p>
             <h1 className="font-display text-balance text-[clamp(3rem,8vw,6.75rem)] font-bold leading-[0.9] tracking-[-0.035em] text-[#102b43]">
@@ -172,7 +172,7 @@ export default function HomePage() {
                 <blockquote className="mt-4 text-xl font-semibold text-[#191919]/82">“Press 1 for sales, press 2 for accounting…”</blockquote>
               </div>
               <div className="border border-[#191919]/12 border-l-4 border-l-[#a84916] bg-white p-6 text-[#191919] sm:p-8">
-                <p className="font-mono text-sm uppercase tracking-[0.12em] text-[#0b5ea8]">The conversation now</p>
+                <p className="font-mono text-sm uppercase tracking-[0.12em] text-[#a84916]">The conversation now</p>
                 <blockquote className="mt-4 text-lg leading-relaxed">
                   “I’ll be happy to schedule your appointment Mrs. Smith. For Wednesday, May 5th I have 11:30am or 2:00pm. Will either work for you?”
                 </blockquote>
@@ -206,14 +206,14 @@ export default function HomePage() {
 
       <section id="departments" className="bg-white px-4 py-20 sm:px-6 sm:py-24 md:px-10 md:py-32">
         <div className="mx-auto max-w-6xl">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#0b5ea8]">Across the business</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#a84916]">Across the business</p>
           <h2 className="mt-4 max-w-4xl text-balance text-4xl font-bold tracking-tight text-[#191919] sm:text-5xl md:text-6xl">
             Every Department, Every Function, 24/7
           </h2>
           <div className="mt-12 grid grid-cols-1 border-l border-t border-[#191919]/12 sm:grid-cols-2 lg:grid-cols-5">
             {FUNCTIONS.map((item, index) => (
               <div key={item} className="min-w-0 border-b border-r border-[#191919]/12 p-5 sm:p-6">
-                <span className="font-mono text-xs text-[#0b5ea8]">{String(index + 1).padStart(2, "0")}</span>
+                <span className="font-mono text-xs text-[#a84916]">{String(index + 1).padStart(2, "0")}</span>
                 <p className="mt-3 text-pretty font-semibold text-[#191919]">{item}</p>
               </div>
             ))}
@@ -279,7 +279,7 @@ export default function HomePage() {
             })}
           </div>
           <p className="mt-8 flex items-center gap-3 text-lg font-semibold text-[#191919]">
-            <Building2 className="h-5 w-5 text-[#0b5ea8]" aria-hidden="true" />
+            <Building2 className="h-5 w-5 text-[#a84916]" aria-hidden="true" />
             And Dozens of Others
           </p>
         </div>

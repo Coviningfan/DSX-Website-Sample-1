@@ -71,6 +71,7 @@ Migrated from the PortfolioRevamp (Replit-based) codebase to Zo Site. DSX Edge i
 - Tablet/desktop show the official logo within the hero, then reveal the compact fixed navbar after the industry crawl leaves the viewport. Mobile navigation remains immediately available.
 - The industry list is a continuous accessible carousel with pause/resume control, hover/focus pause, and a static reduced-motion presentation.
 - Major content sections use white or neutral-gray surfaces. Blue is structural; company orange identifies emphasis and primary actions.
+- Public-route emphasis is standardized: eyebrows, key figures, primary actions, disclosure indicators, and emphasized links use accessible company orange (`#a84916` on light surfaces; `#f28a45` on the dark footer). Blue remains reserved for structure, informational icons, links where appropriate, and focus indication.
 
 ### Opportunity section
 
