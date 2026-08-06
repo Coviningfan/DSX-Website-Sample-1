@@ -80,6 +80,7 @@ Migrated from the PortfolioRevamp (Replit-based) codebase to Zo Site. DSX Edge i
 - Page sections receive restrained, one-time viewport entrance motion without being hidden before JavaScript runs. Reduced-motion preferences remove the entrances and CTA movement.
 - About and Contact are separate routes. `/about` contains company positioning; `/contact` owns the validated consultation form.
 - Industry, company-size, and preferred-time controls use accessible in-page option panels that open below their triggers. The preferred-day field is free text, and the form records a new free-text “How did you hear from us?” response.
+- The internal `/_design` component showcase is route-lazy-loaded so its accessibility primitives do not inflate the public website&rsquo;s initial JavaScript bundle.
 
 ### Opportunity section
 

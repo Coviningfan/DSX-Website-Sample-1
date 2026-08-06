@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect } from "react";
+import { lazy, Suspense, useEffect, useLayoutEffect } from "react";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import { ThemeProvider } from "@/components/theme-provider";
 import Navbar from "@/components/navbar";
@@ -10,7 +10,8 @@ import IndustriesPage from "@/pages/industries";
 import PricingPage from "@/pages/pricing";
 import AboutPage from "@/pages/about";
 import ContactPage from "@/pages/contact";
-import DesignKitDemo from "@/pages/_design";
+
+const DesignKitDemo = lazy(() => import("@/pages/_design"));
 
 function RouteScroll() {
   const { pathname, hash, key } = useLocation();
@@ -61,7 +62,14 @@ export default function App() {
           <Route path="/pricing" element={<PricingPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/contact" element={<ContactPage />} />
-          <Route path="/_design" element={<DesignKitDemo />} />
+          <Route
+            path="/_design"
+            element={
+              <Suspense fallback={<main className="min-h-screen bg-background" />}>
+                <DesignKitDemo />
+              </Suspense>
+            }
+          />
         </Routes>
         <Footer />
       </BrowserRouter>
