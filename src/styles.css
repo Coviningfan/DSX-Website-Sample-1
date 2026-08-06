@@ -191,9 +191,26 @@ h3 {
   height: auto;
 }
 
-.features-management {
-  background: #f6f8fa;
-  box-shadow: inset 4px 0 0 #a84916;
+.features-capability-row {
+  position: relative;
+}
+
+.features-capability-row::before {
+  content: "";
+  position: absolute;
+  inset: 0 calc(50% - 50vw);
+  z-index: 0;
+  background: transparent;
+  pointer-events: none;
+}
+
+.features-capability-row-alt::before {
+  background: rgb(255 255 255 / 72%);
+}
+
+.features-capability-row > * {
+  position: relative;
+  z-index: 1;
 }
 
 .industry-crawl {

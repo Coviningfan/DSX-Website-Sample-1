@@ -63,7 +63,7 @@ Migrated from the PortfolioRevamp (Replit-based) codebase to Zo Site. DSX Edge i
 
 - The dedicated Features page presents Business Communications as the shared foundation, followed by five connected operating areas: Sales, Marketing, Customer Service, Shipping & Returns, and Management.
 - Each capability leads with an operational outcome, keeps three representative functions visible, and exposes the remaining functions through a native keyboard-accessible disclosure.
-- The page uses a white editorial capability system with blue structural details, orange emphasis, square technical surfaces, and one consolidated consultation action rather than a repetitive stack of equal cards.
+- The page uses a neutral architectural sequence: one white communications-foundation band followed by five full-width operating rows with blue structural details, orange emphasis, and one consolidated consultation action.
 
 ### 2026-08-06 visual-system refinement
 

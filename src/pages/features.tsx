@@ -165,32 +165,35 @@ export default function FeaturesPage() {
         </div>
       </section>
 
-      <section className="bg-white px-4 py-20 text-[#191919] sm:px-6 sm:py-24 md:px-10 md:py-28">
+      <section className="bg-[#f6f8fa] px-4 py-20 text-[#191919] sm:px-6 sm:py-24 md:px-10 md:py-28">
         <div className="mx-auto max-w-6xl">
-          <div className="grid gap-8 border-y border-[#191919]/12 py-8 lg:grid-cols-[0.78fr_1.22fr] lg:items-center lg:gap-16 lg:py-10">
-            <div className="flex items-start gap-5">
-              <span className="flex size-12 shrink-0 items-center justify-center border border-[#1688e8]/35 bg-[#1688e8]/6 text-[#0b5ea8]">
-                <FoundationIcon className="h-6 w-6" aria-hidden="true" />
-              </span>
-              <div>
-                <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#a84916]">
-                  Foundation / 01
-                </p>
-                <h2 className="mt-2 text-2xl font-bold tracking-tight sm:text-3xl">
-                  {foundation.title}
-                </h2>
-                <p className="mt-3 max-w-md text-pretty text-base leading-relaxed text-[#191919]/65">
-                  {foundation.outcome}
-                </p>
+          <div className="relative border-y border-[#191919]/12 bg-white px-6 py-8 sm:px-8 sm:py-10 lg:px-10">
+            <div className="absolute inset-x-0 top-0 h-1 bg-[#a84916]" aria-hidden="true" />
+            <div className="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-start lg:gap-16">
+              <div className="flex items-start gap-5">
+                <span className="flex size-12 shrink-0 items-center justify-center border border-[#1688e8]/30 text-[#0b5ea8]">
+                  <FoundationIcon className="h-6 w-6" aria-hidden="true" />
+                </span>
+                <div>
+                  <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#a84916]">
+                    Foundation / 01
+                  </p>
+                  <h2 className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">
+                    {foundation.title}
+                  </h2>
+                  <p className="mt-3 max-w-md text-pretty leading-relaxed text-[#191919]/65">
+                    {foundation.outcome}
+                  </p>
+                </div>
               </div>
-            </div>
-            <div className="grid gap-7 md:grid-cols-[1fr_0.9fr] md:items-start">
-              <p className="text-pretty leading-relaxed text-[#191919]/68">{foundation.description}</p>
-              <CapabilityList items={foundation.items} />
+              <div className="grid gap-7 md:grid-cols-[1fr_0.9fr] md:items-start">
+                <p className="text-pretty text-lg leading-relaxed text-[#191919]/68">{foundation.description}</p>
+                <CapabilityList items={foundation.items} />
+              </div>
             </div>
           </div>
 
-          <div className="mt-14 flex items-end justify-between gap-8">
+          <div className="mb-8 mt-16 flex items-end justify-between gap-8">
             <div>
               <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#a84916]">
                 Connected operations / 02–06
@@ -205,24 +208,24 @@ export default function FeaturesPage() {
             </p>
           </div>
 
-          <div className="features-capability-grid mt-10 grid border-l border-t border-[#191919]/12 md:grid-cols-2">
+          <div className="border-t border-[#191919]/14">
             {operatingCapabilities.map((capability, index) => {
               const Icon = capability.icon;
               return (
                 <article
                   key={capability.title}
-                  className={`relative min-w-0 border-b border-r border-[#191919]/12 bg-white p-6 sm:p-8 ${index === operatingCapabilities.length - 1 ? "features-management md:col-span-2 md:grid md:grid-cols-2 md:gap-12" : ""}`}
+                  className={`features-capability-row grid min-w-0 gap-7 border-b border-[#191919]/14 py-9 sm:py-11 md:grid-cols-[6rem_minmax(0,1.05fr)_minmax(16rem,0.95fr)] md:gap-10 ${index % 2 === 1 ? "features-capability-row-alt" : ""}`}
                 >
-                  <div>
-                    <div className="flex items-center justify-between gap-4">
-                      <span className="flex size-10 items-center justify-center border border-[#1688e8]/25 text-[#0b5ea8]">
-                        <Icon className="h-5 w-5" aria-hidden="true" />
-                      </span>
-                      <span className="font-mono text-[10px] tracking-[0.18em] text-[#a84916]">
-                        {String(index + 2).padStart(2, "0")}
-                      </span>
-                    </div>
-                    <h3 className="mt-7 text-2xl font-bold tracking-tight">{capability.title}</h3>
+                  <div className="flex items-center gap-4 md:block">
+                    <span className="flex size-11 items-center justify-center border border-[#1688e8]/25 bg-white text-[#0b5ea8]">
+                      <Icon className="h-5 w-5" aria-hidden="true" />
+                    </span>
+                    <span className="font-mono text-xs tracking-[0.18em] text-[#a84916] md:mt-4 md:block">
+                      {String(index + 2).padStart(2, "0")}
+                    </span>
+                  </div>
+                  <div className="min-w-0">
+                    <h3 className="text-3xl font-bold tracking-tight sm:text-4xl">{capability.title}</h3>
                     <p className="mt-3 max-w-xl text-pretty leading-relaxed text-[#191919]/78">
                       {capability.outcome}
                     </p>
@@ -230,7 +233,9 @@ export default function FeaturesPage() {
                       {capability.description}
                     </p>
                   </div>
-                  <CapabilityList items={capability.items} />
+                  <div className="min-w-0 md:border-l md:border-[#191919]/12 md:pl-8">
+                    <CapabilityList items={capability.items} />
+                  </div>
                 </article>
               );
             })}
