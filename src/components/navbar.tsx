@@ -7,7 +7,6 @@ const NAV_LINKS = [
   { label: "Industries", href: "/industries" },
   { label: "Pricing", href: "/pricing" },
   { label: "About", href: "/about" },
-  { label: "Contact", href: "/about#contact" },
 ];
 
 const linkBase =

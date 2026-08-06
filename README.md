@@ -19,13 +19,13 @@ Migrated from the PortfolioRevamp (Replit-based) codebase to Zo Site. DSX Edge i
 
 - `Web Mockup-5` is the content-and-flow authority for the five public pages; it explicitly is not a visual design specification.
 - `DSXEdge Website Design Brief-1` defines the audience, positioning, brand qualities, logo-derived colors, and whitespace direction.
-- The homepage serves an optimized derivative of the exact hero image embedded in slide 1. Navigation includes Features, Industries, Pricing, About, and Contact.
+- The homepage serves an optimized derivative of the exact hero image embedded in slide 1. Navigation includes Features, Industries, Pricing, and About, with the consultation action serving as the direct contact path.
 - Homepage functions, feature categories, industry choices, pricing structure, About copy, contact fields, contact details, and confirmed demo numbers track the supplied source documents.
 - Unverified claims and unavailable industry demo numbers remain excluded or marked pending. Consultation CTAs use the contact form until the owner supplies the calendar URL requested by the mockup.
 
 ### 2026-08-04 Audit Fixes (verified live)
 
-- **Nav anchor fix:** "Features" now resolves to `#departments` (the section ID was missing, leaving dead links). All five nav links verified: Features→#departments, Industries→#industries, Pricing→#pricing, About→#about, Contact→#contact.
+- **Nav anchor fix:** All navigation destinations resolve to working routes; the dedicated consultation action links directly to the contact form.
 - **Footer link hygiene:** Removed dead "Case Studies" / "Resources" links — those routes no longer exist (case studies were removed per owner direction); footer Company column is now About + Contact only.
 - **Claim verification:** Replaced unverified stats with source-backed values from the original codebase: `99.9% Uptime SLA` (was 99.97%), `100K+/mo Minutes on one platform` (was 2.4M+/mo — original cites a 100,000+ minutes/month testimonial), removed invented "400+ companies" headline. Contact email corrected to `hello@dsxedge.com` (canonical in original `src/lib/site.ts`).
 - **Pricing** remains descriptive with no tiers: telephone priced by concurrent capacity, AI customization $300–$1,000, ongoing AI 15–20% of telephone charge. No plans, no monthly prices, no feature tables.
@@ -56,6 +56,7 @@ Migrated from the PortfolioRevamp (Replit-based) codebase to Zo Site. DSX Edge i
 ### Opportunity section
 
 - The homepage's missed-opportunity section uses an explicitly illustrative live-call timeline: incoming call, request understood, availability checked, and appointment confirmed.
+- A restrained blue-to-orange pulse travels down the timeline connectors to reinforce the request sequence; reduced-motion preferences keep the connectors static.
 - Example timestamps are presentation devices, not performance guarantees or measured customer results.
 
 ### Hero blend (2026-08-04)

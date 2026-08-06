@@ -254,7 +254,7 @@ export default function HomePage() {
                 <li key={title} className="relative grid grid-cols-[3.5rem_1rem_1fr] gap-3 border-b border-white/8 py-5 last:border-b-0 sm:grid-cols-[4rem_1rem_1fr]">
                   <span className="pt-0.5 font-mono text-[11px] text-white/48">{time}</span>
                   <span className="relative mt-1 flex justify-center" aria-hidden="true">
-                    {index < 3 && <span className="absolute left-1/2 top-3 h-[calc(100%+1.6rem)] w-px -translate-x-1/2 bg-gradient-to-b from-[#4aa6ff]/70 to-[#e2712f]/30" />}
+                    {index < 3 && <span className="opportunity-flow-line absolute left-1/2 top-3 h-[calc(100%+1.6rem)] w-px -translate-x-1/2" />}
                     <span className={`relative z-10 h-2.5 w-2.5 rounded-full ${index === 3 ? "bg-[#f28a45] shadow-[0_0_16px_rgba(242,138,69,0.7)]" : "bg-[#69baff]"}`} />
                   </span>
                   <div>
