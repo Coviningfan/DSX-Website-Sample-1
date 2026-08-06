@@ -57,6 +57,11 @@ Migrated from the PortfolioRevamp (Replit-based) codebase to Zo Site. DSX Edge i
 - Stage solid dark fill is cleared via `.hero-orb-blend` CSS so the tunnel shows through; left-side + bottom gradients keep left-aligned copy readable.
 - Section uses `min-h-[min(72vh,720px)]` for presence while remaining content-driven.
 
+### Hero media refinement (2026-08-06)
+
+- The homepage uses one optimized static tunnel image with breakpoint-specific `object-position`; the duplicated blurred fill and scroll-driven blur were removed.
+- Static media remains intentional: it preserves headline readability, reduced-motion behavior, and predictable LCP while the separate SignalOrb carries meaningful system motion.
+
 ### Phase 1 Design Decisions (Homepage Redesign)
 
 **Font pairing:** IBM Plex Sans (body) + IBM Plex Mono (data/metrics). Loaded from Google Fonts in `index.html`.

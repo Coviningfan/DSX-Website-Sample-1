@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import SignalOrb from "@/components/signal-orb";
 import {
@@ -53,8 +53,12 @@ const WORKFLOW_EXAMPLES = [
 export default function HomePage() {
   const [modalOpen, setModalOpen] = useState(false);
   const [activeLayer, setActiveLayer] = useState<number>(0);
+  const modalRef = useRef<HTMLDivElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const modalTriggerRef = useRef<HTMLElement | null>(null);
 
   const openModal = (layer: number) => {
+    modalTriggerRef.current = document.activeElement as HTMLElement;
     setActiveLayer(layer);
     setModalOpen(true);
   };
@@ -67,6 +71,35 @@ export default function HomePage() {
 
     return () => {
       document.body.style.overflow = previousOverflow;
+    };
+  }, [modalOpen]);
+
+  useEffect(() => {
+    if (!modalOpen) return;
+
+    closeButtonRef.current?.focus();
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setModalOpen(false);
+      if (event.key !== "Tab" || !modalRef.current) return;
+
+      const focusable = Array.from(
+        modalRef.current.querySelectorAll<HTMLElement>("button, a[href]"),
+      ).filter((element) => !element.hasAttribute("disabled"));
+      const first = focusable[0];
+      const last = focusable.at(-1);
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last?.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first?.focus();
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+      modalTriggerRef.current?.focus();
     };
   }, [modalOpen]);
 
@@ -93,9 +126,12 @@ export default function HomePage() {
       <section className="relative flex min-h-[100svh] flex-col overflow-hidden pt-[env(safe-area-inset-top)] max-md:min-h-0">
         <div className="absolute inset-0 z-0 hero-tunnel-bg" aria-hidden="true">
           <img
-            src="/images/dsx-edge-bkg.jpg"
+            src="/images/dsx-edge-bkg.webp"
             alt=""
-            className="relative z-[1] block h-full w-full object-contain object-center"
+            width="2560"
+            height="1435"
+            fetchPriority="high"
+            className="block h-full w-full object-cover"
           />
         </div>
         <div className="absolute inset-0 z-[2] bg-gradient-to-b from-white/10 via-transparent to-[#d9ebf7]/20" />
@@ -153,7 +189,7 @@ export default function HomePage() {
                   key={item.num}
                   type="button"
                   onClick={() => openModal(index)}
-                  className="group flex items-center justify-between bg-[#F4F3F3] px-4 py-4 text-left transition-colors duration-200 hover:bg-[#e9eef2] sm:px-6"
+                  className="group flex min-h-11 items-center justify-between bg-[#F4F3F3] px-4 py-4 text-left transition-colors duration-200 hover:bg-[#e9eef2] focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-[#0872d6] sm:px-6"
                 >
                   <span className="flex items-center gap-2">
                     <span className="font-medium text-[#191919]/40">{item.num}</span>
@@ -467,21 +503,27 @@ export default function HomePage() {
         >
           <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" />
           <div
+            ref={modalRef}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="layer-modal-title"
+            aria-describedby="layer-modal-description"
             className="relative z-10 max-h-[calc(100dvh-2rem)] w-full max-w-lg overflow-y-auto rounded-2xl border border-gray-200 bg-white p-5 shadow-xl animate-[fadeIn_0.2s_ease-out] sm:p-8"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center gap-3 mb-4">
               <span className="text-2xl font-bold text-[#0084FF]">{LAYERS[activeLayer].num}</span>
               <span className="text-[#191919]/30">/</span>
-              <h3 className="text-xl font-semibold text-[#191919]">{LAYERS[activeLayer].label}</h3>
+              <h3 id="layer-modal-title" className="text-xl font-semibold text-[#191919]">{LAYERS[activeLayer].label}</h3>
             </div>
             <p className="text-sm font-medium text-[#191919]/60 mb-4">{LAYERS[activeLayer].subtitle}</p>
-            <p className="text-[#191919]/70 leading-relaxed">{LAYERS[activeLayer].body}</p>
-            <div className="mt-6 flex flex-col gap-2 sm:flex-row">
+            <p id="layer-modal-description" className="text-[#191919]/70 leading-relaxed">{LAYERS[activeLayer].body}</p>
+            <div className="mt-6 flex flex-col gap-2 sm:flex-row" role="group" aria-label="Choose platform layer">
               {LAYERS.map((l, i) => (
                 <button
                   key={l.num}
                   onClick={() => setActiveLayer(i)}
+                  aria-pressed={i === activeLayer}
                   className={`flex min-h-11 w-full min-w-0 items-center gap-3 rounded-lg px-4 py-2 text-left text-sm font-medium transition-colors duration-200 sm:min-h-0 sm:w-auto sm:justify-center sm:text-center ${
                     i === activeLayer
                       ? "bg-[#191919] text-white"
@@ -496,8 +538,9 @@ export default function HomePage() {
               ))}
             </div>
             <button
+              ref={closeButtonRef}
               onClick={() => setModalOpen(false)}
-              className="mt-4 min-h-11 w-full rounded-lg border border-gray-200 text-sm font-medium text-[#191919]/60 transition-colors duration-200 hover:bg-gray-50 hover:text-[#191919] sm:mt-6"
+              className="mt-4 min-h-11 w-full rounded-lg border border-gray-200 text-sm font-medium text-[#191919]/60 transition-colors duration-200 hover:bg-gray-50 hover:text-[#191919] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0872d6] sm:mt-6"
             >
               Close
             </button>
