@@ -81,6 +81,7 @@ Migrated from the PortfolioRevamp (Replit-based) codebase to Zo Site. DSX Edge i
 - About and Contact are separate routes. `/about` contains company positioning; `/contact` owns the validated consultation form.
 - Industry, company-size, and preferred-time controls use accessible in-page option panels that open below their triggers. The preferred-day field is free text, and the form records a new free-text “How did you hear from us?” response.
 - The internal `/_design` component showcase is route-lazy-loaded so its accessibility primitives do not inflate the public website&rsquo;s initial JavaScript bundle.
+- The shared footer uses a larger official DSX Edge mark and restores centered “Powered by JABV Labs” attribution with the existing transparent brand asset.
 
 ### Opportunity section
 

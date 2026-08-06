@@ -19,8 +19,7 @@ export default function Footer() {
               <img
                 src="/images/dsx-edge-logo-official.png"
                 alt="DSX Edge"
-                className="h-6 w-auto"
-
+                className="h-10 w-auto sm:h-12"
               />
             </Link>
             <p className="text-sm text-white/50 leading-relaxed max-w-sm">
@@ -72,9 +71,20 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-white/30">
+        <div className="mt-12 grid items-center gap-5 border-t border-white/10 pt-8 text-center text-xs text-white/30 sm:grid-cols-[1fr_auto_1fr] sm:text-left">
           <p>&copy; {new Date().getFullYear()} DSX Edge. All rights reserved.</p>
-          <p>Every Department, Every Function, 24/7.</p>
+          <div className="flex items-center justify-center gap-2.5" aria-label="Powered by JABV Labs">
+            <span className="uppercase tracking-[0.14em] text-white/40">Powered by</span>
+            <img
+              src="/assets/JABVLABS_LOGO_HD-removebg-preview_1771726977207.png"
+              alt="JABV Labs"
+              width="613"
+              height="135"
+              loading="lazy"
+              className="h-5 w-auto sm:h-6"
+            />
+          </div>
+          <p className="sm:text-right">Every Department, Every Function, 24/7.</p>
         </div>
       </div>
     </footer>
