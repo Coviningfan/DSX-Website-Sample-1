@@ -8,7 +8,7 @@ export default function PricingPage() {
         <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#FC5104FA]">Pricing</p>
         <h1 className="mt-4 max-w-4xl text-balance text-4xl font-bold leading-tight tracking-tight text-[#191919] sm:text-5xl md:text-6xl">Power Your Business</h1>
         <p className="mt-5 text-balance text-2xl font-bold text-[#FC5104FA] sm:text-3xl">Major Features • Minor Price • Great ROI</p>
-        <div className="mt-10 max-w-3xl border-l-4 border-[#1688e8] pl-6 sm:pl-8">
+        <div className="mt-10 max-w-3xl border-l-4 border-[#114CA8] pl-6 sm:pl-8">
           <p className="text-2xl font-semibold leading-snug text-[#191919]">Improving your business with DSX Edge AI does not cost thousands of dollars.</p>
           <p className="mt-5 text-lg leading-relaxed text-[#191919]/68">
             Why? Because we use our own AI tools to do most of the customization and training for your specific company which saves hundreds of man-hours and hundreds of dollars. And we pass those savings on to you.
@@ -35,7 +35,7 @@ export default function PricingPage() {
         <div className="mx-auto max-w-6xl">
           <h2 className="text-4xl font-bold tracking-tight text-[#191919] sm:text-5xl">Pricing</h2>
           <div className="mt-12 grid gap-12 lg:grid-cols-2 lg:gap-16">
-            <article className="border-t-4 border-[#1688e8] pt-7">
+            <article className="border-t-4 border-[#114CA8] pt-7">
               <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#FC5104FA]">Telephone Service</p>
               <h3 className="mt-4 text-3xl font-bold tracking-tight text-[#191919]">We Never Charge Per User!</h3>
               <p className="mt-5 leading-relaxed text-[#191919]/68">

@@ -163,7 +163,7 @@ textarea {
 
 
 .hero-tunnel-bg {
-  background: #dcecf5;
+  background: rgb(17 76 168 / 12%);
 }
 
 .hero-tunnel-bg > img {
@@ -318,7 +318,7 @@ h3 {
 
 .brand-accent-rail {
   height: 3px;
-  background: linear-gradient(90deg, #1688e8 0 72%, #FC5104FA 72% 100%);
+  background: linear-gradient(90deg, #114CA8 0 72%, #FC5104FA 72% 100%);
 }
 
 .how-it-works-orb {

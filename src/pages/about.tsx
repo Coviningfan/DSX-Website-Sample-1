@@ -81,21 +81,21 @@ export default function AboutPage() {
         <div className="mt-14 grid md:grid-cols-3 gap-8 sm:mt-20">
           <div className="space-y-6">
             <div className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-[#0084FF] mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-[#114CA8] mt-0.5 shrink-0" />
               <div>
                 <p className="font-medium text-[#191919]">Reno, Nevada</p>
                 <p className="text-sm text-[#191919]/60">Serving businesses nationwide</p>
               </div>
             </div>
             <div className="flex items-start gap-3">
-              <Phone className="w-5 h-5 text-[#0084FF] mt-0.5 shrink-0" />
+              <Phone className="w-5 h-5 text-[#114CA8] mt-0.5 shrink-0" />
               <div>
                 <p className="font-medium text-[#191919]">775-624-9424</p>
                 <p className="text-sm text-[#191919]/60">Available 24/7 for customers</p>
               </div>
             </div>
             <div className="flex items-start gap-3">
-              <Mail className="w-5 h-5 text-[#0084FF] mt-0.5 shrink-0" />
+              <Mail className="w-5 h-5 text-[#114CA8] mt-0.5 shrink-0" />
               <div>
                 <p className="font-medium text-[#191919]">info@dsxedge.com</p>
                 <p className="text-sm text-[#191919]/60">Sales: sales@dsxedge.com</p>
@@ -103,7 +103,7 @@ export default function AboutPage() {
               </div>
             </div>
             <div className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-[#0084FF] mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-[#114CA8] mt-0.5 shrink-0" />
               <div>
                 <p className="font-medium text-[#191919]">We&rsquo;re always on</p>
                 <p className="text-sm text-[#191919]/60">Your business never sleeps. Neither do we.</p>
@@ -138,8 +138,8 @@ export default function AboutPage() {
 
           {submitted ? (
             <div className="bg-white rounded-2xl border border-gray-200 p-12 text-center">
-              <div className="w-16 h-16 bg-[#0084FF]/10 rounded-full flex items-center justify-center mx-auto mb-6">
-                <ArrowRight className="w-8 h-8 text-[#0084FF]" />
+              <div className="w-16 h-16 bg-[#114CA8]/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                <ArrowRight className="w-8 h-8 text-[#114CA8]" />
               </div>
               <h3 className="font-bold text-2xl text-[#191919] mb-2">Thanks for reaching out.</h3>
               <p className="text-[#191919]/60">
@@ -163,7 +163,7 @@ export default function AboutPage() {
                     required
                     value={form.name}
                     onChange={handleChange}
-                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-white text-[#191919] text-base sm:text-sm focus:outline-none focus:border-[#0084FF] focus:ring-1 focus:ring-[#0084FF]/20 transition-all duration-200"
+                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-white text-[#191919] text-base sm:text-sm focus:outline-none focus:border-[#114CA8] focus:ring-1 focus:ring-[#114CA8]/20 transition-all duration-200"
                     placeholder="Your name"
                     autoComplete="name"
                   />
@@ -177,7 +177,7 @@ export default function AboutPage() {
                     required
                     value={form.company}
                     onChange={handleChange}
-                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-white text-[#191919] text-base sm:text-sm focus:outline-none focus:border-[#0084FF] focus:ring-1 focus:ring-[#0084FF]/20 transition-all duration-200"
+                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-white text-[#191919] text-base sm:text-sm focus:outline-none focus:border-[#114CA8] focus:ring-1 focus:ring-[#114CA8]/20 transition-all duration-200"
                     placeholder="Your company"
                     autoComplete="organization"
                   />
@@ -193,7 +193,7 @@ export default function AboutPage() {
                     required
                     value={form.email}
                     onChange={handleChange}
-                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-white text-[#191919] text-base sm:text-sm focus:outline-none focus:border-[#0084FF] focus:ring-1 focus:ring-[#0084FF]/20 transition-all duration-200"
+                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-white text-[#191919] text-base sm:text-sm focus:outline-none focus:border-[#114CA8] focus:ring-1 focus:ring-[#114CA8]/20 transition-all duration-200"
                     placeholder="you@company.com"
                     autoComplete="email"
                     inputMode="email"
@@ -208,7 +208,7 @@ export default function AboutPage() {
                     required
                     value={form.phone}
                     onChange={handleChange}
-                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-white text-[#191919] text-base sm:text-sm focus:outline-none focus:border-[#0084FF] focus:ring-1 focus:ring-[#0084FF]/20 transition-all duration-200"
+                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-white text-[#191919] text-base sm:text-sm focus:outline-none focus:border-[#114CA8] focus:ring-1 focus:ring-[#114CA8]/20 transition-all duration-200"
                     placeholder="(555) 123-4567"
                     autoComplete="tel"
                     inputMode="tel"
@@ -224,7 +224,7 @@ export default function AboutPage() {
                     required
                     value={form.industry}
                     onChange={handleChange}
-                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-white text-[#191919] text-base sm:text-sm focus:outline-none focus:border-[#0084FF] focus:ring-1 focus:ring-[#0084FF]/20 transition-all duration-200"
+                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-white text-[#191919] text-base sm:text-sm focus:outline-none focus:border-[#114CA8] focus:ring-1 focus:ring-[#114CA8]/20 transition-all duration-200"
                   >
                     <option value="">Select industry</option>
                     {INDUSTRY_OPTIONS.map((ind) => (
@@ -240,7 +240,7 @@ export default function AboutPage() {
                     required
                     value={form.employees}
                     onChange={handleChange}
-                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-white text-[#191919] text-base sm:text-sm focus:outline-none focus:border-[#0084FF] focus:ring-1 focus:ring-[#0084FF]/20 transition-all duration-200"
+                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-white text-[#191919] text-base sm:text-sm focus:outline-none focus:border-[#114CA8] focus:ring-1 focus:ring-[#114CA8]/20 transition-all duration-200"
                   >
                     <option value="">Select size</option>
                     {EMPLOYEE_OPTIONS.map((e) => (
@@ -258,7 +258,7 @@ export default function AboutPage() {
                   rows={4}
                   value={form.message}
                   onChange={handleChange}
-                  className="w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-white text-[#191919] text-base sm:text-sm focus:outline-none focus:border-[#0084FF] focus:ring-1 focus:ring-[#0084FF]/20 transition-all duration-200 resize-none"
+                  className="w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-white text-[#191919] text-base sm:text-sm focus:outline-none focus:border-[#114CA8] focus:ring-1 focus:ring-[#114CA8]/20 transition-all duration-200 resize-none"
                   placeholder="Tell us about your business and what you need..."
                 />
               </div>
@@ -271,7 +271,7 @@ export default function AboutPage() {
                     name="bestDay"
                     value={form.bestDay}
                     onChange={handleChange}
-                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-white text-[#191919] text-base sm:text-sm focus:outline-none focus:border-[#0084FF] focus:ring-1 focus:ring-[#0084FF]/20 transition-all duration-200"
+                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-white text-[#191919] text-base sm:text-sm focus:outline-none focus:border-[#114CA8] focus:ring-1 focus:ring-[#114CA8]/20 transition-all duration-200"
                   />
                 </div>
                 <div>
@@ -281,7 +281,7 @@ export default function AboutPage() {
                     name="bestTime"
                     value={form.bestTime}
                     onChange={handleChange}
-                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-white text-[#191919] text-base sm:text-sm focus:outline-none focus:border-[#0084FF] focus:ring-1 focus:ring-[#0084FF]/20 transition-all duration-200"
+                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-white text-[#191919] text-base sm:text-sm focus:outline-none focus:border-[#114CA8] focus:ring-1 focus:ring-[#114CA8]/20 transition-all duration-200"
                   >
                     <option value="">Select a time</option>
                     <option value="Morning">Morning</option>
@@ -299,7 +299,7 @@ export default function AboutPage() {
               <button
                 type="submit"
                 disabled={submitting}
-                className="flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-[#FC5104FA] px-6 py-3 text-sm font-semibold text-white transition-colors duration-200 hover:bg-[#FC5104] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#0872d6] disabled:opacity-60"
+                className="flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-[#FC5104FA] px-6 py-3 text-sm font-semibold text-white transition-colors duration-200 hover:bg-[#FC5104] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#114CA8] disabled:opacity-60"
               >
                 {submitting ? "Recording Request…" : "Request My Consultation"}
                 <ArrowRight className="w-4 h-4" />

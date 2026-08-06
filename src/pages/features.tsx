@@ -112,7 +112,7 @@ function CapabilityList({ items }: { items: string[] }) {
         ))}
       </ul>
       <details className="group mt-3">
-        <summary className="inline-flex min-h-11 list-none items-center gap-2 text-sm font-semibold text-[#FC5104FA] marker:hidden focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#0872d6]">
+        <summary className="inline-flex min-h-11 list-none items-center gap-2 text-sm font-semibold text-[#FC5104FA] marker:hidden focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#114CA8]">
           <span className="group-open:hidden">View all capabilities</span>
           <span className="hidden group-open:inline">Show fewer capabilities</span>
           <ArrowRight className="h-4 w-4 transition-transform duration-200 group-open:rotate-90 motion-reduce:transition-none" aria-hidden="true" />
@@ -151,7 +151,7 @@ export default function FeaturesPage() {
             </p>
           </div>
 
-          <aside className="border-l-2 border-[#0872d6] pl-6" aria-label="Platform structure">
+          <aside className="border-l-2 border-[#114CA8] pl-6" aria-label="Platform structure">
             <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-[#191919]/42">
               Operating model
             </p>
@@ -171,7 +171,7 @@ export default function FeaturesPage() {
             <div className="absolute inset-x-0 top-0 h-1 bg-[#FC5104FA]" aria-hidden="true" />
             <div className="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-start lg:gap-16">
               <div className="flex items-start gap-5">
-                <span className="flex size-12 shrink-0 items-center justify-center border border-[#1688e8]/30 text-[#0b5ea8]">
+                <span className="flex size-12 shrink-0 items-center justify-center border border-[#114CA8]/30 text-[#114CA8]">
                   <FoundationIcon className="h-6 w-6" aria-hidden="true" />
                 </span>
                 <div>
@@ -217,7 +217,7 @@ export default function FeaturesPage() {
                   className={`features-capability-row grid min-w-0 gap-7 border-b border-[#191919]/14 py-9 sm:py-11 md:grid-cols-[6rem_minmax(0,1.05fr)_minmax(16rem,0.95fr)] md:gap-10 ${index % 2 === 1 ? "features-capability-row-alt" : ""}`}
                 >
                   <div className="flex items-center gap-4 md:block">
-                    <span className="flex size-11 items-center justify-center border border-[#1688e8]/25 bg-white text-[#0b5ea8]">
+                    <span className="flex size-11 items-center justify-center border border-[#114CA8]/25 bg-white text-[#114CA8]">
                       <Icon className="h-5 w-5" aria-hidden="true" />
                     </span>
                     <span className="font-mono text-xs tracking-[0.18em] text-[#FC5104FA] md:mt-4 md:block">
@@ -259,7 +259,7 @@ export default function FeaturesPage() {
           </div>
           <Link
             to="/about#contact"
-            className="inline-flex min-h-12 items-center justify-center gap-2 bg-[#FC5104FA] px-6 py-3 text-sm font-semibold text-white transition-colors duration-200 hover:bg-[#FC5104] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#0872d6]"
+            className="inline-flex min-h-12 items-center justify-center gap-2 bg-[#FC5104FA] px-6 py-3 text-sm font-semibold text-white transition-colors duration-200 hover:bg-[#FC5104] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#114CA8]"
           >
             Book a Free Consultation
             <ArrowRight className="h-4 w-4" aria-hidden="true" />

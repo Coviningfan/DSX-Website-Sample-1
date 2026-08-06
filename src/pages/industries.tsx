@@ -62,7 +62,7 @@ export default function IndustriesPage() {
                   onClick={() => setOpen(expanded ? null : index)}
                   aria-expanded={expanded}
                   aria-controls={panelId}
-                  className="grid min-h-14 w-full min-w-0 grid-cols-[2.5rem_minmax(0,1fr)_2.75rem] items-center gap-3 py-5 text-left focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#0872d6]"
+                  className="grid min-h-14 w-full min-w-0 grid-cols-[2.5rem_minmax(0,1fr)_2.75rem] items-center gap-3 py-5 text-left focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#114CA8]"
                 >
                   <span className="font-mono text-xs text-[#FC5104FA]">{String(index + 1).padStart(2, "0")}</span>
                   <span className="min-w-0 text-lg font-semibold text-[#191919]">{industry}</span>
@@ -77,7 +77,7 @@ export default function IndustriesPage() {
                         <ul className="space-y-3">
                           {AUTOMOTIVE_ACTIVITIES.map((activity) => (
                             <li key={activity} className="flex gap-3 leading-relaxed text-[#191919]/70">
-                              <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#1688e8]" aria-hidden="true" />
+                              <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#114CA8]" aria-hidden="true" />
                               <span>{activity}</span>
                             </li>
                           ))}

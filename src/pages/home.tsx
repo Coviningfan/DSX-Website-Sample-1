@@ -145,7 +145,7 @@ export default function HomePage() {
             </h2>
             <p className="mt-4 text-2xl font-bold text-[#FC5104FA]">Hundreds or Thousands a Month!</p>
           </div>
-          <div className="border-l-2 border-[#1688e8] pl-6 sm:pl-8">
+          <div className="border-l-2 border-[#114CA8] pl-6 sm:pl-8">
             <p className="text-2xl font-semibold text-[#191919]">The worst part? You never knew it happened.</p>
             <p className="mt-5 text-lg leading-relaxed text-[#191919]/68">
               The most expensive problem in your business may be the one you never see. Every day, potential customers call, click, text, and leave without doing business with you. That’s serious lost profit. And because you never knew they were ready to buy, you don’t even know what you’ve lost.
@@ -236,7 +236,7 @@ export default function HomePage() {
       </section>
 
       <section className="bg-white px-4 py-20 sm:px-6 sm:py-24 md:px-10 md:py-32">
-        <div className="mx-auto max-w-6xl border-l-4 border-[#1688e8] pl-6 sm:pl-10">
+        <div className="mx-auto max-w-6xl border-l-4 border-[#114CA8] pl-6 sm:pl-10">
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#FC5104FA]">Turnkey AI</p>
           <h2 className="mt-4 max-w-4xl text-balance text-4xl font-bold tracking-tight text-[#191919] sm:text-5xl">
             We set up the platform for your specific business and your specific needs.
@@ -266,8 +266,8 @@ export default function HomePage() {
               const Icon = workflow.icon;
               return (
                 <details key={workflow.title} className="group">
-                  <summary className="flex min-h-14 list-none items-center gap-4 py-5 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#0872d6]">
-                    <span className="flex h-11 w-11 shrink-0 items-center justify-center bg-[#eaf4fc] text-[#0b5ea8]">
+                  <summary className="flex min-h-14 list-none items-center gap-4 py-5 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#114CA8]">
+                    <span className="flex h-11 w-11 shrink-0 items-center justify-center bg-[#114CA8]/10 text-[#114CA8]">
                       <Icon className="h-5 w-5" aria-hidden="true" />
                     </span>
                     <span className="min-w-0 flex-1 text-lg font-bold text-[#191919]">{workflow.title}</span>
