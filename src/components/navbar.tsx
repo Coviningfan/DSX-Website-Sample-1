@@ -47,12 +47,14 @@ export default function Navbar() {
         ref={menuRef}
         className="pointer-events-auto flex w-full max-w-full items-center justify-between gap-3 rounded-xl border border-black/10 bg-white/92 px-3 py-1.5 shadow-[0_8px_24px_rgba(25,61,94,0.1)] backdrop-blur-xl transition-[background-color,box-shadow] duration-300 sm:w-fit sm:justify-start sm:gap-6 sm:rounded-2xl sm:bg-white/70 sm:px-5 sm:py-2 md:py-3"
       >
-        <Link to="/" className="flex min-h-11 items-center gap-2.5 shrink-0" aria-label="DSX Edge home">
-          <img
-            src="/images/dsx-edge-logo.png"
-            alt="DSX Edge"
-            className="h-5 w-auto sm:h-6"
-          />
+        <Link to="/" className="flex min-h-11 shrink-0 items-center" aria-label="DSX Edge home">
+          <span className="relative block h-5 w-[58px] overflow-hidden" aria-hidden="true">
+            <img
+              src="/images/dsx-edge-logo.png"
+              alt=""
+              className="absolute -left-[8px] -top-[32px] h-auto w-[190px] max-w-none"
+            />
+          </span>
         </Link>
 
         <div className="hidden md:flex items-center gap-1">

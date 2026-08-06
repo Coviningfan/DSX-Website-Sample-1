@@ -136,8 +136,15 @@ export default function HomePage() {
         </div>
         <div className="absolute inset-0 z-[2] bg-gradient-to-b from-white/10 via-transparent to-[#d9ebf7]/20" />
 
-        <div className="relative z-10 flex flex-1 flex-col items-center px-4 pb-8 pt-24 sm:px-6 sm:pt-32 md:pb-0 md:pt-36">
-          <h1 className="max-w-5xl text-balance text-center text-[clamp(2.65rem,12vw,4.5rem)] font-bold leading-[1.02] tracking-[-0.045em] text-[#191919] md:text-7xl lg:text-8xl">
+        <div className="relative z-10 flex flex-1 flex-col items-center px-4 pb-8 pt-24 sm:px-6 sm:pt-28 md:pb-0">
+          <img
+            src="/images/dsx-edge-logo.png"
+            alt="DSX Edge"
+            width="735"
+            height="339"
+            className="w-[130px] object-contain sm:w-[145px] lg:w-[160px]"
+          />
+          <h1 className="mt-5 max-w-5xl text-balance text-center text-[clamp(2.65rem,12vw,4.5rem)] font-bold leading-[1.02] tracking-[-0.045em] text-[#191919] sm:mt-6 md:text-7xl lg:text-8xl">
             Every Department, Every Function, 24/7.
           </h1>
           <p className="mt-4 text-center text-lg font-semibold text-[#0084FF] sm:text-xl md:text-2xl">
