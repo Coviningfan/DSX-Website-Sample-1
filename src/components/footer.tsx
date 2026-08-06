@@ -18,8 +18,9 @@ export default function Footer() {
               <img
                 src="/images/dsx-edge-logo.png"
                 alt="DSX Edge"
-                className="h-6 w-auto"
-
+                width="735"
+                height="339"
+                className="h-auto w-36 sm:w-40"
               />
             </Link>
             <p className="text-sm text-white/50 leading-relaxed max-w-sm">
