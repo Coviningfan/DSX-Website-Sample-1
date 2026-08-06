@@ -53,6 +53,12 @@ Migrated from the PortfolioRevamp (Replit-based) codebase to Zo Site. DSX Edge i
 - Mobile sections use a 80px baseline rhythm, increasing to 96–128px at larger breakpoints. Long workflow cards use native disclosure controls on mobile and remain fully expanded from the small breakpoint upward.
 - Motion continues while the visualization is onscreen and suspends offscreen. Reduced-motion preferences remove transition effects without hiding the operating model.
 
+### Features page
+
+- The dedicated Features page presents Business Communications as the shared foundation, followed by five connected operating areas: Sales, Marketing, Customer Service, Shipping & Returns, and Management.
+- Each capability leads with an operational outcome, keeps three representative functions visible, and exposes the remaining functions through a native keyboard-accessible disclosure.
+- The page uses the existing industrial blue/orange system, square technical surfaces, and one consolidated consultation action rather than a repetitive stack of equal cards.
+
 ### Opportunity section
 
 - The homepage's missed-opportunity section uses an explicitly illustrative live-call timeline: incoming call, request understood, availability checked, and appointment confirmed.
