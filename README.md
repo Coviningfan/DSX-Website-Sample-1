@@ -9,7 +9,7 @@ Migrated from the PortfolioRevamp (Replit-based) codebase to Zo Site. DSX Edge i
 ### 2026-08-05 Client Presentation Readiness
 
 - The site is a five-page React application: Home, Features, Industries, Pricing, and About/Contact.
-- The homepage uses the approved tunnel hero and presents the SignalOrb in the dedicated How It Works section.
+- The homepage uses the approved tunnel hero. The SignalOrb remains an internal reusable asset and is not rendered on public routes.
 - Homepage persuasion follows the approved mockup: missed-opportunity problem, natural conversation examples, platform explanation, turnkey implementation, department coverage, industry workflows, live demo, and consultation CTA.
 - The contact form writes validated requests to `data/contact-submissions.sqlite`; it does not claim success unless the API records the submission.
 - Only confirmed demo numbers are callable. Automotive uses 844-379-2886; other industry demo lines remain visibly pending confirmation.
@@ -22,6 +22,7 @@ Migrated from the PortfolioRevamp (Replit-based) codebase to Zo Site. DSX Edge i
 - The homepage serves an optimized derivative of the exact hero image embedded in slide 1. Navigation includes Features, Industries, Pricing, About, and Contact.
 - Homepage functions, feature categories, industry choices, pricing structure, About copy, contact fields, contact details, and confirmed demo numbers track the supplied source documents.
 - Unverified claims and unavailable industry demo numbers remain excluded or marked pending. Consultation CTAs use the contact form until the owner supplies the calendar URL requested by the mockup.
+- Web presentation rules are documented in `docs/DSX-EDGE-STYLE-GUIDE.md`.
 
 ### 2026-08-04 Audit Fixes (verified live)
 
@@ -30,9 +31,9 @@ Migrated from the PortfolioRevamp (Replit-based) codebase to Zo Site. DSX Edge i
 - **Claim verification:** Replaced unverified stats with source-backed values from the original codebase: `99.9% Uptime SLA` (was 99.97%), `100K+/mo Minutes on one platform` (was 2.4M+/mo — original cites a 100,000+ minutes/month testimonial), removed invented "400+ companies" headline. Contact email corrected to `hello@dsxedge.com` (canonical in original `src/lib/site.ts`).
 - **Pricing** remains descriptive with no tiers: telephone priced by concurrent capacity, AI customization $300–$1,000, ongoing AI 15–20% of telephone charge. No plans, no monthly prices, no feature tables.
 
-### SignalOrb runtime decisions (Three.js)
+### Preserved SignalOrb asset (Three.js)
 
-- Orb is the interactive centerpiece of the dedicated **How It Works** section, not part of the homepage hero.
+- The orb is retained for internal prototypes, presentations, or a future technical page; it is not part of the public homepage.
 - Internal particles travel left-to-right in six deterministic helical streams through the core and shift from blue through a brighter white core to amber. This coherent lane structure makes direction readable without enlarging the particles. Three inbound blue rails and three outbound amber rails carry luminous directional packets.
 - The six particle streams retain the first orb's continuous coherent roll while moving through the core. Focusing the communications, core, or actions zone accelerates the internal transit, with the core producing the strongest response.
 - The particle field uses 240 high-contrast points and more legible transit speed. Motion runs continuously while the visualization is onscreen; there is no visible motion toolbar.
@@ -69,7 +70,9 @@ Migrated from the PortfolioRevamp (Replit-based) codebase to Zo Site. DSX Edge i
 - The homepage's missed-opportunity section uses an explicitly illustrative live-call timeline: incoming call, request understood, availability checked, and appointment confirmed.
 - Example timestamps are presentation devices, not performance guarantees or measured customer results.
 
-### Hero blend (2026-08-04)
+### Superseded hero blend experiment (2026-08-04)
+
+The following treatment is retained as historical context only and is superseded by the final mockup alignment:
 
 - Mockup-requested tunnel image (`public/images/hero-tunnel.webp`, extracted from Web Mockup-5) is the full-bleed hero base.
 - SignalOrb is layered over it with `mix-blend-screen`, reduced opacity (~70%), and a radial mask centered toward the tunnel vanishing point so particles/flows read as energy traveling the corridor.

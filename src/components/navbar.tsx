@@ -50,7 +50,7 @@ export default function Navbar() {
       >
         <Link to="/" className="flex min-h-11 items-center gap-2.5 shrink-0" aria-label="DSX Edge home">
           <img
-            src="/images/dsx-edge-logo.png"
+            src="/images/dsx-edge-logo-official.png"
             alt="DSX Edge"
             className="h-5 w-auto sm:h-6"
           />
@@ -77,7 +77,7 @@ export default function Navbar() {
             className="flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-white bg-[#0084FF]/80 backdrop-blur-[2px] rounded-2xl hover:scale-[1.02] transition-transform duration-200"
             style={{ boxShadow: "inset 0px 4px 4px 0px rgba(255,255,255,0.35)" }}
           >
-            Request A Consultation
+            Book a Free Consultation
             <ArrowRight className="w-3.5 h-3.5" />
           </Link>
         </div>
@@ -112,7 +112,7 @@ export default function Navbar() {
                 onClick={() => setOpen(false)}
                 className="mt-2 flex min-h-12 items-center justify-center gap-1.5 px-4 py-2.5 text-sm font-medium text-white bg-[#0084FF] rounded-2xl"
               >
-                Request A Consultation
+                Book a Free Consultation
                 <ArrowRight className="w-3.5 h-3.5" />
               </Link>
             </div>

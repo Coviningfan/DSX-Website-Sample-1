@@ -16,7 +16,7 @@ export default function Footer() {
           <div className="lg:col-span-2">
             <Link to="/" className="inline-flex min-h-11 items-center gap-2.5 mb-4" aria-label="DSX Edge home">
               <img
-                src="/images/dsx-edge-logo.png"
+                src="/images/dsx-edge-logo-official.png"
                 alt="DSX Edge"
                 className="h-6 w-auto"
 

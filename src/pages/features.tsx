@@ -256,7 +256,7 @@ export default function FeaturesPage() {
             to="/about#contact"
             className="inline-flex min-h-12 items-center justify-center gap-2 bg-[#e2712f] px-6 py-3 text-sm font-semibold text-white transition-colors duration-200 hover:bg-[#c85f1f] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#0872d6]"
           >
-            Request A Consultation
+            Book a Free Consultation
             <ArrowRight className="h-4 w-4" aria-hidden="true" />
           </Link>
         </div>

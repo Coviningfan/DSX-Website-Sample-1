@@ -74,8 +74,7 @@ export default function AboutPage() {
             Serving Businesses Like Yours
           </h1>
           <p className="mt-6 text-lg text-[#191919]/60 leading-relaxed max-w-2xl">
-            For nearly 20 years, DSX has helped small and medium businesses grow by applying
-            communications technology wisely.
+            For nearly 20 years DSX has helped small and medium businesses grow and prosper by applying technology wisely. We’ve grown from a small startup providing data services to an established business with clients across the United States.
           </p>
         </div>
 
@@ -115,10 +114,10 @@ export default function AboutPage() {
           <div className="md:col-span-2">
             <div className="bg-[#F9F8F6] rounded-2xl p-8 md:p-10">
               <p className="text-lg text-[#191919]/60 leading-relaxed mb-8">
-                We are a local team of experienced communications, data, networking, and AI
-                professionals. We are not big-company outsiders, and we do not charge consulting
-                fees to tell you what you already know. We build cost-effective systems that serve
-                the way your business actually works. When our clients succeed, we succeed.
+                We are not consultants. We don’t charge high fees. We’re not big company outsiders.
+              </p>
+              <p className="text-lg text-[#191919]/60 leading-relaxed">
+                We are a local team of experienced IT, communications, data, networking, and AI experts delivering cost-effective solutions that benefit our clients. And we live in, and are part of, your community, so when you succeed, we succeed.
               </p>
             </div>
           </div>
@@ -164,7 +163,7 @@ export default function AboutPage() {
                     required
                     value={form.name}
                     onChange={handleChange}
-                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-white text-[#191919] text-sm focus:outline-none focus:border-[#0084FF] focus:ring-1 focus:ring-[#0084FF]/20 transition-all duration-200"
+                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-white text-[#191919] text-base sm:text-sm focus:outline-none focus:border-[#0084FF] focus:ring-1 focus:ring-[#0084FF]/20 transition-all duration-200"
                     placeholder="Your name"
                     autoComplete="name"
                   />
@@ -178,7 +177,7 @@ export default function AboutPage() {
                     required
                     value={form.company}
                     onChange={handleChange}
-                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-white text-[#191919] text-sm focus:outline-none focus:border-[#0084FF] focus:ring-1 focus:ring-[#0084FF]/20 transition-all duration-200"
+                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-white text-[#191919] text-base sm:text-sm focus:outline-none focus:border-[#0084FF] focus:ring-1 focus:ring-[#0084FF]/20 transition-all duration-200"
                     placeholder="Your company"
                     autoComplete="organization"
                   />
@@ -194,7 +193,7 @@ export default function AboutPage() {
                     required
                     value={form.email}
                     onChange={handleChange}
-                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-white text-[#191919] text-sm focus:outline-none focus:border-[#0084FF] focus:ring-1 focus:ring-[#0084FF]/20 transition-all duration-200"
+                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-white text-[#191919] text-base sm:text-sm focus:outline-none focus:border-[#0084FF] focus:ring-1 focus:ring-[#0084FF]/20 transition-all duration-200"
                     placeholder="you@company.com"
                     autoComplete="email"
                     inputMode="email"
@@ -209,7 +208,7 @@ export default function AboutPage() {
                     required
                     value={form.phone}
                     onChange={handleChange}
-                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-white text-[#191919] text-sm focus:outline-none focus:border-[#0084FF] focus:ring-1 focus:ring-[#0084FF]/20 transition-all duration-200"
+                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-white text-[#191919] text-base sm:text-sm focus:outline-none focus:border-[#0084FF] focus:ring-1 focus:ring-[#0084FF]/20 transition-all duration-200"
                     placeholder="(555) 123-4567"
                     autoComplete="tel"
                     inputMode="tel"
@@ -225,7 +224,7 @@ export default function AboutPage() {
                     required
                     value={form.industry}
                     onChange={handleChange}
-                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-white text-[#191919] text-sm focus:outline-none focus:border-[#0084FF] focus:ring-1 focus:ring-[#0084FF]/20 transition-all duration-200"
+                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-white text-[#191919] text-base sm:text-sm focus:outline-none focus:border-[#0084FF] focus:ring-1 focus:ring-[#0084FF]/20 transition-all duration-200"
                   >
                     <option value="">Select industry</option>
                     {INDUSTRY_OPTIONS.map((ind) => (
@@ -241,7 +240,7 @@ export default function AboutPage() {
                     required
                     value={form.employees}
                     onChange={handleChange}
-                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-white text-[#191919] text-sm focus:outline-none focus:border-[#0084FF] focus:ring-1 focus:ring-[#0084FF]/20 transition-all duration-200"
+                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-white text-[#191919] text-base sm:text-sm focus:outline-none focus:border-[#0084FF] focus:ring-1 focus:ring-[#0084FF]/20 transition-all duration-200"
                   >
                     <option value="">Select size</option>
                     {EMPLOYEE_OPTIONS.map((e) => (
@@ -259,7 +258,7 @@ export default function AboutPage() {
                   rows={4}
                   value={form.message}
                   onChange={handleChange}
-                  className="w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-white text-[#191919] text-sm focus:outline-none focus:border-[#0084FF] focus:ring-1 focus:ring-[#0084FF]/20 transition-all duration-200 resize-none"
+                  className="w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-white text-[#191919] text-base sm:text-sm focus:outline-none focus:border-[#0084FF] focus:ring-1 focus:ring-[#0084FF]/20 transition-all duration-200 resize-none"
                   placeholder="Tell us about your business and what you need..."
                 />
               </div>
@@ -272,7 +271,7 @@ export default function AboutPage() {
                     name="bestDay"
                     value={form.bestDay}
                     onChange={handleChange}
-                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-white text-[#191919] text-sm focus:outline-none focus:border-[#0084FF] focus:ring-1 focus:ring-[#0084FF]/20 transition-all duration-200"
+                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-white text-[#191919] text-base sm:text-sm focus:outline-none focus:border-[#0084FF] focus:ring-1 focus:ring-[#0084FF]/20 transition-all duration-200"
                   />
                 </div>
                 <div>
@@ -282,7 +281,7 @@ export default function AboutPage() {
                     name="bestTime"
                     value={form.bestTime}
                     onChange={handleChange}
-                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-white text-[#191919] text-sm focus:outline-none focus:border-[#0084FF] focus:ring-1 focus:ring-[#0084FF]/20 transition-all duration-200"
+                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-white text-[#191919] text-base sm:text-sm focus:outline-none focus:border-[#0084FF] focus:ring-1 focus:ring-[#0084FF]/20 transition-all duration-200"
                   >
                     <option value="">Select a time</option>
                     <option value="Morning">Morning</option>
@@ -294,6 +293,9 @@ export default function AboutPage() {
               {submitError && (
                 <p role="alert" className="text-sm text-red-700">{submitError}</p>
               )}
+              <p className="text-xs leading-relaxed text-[#191919]/55">
+                We use the information you provide only to respond to your request and arrange a conversation about DSX Edge.
+              </p>
               <button
                 type="submit"
                 disabled={submitting}
