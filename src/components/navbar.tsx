@@ -86,7 +86,7 @@ export default function Navbar() {
             alt=""
             width="735"
             height="339"
-            className="absolute right-0 top-1/2 h-auto w-[82px] max-w-none -translate-y-1/2 object-contain transition-[clip-path] duration-[600ms] ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none"
+            className="absolute right-0 top-1/2 h-auto w-[82px] max-w-none -translate-y-1/2 object-contain opacity-100 contrast-125 saturate-125 transition-[clip-path] duration-[600ms] ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none"
             style={{
               clipPath: logoVisible ? "inset(0 0 0 0)" : "inset(0 0 0 100%)",
               transitionDelay: logoVisible ? "400ms" : "0ms",

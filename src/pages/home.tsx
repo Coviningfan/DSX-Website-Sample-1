@@ -146,7 +146,7 @@ export default function HomePage() {
             alt="DSX Edge"
             width="735"
             height="339"
-            className="w-[130px] object-contain sm:w-[145px] lg:w-[160px]"
+            className="w-[130px] object-contain opacity-100 contrast-125 saturate-125 sm:w-[145px] lg:w-[160px]"
           />
           <h1 className="mt-5 max-w-5xl text-balance text-center text-[clamp(2.65rem,12vw,4.5rem)] font-bold leading-[1.02] tracking-[-0.045em] text-[#191919] sm:mt-6 md:text-7xl lg:text-8xl">
             Every Department, Every Function, 24/7.
