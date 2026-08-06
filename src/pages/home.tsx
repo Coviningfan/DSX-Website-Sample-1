@@ -127,10 +127,14 @@ export default function HomePage() {
         <div className="absolute inset-0 z-0 hero-tunnel-bg" aria-hidden="true">
           <img
             src="/images/dsx-edge-bkg.webp"
+            srcSet="/images/dsx-edge-bkg-960.webp 960w, /images/dsx-edge-bkg-1600.webp 1600w, /images/dsx-edge-bkg.webp 2560w"
+            sizes="100vw"
             alt=""
             width="2560"
             height="1435"
             fetchPriority="high"
+            loading="eager"
+            decoding="async"
             className="block h-full w-full object-cover"
           />
         </div>

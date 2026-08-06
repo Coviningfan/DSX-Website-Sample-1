@@ -60,8 +60,9 @@ Migrated from the PortfolioRevamp (Replit-based) codebase to Zo Site. DSX Edge i
 ### Hero media refinement (2026-08-06)
 
 - The homepage uses one optimized static tunnel image with breakpoint-specific `object-position`; the duplicated blurred fill and scroll-driven blur were removed.
+- The tunnel ships with responsive 960px, 1600px, and 2560px WebP sources and a matching responsive preload so browsers fetch and decode only the resolution needed for the viewport as early as possible.
 - Static media remains intentional: it preserves headline readability, reduced-motion behavior, and predictable LCP while the separate SignalOrb carries meaningful system motion.
-- The full DSX Edge wordmark is centered above the hero promise at a responsive 130–160px width. The navbar remains logo-free while the homepage hero is visible, then smoothly expands and wipes the complete compact wordmark into view from right to left after the hero has passed. Interior pages show the compact wordmark immediately.
+- The full DSX Edge wordmark is centered above the hero promise at a responsive 130–160px width. The navbar remains logo-free while the homepage hero is visible, then expands and wipes the complete compact wordmark into view from right to left over 1000ms after the hero has passed. Interior pages show the compact wordmark immediately.
 
 ### Phase 1 Design Decisions (Homepage Redesign)
 

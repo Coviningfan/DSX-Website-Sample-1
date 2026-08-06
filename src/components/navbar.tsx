@@ -74,7 +74,7 @@ export default function Navbar() {
           aria-label="DSX Edge home"
           aria-hidden={!logoVisible}
           tabIndex={logoVisible ? 0 : -1}
-          className={`relative block min-h-11 shrink-0 overflow-hidden transition-[width,margin] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none ${
+          className={`relative block min-h-11 shrink-0 overflow-hidden transition-[width,margin] duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none ${
             logoVisible
               ? "mr-0 w-[82px]"
               : "-mr-3 w-0 pointer-events-none sm:-mr-6"
@@ -85,7 +85,7 @@ export default function Navbar() {
             alt=""
             width="735"
             height="339"
-            className="absolute right-0 top-1/2 h-auto w-[82px] max-w-none -translate-y-1/2 object-contain transition-[clip-path] delay-75 duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none"
+            className="absolute right-0 top-1/2 h-auto w-[82px] max-w-none -translate-y-1/2 object-contain transition-[clip-path] delay-75 duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none"
             style={{
               clipPath: logoVisible ? "inset(0 0 0 0)" : "inset(0 0 0 100%)",
             }}
