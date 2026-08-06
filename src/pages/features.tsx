@@ -1,4 +1,4 @@
-import { Phone, ArrowRight, HeadphonesIcon, BarChart3, Globe, Shield, Wrench } from "lucide-react";
+import { Phone, ArrowRight, HeadphonesIcon, BarChart3, Globe, Shield, PackageCheck } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const DEPARTMENTS = [
@@ -58,27 +58,27 @@ const DEPARTMENTS = [
     icon: Shield,
     title: "Management",
     items: [
-      "Real-time dashboard with call and response analytics",
-      "AI agent performance monitoring and tuning",
-      "Custom reporting by department and function",
-      "Role-based access and audit trail",
-      "Compliance guardrails for regulated industries",
+      "Screen calls and take complete messages",
+      "Route callers according to rules you set",
+      "Reduce interruptions to management time",
+      "Escalate critical communications without delay",
+      "Maintain a professional caller experience",
     ],
     description:
-      "Complete visibility into every customer interaction. DSX Edge gives leadership a real-time view of call volume, response quality, and AI performance — with the controls to adjust on the fly.",
+      "A personal assistant for management communications. DSX Edge screens calls, takes messages, and routes people according to your rules, protecting management time without losing critical communications.",
   },
   {
-    icon: Wrench,
-    title: "Infrastructure & Integrations",
+    icon: PackageCheck,
+    title: "Shipping & Returns",
     items: [
-      "Full PBX replacement with cloud phone system",
-      "Works with Switch, 3CX, Cisco, Polycom, and Yealink",
-      "SIP trunking and carrier-grade call routing",
-      "Custom API integration with your business systems",
-      "Enterprise security and uptime SLA",
+      "Provide order status, tracking details, and delivery estimates",
+      "Notify customers about shipment delays and weather issues",
+      "Manage delivery windows and pending pickups",
+      "Handle common delivery complaints and proof of delivery",
+      "Issue RMAs and email return shipping labels",
     ],
     description:
-      "The backbone that makes it all work. DSX Edge runs on carrier-grade infrastructure with deep integrations into the phone systems and business tools you already use.",
+      "Keep customers informed from shipment through return. DSX Edge answers delivery questions, sends proactive updates, manages return windows, and completes routine RMA workflows.",
   },
 ];
 

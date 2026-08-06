@@ -15,6 +15,14 @@ Migrated from the PortfolioRevamp (Replit-based) codebase to Zo Site. DSX Edge i
 - Only confirmed demo numbers are callable. Automotive uses 844-379-2886; other industry demo lines remain visibly pending confirmation.
 - Public publishing remains a separate approval-gated action after preview QA.
 
+### Source mockup compliance
+
+- `Web Mockup-5` is the content-and-flow authority for the five public pages; it explicitly is not a visual design specification.
+- `DSXEdge Website Design Brief-1` defines the audience, positioning, brand qualities, logo-derived colors, and whitespace direction.
+- The homepage serves an optimized derivative of the exact hero image embedded in slide 1. Navigation includes Features, Industries, Pricing, About, and Contact.
+- Homepage functions, feature categories, industry choices, pricing structure, About copy, contact fields, contact details, and confirmed demo numbers track the supplied source documents.
+- Unverified claims and unavailable industry demo numbers remain excluded or marked pending. Consultation CTAs use the contact form until the owner supplies the calendar URL requested by the mockup.
+
 ### 2026-08-04 Audit Fixes (verified live)
 
 - **Nav anchor fix:** "Features" now resolves to `#departments` (the section ID was missing, leaving dead links). All five nav links verified: Features→#departments, Industries→#industries, Pricing→#pricing, About→#about, Contact→#contact.

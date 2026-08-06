@@ -9,11 +9,9 @@ import {
 import { Link } from "react-router-dom";
 
 const DEPARTMENTS = [
-  "Customer Service", "Sales", "Marketing", "Appointment Setting",
-  "Shipping", "Management", "Finance", "Human Resources",
-  "IT", "Legal", "Construction", "Hotels", "Medical", "Retail",
-  "Transportation", "Logistics", "Wholesale", "Professional Services",
-  "Manufacturing", "Education",
+  "Customer Service", "Order Taking", "Appointment Setting",
+  "Return Processing & RMAs", "Dispatch", "Inventory Control",
+  "Accounting Inquiries", "Troubleshooting", "FAQs", "And Much More",
 ];
 
 const WORKFLOW_EXAMPLES = [

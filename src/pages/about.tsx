@@ -16,8 +16,9 @@ interface FormData {
 
 const INDUSTRY_OPTIONS = [
   "Automotive", "Construction", "Education", "Financial Services",
-  "Healthcare", "Hotels & Hospitality", "Manufacturing", "Professional Services",
-  "Real Estate", "Retail", "Transportation & Logistics", "Other",
+  "Healthcare", "Hotels & Hospitality", "Logistics", "Municipalities",
+  "Manufacturing", "Nonprofit", "Professional Services", "Real Estate",
+  "Retail", "Transportation", "Wholesale", "Other",
 ];
 
 const EMPLOYEE_OPTIONS = [
