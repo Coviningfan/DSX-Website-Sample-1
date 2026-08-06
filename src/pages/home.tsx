@@ -306,7 +306,7 @@ export default function HomePage() {
             </p>
             <Link
               to="/features"
-              className="mt-7 inline-flex items-center gap-2 rounded-xl bg-[#191919] px-6 py-3 text-sm font-medium text-white transition-colors duration-200 hover:bg-[#333]"
+              className="mt-7 inline-flex items-center gap-2 rounded-xl bg-[#e2712f] px-6 py-3 text-sm font-medium text-white transition-colors duration-200 hover:bg-[#c85f1f]"
             >
               See the Full Platform
               <ArrowRight className="h-4 w-4" />
@@ -417,7 +417,7 @@ export default function HomePage() {
           <div className="text-center">
             <Link
               to="/industries"
-              className="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium text-white bg-[#191919] rounded-xl hover:bg-[#333] transition-colors duration-200"
+              className="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium text-white bg-[#e2712f] rounded-xl hover:bg-[#c85f1f] transition-colors duration-200"
             >
               SEE DSX EDGE FOR YOUR BUSINESS
               <ChevronRight className="w-4 h-4" />
@@ -462,7 +462,7 @@ export default function HomePage() {
         </p>
         <Link
           to="/industries"
-          className="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium text-white bg-[#191919] rounded-xl hover:bg-[#333] transition-colors duration-200"
+          className="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium text-white bg-[#e2712f] rounded-xl hover:bg-[#c85f1f] transition-colors duration-200"
         >
           Explore All Industries
           <ArrowRight className="w-4 h-4" />

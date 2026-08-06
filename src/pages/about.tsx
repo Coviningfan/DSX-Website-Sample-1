@@ -296,7 +296,7 @@ export default function AboutPage() {
               <button
                 type="submit"
                 disabled={submitting}
-                className="w-full flex items-center justify-center gap-2 px-6 py-3 text-sm font-medium text-white bg-[#0084FF]/80 backdrop-blur-[2px] rounded-2xl hover:scale-[1.02] transition-transform duration-200"
+                className="w-full flex items-center justify-center gap-2 px-6 py-3 text-sm font-medium text-white bg-[#e2712f] rounded-2xl transition-[background-color,transform] duration-200 hover:scale-[1.02] hover:bg-[#c85f1f] disabled:opacity-60 disabled:hover:scale-100"
                 style={{ boxShadow: "inset 0px 4px 4px 0px rgba(255,255,255,0.35)" }}
               >
                 {submitting ? "Recording Request…" : "Request My Consultation"}
