@@ -7,7 +7,7 @@ const NAV_LINKS = [
   { label: "Industries", href: "/industries" },
   { label: "Pricing", href: "/pricing" },
   { label: "About", href: "/about" },
-  { label: "Contact", href: "/about#contact" },
+  { label: "Contact", href: "/contact" },
 ];
 
 const linkBase =
@@ -93,7 +93,7 @@ export default function Navbar() {
 
         <div className="hidden md:flex items-center gap-2">
           <Link
-            to="/about#contact"
+            to="/contact"
             className="flex items-center gap-1.5 rounded-xl bg-[#FC5104FA] px-4 py-2 text-sm font-medium text-white transition-colors duration-200 hover:bg-[#FC5104]"
           >
             Book a Free Consultation
@@ -127,7 +127,7 @@ export default function Navbar() {
                 </Link>
               ))}
               <Link
-                to="/about#contact"
+                to="/contact"
                 onClick={() => setOpen(false)}
                 className="mt-2 flex min-h-12 items-center justify-center gap-1.5 rounded-xl bg-[#FC5104FA] px-4 py-2.5 text-sm font-medium text-white"
               >

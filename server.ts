@@ -21,6 +21,7 @@ const contactSchema = z.object({
   employees: z.string().trim().min(1).max(50),
   bestDay: z.string().trim().max(50),
   bestTime: z.string().trim().max(50),
+  heardFrom: z.string().trim().max(250),
   website: z.string().max(0).optional(),
 });
 
@@ -38,9 +39,14 @@ contactDb.run(`
     industry TEXT NOT NULL,
     employees TEXT NOT NULL,
     best_day TEXT,
-    best_time TEXT
+    best_time TEXT,
+    heard_from TEXT NOT NULL DEFAULT ''
   )
 `);
+const contactColumns = contactDb.query("PRAGMA table_info(contact_submissions)").all() as Array<{ name: string }>;
+if (!contactColumns.some((column) => column.name === "heard_from")) {
+  contactDb.run("ALTER TABLE contact_submissions ADD COLUMN heard_from TEXT NOT NULL DEFAULT ''");
+}
 
 const mode: Mode =
   process.env.NODE_ENV === "production" ? "production" : "development";
@@ -58,8 +64,8 @@ app.post("/api/contact", async (c) => {
   const submission = parsed.data;
   contactDb.run(
     `INSERT INTO contact_submissions
-      (created_at, name, company, email, phone, message, industry, employees, best_day, best_time)
-     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      (created_at, name, company, email, phone, message, industry, employees, best_day, best_time, heard_from)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
     [
       new Date().toISOString(),
       submission.name,
@@ -71,6 +77,7 @@ app.post("/api/contact", async (c) => {
       submission.employees,
       submission.bestDay,
       submission.bestTime,
+      submission.heardFrom,
     ],
   );
 

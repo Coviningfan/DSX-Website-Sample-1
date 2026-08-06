@@ -258,8 +258,8 @@ export default function FeaturesPage() {
             </p>
           </div>
           <Link
-            to="/about#contact"
-            className="inline-flex min-h-12 items-center justify-center gap-2 bg-[#FC5104FA] px-6 py-3 text-sm font-semibold text-white transition-colors duration-200 hover:bg-[#FC5104] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#114CA8]"
+            to="/contact"
+            className="consultation-action inline-flex min-h-12 items-center justify-center gap-2 bg-[#FC5104FA] px-6 py-3 text-sm font-semibold text-white transition-colors duration-200 hover:bg-[#FC5104] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#114CA8]"
           >
             Book a Free Consultation
             <ArrowRight className="h-4 w-4" aria-hidden="true" />

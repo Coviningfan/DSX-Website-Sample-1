@@ -103,7 +103,7 @@ export default function IndustriesPage() {
       <section className="bg-[#f6f8fa] px-4 py-20 text-[#191919] sm:px-6 sm:py-24 md:px-10">
         <div className="mx-auto flex max-w-6xl flex-col items-start justify-between gap-8 md:flex-row md:items-center">
           <h2 className="max-w-3xl text-balance text-4xl font-bold tracking-tight sm:text-5xl">Improve Your Operations &amp; Increase Profits</h2>
-          <Link to="/about#contact" className="inline-flex min-h-11 shrink-0 items-center gap-2 rounded-lg bg-[#FC5104FA] px-6 py-3 text-sm font-semibold uppercase tracking-[0.08em] text-white transition-colors hover:bg-[#FC5104]">
+          <Link to="/contact" className="consultation-action inline-flex min-h-11 shrink-0 items-center gap-2 rounded-lg bg-[#FC5104FA] px-6 py-3 text-sm font-semibold uppercase tracking-[0.08em] text-white transition-colors hover:bg-[#FC5104]">
             Book a Free Consultation
             <ArrowRight className="h-4 w-4" aria-hidden="true" />
           </Link>

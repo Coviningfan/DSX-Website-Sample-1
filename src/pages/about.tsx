@@ -1,311 +1,58 @@
-import { useState } from "react";
-import { MapPin, Phone, Mail, ArrowRight, Clock } from "lucide-react";
-
-interface FormData {
-  name: string;
-  company: string;
-  email: string;
-  phone: string;
-  message: string;
-  industry: string;
-  employees: string;
-  bestDay: string;
-  bestTime: string;
-  website: string;
-}
-
-const INDUSTRY_OPTIONS = [
-  "Automotive", "Construction", "Education", "Financial Services",
-  "Healthcare", "Hotels & Hospitality", "Logistics", "Municipalities",
-  "Manufacturing", "Nonprofit", "Professional Services", "Real Estate",
-  "Retail", "Transportation", "Wholesale", "Other",
-];
-
-const EMPLOYEE_OPTIONS = [
-  "1–10", "11–50", "51–200", "201–500", "500+",
-];
+import { ArrowRight, Clock, Mail, MapPin, Phone } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export default function AboutPage() {
-  const [form, setForm] = useState<FormData>({
-    name: "", company: "", email: "", phone: "", message: "",
-    industry: "", employees: "", bestDay: "", bestTime: "",
-    website: "",
-  });
-  const [submitted, setSubmitted] = useState(false);
-  const [submitting, setSubmitting] = useState(false);
-  const [submitError, setSubmitError] = useState("");
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setSubmitting(true);
-    setSubmitError("");
-
-    try {
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify(form),
-      });
-
-      if (!response.ok) throw new Error("Submission failed");
-      setSubmitted(true);
-    } catch {
-      setSubmitError("We couldn’t record your request. Please try again or call 775-624-9424.");
-    } finally {
-      setSubmitting(false);
-    }
-  };
-
   return (
     <main className="min-h-screen bg-white">
-      <section className="relative pt-32 pb-16 px-4 sm:px-6 sm:pt-44 sm:pb-24 md:px-10 max-w-6xl mx-auto">
+      <section className="mx-auto max-w-6xl px-4 pb-16 pt-32 sm:px-6 sm:pb-24 sm:pt-44 md:px-10">
         <div className="max-w-3xl">
-          <p className="text-xs uppercase tracking-[0.2em] text-[#FC5104FA] font-medium mb-4">
-            About DSX Edge
-          </p>
-          <h1 className="font-bold text-4xl sm:text-5xl md:text-6xl leading-[1.1] tracking-tight text-[#191919]">
+          <p className="mb-4 text-xs font-medium uppercase tracking-[0.2em] text-[#FC5104FA]">About DSX Edge</p>
+          <h1 className="text-balance text-4xl font-bold leading-[1.1] tracking-tight text-[#191919] sm:text-5xl md:text-6xl">
             Serving Businesses Like Yours
           </h1>
-          <p className="mt-6 text-lg text-[#191919]/60 leading-relaxed max-w-2xl">
+          <p className="mt-6 max-w-2xl text-lg leading-relaxed text-[#191919]/60">
             For nearly 20 years DSX has helped small and medium businesses grow and prosper by applying technology wisely. We’ve grown from a small startup providing data services to an established business with clients across the United States.
           </p>
         </div>
 
-        <div className="mt-14 grid md:grid-cols-3 gap-8 sm:mt-20">
+        <div className="mt-14 grid gap-8 sm:mt-20 md:grid-cols-3">
           <div className="space-y-6">
             <div className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-[#114CA8] mt-0.5 shrink-0" />
-              <div>
-                <p className="font-medium text-[#191919]">Reno, Nevada</p>
-                <p className="text-sm text-[#191919]/60">Serving businesses nationwide</p>
-              </div>
+              <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-[#114CA8]" aria-hidden="true" />
+              <div><p className="font-medium text-[#191919]">Reno, Nevada</p><p className="text-sm text-[#191919]/60">Serving businesses nationwide</p></div>
             </div>
             <div className="flex items-start gap-3">
-              <Phone className="w-5 h-5 text-[#114CA8] mt-0.5 shrink-0" />
-              <div>
-                <p className="font-medium text-[#191919]">775-624-9424</p>
-                <p className="text-sm text-[#191919]/60">Available 24/7 for customers</p>
-              </div>
+              <Phone className="mt-0.5 h-5 w-5 shrink-0 text-[#114CA8]" aria-hidden="true" />
+              <div><p className="font-medium text-[#191919]">775-624-9424</p><p className="text-sm text-[#191919]/60">Available 24/7 for customers</p></div>
             </div>
             <div className="flex items-start gap-3">
-              <Mail className="w-5 h-5 text-[#114CA8] mt-0.5 shrink-0" />
-              <div>
-                <p className="font-medium text-[#191919]">info@dsxedge.com</p>
-                <p className="text-sm text-[#191919]/60">Sales: sales@dsxedge.com</p>
-                <p className="text-sm text-[#191919]/60">Support: support@dsxedge.com</p>
-              </div>
+              <Mail className="mt-0.5 h-5 w-5 shrink-0 text-[#114CA8]" aria-hidden="true" />
+              <div><p className="font-medium text-[#191919]">info@dsxedge.com</p><p className="text-sm text-[#191919]/60">Sales: sales@dsxedge.com</p><p className="text-sm text-[#191919]/60">Support: support@dsxedge.com</p></div>
             </div>
             <div className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-[#114CA8] mt-0.5 shrink-0" />
-              <div>
-                <p className="font-medium text-[#191919]">We&rsquo;re always on</p>
-                <p className="text-sm text-[#191919]/60">Your business never sleeps. Neither do we.</p>
-              </div>
+              <Clock className="mt-0.5 h-5 w-5 shrink-0 text-[#114CA8]" aria-hidden="true" />
+              <div><p className="font-medium text-[#191919]">We&rsquo;re always on</p><p className="text-sm text-[#191919]/60">Your business never sleeps. Neither do we.</p></div>
             </div>
           </div>
 
           <div className="md:col-span-2">
-            <div className="bg-[#F9F8F6] rounded-2xl p-8 md:p-10">
-              <p className="text-lg text-[#191919]/60 leading-relaxed mb-8">
-                We are not consultants. We don’t charge high fees. We’re not big company outsiders.
-              </p>
-              <p className="text-lg text-[#191919]/60 leading-relaxed">
-                We are a local team of experienced IT, communications, data, networking, and AI experts delivering cost-effective solutions that benefit our clients. And we live in, and are part of, your community, so when you succeed, we succeed.
-              </p>
+            <div className="rounded-2xl bg-[#F9F8F6] p-8 md:p-10">
+              <p className="mb-8 text-lg leading-relaxed text-[#191919]/60">We are not consultants. We don’t charge high fees. We’re not big company outsiders.</p>
+              <p className="text-lg leading-relaxed text-[#191919]/60">We are a local team of experienced IT, communications, data, networking, and AI experts delivering cost-effective solutions that benefit our clients. And we live in, and are part of, your community, so when you succeed, we succeed.</p>
             </div>
           </div>
         </div>
       </section>
 
-      <section id="contact" className="py-16 px-4 sm:px-6 sm:py-24 md:px-10 bg-[#F9F8F6]">
-        <div className="max-w-2xl mx-auto">
-          <p className="text-xs uppercase tracking-[0.2em] text-[#FC5104FA] font-medium mb-4 text-center">
-            Get In Touch
-          </p>
-          <h2 className="font-bold text-3xl sm:text-4xl leading-tight tracking-tight text-[#191919] mb-4 text-center">
-            We Want To Hear From You
-          </h2>
-          <p className="text-[#191919]/60 leading-relaxed mb-12 text-center">
-            Tell us about your business and we&rsquo;ll show you exactly how DSX Edge fits.
-          </p>
-
-          {submitted ? (
-            <div className="bg-white rounded-2xl border border-gray-200 p-12 text-center">
-              <div className="w-16 h-16 bg-[#114CA8]/10 rounded-full flex items-center justify-center mx-auto mb-6">
-                <ArrowRight className="w-8 h-8 text-[#114CA8]" />
-              </div>
-              <h3 className="font-bold text-2xl text-[#191919] mb-2">Thanks for reaching out.</h3>
-              <p className="text-[#191919]/60">
-                Your request has been recorded. DSX Edge will use the contact details and preferred
-                time you provided to follow up.
-              </p>
-            </div>
-          ) : (
-            <form onSubmit={handleSubmit} className="bg-white rounded-2xl border border-gray-200 p-5 sm:p-8 md:p-10 space-y-6">
-              <div className="hidden" aria-hidden="true">
-                <label htmlFor="website">Website</label>
-                <input id="website" name="website" value={form.website} onChange={handleChange} tabIndex={-1} autoComplete="off" />
-              </div>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-[#191919] mb-1.5">Name</label>
-                  <input
-                    id="name"
-                    type="text"
-                    name="name"
-                    required
-                    value={form.name}
-                    onChange={handleChange}
-                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-white text-[#191919] text-base sm:text-sm focus:outline-none focus:border-[#114CA8] focus:ring-1 focus:ring-[#114CA8]/20 transition-all duration-200"
-                    placeholder="Your name"
-                    autoComplete="name"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="company" className="block text-sm font-medium text-[#191919] mb-1.5">Company</label>
-                  <input
-                    id="company"
-                    type="text"
-                    name="company"
-                    required
-                    value={form.company}
-                    onChange={handleChange}
-                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-white text-[#191919] text-base sm:text-sm focus:outline-none focus:border-[#114CA8] focus:ring-1 focus:ring-[#114CA8]/20 transition-all duration-200"
-                    placeholder="Your company"
-                    autoComplete="organization"
-                  />
-                </div>
-              </div>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-[#191919] mb-1.5">Email</label>
-                  <input
-                    id="email"
-                    type="email"
-                    name="email"
-                    required
-                    value={form.email}
-                    onChange={handleChange}
-                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-white text-[#191919] text-base sm:text-sm focus:outline-none focus:border-[#114CA8] focus:ring-1 focus:ring-[#114CA8]/20 transition-all duration-200"
-                    placeholder="you@company.com"
-                    autoComplete="email"
-                    inputMode="email"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="phone" className="block text-sm font-medium text-[#191919] mb-1.5">Phone</label>
-                  <input
-                    id="phone"
-                    type="tel"
-                    name="phone"
-                    required
-                    value={form.phone}
-                    onChange={handleChange}
-                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-white text-[#191919] text-base sm:text-sm focus:outline-none focus:border-[#114CA8] focus:ring-1 focus:ring-[#114CA8]/20 transition-all duration-200"
-                    placeholder="(555) 123-4567"
-                    autoComplete="tel"
-                    inputMode="tel"
-                  />
-                </div>
-              </div>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div>
-                  <label htmlFor="industry" className="block text-sm font-medium text-[#191919] mb-1.5">Industry</label>
-                  <select
-                    id="industry"
-                    name="industry"
-                    required
-                    value={form.industry}
-                    onChange={handleChange}
-                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-white text-[#191919] text-base sm:text-sm focus:outline-none focus:border-[#114CA8] focus:ring-1 focus:ring-[#114CA8]/20 transition-all duration-200"
-                  >
-                    <option value="">Select industry</option>
-                    {INDUSTRY_OPTIONS.map((ind) => (
-                      <option key={ind} value={ind}>{ind}</option>
-                    ))}
-                  </select>
-                </div>
-                <div>
-                  <label htmlFor="employees" className="block text-sm font-medium text-[#191919] mb-1.5">Number of Employees</label>
-                  <select
-                    id="employees"
-                    name="employees"
-                    required
-                    value={form.employees}
-                    onChange={handleChange}
-                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-white text-[#191919] text-base sm:text-sm focus:outline-none focus:border-[#114CA8] focus:ring-1 focus:ring-[#114CA8]/20 transition-all duration-200"
-                  >
-                    <option value="">Select size</option>
-                    {EMPLOYEE_OPTIONS.map((e) => (
-                      <option key={e} value={e}>{e}</option>
-                    ))}
-                  </select>
-                </div>
-              </div>
-              <div>
-                <label htmlFor="message" className="block text-sm font-medium text-[#191919] mb-1.5">Message</label>
-                <textarea
-                  id="message"
-                  name="message"
-                  required
-                  rows={4}
-                  value={form.message}
-                  onChange={handleChange}
-                  className="w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-white text-[#191919] text-base sm:text-sm focus:outline-none focus:border-[#114CA8] focus:ring-1 focus:ring-[#114CA8]/20 transition-all duration-200 resize-none"
-                  placeholder="Tell us about your business and what you need..."
-                />
-              </div>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div>
-                  <label htmlFor="bestDay" className="block text-sm font-medium text-[#191919] mb-1.5">Best Day to Reach You</label>
-                  <input
-                    id="bestDay"
-                    type="date"
-                    name="bestDay"
-                    value={form.bestDay}
-                    onChange={handleChange}
-                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-white text-[#191919] text-base sm:text-sm focus:outline-none focus:border-[#114CA8] focus:ring-1 focus:ring-[#114CA8]/20 transition-all duration-200"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="bestTime" className="block text-sm font-medium text-[#191919] mb-1.5">Best Times</label>
-                  <select
-                    id="bestTime"
-                    name="bestTime"
-                    value={form.bestTime}
-                    onChange={handleChange}
-                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-white text-[#191919] text-base sm:text-sm focus:outline-none focus:border-[#114CA8] focus:ring-1 focus:ring-[#114CA8]/20 transition-all duration-200"
-                  >
-                    <option value="">Select a time</option>
-                    <option value="Morning">Morning</option>
-                    <option value="Afternoon">Afternoon</option>
-                    <option value="Evening">Evening</option>
-                  </select>
-                </div>
-              </div>
-              {submitError && (
-                <p role="alert" className="text-sm text-red-700">{submitError}</p>
-              )}
-              <p className="text-xs leading-relaxed text-[#191919]/55">
-                We use the information you provide only to respond to your request and arrange a conversation about DSX Edge.
-              </p>
-              <button
-                type="submit"
-                disabled={submitting}
-                className="flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-[#FC5104FA] px-6 py-3 text-sm font-semibold text-white transition-colors duration-200 hover:bg-[#FC5104] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#114CA8] disabled:opacity-60"
-              >
-                {submitting ? "Recording Request…" : "Request My Consultation"}
-                <ArrowRight className="w-4 h-4" />
-              </button>
-            </form>
-          )}
+      <section className="bg-[#F9F8F6] px-4 py-16 sm:px-6 sm:py-20 md:px-10">
+        <div className="mx-auto flex max-w-6xl flex-col items-start justify-between gap-8 md:flex-row md:items-center">
+          <div>
+            <p className="text-xs font-medium uppercase tracking-[0.2em] text-[#FC5104FA]">Start a Conversation</p>
+            <h2 className="mt-3 max-w-2xl text-balance text-3xl font-bold tracking-tight text-[#191919] sm:text-4xl">See where DSX Edge fits your business.</h2>
+          </div>
+          <Link to="/contact" className="consultation-action inline-flex min-h-12 items-center gap-2 rounded-xl bg-[#FC5104FA] px-6 py-3 text-sm font-semibold uppercase tracking-[0.08em] text-white hover:bg-[#FC5104]">
+            Book a Free Consultation <ArrowRight className="h-4 w-4" aria-hidden="true" />
+          </Link>
         </div>
       </section>
     </main>

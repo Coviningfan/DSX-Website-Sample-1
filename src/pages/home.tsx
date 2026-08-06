@@ -69,8 +69,8 @@ const WORKFLOWS = [
 function ConsultationLink({ className = "" }: { className?: string }) {
   return (
     <Link
-      to="/about#contact"
-      className={`inline-flex min-h-11 items-center justify-center gap-2 rounded-lg bg-[#191919] px-6 py-3 text-sm font-semibold uppercase tracking-[0.08em] text-white transition-colors hover:bg-[#102b43] ${className}`}
+      to="/contact"
+      className={`consultation-action inline-flex min-h-11 items-center justify-center gap-2 rounded-lg bg-[#191919] px-6 py-3 text-sm font-semibold uppercase tracking-[0.08em] text-white transition-colors hover:bg-[#102b43] ${className}`}
     >
       Book a Free Consultation
       <ArrowRight className="h-4 w-4" aria-hidden="true" />
@@ -100,7 +100,7 @@ export default function HomePage() {
           <img src="/images/dsx-edge-logo-official.png" alt="DSX Edge" width="472" height="188" />
         </Link>
 
-        <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-1 flex-col justify-center px-4 pb-20 pt-32 sm:px-6 sm:pt-40 md:px-10 md:pb-24">
+        <div className="hero-copy-shell relative z-10 mx-auto flex w-full max-w-[80rem] flex-1 flex-col justify-center px-4 pb-20 pt-32 sm:px-6 sm:pt-40 md:px-10 md:pb-24">
           <div className="max-w-3xl">
             <p className="mb-5 text-xs font-semibold uppercase tracking-[0.2em] text-[#FC5104FA]">
               DSX Edge Business Communications
@@ -157,7 +157,7 @@ export default function HomePage() {
       <section id="opportunity" className="bg-white px-4 py-20 text-[#191919] sm:px-6 sm:py-24 md:px-10 md:py-32">
         <div className="mx-auto max-w-6xl">
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#FC5104FA]">Never Miss Another Opportunity</p>
-          <div className="mt-5 grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
+          <div className="mt-5 grid gap-10 lg:grid-cols-[0.76fr_1.24fr] lg:gap-16">
             <div>
               <h2 className="text-balance text-4xl font-bold leading-tight tracking-tight sm:text-5xl">
                 Customer interaction that continues when your staff cannot.
@@ -166,22 +166,23 @@ export default function HomePage() {
             DSXEdge is an intelligent addition to your staff that works 24/7, never missing a call or text. It can handle many routine customer interactions autonomously. After hours it serves customers while no one is there, increasing revenue and delivering excellent customer service.
               </p>
             </div>
-            <div className="space-y-5">
-              <div className="border border-[#191919]/12 bg-[#f6f8fa] p-6 sm:p-8">
+            <div className="experience-comparison">
+              <div className="experience-panel experience-panel-old">
                 <p className="font-mono text-sm uppercase tracking-[0.12em] text-[#191919]/52">The old experience</p>
-                <blockquote className="mt-4 text-xl font-semibold text-[#191919]/82">“Press 1 for sales, press 2 for accounting…”</blockquote>
+                <blockquote className="mt-4 text-xl font-semibold italic text-[#191919]/82">“Press 1 for sales, press 2 for accounting…”</blockquote>
               </div>
-              <div className="border border-[#191919]/12 border-l-4 border-l-[#FC5104FA] bg-white p-6 text-[#191919] sm:p-8">
+              <div className="experience-or" aria-hidden="true"><span>OR</span></div>
+              <div className="experience-panel experience-panel-new">
                 <p className="font-mono text-sm uppercase tracking-[0.12em] text-[#FC5104FA]">The conversation now</p>
-                <blockquote className="mt-4 text-lg leading-relaxed">
+                <blockquote className="mt-4 text-lg italic leading-relaxed">
                   “I’ll be happy to schedule your appointment Mrs. Smith. For Wednesday, May 5th I have 11:30am or 2:00pm. Will either work for you?”
                 </blockquote>
                 <div className="my-5 h-px bg-[#191919]/12" />
-                <blockquote className="text-lg leading-relaxed">
+                <blockquote className="text-lg italic leading-relaxed">
                   “Thank you for explaining your problem. If you tell me your model number, I’ll order the replacement parts, and we can schedule your service call. You will find the model number inside the door, bottom left corner.”
                 </blockquote>
               </div>
-              <p className="text-pretty text-center text-sm leading-relaxed text-[#191919]/62">
+              <p className="experience-note text-pretty text-center text-sm font-bold italic leading-relaxed text-[#191919]/62">
                 All spoken in a natural, conversational voice indistinguishable from a live person in the caller’s language.
               </p>
             </div>
@@ -197,7 +198,7 @@ export default function HomePage() {
               Try It for Yourself — call 844-DSX-Edge and talk with Mary
             </h2>
           </div>
-          <a href="tel:8443793343" className="inline-flex min-h-11 shrink-0 items-center gap-3 rounded-lg bg-[#FC5104FA] px-6 py-3 font-semibold text-white transition-colors hover:bg-[#FC5104]">
+          <a href="tel:8443793343" className="demo-call-action inline-flex min-h-11 shrink-0 items-center gap-3 rounded-lg bg-[#FC5104FA] px-6 py-3 font-semibold text-white transition-colors hover:bg-[#FC5104]">
             <Phone className="h-5 w-5" aria-hidden="true" />
             844-379-3343
           </a>

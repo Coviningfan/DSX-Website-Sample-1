@@ -8,7 +8,7 @@ Migrated from the PortfolioRevamp (Replit-based) codebase to Zo Site. DSX Edge i
 
 ### 2026-08-05 Client Presentation Readiness
 
-- The site is a five-page React application: Home, Features, Industries, Pricing, and About/Contact.
+- The site is a six-page React application: Home, Features, Industries, Pricing, About, and Contact.
 - The homepage uses the approved tunnel hero. The SignalOrb remains an internal reusable asset and is not rendered on public routes.
 - Homepage persuasion follows the approved mockup: missed-opportunity problem, natural conversation examples, platform explanation, turnkey implementation, department coverage, industry workflows, live demo, and consultation CTA.
 - The contact form writes validated requests to `data/contact-submissions.sqlite`; it does not claim success unless the API records the submission.
@@ -19,7 +19,7 @@ Migrated from the PortfolioRevamp (Replit-based) codebase to Zo Site. DSX Edge i
 
 - `Web Mockup-5` is the content-and-flow authority for the five public pages; it explicitly is not a visual design specification.
 - `DSXEdge Website Design Brief-1` defines the audience, positioning, brand qualities, logo-derived colors, and whitespace direction.
-- The homepage serves an optimized derivative of the exact hero image embedded in slide 1. Navigation includes Features, Industries, Pricing, About, and Contact.
+- The homepage serves an optimized derivative of the exact hero image embedded in slide 1. Navigation includes Features, Industries, Pricing, About, and the dedicated Contact route.
 - Homepage functions, feature categories, industry choices, pricing structure, About copy, contact fields, contact details, and confirmed demo numbers track the supplied source documents.
 - Unverified claims and unavailable industry demo numbers remain excluded or marked pending. Consultation CTAs use the contact form until the owner supplies the calendar URL requested by the mockup.
 - Web presentation rules are documented in `docs/DSX-EDGE-STYLE-GUIDE.md`.
@@ -72,6 +72,14 @@ Migrated from the PortfolioRevamp (Replit-based) codebase to Zo Site. DSX Edge i
 - The industry list is a continuous accessible carousel with pause/resume control, hover/focus pause, and a static reduced-motion presentation.
 - Major content sections use white or neutral-gray surfaces. Company blue `#114CA8` is structural; company orange identifies emphasis and primary actions.
 - Public-route emphasis is standardized: eyebrows, key figures, primary actions, disclosure indicators, and emphasized links use company orange `#FC5104` at 98% opacity (`#FC5104FA`). Blue remains reserved for structure, informational icons, links where appropriate, and focus indication.
+
+### Homepage motion and contact routing refinement
+
+- The hero keeps the approved single-layer tunnel treatment while its copy occupies a more intentional left editorial rail on wide screens.
+- The industry crawl uses an evenly spaced continuous loop. The opportunity comparison is one composed old-way / OR / DSX-way unit; source dialogue is unchanged.
+- Page sections receive restrained, one-time viewport entrance motion without being hidden before JavaScript runs. Reduced-motion preferences remove the entrances and CTA movement.
+- About and Contact are separate routes. `/about` contains company positioning; `/contact` owns the validated consultation form.
+- Industry, company-size, and preferred-time controls use accessible in-page option panels that open below their triggers. The preferred-day field is free text, and the form records a new free-text “How did you hear from us?” response.
 
 ### Opportunity section
 

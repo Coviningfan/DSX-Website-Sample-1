@@ -6,7 +6,20 @@ export default function ScrollMotion() {
 
   useEffect(() => {
     const hero = document.querySelector<HTMLElement>("main > section:first-child");
+    const sections = Array.from(document.querySelectorAll<HTMLElement>("main > section:not(:first-child)"));
     let frame = 0;
+
+    const revealObserver = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          entry.target.classList.add("scroll-enter");
+          revealObserver.unobserve(entry.target);
+        }
+      },
+      { threshold: 0.08, rootMargin: "0px 0px -6% 0px" },
+    );
+    sections.forEach((section) => revealObserver.observe(section));
 
     const render = () => {
       if (hero) {
@@ -39,6 +52,7 @@ export default function ScrollMotion() {
       cancelAnimationFrame(frame);
       window.removeEventListener("scroll", update);
       window.removeEventListener("resize", update);
+      revealObserver.disconnect();
       hero?.style.removeProperty("--hero-motion");
       document.documentElement.style.removeProperty("--nav-motion");
     };
