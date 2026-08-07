@@ -1,5 +1,4 @@
 import {
-  ArrowRight,
   Building2,
   HeartPulse,
   Home,
@@ -10,27 +9,29 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { INDUSTRIES } from "@/data/industries";
+import { HOME_CRAWL_INDUSTRIES } from "@/data/industries";
 import PrimaryCta from "@/components/primary-cta";
+
+/** Home copy is word-for-word from Web Mockup-5 slide 1 (including DSXEdge). */
 
 const FUNCTIONS = [
   "Customer Service",
-  "Appointment Setting",
-  "Dispatch",
-  "Accounting Inquiries",
-  "FAQs",
   "Order Taking",
+  "Appointment Setting",
   "Return Processing & RMAs",
+  "Dispatch",
   "Inventory Control",
-  "Troubleshooting",
-  "And much more",
+  "Accounting Inquiries",
+  "Trouble Shooting",
+  "FAQs",
+  "and much more",
 ];
 
 const WORKFLOWS = [
   {
     icon: Wrench,
-    title: "Repair / Maintenance",
-    body: "Talk or text with a customer to get information about their problem, diagnose the issue, make a list of the parts needed, create a job ticket, and schedule a service call. If the customer call comes in after hours and the problem is critical, DSX Edge can contact the tech on call and dispatch them.",
+    title: "Repair/Maintenance",
+    body: "Talk/text with a customer to get information about their problem, diagnose the issue, make a list of the parts needed, creating job ticket and scheduling a service call. If the customer call comes in after hours and the problem is critical, DSXEdge can contact the tech on call and dispatch them.",
   },
   {
     icon: HeartPulse,
@@ -39,18 +40,18 @@ const WORKFLOWS = [
   },
   {
     icon: ShoppingCart,
-    title: "Retail / Wholesale",
-    body: "Take an incoming order, check inventory to see if the items are in stock, tell the customer if some items are on backorder, confirm whether they still want to place or amend the order, create the order, take payment or put the order on the customer’s account, generate the pick ticket, and schedule delivery. Check order status and delivery status anytime.",
+    title: "Retail/Wholesale",
+    body: "Take an incoming order, checking inventory to see if the items are in stock, tell the customer if some items are on backorder, if some items are not in stock confirm that they still want to place the order or amend the order, create the order, take payment or put the order on the customer’s account, generate the pick ticket and schedule delivery. Check order status, delivery status, …",
   },
   {
     icon: Truck,
-    title: "Transportation / Shipping",
-    body: "Tell a customer when the next bus, train, or boat is departing from their location for their destination. Tell a client where their shipment is and when it is expected to arrive. Call a client and let them know that there is a delay, the cause, and the new expected arrival date and time. Give a time and cost estimate based on customer input.",
+    title: "Transportation/Shipping",
+    body: "Tell a customer when the next bus/train/boat is departing from their location for their destination. Tell a client where their shipment is and when it is expected to arrive. Call a client and let them know that there is a delay, the cause and the new expected arrival date and time. Give a time and cost estimate based on customer input.",
   },
   {
     icon: Home,
-    title: "Residential / Commercial Services",
-    body: "Ask a caller about their yard, house, or building and prepare a quote. Schedule or cancel an appointment. Make a schedule change. Pause or restart a recurring service. Answer billing questions. Call customers to confirm appointments and service.",
+    title: "Residential/Commercial Services",
+    body: "Ask a caller about their yard/house/building and prepare a quote. Schedule/cancel an appointment. Make a schedule change. Pause/restart a recurring service. Answer billing questions. Call customer to confirm appointment and service.",
   },
 ];
 
@@ -75,36 +76,21 @@ export default function HomePage() {
         </div>
         <div className="hero-readability absolute inset-0 z-[1]" aria-hidden="true" />
 
-        <Link to="/" className="hero-brand absolute left-4 top-6 z-10 sm:left-6 sm:top-8 md:left-10" aria-label="DSX Edge home">
-          <img src="/images/dsx-edge-logo-official.png" alt="DSX Edge" width="472" height="188" />
+        <Link to="/" className="hero-brand absolute left-4 top-6 z-10 sm:left-6 sm:top-8 md:left-10" aria-label="DSXEdge home">
+          <img src="/images/dsx-edge-logo-official.png" alt="DSXEdge" width="472" height="188" />
         </Link>
 
-        <div className="hero-copy-shell relative z-10 mx-auto flex w-full max-w-[80rem] flex-1 flex-col justify-center px-4 pb-16 pt-32 sm:px-6 sm:pt-40 md:px-10 md:pb-20">
-          <div className="max-w-3xl">
-            <p className="mb-5 text-xs font-semibold uppercase tracking-[0.2em] text-[#FC5104FA]">
-              DSX Edge Business Communications
-            </p>
-            <h1 className="font-display text-balance text-[clamp(3rem,8vw,6.75rem)] font-bold leading-[0.9] tracking-[-0.035em] text-[#102b43]">
+        <div className="hero-copy-shell relative z-10 flex w-full max-w-[80rem] flex-1 flex-col items-start justify-center px-4 pb-16 pt-32 text-left sm:px-6 sm:pt-40 md:px-10 md:pb-20">
+          <div className="max-w-3xl self-start text-left pl-[clamp(4.5rem,7vw,6.25rem)]">
+            <h1 className="font-display text-balance text-left text-[clamp(3rem,8vw,6.75rem)] font-bold leading-[0.9] tracking-[-0.035em] text-[#102b43]">
               Business Communications That Drive Profit
             </h1>
-            <p className="mt-7 max-w-2xl text-balance text-xl font-semibold leading-snug text-[#191919] sm:text-2xl md:text-3xl">
+            <p className="mt-7 max-w-2xl text-balance text-left text-xl font-semibold leading-snug text-[#191919] sm:text-2xl md:text-3xl">
               A New Dimension in Customer Interaction &amp; Service
             </p>
-            <p className="mt-5 border-l-2 border-[#FC5104FA] pl-4 text-lg font-semibold uppercase tracking-[0.08em] text-[#191919]/75 sm:text-xl">
-              Tailored to <em className="font-bold not-italic text-[#FC5104FA]">YOUR</em> Business
+            <p className="mt-5 border-l-2 border-[#FC5104FA] pl-4 text-left text-lg font-semibold uppercase tracking-[0.08em] text-[#191919]/75 sm:text-xl">
+              Tailored to Your Business
             </p>
-            <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
-              <PrimaryCta />
-              <PrimaryCta
-                href="tel:8443793343"
-                variant="secondary"
-                showArrow={false}
-                className="demo-call-action"
-              >
-                <Phone className="h-4 w-4 shrink-0" aria-hidden="true" />
-                Call Mary — 844-379-3343
-              </PrimaryCta>
-            </div>
           </div>
         </div>
 
@@ -113,7 +99,7 @@ export default function HomePage() {
             <div className="industry-crawl-track" data-paused={crawlPaused ? "true" : "false"} aria-hidden="true">
               {[0, 1].map((copy) => (
                 <div className="industry-crawl-group" key={copy}>
-                  {INDUSTRIES.map((industry) => (
+                  {HOME_CRAWL_INDUSTRIES.map((industry) => (
                     <span key={`${copy}-${industry}`}>{industry}</span>
                   ))}
                 </div>
@@ -121,13 +107,13 @@ export default function HomePage() {
             </div>
           </div>
           <ul className="industry-crawl-static" role="list">
-            {INDUSTRIES.map((industry) => (
+            {HOME_CRAWL_INDUSTRIES.map((industry) => (
               <li key={industry}>{industry}</li>
             ))}
           </ul>
           <button
             type="button"
-            className="industry-crawl-toggle focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#114CA8]"
+            className="industry-crawl-toggle"
             onClick={() => setCrawlPaused((paused) => !paused)}
             aria-pressed={crawlPaused}
           >
@@ -139,8 +125,7 @@ export default function HomePage() {
       <section className="bg-white px-4 py-20 sm:px-6 sm:py-24 md:px-10 md:py-32">
         <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#FC5104FA]">The unseen cost</p>
-            <h2 className="mt-4 text-balance text-4xl font-bold leading-tight tracking-tight text-[#191919] sm:text-5xl">
+            <h2 className="text-balance text-4xl font-bold leading-tight tracking-tight text-[#191919] sm:text-5xl">
               Every missed call is profit that disappears
             </h2>
             <p className="mt-4 text-2xl font-bold text-[#FC5104FA]">Hundreds or Thousands a Month!</p>
@@ -156,129 +141,106 @@ export default function HomePage() {
 
       <section id="opportunity" className="bg-white px-4 py-20 text-[#191919] sm:px-6 sm:py-24 md:px-10 md:py-32">
         <div className="mx-auto max-w-6xl">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#FC5104FA]">Never Miss Another Opportunity</p>
-          <div className="mt-5 grid gap-10 lg:grid-cols-[0.76fr_1.24fr] lg:gap-16">
-            <div>
-              <h2 className="text-balance text-4xl font-bold leading-tight tracking-tight sm:text-5xl">
-                Customer interaction that continues when your staff cannot.
-              </h2>
-              <p className="mt-6 text-lg leading-relaxed text-[#191919]/68">
-                DSX Edge is an intelligent addition to your staff that works 24/7, never missing a call or text. It can handle many routine customer interactions autonomously. After hours it serves customers while no one is there, increasing revenue and delivering excellent customer service.
-              </p>
+          <h2 className="text-balance text-4xl font-bold leading-tight tracking-tight sm:text-5xl">
+            Never Miss Another Opportunity
+          </h2>
+          <p className="mt-6 max-w-3xl text-lg leading-relaxed text-[#191919]/68">
+            DSXEdge is an intelligent addition to your staff that works 24/7, never missing a call or text. It can handle many routine customer interactions autonomously. After hours it serves customers while no one is there, increasing revenue and delivering excellent customer service.
+          </p>
+          <div className="experience-comparison mt-12">
+            <div className="experience-panel experience-panel-old">
+              <blockquote className="text-xl font-semibold italic text-[#191919]/82">
+                The old “Press 1 for sales, press 2 for accounting, …”
+              </blockquote>
             </div>
-            <div className="experience-comparison">
-              <div className="experience-panel experience-panel-old">
-                <p className="font-mono text-sm uppercase tracking-[0.12em] text-[#191919]/52">The old experience</p>
-                <blockquote className="mt-4 text-xl font-semibold italic text-[#191919]/82">“Press 1 for sales, press 2 for accounting…”</blockquote>
+            <p className="py-3 text-center text-sm font-bold uppercase tracking-[0.14em] text-[#191919]/55">is now</p>
+            <div className="experience-panel experience-panel-new">
+              <blockquote className="text-lg italic leading-relaxed">
+                “I’ll be happy to schedule your appointment Mrs. Smith. For Wednesday, May 5th I have 11:30am or 2:00pm. Will either work for you?”
+              </blockquote>
+              <div className="experience-or" aria-hidden="true">
+                <span>or</span>
               </div>
-              <div className="experience-or" aria-hidden="true"><span>OR</span></div>
-              <div className="experience-panel experience-panel-new">
-                <p className="font-mono text-sm uppercase tracking-[0.12em] text-[#FC5104FA]">The conversation now</p>
-                <blockquote className="mt-4 text-lg italic leading-relaxed">
-                  “I’ll be happy to schedule your appointment Mrs. Smith. For Wednesday, May 5th I have 11:30am or 2:00pm. Will either work for you?”
-                </blockquote>
-                <div className="my-5 h-px bg-[#191919]/12" />
-                <blockquote className="text-lg italic leading-relaxed">
-                  “Thank you for explaining your problem. If you tell me your model number, I’ll order the replacement parts, and we can schedule your service call. You will find the model number inside the door, bottom left corner.”
-                </blockquote>
-              </div>
-              <p className="experience-note text-pretty text-center text-sm font-bold italic leading-relaxed text-[#191919]/62">
-                All spoken in a natural, conversational voice indistinguishable from a live person in the caller’s language.
-              </p>
+              <blockquote className="text-lg italic leading-relaxed">
+                “Thank you for explaining your problem. If you tell me your model number, I’ll order the replacement parts, and we can schedule your service call. You will find the model number inside the door, bottom left corner.”
+              </blockquote>
             </div>
+            <p className="experience-note text-pretty text-center text-sm font-bold italic leading-relaxed text-[#191919]/62">
+              All spoken in a natural, conversational voice indistinguishable from a live person in the caller’s language.
+            </p>
           </div>
-          <div className="mt-12">
-            <PrimaryCta />
+        </div>
+      </section>
+
+      <section className="surface-muted px-4 py-20 sm:px-6 sm:py-24 md:px-10 md:py-32">
+        <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-center">
+          <h2 className="text-balance text-4xl font-bold tracking-tight text-[#191919] sm:text-5xl">
+            Increase Productivity By 50% or More
+          </h2>
+          <div className="space-y-5 text-lg leading-relaxed text-[#191919]/68">
+            <p>
+              Numerous studies have shown that repetitive, routine tasks consume as much as 65% of staff time, keeping them from doing high-value work that boosts profitability.
+            </p>
+            <p>
+              During business hours, DSXEdge offloads routine customer interactions that drain your team’s time, reducing interruptions, raising productivity, and increasing customer and employee satisfaction.
+            </p>
           </div>
         </div>
       </section>
 
       <section id="demo" className="bg-white px-4 py-20 sm:px-6 sm:py-24 md:px-10">
         <div className="mx-auto flex max-w-5xl flex-col items-center justify-between gap-8 border-y border-[#191919]/12 py-10 text-center md:flex-row md:text-left">
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#FC5104FA]">Live telephone demonstration</p>
-            <h2 className="mt-3 text-balance text-3xl font-bold tracking-tight text-[#191919] sm:text-4xl">
-              Try It for Yourself — call 844-DSX-Edge and talk with Mary
-            </h2>
-          </div>
-          <a
-            href="tel:8443793343"
-            className="demo-call-action inline-flex min-h-11 shrink-0 items-center gap-3 rounded-lg bg-[#FC5104FA] px-6 py-3 font-semibold text-white transition-colors hover:bg-[#FC5104] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#114CA8]"
-          >
-            <Phone className="h-5 w-5" aria-hidden="true" />
+          <h2 className="text-balance text-3xl font-bold tracking-tight text-[#191919] sm:text-4xl">
+            Try It for Yourself – call 844-DSX-Edge (844-379-3343) and talk with Mary
+          </h2>
+          <PrimaryCta href="tel:8443793343" showArrow={false} className="demo-call-action shrink-0">
+            <Phone className="h-4 w-4 shrink-0" aria-hidden="true" />
             844-379-3343
-          </a>
+          </PrimaryCta>
         </div>
       </section>
 
       <section id="departments" className="bg-white px-4 py-20 sm:px-6 sm:py-24 md:px-10 md:py-32">
         <div className="mx-auto max-w-6xl">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#FC5104FA]">Across the business</p>
-          <h2 className="mt-4 max-w-4xl text-balance text-4xl font-bold tracking-tight text-[#191919] sm:text-5xl md:text-6xl">
+          <h2 className="max-w-4xl text-balance text-4xl font-bold tracking-tight text-[#191919] sm:text-5xl md:text-6xl">
             Every Department, Every Function, 24/7
           </h2>
           <div className="mt-12 grid grid-cols-1 border-l border-t border-[#191919]/12 sm:grid-cols-2 lg:grid-cols-5">
-            {FUNCTIONS.map((item, index) => (
+            {FUNCTIONS.map((item) => (
               <div key={item} className="min-w-0 border-b border-r border-[#191919]/12 p-5 sm:p-6">
-                <span className="font-mono text-xs text-[#FC5104FA]">{String(index + 1).padStart(2, "0")}</span>
-                <p className="mt-3 text-pretty font-semibold text-[#191919]">{item}</p>
+                <p className="text-pretty font-semibold text-[#191919]">{item}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="surface-muted px-4 py-20 sm:px-6 sm:py-24 md:px-10 md:py-32">
-        <div className="mx-auto grid max-w-6xl gap-12 lg:grid-cols-2 lg:items-center">
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#FC5104FA]">The Easiest Way for Your Business to Benefit From AI</p>
-            <h2 className="mt-4 text-balance text-4xl font-bold leading-tight tracking-tight text-[#191919] sm:text-5xl">
-              A full-featured business communication platform with a unique AI component.
-            </h2>
-          </div>
-          <p className="text-lg leading-relaxed text-[#191919]/68">
-            DSX Edge is a full-featured business communication platform that also includes a unique AI component designed to handle a wide range of business chores, from customer interactions and back-office tasks to taking and acting on customer and supplier information, answering complex customer questions and taking actions based on customer or staff requests. And it works across calls, texts, email, and live chat on your website.
-          </p>
-        </div>
-      </section>
-
-      <section className="bg-white px-4 py-20 sm:px-6 sm:py-24 md:px-10 md:py-32">
-        <div className="mx-auto max-w-6xl border-l-4 border-[#114CA8] pl-6 sm:pl-10">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#FC5104FA]">Turnkey AI</p>
-          <h2 className="mt-4 max-w-4xl text-balance text-4xl font-bold tracking-tight text-[#191919] sm:text-5xl">
-            We set up the platform for your specific business and your specific needs.
-          </h2>
-          <p className="mt-5 text-3xl font-bold text-[#FC5104FA] sm:text-4xl">You Just Use It.</p>
-        </div>
-      </section>
-
-      <section className="surface-muted px-4 py-20 sm:px-6 sm:py-24 md:px-10 md:py-32">
-        <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-center">
-          <h2 className="text-balance text-4xl font-bold tracking-tight text-[#191919] sm:text-5xl">Free Your Team for Higher-Value Work</h2>
-          <div className="space-y-5 text-lg leading-relaxed text-[#191919]/68">
-            <p>Repetitive, routine tasks often consume the majority of staff time, keeping them from the high-value work that boosts profitability.</p>
-            <p>During business hours, DSX Edge offloads routine customer interactions that drain your team’s time, reducing interruptions, raising productivity, and increasing customer and employee satisfaction.</p>
-          </div>
-        </div>
-      </section>
-
       <section id="workflows" className="bg-white px-4 py-20 sm:px-6 sm:py-24 md:px-10 md:py-32">
         <div className="mx-auto max-w-6xl">
-          <div className="max-w-3xl">
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#FC5104FA]">Tailored to Your Business</p>
-            <h2 className="mt-4 text-balance text-4xl font-bold tracking-tight text-[#191919] sm:text-5xl">See DSX Edge for Your Business</h2>
+          <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-end">
+            <h2 className="text-balance text-4xl font-bold tracking-tight text-[#191919] sm:text-5xl">
+              SEE DSXEDGE FOR YOUR BUSINESS
+            </h2>
+            <Link
+              to="/industries"
+              className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-[#FC5104FA] hover:text-[#FC5104]"
+            >
+              Industries
+            </Link>
           </div>
           <div className="mt-12 divide-y divide-[#191919]/12 border-y border-[#191919]/12">
             {WORKFLOWS.map((workflow) => {
               const Icon = workflow.icon;
               return (
                 <details key={workflow.title} className="group">
-                  <summary className="flex min-h-14 cursor-pointer list-none items-center gap-4 py-5 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#114CA8]">
+                  <summary className="flex min-h-14 list-none items-center gap-4 py-5 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#114CA8]">
                     <span className="flex h-11 w-11 shrink-0 items-center justify-center bg-[#114CA8]/10 text-[#114CA8]">
                       <Icon className="h-5 w-5" aria-hidden="true" />
                     </span>
                     <span className="min-w-0 flex-1 text-lg font-bold text-[#191919]">{workflow.title}</span>
-                    <span className="text-2xl text-[#FC5104FA] transition-transform group-open:rotate-45" aria-hidden="true">+</span>
+                    <span className="text-2xl text-[#FC5104FA] transition-transform group-open:rotate-45" aria-hidden="true">
+                      +
+                    </span>
                   </summary>
                   <p className="max-w-4xl pb-7 pl-[3.75rem] leading-relaxed text-[#191919]/68">{workflow.body}</p>
                 </details>
@@ -289,25 +251,43 @@ export default function HomePage() {
             <Building2 className="h-5 w-5 text-[#FC5104FA]" aria-hidden="true" />
             And Dozens of Others
           </p>
-          <div className="mt-10">
-            <Link
-              to="/industries"
-              className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-[#114CA8] hover:text-[#0d3a80] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#114CA8]"
-            >
-              Explore industries
-              <ArrowRight className="h-4 w-4" aria-hidden="true" />
-            </Link>
+        </div>
+      </section>
+
+      <section className="surface-muted px-4 py-20 sm:px-6 sm:py-24 md:px-10 md:py-32">
+        <div className="mx-auto max-w-6xl">
+          <h2 className="text-balance text-4xl font-bold leading-tight tracking-tight text-[#191919] sm:text-5xl">
+            The Easiest Way for Your Business to Benefit From AI
+          </h2>
+          <p className="mt-6 max-w-4xl text-lg leading-relaxed text-[#191919]/68">
+            DSXEdge is a full-featured business communication platform that also includes a unique AI component designed to handle a wide range of business chores, from customer interactions and back-office tasks to taking and acting on customer and supplier information, answering complex customer questions and taking actions based on customer or staff requests. And it works across calls, texts, email, and live chat on your website.
+          </p>
+          <div className="mt-14 border-l-4 border-[#114CA8] pl-6 sm:pl-10">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#FC5104FA]">Turnkey AI</p>
+            <h3 className="mt-4 max-w-4xl text-balance text-3xl font-bold tracking-tight text-[#191919] sm:text-4xl">
+              We set up the platform for your specific business and your specific needs.
+            </h3>
+            <p className="mt-5 text-3xl font-bold text-[#FC5104FA] sm:text-4xl">You Just Use It.</p>
           </div>
         </div>
       </section>
 
-      <section className="surface-muted px-4 py-20 text-[#191919] sm:px-6 sm:py-24 md:px-10">
+      <section className="bg-white px-4 py-20 text-[#191919] sm:px-6 sm:py-24 md:px-10">
         <div className="mx-auto flex max-w-6xl flex-col items-start justify-between gap-8 md:flex-row md:items-center">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#FC5104FA]">Improve Your Operations &amp; Increase Profits</p>
-            <h2 className="mt-4 max-w-3xl text-balance text-4xl font-bold tracking-tight sm:text-5xl">Learn How DSX Edge Can Improve Your Operations &amp; Profits</h2>
+            <h2 className="max-w-3xl text-balance text-4xl font-bold tracking-tight sm:text-5xl">
+              Learn How DSXEdge Can Improve Your Operations &amp; Profits
+            </h2>
+            <p className="mt-4 text-lg text-[#191919]/60">Pick up phone and delegate</p>
           </div>
-          <PrimaryCta className="shrink-0" />
+          <PrimaryCta className="shrink-0">BOOK A FREE CONSULTATION</PrimaryCta>
+        </div>
+      </section>
+
+      <section className="border-t border-[#191919]/10 surface-muted px-4 py-16 sm:px-6 md:px-10" aria-label="Trusted by">
+        <div className="mx-auto max-w-6xl text-center">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#191919]/45">TRUSTED BY</p>
+          <p className="mt-6 text-sm text-[#191919]/45">Example logos – get list and logos from Joe</p>
         </div>
       </section>
     </main>

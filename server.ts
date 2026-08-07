@@ -6,6 +6,14 @@ import { Hono } from "hono";
 import { Database } from "bun:sqlite";
 import { mkdirSync } from "node:fs";
 import { z } from "zod";
+import {
+  bookingConfig,
+  createOutlookEvent,
+  formatDateLabel,
+  getAvailableSlotsForDate,
+  outlookConfigured,
+  zonedLocalToUtc,
+} from "./backend-lib/outlook-calendar";
 
 // AI agents: read README.md for navigation and contribution guidance.
 type Mode = "development" | "production";
@@ -19,8 +27,10 @@ const contactSchema = z.object({
   message: z.string().trim().min(10).max(3000),
   industry: z.string().trim().min(1).max(100),
   employees: z.string().trim().min(1).max(50),
-  bestDay: z.string().trim().max(50),
+  bestDay: z.string().trim().max(120),
   bestTime: z.string().trim().max(50),
+  slotStart: z.string().trim().max(40).optional().default(""),
+  slotEnd: z.string().trim().max(40).optional().default(""),
   heardFrom: z.string().trim().max(250),
   website: z.string().max(0).optional(),
 });
@@ -40,12 +50,41 @@ contactDb.run(`
     employees TEXT NOT NULL,
     best_day TEXT,
     best_time TEXT,
-    heard_from TEXT NOT NULL DEFAULT ''
+    heard_from TEXT NOT NULL DEFAULT '',
+    slot_start TEXT,
+    slot_end TEXT,
+    outlook_event_id TEXT
   )
 `);
 const contactColumns = contactDb.query("PRAGMA table_info(contact_submissions)").all() as Array<{ name: string }>;
-if (!contactColumns.some((column) => column.name === "heard_from")) {
-  contactDb.run("ALTER TABLE contact_submissions ADD COLUMN heard_from TEXT NOT NULL DEFAULT ''");
+const ensureColumn = (name: string, ddl: string) => {
+  if (!contactColumns.some((column) => column.name === name)) contactDb.run(ddl);
+};
+ensureColumn("heard_from", "ALTER TABLE contact_submissions ADD COLUMN heard_from TEXT NOT NULL DEFAULT ''");
+ensureColumn("slot_start", "ALTER TABLE contact_submissions ADD COLUMN slot_start TEXT");
+ensureColumn("slot_end", "ALTER TABLE contact_submissions ADD COLUMN slot_end TEXT");
+ensureColumn("outlook_event_id", "ALTER TABLE contact_submissions ADD COLUMN outlook_event_id TEXT");
+
+function localBusyForDate(dateKey: string): Array<{ start: string; end: string }> {
+  const cfg = bookingConfig();
+  const rows = contactDb
+    .query(`SELECT slot_start, slot_end FROM contact_submissions WHERE slot_start IS NOT NULL AND slot_start != ''`)
+    .all() as Array<{ slot_start: string; slot_end: string }>;
+  return rows
+    .filter((row) => {
+      try {
+        const key = new Intl.DateTimeFormat("en-CA", {
+          timeZone: cfg.timezone,
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit",
+        }).format(new Date(row.slot_start));
+        return key === dateKey;
+      } catch {
+        return false;
+      }
+    })
+    .map((row) => ({ start: row.slot_start, end: row.slot_end || row.slot_start }));
 }
 
 const mode: Mode =
@@ -55,6 +94,27 @@ const mode: Mode =
  * Add any API routes here.
  */
 app.get("/api/hello-zo", (c) => c.json({ msg: "Hello from Zo" }));
+
+app.get("/api/availability", async (c) => {
+  const dateKey = (c.req.query("date") || "").trim();
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(dateKey)) {
+    return c.json({ error: "Provide date as YYYY-MM-DD." }, 400);
+  }
+  const cfg = bookingConfig();
+  const [y, m, d] = dateKey.split("-").map(Number);
+  const noon = zonedLocalToUtc(y, m, d, 12, 0, cfg.timezone);
+  const dateLabel = formatDateLabel(noon, cfg.timezone);
+  const { slots, source, timezone } = await getAvailableSlotsForDate(dateKey, localBusyForDate(dateKey));
+  return c.json({
+    date: dateKey,
+    dateLabel,
+    timezone,
+    source,
+    outlookConnected: outlookConfigured(),
+    slots,
+  });
+});
+
 app.post("/api/contact", async (c) => {
   const parsed = contactSchema.safeParse(await c.req.json().catch(() => null));
   if (!parsed.success) {
@@ -62,10 +122,61 @@ app.post("/api/contact", async (c) => {
   }
 
   const submission = parsed.data;
+  const slotStart = submission.slotStart || "";
+  const slotEnd = submission.slotEnd || "";
+
+  if (slotStart && slotEnd) {
+    const startMs = Date.parse(slotStart);
+    const endMs = Date.parse(slotEnd);
+    if (!Number.isFinite(startMs) || !Number.isFinite(endMs) || endMs <= startMs) {
+      return c.json({ error: "Please select a valid time from the calendar." }, 400);
+    }
+    if (startMs < Date.now() + 30 * 60 * 1000) {
+      return c.json({ error: "That time is no longer available. Please choose another slot." }, 409);
+    }
+    const cfg = bookingConfig();
+    const dateKey = new Intl.DateTimeFormat("en-CA", {
+      timeZone: cfg.timezone,
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    }).format(new Date(startMs));
+    const { slots } = await getAvailableSlotsForDate(dateKey, localBusyForDate(dateKey));
+    if (!slots.some((s) => s.start === slotStart && s.end === slotEnd)) {
+      return c.json({ error: "That time was just booked. Please pick another open slot." }, 409);
+    }
+  }
+
+  let outlookEventId: string | null = null;
+  if (slotStart && slotEnd && outlookConfigured()) {
+    const event = await createOutlookEvent({
+      subject: `DSXEdge consultation — ${submission.company || submission.name}`,
+      body: [
+        `Consultation request from the DSXEdge website.`,
+        ``,
+        `Name: ${submission.name}`,
+        `Company: ${submission.company}`,
+        `Email: ${submission.email}`,
+        `Phone: ${submission.phone}`,
+        `Industry: ${submission.industry}`,
+        `Employees: ${submission.employees}`,
+        `Preferred: ${submission.bestDay} ${submission.bestTime}`,
+        ``,
+        `Message:`,
+        submission.message,
+      ].join("\n"),
+      start: slotStart,
+      end: slotEnd,
+      attendeeEmail: submission.email,
+      attendeeName: submission.name,
+    });
+    outlookEventId = event?.id ?? null;
+  }
+
   contactDb.run(
     `INSERT INTO contact_submissions
-      (created_at, name, company, email, phone, message, industry, employees, best_day, best_time, heard_from)
-     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      (created_at, name, company, email, phone, message, industry, employees, best_day, best_time, heard_from, slot_start, slot_end, outlook_event_id)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
     [
       new Date().toISOString(),
       submission.name,
@@ -78,10 +189,13 @@ app.post("/api/contact", async (c) => {
       submission.bestDay,
       submission.bestTime,
       submission.heardFrom,
+      slotStart || null,
+      slotEnd || null,
+      outlookEventId,
     ],
   );
 
-  return c.json({ ok: true }, 201);
+  return c.json({ ok: true, booked: Boolean(slotStart && slotEnd), outlookEventCreated: Boolean(outlookEventId) }, 201);
 });
 
 if (mode === "production") {

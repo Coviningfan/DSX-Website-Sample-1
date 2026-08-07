@@ -2,9 +2,21 @@ This file provides guidance when working with code in this repository. The READM
 
 # Project Notes
 
-## DSX Edge — Industrial Telecom Website
+## STOP — Read before editing (agents / CLIs)
 
-Migrated from the PortfolioRevamp (Replit-based) codebase to Zo Site. DSX Edge is a business telecom/services company that builds phone systems, connects them to operations, and adds AI only where it earns its keep.
+**Public copy is locked to Web Mockup-5 word-for-word, including brand spelling `DSXEdge`.**
+
+- Binding rules: **`AGENTS.md`** (start here) and **`docs/AGENT_GUARDRAILS.md`**
+- Do **not** merge UI-audit or refinement branches over `main` without a full mockup-copy diff of `src/pages/*`
+- Do **not** replace the contact calendar with free-text day/time fields
+- Do **not** rewrite Features into a different IA than the mockup lists
+- If unsure, ask Joe — do not “improve” mockup wording
+
+A prior session overwrote mockup-faithful work; these files exist so that does not happen again.
+
+## DSXEdge — Industrial Telecom Website
+
+Migrated from the PortfolioRevamp (Replit-based) codebase to Zo Site. DSXEdge is a business telecom/services company that builds phone systems, connects them to operations, and adds AI only where it earns its keep.
 
 ### 2026-08-05 Client Presentation Readiness
 
@@ -15,14 +27,14 @@ Migrated from the PortfolioRevamp (Replit-based) codebase to Zo Site. DSX Edge i
 - Only confirmed demo numbers are callable. Automotive uses 844-379-2886; other industry demo lines remain visibly pending confirmation.
 - Public publishing remains a separate approval-gated action after preview QA.
 
-### Source mockup compliance
+### Source mockup compliance (strict)
 
-- `Web Mockup-5` is the content-and-flow authority for the five public pages; it explicitly is not a visual design specification.
-- `DSXEdge Website Design Brief-1` defines the audience, positioning, brand qualities, logo-derived colors, and whitespace direction.
-- The homepage serves an optimized derivative of the exact hero image embedded in slide 1. Navigation includes Features, Industries, Pricing, About, and the dedicated Contact route.
-- Homepage functions, feature categories, industry choices, pricing structure, About copy, contact fields, contact details, and confirmed demo numbers track the supplied source documents.
-- Unverified claims and unavailable industry demo numbers remain excluded or marked pending. Consultation CTAs use the contact form until the owner supplies the calendar URL requested by the mockup.
-- Web presentation rules are documented in `docs/DSX-EDGE-STYLE-GUIDE.md`.
+- `Web Mockup-5` is the **word-for-word** content-and-flow authority for public pages; it is not a pixel-perfect visual design specification.
+- Brand form on public strings: **`DSXEdge`** (as in the mockup), not a bulk “DSX Edge” rewrite.
+- `DSXEdge Website Design Brief-1` informs design direction; it does not override mockup sentences.
+- Contact **BEST TIMES** use an in-app calendar + time-slot picker (`booking-calendar.tsx`) with optional Outlook Graph sync (`backend-lib/outlook-calendar.ts`). Free typing of day/time is not allowed.
+- Unverified claims and unavailable industry demo numbers remain excluded or marked pending.
+- Web presentation rules: `docs/DSX-EDGE-STYLE-GUIDE.md`. Agent process rules: `AGENTS.md`, `docs/AGENT_GUARDRAILS.md`.
 
 ### 2026-08-04 Audit Fixes (verified live)
 
@@ -61,9 +73,8 @@ Migrated from the PortfolioRevamp (Replit-based) codebase to Zo Site. DSX Edge i
 
 ### Features page
 
-- The dedicated Features page presents Business Communications as the shared foundation, followed by five connected operating areas: Sales, Marketing, Customer Service, Shipping & Returns, and Management.
-- Each capability leads with an operational outcome, keeps three representative functions visible, and exposes the remaining functions through a native keyboard-accessible disclosure.
-- The page uses a neutral architectural sequence: one white communications-foundation band followed by five full-width operating rows with blue structural details, orange emphasis, and one consolidated consultation action.
+- Mockup structure: **Power Your Business** → multi-channel intro → **Communications** (4 bullets) → **AI-Powered Business Support For Every Department** with full Sales / Marketing / Customer Service / Shipping & Returns / Management lists → **Increases Productivity and Customer Satisfaction** + BOOK A FREE CONSULTATION.
+- Full mockup bullets are shown (no “view all” collapse). Do not reintroduce the older “foundation + collapsed outcomes” IA without Joe’s approval.
 
 ### 2026-08-06 visual-system refinement
 

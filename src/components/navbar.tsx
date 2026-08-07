@@ -123,11 +123,11 @@ export default function Navbar() {
             <Link
               to="/"
               className="flex min-h-11 shrink-0 items-center gap-2.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#114CA8]"
-              aria-label="DSX Edge home"
+              aria-label="DSXEdge home"
             >
               <img
                 src="/images/dsx-edge-logo-official.png"
-                alt="DSX Edge"
+                alt="DSXEdge"
                 width="472"
                 height="188"
                 className="h-8 w-auto sm:h-9"

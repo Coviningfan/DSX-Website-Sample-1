@@ -2,6 +2,7 @@ import { useEffect, useId, useRef, useState } from "react";
 import { Check, ChevronDown, Mail, Phone } from "lucide-react";
 import { INDUSTRY_FORM_OPTIONS } from "@/data/industries";
 import PrimaryCta from "@/components/primary-cta";
+import BookingCalendar, { type BookingSelection } from "@/components/booking-calendar";
 
 interface FormData {
   name: string;
@@ -11,14 +12,10 @@ interface FormData {
   message: string;
   industry: string;
   employees: string;
-  bestDay: string;
-  bestTime: string;
-  heardFrom: string;
   website: string;
 }
 
 const EMPLOYEE_OPTIONS = ["1–10", "11–50", "51–200", "201–500", "500+"];
-const TIME_OPTIONS = ["Morning", "Afternoon", "Evening"];
 
 function DownwardSelect({
   id,
@@ -159,7 +156,7 @@ function DownwardSelect({
         onKeyDown={onTriggerKeyDown}
         className="form-control flex w-full items-center justify-between gap-3 text-left"
       >
-        <span className={value ? "text-[#191919]" : "text-[#191919]/45"}>{value || placeholder}</span>
+        <span className={value ? "text-neutral-900" : "text-neutral-900/45"}>{value || placeholder}</span>
         <ChevronDown
           className={`h-4 w-4 shrink-0 text-[#114CA8] transition-transform ${open ? "rotate-180" : ""}`}
           aria-hidden="true"
@@ -207,14 +204,13 @@ export default function ContactPage() {
     message: "",
     industry: "",
     employees: "",
-    bestDay: "",
-    bestTime: "",
-    heardFrom: "",
     website: "",
   });
+  const [booking, setBooking] = useState<BookingSelection | null>(null);
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState("");
+  const [bookedMeta, setBookedMeta] = useState<{ outlook: boolean } | null>(null);
   const successRef = useRef<HTMLDivElement>(null);
 
   const updateField = (name: string, value: string) => setForm((current) => ({ ...current, [name]: value }));
@@ -229,19 +225,39 @@ export default function ContactPage() {
       document.getElementById(missingField)?.focus();
       return;
     }
+    if (!booking?.startIso || !booking?.endIso) {
+      setSubmitError("Please select a day and time from the calendar.");
+      return;
+    }
     setSubmitting(true);
     setSubmitError("");
     try {
       const response = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify({
+          ...form,
+          heardFrom: "",
+          bestDay: booking.dateLabel,
+          bestTime: booking.timeLabel,
+          slotStart: booking.startIso,
+          slotEnd: booking.endIso,
+        }),
       });
-      if (!response.ok) throw new Error("Submission failed");
+      const data = (await response.json().catch(() => null)) as {
+        error?: string;
+        outlookEventCreated?: boolean;
+      } | null;
+      if (!response.ok) throw new Error(data?.error || "Submission failed");
+      setBookedMeta({ outlook: Boolean(data?.outlookEventCreated) });
       setSubmitted(true);
       requestAnimationFrame(() => successRef.current?.focus());
-    } catch {
-      setSubmitError("We couldn’t record your request. Please try again or call 775-624-9424.");
+    } catch (err) {
+      setSubmitError(
+        err instanceof Error && err.message
+          ? err.message
+          : "We couldn’t record your request. Please try again or call 775-624-9424.",
+      );
     } finally {
       setSubmitting(false);
     }
@@ -252,27 +268,25 @@ export default function ContactPage() {
       <section className="px-4 pb-12 pt-32 sm:px-6 sm:pb-16 sm:pt-44 md:px-10">
         <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[0.72fr_1.28fr] lg:gap-16">
           <div>
-            <p className="text-xs font-medium uppercase tracking-[0.2em] text-[#FC5104FA]">Get In Touch</p>
             <h1 className="mt-4 text-balance text-4xl font-bold leading-[1.05] tracking-tight text-[#191919] sm:text-5xl md:text-6xl">
               We Want To Hear From You
             </h1>
-            <p className="mt-6 max-w-lg text-lg leading-relaxed text-[#191919]/60">
-              Tell us about your business and we&rsquo;ll show you exactly how DSX Edge fits. Prefer to talk now? Call us or leave a message below.
-            </p>
-            <div className="mt-10 space-y-4 border-t border-[#191919]/12 pt-8 text-sm">
-              <a
-                href="tel:7756249424"
-                className="flex min-h-11 items-center gap-3 font-medium text-[#191919] hover:text-[#FC5104FA] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#114CA8]"
-              >
-                <Phone className="h-5 w-5 text-[#114CA8]" aria-hidden="true" />
-                775-624-9424
-              </a>
-              <a
-                href="mailto:info@dsxedge.com"
-                className="flex min-h-11 items-center gap-3 font-medium text-[#191919] hover:text-[#FC5104FA] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#114CA8]"
-              >
+            <div className="mt-10 space-y-3 border-t border-[#191919]/12 pt-8 text-sm leading-relaxed text-[#191919]">
+              <a href="mailto:info@dsxedge.com" className="flex min-h-11 items-center gap-3 font-medium hover:text-[#FC5104FA] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#114CA8]">
                 <Mail className="h-5 w-5 text-[#114CA8]" aria-hidden="true" />
                 info@dsxedge.com
+              </a>
+              <a href="mailto:sales@dsxedge.com" className="flex min-h-11 items-center gap-3 font-medium hover:text-[#FC5104FA] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#114CA8]">
+                <Mail className="h-5 w-5 text-[#114CA8]" aria-hidden="true" />
+                sales@dsxedge.com
+              </a>
+              <a href="mailto:support@dsxedge.com" className="flex min-h-11 items-center gap-3 font-medium hover:text-[#FC5104FA] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#114CA8]">
+                <Mail className="h-5 w-5 text-[#114CA8]" aria-hidden="true" />
+                support@dsxedge.com
+              </a>
+              <a href="tel:7756249424" className="flex min-h-11 items-center gap-3 font-medium hover:text-[#FC5104FA] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#114CA8]">
+                <Phone className="h-5 w-5 text-[#114CA8]" aria-hidden="true" />
+                775-624-9424
               </a>
             </div>
           </div>
@@ -287,10 +301,16 @@ export default function ContactPage() {
               <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-[#114CA8]/10">
                 <Check className="h-8 w-8 text-[#114CA8]" aria-hidden="true" />
               </div>
-              <h2 className="text-2xl font-bold text-[#191919]">Thanks for reaching out.</h2>
-              <p className="mt-2 text-[#191919]/60">
-                Your request has been recorded. A DSX Edge team member will follow up using the contact details and preferred time you provided—typically within one business day.
-              </p>
+              <h2 className="text-2xl font-bold text-[#191919]">Thank you.</h2>
+              <p className="mt-2 text-[#191919]/60">Your request has been received.</p>
+              {booking && (
+                <p className="mt-4 text-sm font-medium text-[#191919]">
+                  Preferred time: {booking.dateLabel} at {booking.timeLabel}
+                </p>
+              )}
+              {bookedMeta?.outlook && (
+                <p className="mt-2 text-sm text-[#114CA8]">A calendar invite was added to the DSXEdge Outlook calendar.</p>
+              )}
               <p className="mt-4 text-sm text-[#191919]/55">
                 Need something sooner? Call{" "}
                 <a href="tel:7756249424" className="font-semibold text-[#114CA8] hover:text-[#FC5104FA]">
@@ -318,7 +338,7 @@ export default function ContactPage() {
               <div className="grid gap-4 sm:grid-cols-2">
                 <div>
                   <label htmlFor="name" className="form-label">
-                    Name <span className="text-[#FC5104FA]">*</span>
+                    NAME <span className="text-[#FC5104FA]">*</span>
                   </label>
                   <input
                     id="name"
@@ -333,7 +353,7 @@ export default function ContactPage() {
                 </div>
                 <div>
                   <label htmlFor="company" className="form-label">
-                    Company <span className="text-[#FC5104FA]">*</span>
+                    COMPANY <span className="text-[#FC5104FA]">*</span>
                   </label>
                   <input
                     id="company"
@@ -350,7 +370,7 @@ export default function ContactPage() {
               <div className="grid gap-4 sm:grid-cols-2">
                 <div>
                   <label htmlFor="email" className="form-label">
-                    Email <span className="text-[#FC5104FA]">*</span>
+                    EMAIL <span className="text-[#FC5104FA]">*</span>
                   </label>
                   <input
                     id="email"
@@ -367,7 +387,7 @@ export default function ContactPage() {
                 </div>
                 <div>
                   <label htmlFor="phone" className="form-label">
-                    Phone <span className="text-[#FC5104FA]">*</span>
+                    PHONE <span className="text-[#FC5104FA]">*</span>
                   </label>
                   <input
                     id="phone"
@@ -386,7 +406,7 @@ export default function ContactPage() {
               <div className="grid gap-4 sm:grid-cols-2">
                 <DownwardSelect
                   id="industry"
-                  label="Industry"
+                  label="INDUSTRY"
                   name="industry"
                   value={form.industry}
                   options={INDUSTRY_FORM_OPTIONS}
@@ -396,7 +416,7 @@ export default function ContactPage() {
                 />
                 <DownwardSelect
                   id="employees"
-                  label="Number of Employees"
+                  label="NUMBER OF EMPLOYEES"
                   name="employees"
                   value={form.employees}
                   options={EMPLOYEE_OPTIONS}
@@ -407,7 +427,7 @@ export default function ContactPage() {
               </div>
               <div>
                 <label htmlFor="message" className="form-label">
-                  Message <span className="text-[#FC5104FA]">*</span>
+                  MESSAGE <span className="text-[#FC5104FA]">*</span>
                 </label>
                 <textarea
                   id="message"
@@ -421,53 +441,17 @@ export default function ContactPage() {
                   placeholder="Tell us about your business and what you need..."
                 />
               </div>
-              <div>
-                <label htmlFor="heardFrom" className="form-label">
-                  How did you hear about us?
-                </label>
-                <input
-                  id="heardFrom"
-                  name="heardFrom"
-                  value={form.heardFrom}
-                  onChange={handleChange}
-                  className="form-control"
-                  placeholder="Referral, search, event, etc."
-                />
-              </div>
-              <div className="grid gap-4 sm:grid-cols-2">
-                <div>
-                  <label htmlFor="bestDay" className="form-label">
-                    Best Day to Reach You
-                  </label>
-                  <input
-                    id="bestDay"
-                    name="bestDay"
-                    value={form.bestDay}
-                    onChange={handleChange}
-                    className="form-control"
-                    placeholder="e.g. Tuesday or August 18"
-                  />
-                </div>
-                <DownwardSelect
-                  id="bestTime"
-                  label="Best Times"
-                  name="bestTime"
-                  value={form.bestTime}
-                  options={TIME_OPTIONS}
-                  placeholder="Select a time"
-                  onChange={updateField}
-                />
-              </div>
+              <BookingCalendar value={booking} onChange={setBooking} />
               {submitError && (
                 <p role="alert" className="text-sm font-medium text-red-700">
                   {submitError}
                 </p>
               )}
               <p className="text-xs leading-relaxed text-[#191919]/55">
-                We use the information you provide only to respond to your request and arrange a conversation about DSX Edge.
+                We use the information you provide only to respond to your request and arrange a conversation about DSXEdge.
               </p>
               <PrimaryCta type="submit" disabled={submitting} className="w-full">
-                {submitting ? "Recording Request…" : "Request My Consultation"}
+                {submitting ? "…" : "SUBMIT"}
               </PrimaryCta>
             </form>
           )}

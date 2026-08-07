@@ -296,6 +296,7 @@ h3 {
 .experience-comparison {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
+  gap: 1rem;
 }
 
 .experience-panel {
@@ -313,27 +314,41 @@ h3 {
   background: white;
 }
 
+/* Divider between the two example dialogues inside "The conversation now" */
 .experience-or {
-  position: relative;
-  z-index: 1;
-  display: grid;
-  place-items: center;
-  height: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  margin: 0;
+  padding: 1rem 0;
+  min-height: auto;
+  height: auto;
+}
+
+.experience-or::before,
+.experience-or::after {
+  content: "";
+  flex: 1 1 auto;
+  height: 1px;
+  background: rgb(25 25 25 / 14%);
 }
 
 .experience-or span {
-  display: grid;
-  width: 3rem;
-  height: 3rem;
-  place-items: center;
-  border: 1px solid rgb(17 76 168 / 25%);
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.5rem;
+  padding: 0.35rem 0.75rem;
+  border: 1px solid rgb(17 76 168 / 22%);
   border-radius: 999px;
-  background: white;
+  background: #fff;
   color: #114CA8;
   font-family: "IBM Plex Mono", monospace;
   font-size: 0.6875rem;
   font-weight: 700;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.14em;
+  line-height: 1;
 }
 
 .experience-note {
@@ -613,3 +628,183 @@ summary::-webkit-details-marker {
     transition: none;
   }
 }
+
+/* Features page — mockup-faithful department lists */
+.features-mockup-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.75rem;
+}
+.features-mockup-list li {
+  position: relative;
+  padding: 0.15rem 0 0.15rem 1.35rem;
+  color: rgb(25 25 25 / 78%);
+  font-size: 1rem;
+  line-height: 1.55;
+}
+.features-mockup-list li::before {
+  content: "";
+  position: absolute;
+  top: 0.7rem;
+  left: 0;
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 999px;
+  background: #114CA8;
+}
+.features-dept-row { position: relative; }
+.features-dept-row-alt {
+  background: linear-gradient(90deg, rgb(246 248 250 / 0%) 0%, rgb(246 248 250 / 65%) 18%, rgb(246 248 250 / 65%) 100%);
+}
+@media (min-width: 768px) {
+  .features-dept-row-alt {
+    margin-inline: -1rem;
+    padding-inline: 1rem;
+  }
+}
+
+
+/* Industries accordion */
+.industry-accordion { display: flex; flex-direction: column; gap: 0.625rem; }
+.industry-item {
+  border: 1px solid rgb(25 25 25 / 12%);
+  background: #fff;
+  transition: border-color 180ms ease, box-shadow 180ms ease, background-color 180ms ease;
+}
+.industry-item:hover { border-color: rgb(17 76 168 / 28%); }
+.industry-item.is-open {
+  border-color: rgb(17 76 168 / 35%);
+  box-shadow: 0 10px 28px rgb(16 43 67 / 6%);
+}
+.industry-item-heading { margin: 0; font-size: inherit; font-weight: inherit; }
+.industry-item-trigger {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.875rem 1rem;
+  width: 100%;
+  min-height: 3.75rem;
+  padding: 0.95rem 1rem;
+  text-align: left;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+}
+.industry-item-trigger:hover { background: rgb(246 248 250 / 70%); }
+.industry-item.is-open .industry-item-trigger {
+  background: linear-gradient(90deg, rgb(17 76 168 / 6%) 0%, transparent 58%);
+  border-bottom: 1px solid rgb(25 25 25 / 8%);
+}
+.industry-item-trigger:focus-visible { outline: 2px solid #114CA8; outline-offset: -2px; }
+.industry-item-index {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 2.5rem; height: 2.5rem; padding-inline: 0.4rem;
+  border: 1px solid rgb(252 81 4 / 22%); background: rgb(252 81 4 / 6%);
+  color: #FC5104; font-family: "IBM Plex Mono", monospace; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.06em;
+}
+.industry-item.is-open .industry-item-index {
+  border-color: rgb(17 76 168 / 30%); background: rgb(17 76 168 / 10%); color: #114CA8;
+}
+.industry-item-title {
+  min-width: 0; color: #191919;
+  font-family: "Barlow Semi Condensed", "IBM Plex Sans", sans-serif;
+  font-size: clamp(1.125rem, 2.2vw, 1.375rem); font-weight: 700; letter-spacing: -0.01em; line-height: 1.2; text-transform: uppercase;
+}
+.industry-item-chevron {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 2.25rem; height: 2.25rem; border: 1px solid rgb(25 25 25 / 12%); border-radius: 999px;
+  color: #191919; background: #fff; transition: transform 200ms ease, border-color 160ms ease, background-color 160ms ease, color 160ms ease;
+}
+.industry-item.is-open .industry-item-chevron {
+  transform: rotate(180deg); border-color: rgb(252 81 4 / 35%); background: rgb(252 81 4 / 8%); color: #FC5104;
+}
+.industry-item-panel { padding: 1.25rem 1rem 1.35rem; }
+@media (min-width: 640px) {
+  .industry-item-trigger { padding: 1.05rem 1.25rem; }
+  .industry-item-panel { padding: 0.35rem 1.25rem 1.5rem 5rem; }
+}
+.industry-activity-list { margin: 0; padding: 0; list-style: none; display: grid; gap: 0.65rem; }
+.industry-activity-list li {
+  position: relative; padding: 0.85rem 0.95rem 0.85rem 1.85rem;
+  border: 1px solid rgb(25 25 25 / 8%); background: #f8f9fb; color: rgb(25 25 25 / 78%); font-size: 0.975rem; line-height: 1.55;
+}
+.industry-activity-list li::before {
+  content: ""; position: absolute; top: 1.2rem; left: 0.85rem; width: 0.4rem; height: 0.4rem; border-radius: 999px; background: #114CA8;
+}
+.industry-demo-call {
+  display: flex; align-items: center; gap: 0.85rem; margin-top: 1.15rem; padding: 0.95rem 1rem;
+  border: 1px solid rgb(252 81 4 / 28%);
+  background: linear-gradient(90deg, rgb(252 81 4 / 8%) 0%, rgb(252 81 4 / 2%) 100%);
+  color: #191919; text-decoration: none;
+}
+.industry-demo-call:hover { border-color: rgb(252 81 4 / 55%); }
+.industry-demo-call-icon {
+  display: inline-flex; align-items: center; justify-content: center; width: 2.35rem; height: 2.35rem; flex-shrink: 0;
+  border-radius: 999px; background: #FC5104FA; color: #fff;
+}
+.industry-demo-call-copy { display: flex; min-width: 0; flex: 1 1 auto; flex-direction: column; gap: 0.2rem; }
+.industry-demo-call-line { font-size: 0.95rem; font-weight: 600; line-height: 1.35; }
+.industry-demo-call-arrow { color: #FC5104; }
+.industry-panel-placeholder {
+  margin: 0; max-width: 36rem; padding: 1rem 1.1rem;
+  border: 1px dashed rgb(25 25 25 / 16%); background: #f8f9fb; color: rgb(25 25 25 / 58%); font-size: 0.975rem; line-height: 1.55;
+}
+
+
+/* Contact booking calendar */
+.booking-calendar { display: grid; gap: 0.75rem; }
+.booking-calendar-layout { display: grid; gap: 1rem; }
+@media (min-width: 900px) {
+  .booking-calendar-layout { grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr); align-items: start; }
+}
+.booking-month-panel, .booking-slots-panel {
+  border: 1px solid rgb(25 25 25 / 12%); border-radius: 0.9rem; background: #fff; padding: 0.9rem;
+}
+.booking-month-header, .booking-slots-header {
+  display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; margin-bottom: 0.85rem;
+}
+.booking-slots-header { justify-content: flex-start; }
+.booking-month-title {
+  display: inline-flex; align-items: center; gap: 0.45rem; margin: 0; color: #191919; font-size: 0.95rem; font-weight: 700;
+}
+.booking-nav-btn {
+  display: inline-flex; align-items: center; justify-content: center; width: 2.25rem; height: 2.25rem;
+  border: 1px solid rgb(25 25 25 / 12%); border-radius: 999px; background: #f8f9fb; color: #191919;
+}
+.booking-weekday-row, .booking-day-grid {
+  display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 0.35rem;
+}
+.booking-weekday-row { margin-bottom: 0.4rem; }
+.booking-weekday-row span {
+  text-align: center; color: rgb(25 25 25 / 45%); font-family: "IBM Plex Mono", monospace;
+  font-size: 0.65rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+}
+.booking-day {
+  min-height: 2.4rem; border: 1px solid transparent; border-radius: 0.55rem; background: transparent;
+  color: #191919; font-size: 0.9rem; font-weight: 600;
+}
+.booking-day:not(.empty):not(.is-disabled):hover { border-color: rgb(17 76 168 / 25%); background: rgb(17 76 168 / 6%); }
+.booking-day.is-selected { border-color: #114CA8; background: #114CA8; color: #fff; }
+.booking-day.is-disabled, .booking-day.empty { color: rgb(25 25 25 / 28%); cursor: default; }
+.booking-day.is-disabled { text-decoration: line-through; }
+.booking-slot-grid {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.5rem;
+  max-height: 16rem; overflow-y: auto; overscroll-behavior: contain;
+}
+@media (min-width: 480px) { .booking-slot-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.booking-slot {
+  min-height: 2.5rem; border: 1px solid rgb(25 25 25 / 12%); border-radius: 0.55rem;
+  background: #f8f9fb; color: #191919; font-size: 0.85rem; font-weight: 600;
+}
+.booking-slot:hover { border-color: rgb(252 81 4 / 40%); background: rgb(252 81 4 / 6%); }
+.booking-slot.is-selected {
+  border-color: #FC5104FA; background: rgb(252 81 4 / 12%); box-shadow: inset 0 0 0 1px rgb(252 81 4 / 25%);
+}
+.booking-slots-empty { margin: 0.5rem 0 0; color: rgb(25 25 25 / 55%); font-size: 0.9rem; line-height: 1.45; }
+.booking-selection-summary {
+  margin: 0.9rem 0 0; padding-top: 0.75rem; border-top: 1px solid rgb(25 25 25 / 10%);
+  color: #191919; font-size: 0.875rem;
+}
+

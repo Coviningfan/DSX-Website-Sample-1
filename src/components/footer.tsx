@@ -18,11 +18,11 @@ export default function Footer() {
             <Link
               to="/"
               className="inline-flex min-h-11 items-center gap-2.5 mb-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-              aria-label="DSX Edge home"
+              aria-label="DSXEdge home"
             >
               <img
                 src="/images/dsx-edge-logo-official.png"
-                alt="DSX Edge"
+                alt="DSXEdge"
                 width="472"
                 height="188"
                 className="h-10 w-auto sm:h-12"
@@ -87,7 +87,7 @@ export default function Footer() {
         </div>
 
         <div className="mt-12 grid items-center gap-5 border-t border-white/10 pt-8 text-center text-xs text-white/30 sm:grid-cols-[1fr_auto_1fr] sm:text-left">
-          <p>&copy; {new Date().getFullYear()} DSX Edge. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} DSXEdge. All rights reserved.</p>
           <div className="flex items-center justify-center gap-2.5" aria-label="Powered by JABV Labs">
             <span className="uppercase tracking-[0.14em] text-white/40">Powered by</span>
             <img
