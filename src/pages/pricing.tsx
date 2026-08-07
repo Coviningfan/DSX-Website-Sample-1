@@ -1,169 +1,92 @@
-import { Check, ArrowRight, Phone } from "lucide-react";
+import { ArrowRight, Check } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export default function PricingPage() {
   return (
-    <main className="min-h-screen bg-white">
-      {/* Hero */}
-      <section className="relative pt-44 pb-24 px-4 sm:px-6 md:px-10 max-w-6xl mx-auto">
-        <div className="max-w-3xl">
-          <p className="text-xs uppercase tracking-[0.2em] text-[#0084FF] font-medium mb-4">
-            Pricing
-          </p>
-          <h1 className="font-bold text-4xl sm:text-5xl md:text-6xl leading-[1.1] tracking-tight text-[#191919]">
-            Power Your Business
-          </h1>
-          <h2 className="mt-4 text-2xl sm:text-3xl font-bold text-[#191919]/80">
-            Major Features &middot; Minor Price &middot; Great ROI
-          </h2>
-          <p className="mt-6 text-lg text-[#191919]/60 leading-relaxed max-w-2xl">
-            Improving your business with DSX Edge AI does not cost thousands of dollars.
-            We built our own AI tools so most of the customization and training is automated —
-            saving hundreds of man-hours that we pass on to you.
+    <main className="min-h-screen overflow-x-hidden bg-white">
+      <section className="mx-auto max-w-6xl px-4 pb-20 pt-36 sm:px-6 sm:pb-24 sm:pt-44 md:px-10">
+        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#FC5104FA]">Pricing</p>
+        <h1 className="mt-4 max-w-4xl text-balance text-4xl font-bold leading-tight tracking-tight text-[#191919] sm:text-5xl md:text-6xl">Power Your Business</h1>
+        <p className="mt-5 text-balance text-2xl font-bold text-[#FC5104FA] sm:text-3xl">Major Features • Minor Price • Great ROI</p>
+        <div className="mt-10 max-w-3xl border-l-4 border-[#114CA8] pl-6 sm:pl-8">
+          <p className="text-2xl font-semibold leading-snug text-[#191919]">Improving your business with DSX Edge AI does not cost thousands of dollars.</p>
+          <p className="mt-5 text-lg leading-relaxed text-[#191919]/68">
+            Why? Because we use our own AI tools to do most of the customization and training for your specific company which saves hundreds of man-hours and hundreds of dollars. And we pass those savings on to you.
           </p>
         </div>
       </section>
 
-      {/* Telephone pricing */}
-      <section className="py-20 px-4 sm:px-6 md:px-10 bg-[#F9F8F6]">
-        <div className="max-w-5xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-16">
-            <div>
-              <p className="text-xs uppercase tracking-[0.2em] text-[#0084FF] font-medium mb-4">
-                Telephone Service
-              </p>
-              <h2 className="font-bold text-2xl sm:text-3xl leading-tight tracking-tight text-[#191919] mb-6">
-                Priced by concurrent call capacity, not per person.
-              </h2>
-              <div className="bg-white rounded-2xl border border-gray-200 p-6 mb-6">
-                <p className="text-4xl font-bold text-[#191919] mb-2">We Never Charge Per User.</p>
-                <p className="text-sm text-[#191919]/60 leading-relaxed">
-                  No per-seat fees, no per-extension markups, no "line" charges.
-                  Industry-standard pricing schemes always cost more. We size your system
-                  based on what your business actually needs — not on how many people sit at desks.
-                </p>
-              </div>
-              <p className="text-sm text-[#191919]/50 leading-relaxed">
-                We calculate your capacity by looking at three things: what your company does,
-                how many people you have across every location, and how your phones are actually
-                used day-to-day. That gives us the number of concurrent calls to support — the
-                only number that matters.
-              </p>
-            </div>
-
-            <div>
-              <p className="text-xs uppercase tracking-[0.2em] text-[#0084FF] font-medium mb-4">
-                AI Services
-              </p>
-              <h2 className="font-bold text-2xl sm:text-3xl leading-tight tracking-tight text-[#191919] mb-6">
-                Two components. No surprises.
-              </h2>
-              <div className="space-y-4">
-                <div className="bg-white rounded-2xl border border-gray-200 p-6">
-                  <h3 className="font-semibold text-lg text-[#191919] mb-2">
-                    Customization &amp; Training
-                  </h3>
-                  <p className="text-3xl font-bold text-[#0084FF] mb-2">$300 – $1,000</p>
-                  <p className="text-sm text-[#191919]/60 leading-relaxed">
-                    One-time setup to match the AI agents to your specific business functions,
-                    workflows, products, pricing, and payment terms. Cost depends on how many
-                    business functions you automate.
-                  </p>
-                </div>
-                <div className="bg-white rounded-2xl border border-gray-200 p-6">
-                  <h3 className="font-semibold text-lg text-[#191919] mb-2">
-                    AI Compute &amp; Storage
-                  </h3>
-                  <p className="text-3xl font-bold text-[#0084FF] mb-2">15% – 20%</p>
-                  <p className="text-sm text-[#191919]/60 leading-relaxed">
-                    Ongoing monthly cost that covers AI processing and data storage —
-                    calculated as 15% to 20% of your telephone service charge.
-                    Scales with your usage, not with a pricing committee.
-                  </p>
-                </div>
-              </div>
-              <p className="mt-6 text-sm text-[#191919]/50 leading-relaxed">
-                Together, these charges are almost always less than what you pay for your
-                current telephone service alone — and you get AI-powered operations on top.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ROI framing */}
-      <section className="py-24 px-4 sm:px-6 md:px-10">
-        <div className="max-w-4xl mx-auto">
-          <p className="text-xs uppercase tracking-[0.2em] text-[#0084FF] font-medium mb-4 text-center">
-            Return On Investment
-          </p>
-          <h2 className="font-bold text-3xl sm:text-4xl leading-tight tracking-tight text-[#191919] text-center mb-12">
-            A minimal investment that pays for itself in a week.
-          </h2>
-          <div className="bg-[#F4F3F3] rounded-2xl p-8 md:p-12">
-            <p className="text-lg text-[#191919]/80 leading-relaxed mb-6">
-              Adding DSX Edge AI typically pays for itself in less than a week with just
-              <strong className="text-[#191919]"> one sale you would have missed </strong>
-              or your staff's increased productivity because they aren't spending time on
-              repetitive, low-value tasks.
-            </p>
-            <p className="text-lg font-bold text-[#0084FF]">
-              Everything after that is pure profit.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Cost comparison */}
-      <section className="py-24 px-4 sm:px-6 md:px-10 bg-[#F9F8F6]">
-        <div className="max-w-5xl mx-auto">
-          <h2 className="font-bold text-3xl sm:text-4xl leading-tight tracking-tight text-[#191919] text-center mb-16">
-            Adding DSX Edge AI is equivalent to adding staff —
-            at a fraction of the cost.
-          </h2>
-          <div className="grid sm:grid-cols-3 gap-6 text-center">
-            <div className="bg-white rounded-2xl border border-gray-200 p-6">
-              <p className="text-4xl font-bold text-[#0084FF] mb-2">$0</p>
-              <p className="text-sm text-[#191919]/60">Per user, forever. No seat licenses.</p>
-            </div>
-            <div className="bg-white rounded-2xl border border-gray-200 p-6">
-              <p className="text-4xl font-bold text-[#0084FF] mb-2">24/7</p>
-              <p className="text-sm text-[#191919]/60">Availability. No overtime, no PTO, no benefits.</p>
-            </div>
-            <div className="bg-white rounded-2xl border border-gray-200 p-6">
-              <p className="text-4xl font-bold text-[#0084FF] mb-2">&lt;1</p>
-              <p className="text-sm text-[#191919]/60">Week to break even on a single recovered sale.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section className="py-24 px-4 sm:px-6 md:px-10 text-center">
-        <div className="max-w-2xl mx-auto">
-          <h2 className="font-bold text-3xl sm:text-4xl leading-tight tracking-tight text-[#191919] mb-4">
-            Hear it for yourself.
-          </h2>
-          <p className="text-[#191919]/60 leading-relaxed mb-3">
-            Call our live demo. No forms, no funnel — just pick up the phone.
-          </p>
-          <a
-            href="tel:844-379-3343"
-            className="inline-flex min-h-11 items-center gap-2 px-2 text-lg font-semibold text-[#0084FF] hover:text-[#0066CC] transition-colors duration-200 mb-8"
-          >
-            <Phone className="w-5 h-5" />
-            844-DSX-Edge
-          </a>
+      <section className="bg-[#f6f8fa] px-4 py-20 sm:px-6 sm:py-24 md:px-10">
+        <div className="mx-auto grid max-w-6xl gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:items-center">
           <div>
-            <Link
-              to="/about"
-              className="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium text-white bg-[#0084FF]/80 backdrop-blur-[2px] rounded-2xl hover:scale-[1.02] transition-transform duration-200"
-              style={{ boxShadow: "inset 0px 4px 4px 0px rgba(255,255,255,0.35)" }}
-            >
-              Book A Free Consultation
-              <ArrowRight className="w-4 h-4" />
-            </Link>
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#FC5104FA]">High ROI</p>
+            <h2 className="mt-4 text-balance text-4xl font-bold tracking-tight text-[#191919] sm:text-5xl">Maximize Your Communications Spend</h2>
           </div>
+          <div>
+            <p className="text-lg leading-relaxed text-[#191919]/68">
+              A minimal investment to add DSX Edge AI to your business typically pays for itself in less than a week with just one sale you would have missed or your staff’s increased productivity because they are not spending time on repetitive, low-value tasks.
+            </p>
+            <p className="mt-5 text-2xl font-bold text-[#FC5104FA]">Everything after that is pure profit!</p>
+          </div>
+        </div>
+      </section>
+
+      <section className="px-4 py-20 sm:px-6 sm:py-24 md:px-10 md:py-32">
+        <div className="mx-auto max-w-6xl">
+          <h2 className="text-4xl font-bold tracking-tight text-[#191919] sm:text-5xl">Pricing</h2>
+          <div className="mt-12 grid gap-12 lg:grid-cols-2 lg:gap-16">
+            <article className="border-t-4 border-[#114CA8] pt-7">
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#FC5104FA]">Telephone Service</p>
+              <h3 className="mt-4 text-3xl font-bold tracking-tight text-[#191919]">We Never Charge Per User!</h3>
+              <p className="mt-5 leading-relaxed text-[#191919]/68">
+                Telephone Service is priced based on the concurrent call capacity you need and how you use your phones, not on the number of people, extensions or “lines” – We Never Charge Per User!
+              </p>
+              <p className="mt-6 font-semibold text-[#191919]">We calculate your capacity requirement by looking at:</p>
+              <ul className="mt-4 space-y-4">
+                {[
+                  "What your company does - are you a sales organization that is phone intensive, or a manufacturer that is a light phone user",
+                  "The number of people you have - not only the people in your main location, but also in any other locations around the country or even around the world",
+                  "Your usage profile - how are your phones used, for what, and how often.",
+                ].map((item) => (
+                  <li key={item} className="flex gap-3 leading-relaxed text-[#191919]/68"><Check className="mt-1 h-4 w-4 shrink-0 text-[#FC5104FA]" aria-hidden="true" />{item}</li>
+                ))}
+              </ul>
+              <p className="mt-6 leading-relaxed text-[#191919]/68">
+                This let’s us configure the size of the system you need and also estimate the number of concurrent calls you’re likely to require, which is the critical variable and the reason why we never use simpleminded schemes like charging per user/seat which always results in higher pricing.
+              </p>
+            </article>
+
+            <article className="border-t-4 border-[#FC5104FA] pt-7">
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#FC5104FA]">AI Services</p>
+              <h3 className="mt-4 text-3xl font-bold tracking-tight text-[#191919]">Two cost components</h3>
+              <div className="mt-7 space-y-8">
+                <div>
+                  <p className="font-semibold text-[#191919]">Customization and training</p>
+                  <p className="mt-2 text-3xl font-bold text-[#FC5104FA]">$300 to $1,000</p>
+                  <p className="mt-3 leading-relaxed text-[#191919]/68">Customization and training costs to perfectly match the AI agents to your business, generally $300 to $1000 depending on which and how many business functions you automate.</p>
+                </div>
+                <div>
+                  <p className="font-semibold text-[#191919]">Monthly computing and storage</p>
+                  <p className="mt-2 text-3xl font-bold text-[#FC5104FA]">15% to 20%</p>
+                  <p className="mt-3 leading-relaxed text-[#191919]/68">Small monthly computing and storage cost that covers the AI processing and data storage, which generally comes out to 15% to 20% of your telephone service charge.</p>
+                </div>
+              </div>
+              <p className="mt-7 border-l-2 border-[#FC5104FA] pl-5 font-semibold leading-relaxed text-[#191919]">Together these charges are almost always less than you are paying for your current telephone service alone.</p>
+            </article>
+          </div>
+          <p className="mt-14 max-w-4xl text-lg leading-relaxed text-[#191919]/68">
+            Adding DSX Edge AI to your business is equivalent to adding staff, but at a fraction of the cost and without the overhead of paid time off, overtime, or benefits. And it makes your current staff more productive by offloading repetitive tasks.
+          </p>
+        </div>
+      </section>
+
+      <section className="bg-[#f6f8fa] px-4 py-20 text-[#191919] sm:px-6 sm:py-24 md:px-10">
+        <div className="mx-auto flex max-w-6xl flex-col items-start justify-between gap-8 md:flex-row md:items-center">
+          <h2 className="max-w-3xl text-balance text-4xl font-bold tracking-tight sm:text-5xl">Major Features • Minor Price • Great ROI</h2>
+          <Link to="/contact" className="consultation-action inline-flex min-h-11 shrink-0 items-center gap-2 rounded-lg bg-[#FC5104FA] px-6 py-3 text-sm font-semibold uppercase tracking-[0.08em] text-white hover:bg-[#FC5104]">
+            Book a Free Consultation
+            <ArrowRight className="h-4 w-4" aria-hidden="true" />
+          </Link>
         </div>
       </section>
     </main>

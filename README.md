@@ -8,8 +8,8 @@ Migrated from the PortfolioRevamp (Replit-based) codebase to Zo Site. DSX Edge i
 
 ### 2026-08-05 Client Presentation Readiness
 
-- The site is a five-page React application: Home, Features, Industries, Pricing, and About/Contact.
-- The homepage uses the approved tunnel hero and presents the SignalOrb in the dedicated How It Works section.
+- The site is a six-page React application: Home, Features, Industries, Pricing, About, and Contact.
+- The homepage uses the approved tunnel hero. The SignalOrb remains an internal reusable asset and is not rendered on public routes.
 - Homepage persuasion follows the approved mockup: missed-opportunity problem, natural conversation examples, platform explanation, turnkey implementation, department coverage, industry workflows, live demo, and consultation CTA.
 - The contact form writes validated requests to `data/contact-submissions.sqlite`; it does not claim success unless the API records the submission.
 - Only confirmed demo numbers are callable. Automotive uses 844-379-2886; other industry demo lines remain visibly pending confirmation.
@@ -19,20 +19,21 @@ Migrated from the PortfolioRevamp (Replit-based) codebase to Zo Site. DSX Edge i
 
 - `Web Mockup-5` is the content-and-flow authority for the five public pages; it explicitly is not a visual design specification.
 - `DSXEdge Website Design Brief-1` defines the audience, positioning, brand qualities, logo-derived colors, and whitespace direction.
-- The homepage serves an optimized derivative of the exact hero image embedded in slide 1. Navigation includes Features, Industries, Pricing, and About, with the consultation action serving as the direct contact path.
+- The homepage serves an optimized derivative of the exact hero image embedded in slide 1. Navigation includes Features, Industries, Pricing, About, and the dedicated Contact route.
 - Homepage functions, feature categories, industry choices, pricing structure, About copy, contact fields, contact details, and confirmed demo numbers track the supplied source documents.
 - Unverified claims and unavailable industry demo numbers remain excluded or marked pending. Consultation CTAs use the contact form until the owner supplies the calendar URL requested by the mockup.
+- Web presentation rules are documented in `docs/DSX-EDGE-STYLE-GUIDE.md`.
 
 ### 2026-08-04 Audit Fixes (verified live)
 
-- **Nav anchor fix:** All navigation destinations resolve to working routes; the dedicated consultation action links directly to the contact form.
+- **Nav anchor fix:** "Features" now resolves to `#departments` (the section ID was missing, leaving dead links). All five nav links verified: Features→#departments, Industries→#industries, Pricing→#pricing, About→#about, Contact→#contact.
 - **Footer link hygiene:** Removed dead "Case Studies" / "Resources" links — those routes no longer exist (case studies were removed per owner direction); footer Company column is now About + Contact only.
 - **Claim verification:** Replaced unverified stats with source-backed values from the original codebase: `99.9% Uptime SLA` (was 99.97%), `100K+/mo Minutes on one platform` (was 2.4M+/mo — original cites a 100,000+ minutes/month testimonial), removed invented "400+ companies" headline. Contact email corrected to `hello@dsxedge.com` (canonical in original `src/lib/site.ts`).
 - **Pricing** remains descriptive with no tiers: telephone priced by concurrent capacity, AI customization $300–$1,000, ongoing AI 15–20% of telephone charge. No plans, no monthly prices, no feature tables.
 
-### SignalOrb runtime decisions (Three.js)
+### Preserved SignalOrb asset (Three.js)
 
-- Orb is the interactive centerpiece of the dedicated **How It Works** section, not part of the homepage hero.
+- The orb is retained for internal prototypes, presentations, or a future technical page; it is not part of the public homepage.
 - Internal particles travel left-to-right in six deterministic helical streams through the core and shift from blue through a brighter white core to amber. This coherent lane structure makes direction readable without enlarging the particles. Three inbound blue rails and three outbound amber rails carry luminous directional packets.
 - The six particle streams retain the first orb's continuous coherent roll while moving through the core. Focusing the communications, core, or actions zone accelerates the internal transit, with the core producing the strongest response.
 - The particle field uses 240 high-contrast points and more legible transit speed. Motion runs continuously while the visualization is onscreen; there is no visible motion toolbar.
@@ -49,41 +50,64 @@ Migrated from the PortfolioRevamp (Replit-based) codebase to Zo Site. DSX Edge i
 - SignalOrb has three intentional scene modes: side explanations on wide desktop, two explanation columns below the scene on tablet/narrow desktop, and stacked explanations on mobile.
 - Orb scale is constrained by both stage width and height. The scene recenters below 760px so the sphere and all six directional rails remain visible without horizontal overflow.
 - Mobile orb touch zones do not intercept vertical scrolling. Keyboard focus zones remain available from tablet widths upward.
-- Mobile layer dialogs render in the viewport layer and lock background scrolling while open, keeping every selector and the Close action reachable without changing the desktop modal layout.
 - Mobile sections use a 80px baseline rhythm, increasing to 96–128px at larger breakpoints. Long workflow cards use native disclosure controls on mobile and remain fully expanded from the small breakpoint upward.
 - Motion continues while the visualization is onscreen and suspends offscreen. Reduced-motion preferences remove transition effects without hiding the operating model.
+
+### Final mockup homepage alignment (2026-08-06)
+
+- The homepage follows the approved content flow: business-communications hero, missed-profit problem, natural-conversation proof, Mary live demo, department/functions, platform explanation, Turnkey AI, workflow examples, and consultation.
+- The source-controlled industry crawl pauses on hover/focus and becomes a static wrapped list under reduced motion.
+- SignalOrb and its selector panel are no longer imported by the public homepage. The reusable implementation remains preserved in `src/components/signal-orb.tsx` and `src/components/signal-orb.css`.
 
 ### Features page
 
 - The dedicated Features page presents Business Communications as the shared foundation, followed by five connected operating areas: Sales, Marketing, Customer Service, Shipping & Returns, and Management.
 - Each capability leads with an operational outcome, keeps three representative functions visible, and exposes the remaining functions through a native keyboard-accessible disclosure.
-- The page uses the existing industrial blue/orange system, square technical surfaces, and one consolidated consultation action rather than a repetitive stack of equal cards.
+- The page uses a neutral architectural sequence: one white communications-foundation band followed by five full-width operating rows with blue structural details, orange emphasis, and one consolidated consultation action.
+
+### 2026-08-06 visual-system refinement
+
+- Barlow Semi Condensed is the display face; IBM Plex Sans remains the body/interface face and IBM Plex Mono remains the data face.
+- Tablet/desktop show the official logo within the hero, then reveal the compact fixed navbar after the industry crawl leaves the viewport. Mobile navigation remains immediately available.
+- The industry list is a continuous accessible carousel with pause/resume control, hover/focus pause, and a static reduced-motion presentation.
+- Major content sections use white or neutral-gray surfaces. Company blue `#114CA8` is structural; company orange identifies emphasis and primary actions.
+- Public-route emphasis is standardized: eyebrows, key figures, primary actions, disclosure indicators, and emphasized links use company orange `#FC5104` at 98% opacity (`#FC5104FA`). Blue remains reserved for structure, informational icons, links where appropriate, and focus indication.
+
+### Homepage motion and contact routing refinement
+
+- The hero keeps the approved single-layer tunnel treatment while its copy occupies a more intentional left editorial rail on wide screens.
+- The industry crawl uses an evenly spaced continuous loop. The opportunity comparison is one composed old-way / OR / DSX-way unit; source dialogue is unchanged.
+- Page sections receive restrained, one-time viewport entrance motion without being hidden before JavaScript runs. Reduced-motion preferences remove the entrances and CTA movement.
+- About and Contact are separate routes. `/about` contains company positioning; `/contact` owns the validated consultation form.
+- Industry, company-size, and preferred-time controls use accessible in-page option panels that open below their triggers. The preferred-day field is free text, and the form records a new free-text “How did you hear from us?” response.
+- The internal `/_design` component showcase is route-lazy-loaded so its accessibility primitives do not inflate the public website&rsquo;s initial JavaScript bundle.
+- The shared footer uses a larger official DSX Edge mark and restores centered “Powered by JABV Labs” attribution with the existing transparent brand asset.
 
 ### Opportunity section
 
 - The homepage's missed-opportunity section uses an explicitly illustrative live-call timeline: incoming call, request understood, availability checked, and appointment confirmed.
-- A restrained blue-to-orange pulse travels down the timeline connectors to reinforce the request sequence; reduced-motion preferences keep the connectors static.
 - Example timestamps are presentation devices, not performance guarantees or measured customer results.
 
-### Hero blend (2026-08-04)
+### Superseded hero blend experiment (2026-08-04)
+
+The following treatment is retained as historical context only and is superseded by the final mockup alignment:
 
 - Mockup-requested tunnel image (`public/images/hero-tunnel.webp`, extracted from Web Mockup-5) is the full-bleed hero base.
 - SignalOrb is layered over it with `mix-blend-screen`, reduced opacity (~70%), and a radial mask centered toward the tunnel vanishing point so particles/flows read as energy traveling the corridor.
 - Stage solid dark fill is cleared via `.hero-orb-blend` CSS so the tunnel shows through; left-side + bottom gradients keep left-aligned copy readable.
 - Section uses `min-h-[min(72vh,720px)]` for presence while remaining content-driven.
 
-### Hero media refinement (2026-08-06)
+### Hero media correction (2026-08-06)
 
-- The homepage uses one optimized static tunnel image with breakpoint-specific `object-position`; the duplicated blurred fill and scroll-driven blur were removed.
-- The tunnel ships with responsive 960px, 1600px, and 2560px WebP sources and a matching responsive preload so browsers fetch and decode only the resolution needed for the viewport as early as possible.
-- Static media remains intentional: it preserves headline readability, reduced-motion behavior, and predictable LCP while the separate SignalOrb carries meaningful system motion.
-- The full DSX Edge wordmark is centered above the hero promise at a responsive 130–160px width. The navbar remains logo-free while the homepage hero is visible. After the hero passes, the navbar reserves the logo space over 400ms, then performs a distinct 600ms right-to-left wordmark wipe; the reverse sequence runs when returning to the hero. Interior pages show the compact wordmark immediately.
+- The homepage uses a single optimized static derivative of the owner-supplied 4000×2242 tunnel image.
+- Breakpoint-specific `object-position` preserves the vanishing point; blurred duplicates, fake side extensions, and scroll-driven full-screen filters are removed.
+- Static media is intentional for stable readability, reduced-motion behavior, and predictable LCP.
 
 ### Phase 1 Design Decisions (Homepage Redesign)
 
 **Font pairing:** IBM Plex Sans (body) + IBM Plex Mono (data/metrics). Loaded from Google Fonts in `index.html`.
 
-**Theme:** Near-black navy foundation (`oklch(0.10 0.012 258)`, defaulted to dark) with refined blue (`oklch(0.62 0.15 255)`) for infrastructure/trust and orange (`oklch(0.66 0.16 45)`) for action as the only accent roles. Tuned in `src/theme.json` (wired via `src/lib/zo-theme.ts` at runtime; `.dark` fallback tokens live in `src/styles.css`). No gradient text, no glassmorphism, no glow effects.
+**Theme:** Near-black navy foundation (`oklch(0.10 0.012 258)`, defaulted to dark) with company blue (`#114CA8`) for infrastructure/trust and company orange (`#FC5104` at 98% opacity) for action as the only accent role. Tuned in `src/theme.json` (wired via `src/lib/zo-theme.ts` at runtime; `.dark` fallback tokens live in `src/styles.css`). No gradient text, no glassmorphism, no glow effects.
 
 **Layout:** Left-aligned editorial grid. Full-bleed elements. Rounded corners at `--radius-lg` (0.625rem). No rounded-2xl or card overload.
 

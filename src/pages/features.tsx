@@ -105,22 +105,22 @@ function CapabilityList({ items }: { items: string[] }) {
     <>
       <ul className="mt-6 space-y-3">
         {items.slice(0, 3).map((item) => (
-          <li key={item} className="flex items-start gap-3 text-sm leading-relaxed text-white/72">
-            <Check className="mt-0.5 h-4 w-4 shrink-0 text-[#69baff]" aria-hidden="true" />
+          <li key={item} className="flex items-start gap-3 text-sm leading-relaxed text-[#191919]/68">
+            <Check className="mt-0.5 h-4 w-4 shrink-0 text-[#FC5104FA]" aria-hidden="true" />
             <span>{item}</span>
           </li>
         ))}
       </ul>
       <details className="group mt-3">
-        <summary className="inline-flex min-h-11 list-none items-center gap-2 text-sm font-semibold text-[#9fd3ff] marker:hidden focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#69baff]">
+        <summary className="inline-flex min-h-11 list-none items-center gap-2 text-sm font-semibold text-[#FC5104FA] marker:hidden focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#114CA8]">
           <span className="group-open:hidden">View all capabilities</span>
           <span className="hidden group-open:inline">Show fewer capabilities</span>
           <ArrowRight className="h-4 w-4 transition-transform duration-200 group-open:rotate-90 motion-reduce:transition-none" aria-hidden="true" />
         </summary>
         <ul className="space-y-3 pb-1 pt-1">
           {items.slice(3).map((item) => (
-            <li key={item} className="flex items-start gap-3 text-sm leading-relaxed text-white/72">
-              <Check className="mt-0.5 h-4 w-4 shrink-0 text-[#f28a45]" aria-hidden="true" />
+            <li key={item} className="flex items-start gap-3 text-sm leading-relaxed text-[#191919]/68">
+              <Check className="mt-0.5 h-4 w-4 shrink-0 text-[#FC5104FA]" aria-hidden="true" />
               <span>{item}</span>
             </li>
           ))}
@@ -138,7 +138,7 @@ export default function FeaturesPage() {
       <section className="px-4 pb-20 pt-36 sm:px-6 sm:pb-24 sm:pt-44 md:px-10">
         <div className="mx-auto grid max-w-6xl gap-12 lg:grid-cols-[1.2fr_0.8fr] lg:items-end">
           <div>
-            <p className="mb-4 text-xs font-medium uppercase tracking-[0.2em] text-[#0872d6]">
+            <p className="mb-4 text-xs font-medium uppercase tracking-[0.2em] text-[#FC5104FA]">
               Platform Features
             </p>
             <h1 className="max-w-4xl text-balance text-4xl font-bold leading-[1.04] tracking-[-0.035em] text-[#191919] sm:text-5xl md:text-6xl">
@@ -151,7 +151,7 @@ export default function FeaturesPage() {
             </p>
           </div>
 
-          <aside className="border-l-2 border-[#0872d6] pl-6" aria-label="Platform structure">
+          <aside className="border-l-2 border-[#114CA8] pl-6" aria-label="Platform structure">
             <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-[#191919]/42">
               Operating model
             </p>
@@ -165,72 +165,77 @@ export default function FeaturesPage() {
         </div>
       </section>
 
-      <section className="bg-[#102b43] px-4 py-20 text-white sm:px-6 sm:py-24 md:px-10 md:py-28">
+      <section className="bg-[#f6f8fa] px-4 py-20 text-[#191919] sm:px-6 sm:py-24 md:px-10 md:py-28">
         <div className="mx-auto max-w-6xl">
-          <div className="grid gap-8 border-y border-white/12 py-8 lg:grid-cols-[0.78fr_1.22fr] lg:items-center lg:gap-16 lg:py-10">
-            <div className="flex items-start gap-5">
-              <span className="flex size-12 shrink-0 items-center justify-center border border-[#69baff]/45 bg-[#69baff]/8 text-[#9fd3ff]">
-                <FoundationIcon className="h-6 w-6" aria-hidden="true" />
-              </span>
-              <div>
-                <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#9fd3ff]/70">
-                  Foundation / 01
-                </p>
-                <h2 className="mt-2 text-2xl font-bold tracking-tight sm:text-3xl">
-                  {foundation.title}
-                </h2>
-                <p className="mt-3 max-w-md text-pretty text-base leading-relaxed text-white/65">
-                  {foundation.outcome}
-                </p>
+          <div className="relative border-y border-[#191919]/12 bg-white px-6 py-8 sm:px-8 sm:py-10 lg:px-10">
+            <div className="absolute inset-x-0 top-0 h-1 bg-[#FC5104FA]" aria-hidden="true" />
+            <div className="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-start lg:gap-16">
+              <div className="flex items-start gap-5">
+                <span className="flex size-12 shrink-0 items-center justify-center border border-[#114CA8]/30 text-[#114CA8]">
+                  <FoundationIcon className="h-6 w-6" aria-hidden="true" />
+                </span>
+                <div>
+                  <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#FC5104FA]">
+                    Foundation / 01
+                  </p>
+                  <h2 className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">
+                    {foundation.title}
+                  </h2>
+                  <p className="mt-3 max-w-md text-pretty leading-relaxed text-[#191919]/65">
+                    {foundation.outcome}
+                  </p>
+                </div>
               </div>
-            </div>
-            <div className="grid gap-7 md:grid-cols-[1fr_0.9fr] md:items-start">
-              <p className="text-pretty leading-relaxed text-white/72">{foundation.description}</p>
-              <CapabilityList items={foundation.items} />
+              <div className="grid gap-7 md:grid-cols-[1fr_0.9fr] md:items-start">
+                <p className="text-pretty text-lg leading-relaxed text-[#191919]/68">{foundation.description}</p>
+                <CapabilityList items={foundation.items} />
+              </div>
             </div>
           </div>
 
-          <div className="mt-14 flex items-end justify-between gap-8">
+          <div className="mb-8 mt-16 flex items-end justify-between gap-8">
             <div>
-              <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#f7a66f]">
+              <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#FC5104FA]">
                 Connected operations / 02–06
               </p>
               <h2 className="mt-3 max-w-2xl text-balance text-3xl font-bold leading-tight tracking-tight sm:text-4xl">
                 Communications become completed work.
               </h2>
             </div>
-            <p className="hidden max-w-sm text-sm leading-relaxed text-white/55 lg:block">
+            <p className="hidden max-w-sm text-sm leading-relaxed text-[#191919]/55 lg:block">
               Information moves between departments instead of stopping at a voicemail, inbox, or
               handoff someone has to remember.
             </p>
           </div>
 
-          <div className="features-capability-grid mt-10 grid gap-px border border-white/12 bg-white/12 md:grid-cols-2">
+          <div className="border-t border-[#191919]/14">
             {operatingCapabilities.map((capability, index) => {
               const Icon = capability.icon;
               return (
                 <article
                   key={capability.title}
-                  className={`relative bg-[#153650] p-6 sm:p-8 ${index === operatingCapabilities.length - 1 ? "md:col-span-2 md:grid md:grid-cols-2 md:gap-12" : ""}`}
+                  className={`features-capability-row grid min-w-0 gap-7 border-b border-[#191919]/14 py-9 sm:py-11 md:grid-cols-[6rem_minmax(0,1.05fr)_minmax(16rem,0.95fr)] md:gap-10 ${index % 2 === 1 ? "features-capability-row-alt" : ""}`}
                 >
-                  <div>
-                    <div className="flex items-center justify-between gap-4">
-                      <span className="flex size-10 items-center justify-center border border-white/14 text-[#9fd3ff]">
-                        <Icon className="h-5 w-5" aria-hidden="true" />
-                      </span>
-                      <span className="font-mono text-[10px] tracking-[0.18em] text-white/35">
-                        {String(index + 2).padStart(2, "0")}
-                      </span>
-                    </div>
-                    <h3 className="mt-7 text-2xl font-bold tracking-tight">{capability.title}</h3>
-                    <p className="mt-3 max-w-xl text-pretty leading-relaxed text-white/78">
+                  <div className="flex items-center gap-4 md:block">
+                    <span className="flex size-11 items-center justify-center border border-[#114CA8]/25 bg-white text-[#114CA8]">
+                      <Icon className="h-5 w-5" aria-hidden="true" />
+                    </span>
+                    <span className="font-mono text-xs tracking-[0.18em] text-[#FC5104FA] md:mt-4 md:block">
+                      {String(index + 2).padStart(2, "0")}
+                    </span>
+                  </div>
+                  <div className="min-w-0">
+                    <h3 className="text-3xl font-bold tracking-tight sm:text-4xl">{capability.title}</h3>
+                    <p className="mt-3 max-w-xl text-pretty leading-relaxed text-[#191919]/78">
                       {capability.outcome}
                     </p>
-                    <p className="mt-4 max-w-xl text-sm leading-relaxed text-white/52">
+                    <p className="mt-4 max-w-xl text-sm leading-relaxed text-[#191919]/52">
                       {capability.description}
                     </p>
                   </div>
-                  <CapabilityList items={capability.items} />
+                  <div className="min-w-0 md:border-l md:border-[#191919]/12 md:pl-8">
+                    <CapabilityList items={capability.items} />
+                  </div>
                 </article>
               );
             })}
@@ -241,7 +246,7 @@ export default function FeaturesPage() {
       <section className="px-4 py-20 sm:px-6 sm:py-24 md:px-10">
         <div className="mx-auto grid max-w-5xl gap-8 border-y border-[#191919]/12 py-10 md:grid-cols-[1fr_auto] md:items-center">
           <div>
-            <p className="text-xs font-medium uppercase tracking-[0.2em] text-[#c85f1f]">
+            <p className="text-xs font-medium uppercase tracking-[0.2em] text-[#FC5104FA]">
               Configured for your operation
             </p>
             <h2 className="mt-3 text-balance text-3xl font-bold tracking-tight text-[#191919] sm:text-4xl">
@@ -253,10 +258,10 @@ export default function FeaturesPage() {
             </p>
           </div>
           <Link
-            to="/about#contact"
-            className="inline-flex min-h-12 items-center justify-center gap-2 bg-[#e2712f] px-6 py-3 text-sm font-semibold text-white transition-colors duration-200 hover:bg-[#c85f1f] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#0872d6]"
+            to="/contact"
+            className="consultation-action inline-flex min-h-12 items-center justify-center gap-2 bg-[#FC5104FA] px-6 py-3 text-sm font-semibold text-white transition-colors duration-200 hover:bg-[#FC5104] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#114CA8]"
           >
-            Request A Consultation
+            Book a Free Consultation
             <ArrowRight className="h-4 w-4" aria-hidden="true" />
           </Link>
         </div>

@@ -2,31 +2,24 @@ import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
 export default function ScrollMotion() {
-  const { pathname, hash } = useLocation();
+  const { pathname } = useLocation();
 
   useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
-    const sections = Array.from(
-      document.querySelectorAll<HTMLElement>("main > section:not(:first-child)"),
-    );
     const hero = document.querySelector<HTMLElement>("main > section:first-child");
+    const sections = Array.from(document.querySelectorAll<HTMLElement>("main > section:not(:first-child)"));
     let frame = 0;
 
-    sections.forEach((section) => section.setAttribute("data-scroll-motion", ""));
-    if (hash) {
-      document.getElementById(hash.slice(1))?.classList.add("is-motion-visible");
-    }
-
-    const observer = new IntersectionObserver(
+    const revealObserver = new IntersectionObserver(
       (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) entry.target.classList.add("is-motion-visible");
-        });
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          entry.target.classList.add("scroll-enter");
+          revealObserver.unobserve(entry.target);
+        }
       },
-      { rootMargin: "0px 0px -8%", threshold: 0.08 },
+      { threshold: 0.08, rootMargin: "0px 0px -6% 0px" },
     );
-    sections.forEach((section) => observer.observe(section));
+    sections.forEach((section) => revealObserver.observe(section));
 
     const render = () => {
       if (hero) {
@@ -57,17 +50,13 @@ export default function ScrollMotion() {
 
     return () => {
       cancelAnimationFrame(frame);
-      observer.disconnect();
       window.removeEventListener("scroll", update);
       window.removeEventListener("resize", update);
-      sections.forEach((section) => {
-        section.removeAttribute("data-scroll-motion");
-        section.classList.remove("is-motion-visible");
-      });
+      revealObserver.disconnect();
       hero?.style.removeProperty("--hero-motion");
       document.documentElement.style.removeProperty("--nav-motion");
     };
-  }, [pathname, hash]);
+  }, [pathname]);
 
   return null;
 }

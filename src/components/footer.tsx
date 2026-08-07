@@ -6,6 +6,7 @@ const PAGES = [
   { label: "Industries", href: "/industries" },
   { label: "Pricing", href: "/pricing" },
   { label: "About", href: "/about" },
+  { label: "Contact", href: "/contact" },
 ];
 
 export default function Footer() {
@@ -16,11 +17,9 @@ export default function Footer() {
           <div className="lg:col-span-2">
             <Link to="/" className="inline-flex min-h-11 items-center gap-2.5 mb-4" aria-label="DSX Edge home">
               <img
-                src="/images/dsx-edge-logo.png"
+                src="/images/dsx-edge-logo-official.png"
                 alt="DSX Edge"
-                width="735"
-                height="339"
-                className="h-auto w-36 sm:w-40"
+                className="h-10 w-auto sm:h-12"
               />
             </Link>
             <p className="text-sm text-white/50 leading-relaxed max-w-sm">
@@ -30,7 +29,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <p className="text-xs font-medium uppercase tracking-[0.2em] text-white/30 mb-4">
+            <p className="mb-4 text-xs font-medium uppercase tracking-[0.2em] text-[#FC5104FA]">
               Pages
             </p>
             <ul className="space-y-2.5">
@@ -38,7 +37,7 @@ export default function Footer() {
                 <li key={page.href}>
                   <Link
                     to={page.href}
-                    className="inline-flex min-h-11 items-center text-sm text-white/60 hover:text-white transition-colors duration-200"
+                    className="inline-flex min-h-11 items-center text-sm text-white/60 transition-colors duration-200 hover:text-[#FC5104FA]"
                   >
                     {page.label}
                   </Link>
@@ -48,22 +47,22 @@ export default function Footer() {
           </div>
 
           <div>
-            <p className="text-xs font-medium uppercase tracking-[0.2em] text-white/30 mb-4">
+            <p className="mb-4 text-xs font-medium uppercase tracking-[0.2em] text-[#FC5104FA]">
               Contact
             </p>
             <ul className="space-y-2.5 text-sm text-white/50">
               <li>
-                <a href="tel:775-624-9424" className="inline-flex min-h-11 items-center hover:text-white transition-colors duration-200">
+                <a href="tel:775-624-9424" className="inline-flex min-h-11 items-center transition-colors duration-200 hover:text-[#FC5104FA]">
                   775-624-9424
                 </a>
               </li>
               <li>
-                <a href="mailto:info@dsxedge.com" className="inline-flex min-h-11 items-center hover:text-white transition-colors duration-200">
+                <a href="mailto:info@dsxedge.com" className="inline-flex min-h-11 items-center transition-colors duration-200 hover:text-[#FC5104FA]">
                   info@dsxedge.com
                 </a>
               </li>
               <li>
-                <a href="mailto:sales@dsxedge.com" className="inline-flex min-h-11 items-center hover:text-white transition-colors duration-200">
+                <a href="mailto:sales@dsxedge.com" className="inline-flex min-h-11 items-center transition-colors duration-200 hover:text-[#FC5104FA]">
                   sales@dsxedge.com
                 </a>
               </li>
@@ -72,16 +71,20 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 flex flex-col items-center gap-5 border-t border-white/10 pt-8 text-xs text-white/30">
+        <div className="mt-12 grid items-center gap-5 border-t border-white/10 pt-8 text-center text-xs text-white/30 sm:grid-cols-[1fr_auto_1fr] sm:text-left">
           <p>&copy; {new Date().getFullYear()} DSX Edge. All rights reserved.</p>
-          <div className="flex items-center gap-3" aria-label="Powered by JABV Labs">
-            <span className="uppercase tracking-[0.18em] text-white/35">Powered by</span>
+          <div className="flex items-center justify-center gap-2.5" aria-label="Powered by JABV Labs">
+            <span className="uppercase tracking-[0.14em] text-white/40">Powered by</span>
             <img
-              src="/images/jabv-labs-logo.png"
+              src="/assets/JABVLABS_LOGO_HD-removebg-preview_1771726977207.png"
               alt="JABV Labs"
-              className="h-5 w-auto opacity-80"
+              width="613"
+              height="135"
+              loading="lazy"
+              className="h-5 w-auto sm:h-6"
             />
           </div>
+          <p className="sm:text-right">Every Department, Every Function, 24/7.</p>
         </div>
       </div>
     </footer>
