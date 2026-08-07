@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import SignalOrb from "@/components/signal-orb";
 import {
@@ -9,11 +9,9 @@ import {
 import { Link } from "react-router-dom";
 
 const DEPARTMENTS = [
-  "Customer Service", "Sales", "Marketing", "Appointment Setting",
-  "Shipping", "Management", "Finance", "Human Resources",
-  "IT", "Legal", "Construction", "Hotels", "Medical", "Retail",
-  "Transportation", "Logistics", "Wholesale", "Professional Services",
-  "Manufacturing", "Education",
+  "Customer Service", "Order Taking", "Appointment Setting",
+  "Return Processing & RMAs", "Dispatch", "Inventory Control",
+  "Accounting Inquiries", "Troubleshooting", "FAQs", "And Much More",
 ];
 
 const WORKFLOW_EXAMPLES = [
@@ -53,8 +51,12 @@ const WORKFLOW_EXAMPLES = [
 export default function HomePage() {
   const [modalOpen, setModalOpen] = useState(false);
   const [activeLayer, setActiveLayer] = useState<number>(0);
+  const modalRef = useRef<HTMLDivElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const modalTriggerRef = useRef<HTMLElement | null>(null);
 
   const openModal = (layer: number) => {
+    modalTriggerRef.current = document.activeElement as HTMLElement;
     setActiveLayer(layer);
     setModalOpen(true);
   };
@@ -67,6 +69,35 @@ export default function HomePage() {
 
     return () => {
       document.body.style.overflow = previousOverflow;
+    };
+  }, [modalOpen]);
+
+  useEffect(() => {
+    if (!modalOpen) return;
+
+    closeButtonRef.current?.focus();
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setModalOpen(false);
+      if (event.key !== "Tab" || !modalRef.current) return;
+
+      const focusable = Array.from(
+        modalRef.current.querySelectorAll<HTMLElement>("button, a[href]"),
+      ).filter((element) => !element.hasAttribute("disabled"));
+      const first = focusable[0];
+      const last = focusable.at(-1);
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last?.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first?.focus();
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+      modalTriggerRef.current?.focus();
     };
   }, [modalOpen]);
 
@@ -90,18 +121,32 @@ export default function HomePage() {
 
   return (
     <main className="min-h-screen bg-white overflow-x-hidden">
-      <section className="relative flex min-h-[100svh] flex-col overflow-hidden pt-[env(safe-area-inset-top)] max-md:min-h-0">
+      <section id="home-hero" className="relative flex min-h-[100svh] flex-col overflow-hidden pt-[env(safe-area-inset-top)] max-md:min-h-0">
         <div className="absolute inset-0 z-0 hero-tunnel-bg" aria-hidden="true">
           <img
-            src="/images/dsx-edge-bkg.jpg"
+            src="/images/dsx-edge-bkg.webp"
+            srcSet="/images/dsx-edge-bkg-960.webp 960w, /images/dsx-edge-bkg-1600.webp 1600w, /images/dsx-edge-bkg.webp 2560w"
+            sizes="100vw"
             alt=""
-            className="relative z-[1] block h-full w-full object-contain object-center"
+            width="2560"
+            height="1435"
+            fetchPriority="high"
+            loading="eager"
+            decoding="async"
+            className="block h-full w-full object-cover"
           />
         </div>
         <div className="absolute inset-0 z-[2] bg-gradient-to-b from-white/10 via-transparent to-[#d9ebf7]/20" />
 
-        <div className="relative z-10 flex flex-1 flex-col items-center px-4 pb-8 pt-24 sm:px-6 sm:pt-32 md:pb-0 md:pt-36">
-          <h1 className="max-w-5xl text-balance text-center text-[clamp(2.65rem,12vw,4.5rem)] font-bold leading-[1.02] tracking-[-0.045em] text-[#191919] md:text-7xl lg:text-8xl">
+        <div className="relative z-10 flex flex-1 flex-col items-center px-4 pb-8 pt-24 sm:px-6 sm:pt-28 md:pb-0">
+          <img
+            src="/images/dsx-edge-logo.png"
+            alt="DSX Edge"
+            width="735"
+            height="339"
+            className="w-[130px] object-contain opacity-100 contrast-125 saturate-125 sm:w-[145px] lg:w-[160px]"
+          />
+          <h1 className="mt-5 max-w-5xl text-balance text-center text-[clamp(2.65rem,12vw,4.5rem)] font-bold leading-[1.02] tracking-[-0.045em] text-[#191919] sm:mt-6 md:text-7xl lg:text-8xl">
             Every Department, Every Function, 24/7.
           </h1>
           <p className="mt-4 text-center text-lg font-semibold text-[#0084FF] sm:text-xl md:text-2xl">
@@ -153,7 +198,7 @@ export default function HomePage() {
                   key={item.num}
                   type="button"
                   onClick={() => openModal(index)}
-                  className="group flex items-center justify-between bg-[#F4F3F3] px-4 py-4 text-left transition-colors duration-200 hover:bg-[#e9eef2] sm:px-6"
+                  className="group flex min-h-11 items-center justify-between bg-[#F4F3F3] px-4 py-4 text-left transition-colors duration-200 hover:bg-[#e9eef2] focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-[#0872d6] sm:px-6"
                 >
                   <span className="flex items-center gap-2">
                     <span className="font-medium text-[#191919]/40">{item.num}</span>
@@ -209,7 +254,7 @@ export default function HomePage() {
                 <li key={title} className="relative grid grid-cols-[3.5rem_1rem_1fr] gap-3 border-b border-white/8 py-5 last:border-b-0 sm:grid-cols-[4rem_1rem_1fr]">
                   <span className="pt-0.5 font-mono text-[11px] text-white/48">{time}</span>
                   <span className="relative mt-1 flex justify-center" aria-hidden="true">
-                    {index < 3 && <span className="absolute left-1/2 top-3 h-[calc(100%+1.6rem)] w-px -translate-x-1/2 bg-gradient-to-b from-[#4aa6ff]/70 to-[#e2712f]/30" />}
+                    {index < 3 && <span className="opportunity-flow-line absolute left-1/2 top-3 h-[calc(100%+1.6rem)] w-px -translate-x-1/2" />}
                     <span className={`relative z-10 h-2.5 w-2.5 rounded-full ${index === 3 ? "bg-[#f28a45] shadow-[0_0_16px_rgba(242,138,69,0.7)]" : "bg-[#69baff]"}`} />
                   </span>
                   <div>
@@ -270,7 +315,7 @@ export default function HomePage() {
             </p>
             <Link
               to="/features"
-              className="mt-7 inline-flex items-center gap-2 rounded-xl bg-[#191919] px-6 py-3 text-sm font-medium text-white transition-colors duration-200 hover:bg-[#333]"
+              className="mt-7 inline-flex items-center gap-2 rounded-xl bg-[#e2712f] px-6 py-3 text-sm font-medium text-white transition-colors duration-200 hover:bg-[#c85f1f]"
             >
               See the Full Platform
               <ArrowRight className="h-4 w-4" />
@@ -381,7 +426,7 @@ export default function HomePage() {
           <div className="text-center">
             <Link
               to="/industries"
-              className="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium text-white bg-[#191919] rounded-xl hover:bg-[#333] transition-colors duration-200"
+              className="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium text-white bg-[#e2712f] rounded-xl hover:bg-[#c85f1f] transition-colors duration-200"
             >
               SEE DSX EDGE FOR YOUR BUSINESS
               <ChevronRight className="w-4 h-4" />
@@ -426,7 +471,7 @@ export default function HomePage() {
         </p>
         <Link
           to="/industries"
-          className="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium text-white bg-[#191919] rounded-xl hover:bg-[#333] transition-colors duration-200"
+          className="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium text-white bg-[#e2712f] rounded-xl hover:bg-[#c85f1f] transition-colors duration-200"
         >
           Explore All Industries
           <ArrowRight className="w-4 h-4" />
@@ -467,21 +512,27 @@ export default function HomePage() {
         >
           <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" />
           <div
+            ref={modalRef}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="layer-modal-title"
+            aria-describedby="layer-modal-description"
             className="relative z-10 max-h-[calc(100dvh-2rem)] w-full max-w-lg overflow-y-auto rounded-2xl border border-gray-200 bg-white p-5 shadow-xl animate-[fadeIn_0.2s_ease-out] sm:p-8"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center gap-3 mb-4">
               <span className="text-2xl font-bold text-[#0084FF]">{LAYERS[activeLayer].num}</span>
               <span className="text-[#191919]/30">/</span>
-              <h3 className="text-xl font-semibold text-[#191919]">{LAYERS[activeLayer].label}</h3>
+              <h3 id="layer-modal-title" className="text-xl font-semibold text-[#191919]">{LAYERS[activeLayer].label}</h3>
             </div>
             <p className="text-sm font-medium text-[#191919]/60 mb-4">{LAYERS[activeLayer].subtitle}</p>
-            <p className="text-[#191919]/70 leading-relaxed">{LAYERS[activeLayer].body}</p>
-            <div className="mt-6 flex flex-col gap-2 sm:flex-row">
+            <p id="layer-modal-description" className="text-[#191919]/70 leading-relaxed">{LAYERS[activeLayer].body}</p>
+            <div className="mt-6 flex flex-col gap-2 sm:flex-row" role="group" aria-label="Choose platform layer">
               {LAYERS.map((l, i) => (
                 <button
                   key={l.num}
                   onClick={() => setActiveLayer(i)}
+                  aria-pressed={i === activeLayer}
                   className={`flex min-h-11 w-full min-w-0 items-center gap-3 rounded-lg px-4 py-2 text-left text-sm font-medium transition-colors duration-200 sm:min-h-0 sm:w-auto sm:justify-center sm:text-center ${
                     i === activeLayer
                       ? "bg-[#191919] text-white"
@@ -496,8 +547,9 @@ export default function HomePage() {
               ))}
             </div>
             <button
+              ref={closeButtonRef}
               onClick={() => setModalOpen(false)}
-              className="mt-4 min-h-11 w-full rounded-lg border border-gray-200 text-sm font-medium text-[#191919]/60 transition-colors duration-200 hover:bg-gray-50 hover:text-[#191919] sm:mt-6"
+              className="mt-4 min-h-11 w-full rounded-lg border border-gray-200 text-sm font-medium text-[#191919]/60 transition-colors duration-200 hover:bg-gray-50 hover:text-[#191919] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0872d6] sm:mt-6"
             >
               Close
             </button>

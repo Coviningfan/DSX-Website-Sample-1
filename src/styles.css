@@ -162,21 +162,12 @@ textarea {
 }
 
 
-.hero-tunnel-bg::before {
-  content: "";
-  position: absolute;
-  inset: -2%;
-  background: url("/images/dsx-edge-bkg.jpg") center / cover no-repeat;
-  filter: blur(6px) saturate(0.98) brightness(1.02);
-  opacity: 0.82;
-  transform: scale(1.025);
+.hero-tunnel-bg {
+  background: #dcecf5;
 }
 
-.hero-tunnel-bg {
-  transform: scale(calc(1 + var(--hero-motion, 0) * 0.018));
-  filter: blur(calc(var(--hero-motion, 0) * 3px));
-  transform-origin: center;
-  will-change: transform, filter;
+.hero-tunnel-bg > img {
+  object-position: 50% 48%;
 }
 
 .site-nav {
@@ -200,24 +191,52 @@ textarea {
   transform: none;
 }
 
-.hero-tunnel-bg::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  pointer-events: none;
-  background: linear-gradient(
-    90deg,
-    rgba(224, 242, 253, 0.34),
-    transparent 18%,
-    transparent 82%,
-    rgba(224, 242, 253, 0.34)
-  );
-}
-
 .brand-accent-rail {
   height: 3px;
   background: linear-gradient(90deg, #1688e8 0 72%, #e2712f 72% 100%);
+}
+
+.opportunity-flow-line {
+  background: linear-gradient(to bottom, rgb(74 166 255 / 0.7), rgb(226 113 47 / 0.3));
+}
+
+.opportunity-flow-line::after {
+  position: absolute;
+  top: -0.75rem;
+  left: 50%;
+  width: 3px;
+  height: 1.5rem;
+  border-radius: 999px;
+  background: linear-gradient(to bottom, transparent, #bde5ff 45%, #f7a66f 75%, transparent);
+  box-shadow: 0 0 8px rgb(105 186 255 / 0.9), 0 0 14px rgb(242 138 69 / 0.55);
+  content: "";
+  opacity: 0;
+  transform: translateX(-50%);
+  animation: opportunity-line-pulse 2.8s ease-in-out infinite;
+}
+
+#opportunity li:nth-child(2) .opportunity-flow-line::after {
+  animation-delay: 0.6s;
+}
+
+#opportunity li:nth-child(3) .opportunity-flow-line::after {
+  animation-delay: 1.2s;
+}
+
+@keyframes opportunity-line-pulse {
+  0%, 12% {
+    top: -0.75rem;
+    opacity: 0;
+  }
+
+  24%, 72% {
+    opacity: 1;
+  }
+
+  88%, 100% {
+    top: calc(100% - 0.75rem);
+    opacity: 0;
+  }
 }
 
 .how-it-works-orb {
@@ -230,15 +249,8 @@ textarea {
 }
 
 @media (max-width: 760px) {
-  .hero-tunnel-bg::before {
-    inset: 0;
-    filter: saturate(0.98);
-    opacity: 1;
-    transform: none;
-  }
-
   .hero-tunnel-bg > img {
-    opacity: 0;
+    object-position: 50% 46%;
   }
 
   .how-it-works-orb,
@@ -255,5 +267,9 @@ textarea {
     opacity: 1;
     transform: none;
     transition: none;
+  }
+
+  .opportunity-flow-line::after {
+    animation: none;
   }
 }

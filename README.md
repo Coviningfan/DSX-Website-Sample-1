@@ -15,9 +15,17 @@ Migrated from the PortfolioRevamp (Replit-based) codebase to Zo Site. DSX Edge i
 - Only confirmed demo numbers are callable. Automotive uses 844-379-2886; other industry demo lines remain visibly pending confirmation.
 - Public publishing remains a separate approval-gated action after preview QA.
 
+### Source mockup compliance
+
+- `Web Mockup-5` is the content-and-flow authority for the five public pages; it explicitly is not a visual design specification.
+- `DSXEdge Website Design Brief-1` defines the audience, positioning, brand qualities, logo-derived colors, and whitespace direction.
+- The homepage serves an optimized derivative of the exact hero image embedded in slide 1. Navigation includes Features, Industries, Pricing, and About, with the consultation action serving as the direct contact path.
+- Homepage functions, feature categories, industry choices, pricing structure, About copy, contact fields, contact details, and confirmed demo numbers track the supplied source documents.
+- Unverified claims and unavailable industry demo numbers remain excluded or marked pending. Consultation CTAs use the contact form until the owner supplies the calendar URL requested by the mockup.
+
 ### 2026-08-04 Audit Fixes (verified live)
 
-- **Nav anchor fix:** "Features" now resolves to `#departments` (the section ID was missing, leaving dead links). All five nav links verified: Features→#departments, Industries→#industries, Pricing→#pricing, About→#about, Contact→#contact.
+- **Nav anchor fix:** All navigation destinations resolve to working routes; the dedicated consultation action links directly to the contact form.
 - **Footer link hygiene:** Removed dead "Case Studies" / "Resources" links — those routes no longer exist (case studies were removed per owner direction); footer Company column is now About + Contact only.
 - **Claim verification:** Replaced unverified stats with source-backed values from the original codebase: `99.9% Uptime SLA` (was 99.97%), `100K+/mo Minutes on one platform` (was 2.4M+/mo — original cites a 100,000+ minutes/month testimonial), removed invented "400+ companies" headline. Contact email corrected to `hello@dsxedge.com` (canonical in original `src/lib/site.ts`).
 - **Pricing** remains descriptive with no tiers: telephone priced by concurrent capacity, AI customization $300–$1,000, ongoing AI 15–20% of telephone charge. No plans, no monthly prices, no feature tables.
@@ -45,9 +53,16 @@ Migrated from the PortfolioRevamp (Replit-based) codebase to Zo Site. DSX Edge i
 - Mobile sections use a 80px baseline rhythm, increasing to 96–128px at larger breakpoints. Long workflow cards use native disclosure controls on mobile and remain fully expanded from the small breakpoint upward.
 - Motion continues while the visualization is onscreen and suspends offscreen. Reduced-motion preferences remove transition effects without hiding the operating model.
 
+### Features page
+
+- The dedicated Features page presents Business Communications as the shared foundation, followed by five connected operating areas: Sales, Marketing, Customer Service, Shipping & Returns, and Management.
+- Each capability leads with an operational outcome, keeps three representative functions visible, and exposes the remaining functions through a native keyboard-accessible disclosure.
+- The page uses the existing industrial blue/orange system, square technical surfaces, and one consolidated consultation action rather than a repetitive stack of equal cards.
+
 ### Opportunity section
 
 - The homepage's missed-opportunity section uses an explicitly illustrative live-call timeline: incoming call, request understood, availability checked, and appointment confirmed.
+- A restrained blue-to-orange pulse travels down the timeline connectors to reinforce the request sequence; reduced-motion preferences keep the connectors static.
 - Example timestamps are presentation devices, not performance guarantees or measured customer results.
 
 ### Hero blend (2026-08-04)
@@ -56,6 +71,13 @@ Migrated from the PortfolioRevamp (Replit-based) codebase to Zo Site. DSX Edge i
 - SignalOrb is layered over it with `mix-blend-screen`, reduced opacity (~70%), and a radial mask centered toward the tunnel vanishing point so particles/flows read as energy traveling the corridor.
 - Stage solid dark fill is cleared via `.hero-orb-blend` CSS so the tunnel shows through; left-side + bottom gradients keep left-aligned copy readable.
 - Section uses `min-h-[min(72vh,720px)]` for presence while remaining content-driven.
+
+### Hero media refinement (2026-08-06)
+
+- The homepage uses one optimized static tunnel image with breakpoint-specific `object-position`; the duplicated blurred fill and scroll-driven blur were removed.
+- The tunnel ships with responsive 960px, 1600px, and 2560px WebP sources and a matching responsive preload so browsers fetch and decode only the resolution needed for the viewport as early as possible.
+- Static media remains intentional: it preserves headline readability, reduced-motion behavior, and predictable LCP while the separate SignalOrb carries meaningful system motion.
+- The full DSX Edge wordmark is centered above the hero promise at a responsive 130–160px width. The navbar remains logo-free while the homepage hero is visible. After the hero passes, the navbar reserves the logo space over 400ms, then performs a distinct 600ms right-to-left wordmark wipe; the reverse sequence runs when returning to the hero. Interior pages show the compact wordmark immediately.
 
 ### Phase 1 Design Decisions (Homepage Redesign)
 
