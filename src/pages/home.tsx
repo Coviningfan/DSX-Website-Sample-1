@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import SignalOrb from "@/components/signal-orb";
 import {
   Phone, ArrowRight, Wrench, Stethoscope, ShoppingCart,
@@ -57,6 +58,17 @@ export default function HomePage() {
     setActiveLayer(layer);
     setModalOpen(true);
   };
+
+  useEffect(() => {
+    if (!modalOpen || window.matchMedia("(min-width: 640px)").matches) return;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [modalOpen]);
 
   const LAYERS = [
     {
@@ -448,14 +460,14 @@ export default function HomePage() {
       </section>
 
       {/* ── Modal ─────────────────────────────────────────── */}
-      {modalOpen && (
+      {modalOpen && createPortal(
         <div
           className="fixed inset-0 z-50 flex items-center justify-center px-4"
           onClick={() => setModalOpen(false)}
         >
           <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" />
           <div
-            className="relative z-10 bg-white rounded-2xl border border-gray-200 shadow-xl max-w-lg w-full p-8 animate-[fadeIn_0.2s_ease-out]"
+            className="relative z-10 max-h-[calc(100dvh-2rem)] w-full max-w-lg overflow-y-auto rounded-2xl border border-gray-200 bg-white p-5 shadow-xl animate-[fadeIn_0.2s_ease-out] sm:p-8"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center gap-3 mb-4">
@@ -465,29 +477,33 @@ export default function HomePage() {
             </div>
             <p className="text-sm font-medium text-[#191919]/60 mb-4">{LAYERS[activeLayer].subtitle}</p>
             <p className="text-[#191919]/70 leading-relaxed">{LAYERS[activeLayer].body}</p>
-            <div className="mt-6 flex gap-2">
+            <div className="mt-6 flex flex-col gap-2 sm:flex-row">
               {LAYERS.map((l, i) => (
                 <button
                   key={l.num}
                   onClick={() => setActiveLayer(i)}
-                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 ${
+                  className={`flex min-h-11 w-full min-w-0 items-center gap-3 rounded-lg px-4 py-2 text-left text-sm font-medium transition-colors duration-200 sm:min-h-0 sm:w-auto sm:justify-center sm:text-center ${
                     i === activeLayer
                       ? "bg-[#191919] text-white"
                       : "bg-[#F4F3F3] text-[#191919]/60 hover:bg-[#eaeaea]"
                   }`}
                 >
-                  {l.label}
+                  <span className={`text-xs tabular-nums sm:hidden ${i === activeLayer ? "text-white/60" : "text-[#191919]/35"}`}>
+                    {l.num}
+                  </span>
+                  <span>{l.label}</span>
                 </button>
               ))}
             </div>
             <button
               onClick={() => setModalOpen(false)}
-              className="mt-6 text-sm text-[#191919]/40 hover:text-[#191919]/70 transition-colors duration-200"
+              className="mt-4 min-h-11 w-full rounded-lg border border-gray-200 text-sm font-medium text-[#191919]/60 transition-colors duration-200 hover:bg-gray-50 hover:text-[#191919] sm:mt-6"
             >
               Close
             </button>
           </div>
-        </div>
+        </div>,
+        document.body,
       )}
     </main>
   );

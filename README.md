@@ -41,6 +41,7 @@ Migrated from the PortfolioRevamp (Replit-based) codebase to Zo Site. DSX Edge i
 - SignalOrb has three intentional scene modes: side explanations on wide desktop, two explanation columns below the scene on tablet/narrow desktop, and stacked explanations on mobile.
 - Orb scale is constrained by both stage width and height. The scene recenters below 760px so the sphere and all six directional rails remain visible without horizontal overflow.
 - Mobile orb touch zones do not intercept vertical scrolling. Keyboard focus zones remain available from tablet widths upward.
+- Mobile layer dialogs render in the viewport layer and lock background scrolling while open, keeping every selector and the Close action reachable without changing the desktop modal layout.
 - Mobile sections use a 80px baseline rhythm, increasing to 96–128px at larger breakpoints. Long workflow cards use native disclosure controls on mobile and remain fully expanded from the small breakpoint upward.
 - Motion continues while the visualization is onscreen and suspends offscreen. Reduced-motion preferences remove transition effects without hiding the operating model.
 
