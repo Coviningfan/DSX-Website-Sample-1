@@ -10,20 +10,8 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-
-const INDUSTRIES = [
-  "Automotive",
-  "Insurance",
-  "Real Estate",
-  "HVAC",
-  "Plumbing",
-  "Legal",
-  "Construction",
-  "Hotel",
-  "Medical",
-  "Retail",
-  "Nonprofit",
-];
+import { INDUSTRIES } from "@/data/industries";
+import PrimaryCta from "@/components/primary-cta";
 
 const FUNCTIONS = [
   "Customer Service",
@@ -42,7 +30,7 @@ const WORKFLOWS = [
   {
     icon: Wrench,
     title: "Repair / Maintenance",
-    body: "Talk/text with a customer to get information about their problem, diagnose the issue, make a list of the parts needed, creating job ticket and scheduling a service call. If the customer call comes in after hours and the problem is critical, DSXEdge can contact the tech on call and dispatch them.",
+    body: "Talk or text with a customer to get information about their problem, diagnose the issue, make a list of the parts needed, create a job ticket, and schedule a service call. If the customer call comes in after hours and the problem is critical, DSX Edge can contact the tech on call and dispatch them.",
   },
   {
     icon: HeartPulse,
@@ -52,45 +40,36 @@ const WORKFLOWS = [
   {
     icon: ShoppingCart,
     title: "Retail / Wholesale",
-    body: "Take an incoming order, checking inventory to see if the items are in stock, tell the customer if some items are on backorder, if some items are not in stock confirm that they still want to place the order or amend the order, create the order, take payment or put the order on the customer’s account, generate the pick ticket and schedule delivery. Check order status, delivery status, …",
+    body: "Take an incoming order, check inventory to see if the items are in stock, tell the customer if some items are on backorder, confirm whether they still want to place or amend the order, create the order, take payment or put the order on the customer’s account, generate the pick ticket, and schedule delivery. Check order status and delivery status anytime.",
   },
   {
     icon: Truck,
     title: "Transportation / Shipping",
-    body: "Tell a customer when the next bus/train/boat is departing from their location for their destination. Tell a client where their shipment is and when it is expected to arrive. Call a client and let them know that there is a delay, the cause and the new expected arrival date and time. Give a time and cost estimate based on customer input.",
+    body: "Tell a customer when the next bus, train, or boat is departing from their location for their destination. Tell a client where their shipment is and when it is expected to arrive. Call a client and let them know that there is a delay, the cause, and the new expected arrival date and time. Give a time and cost estimate based on customer input.",
   },
   {
     icon: Home,
     title: "Residential / Commercial Services",
-    body: "Ask a caller about their yard/house/building and prepare a quote. Schedule/cancel an appointment. Make a schedule change. Pause/restart a recurring service. Answer billing questions. Call customer to confirm appointment and service.",
+    body: "Ask a caller about their yard, house, or building and prepare a quote. Schedule or cancel an appointment. Make a schedule change. Pause or restart a recurring service. Answer billing questions. Call customers to confirm appointments and service.",
   },
 ];
-
-function ConsultationLink({ className = "" }: { className?: string }) {
-  return (
-    <Link
-      to="/contact"
-      className={`consultation-action inline-flex min-h-11 items-center justify-center gap-2 rounded-lg bg-[#191919] px-6 py-3 text-sm font-semibold uppercase tracking-[0.08em] text-white transition-colors hover:bg-[#102b43] ${className}`}
-    >
-      Book a Free Consultation
-      <ArrowRight className="h-4 w-4" aria-hidden="true" />
-    </Link>
-  );
-}
 
 export default function HomePage() {
   const [crawlPaused, setCrawlPaused] = useState(false);
 
   return (
-    <main className="min-h-screen overflow-x-hidden bg-white">
+    <main id="main-content" className="min-h-screen overflow-x-hidden bg-white">
       <section id="home-hero" className="relative flex min-h-[100svh] flex-col overflow-hidden pt-[env(safe-area-inset-top)] max-md:min-h-0">
         <div className="hero-tunnel-bg absolute inset-0 z-0" aria-hidden="true">
           <img
             src="/images/dsx-edge-bkg.webp"
+            srcSet="/images/dsx-edge-bkg-960.webp 960w, /images/dsx-edge-bkg-1600.webp 1600w, /images/dsx-edge-bkg.webp 2560w"
+            sizes="100vw"
             alt=""
             width="2560"
             height="1435"
             fetchPriority="high"
+            decoding="async"
             className="block h-full w-full object-cover"
           />
         </div>
@@ -100,7 +79,7 @@ export default function HomePage() {
           <img src="/images/dsx-edge-logo-official.png" alt="DSX Edge" width="472" height="188" />
         </Link>
 
-        <div className="hero-copy-shell relative z-10 mx-auto flex w-full max-w-[80rem] flex-1 flex-col justify-center px-4 pb-20 pt-32 sm:px-6 sm:pt-40 md:px-10 md:pb-24">
+        <div className="hero-copy-shell relative z-10 mx-auto flex w-full max-w-[80rem] flex-1 flex-col justify-center px-4 pb-16 pt-32 sm:px-6 sm:pt-40 md:px-10 md:pb-20">
           <div className="max-w-3xl">
             <p className="mb-5 text-xs font-semibold uppercase tracking-[0.2em] text-[#FC5104FA]">
               DSX Edge Business Communications
@@ -112,8 +91,20 @@ export default function HomePage() {
               A New Dimension in Customer Interaction &amp; Service
             </p>
             <p className="mt-5 border-l-2 border-[#FC5104FA] pl-4 text-lg font-semibold uppercase tracking-[0.08em] text-[#191919]/75 sm:text-xl">
-              Tailored to <em className="font-bold text-[#FC5104FA]">YOUR</em> Business
+              Tailored to <em className="font-bold not-italic text-[#FC5104FA]">YOUR</em> Business
             </p>
+            <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+              <PrimaryCta />
+              <PrimaryCta
+                href="tel:8443793343"
+                variant="secondary"
+                showArrow={false}
+                className="demo-call-action"
+              >
+                <Phone className="h-4 w-4 shrink-0" aria-hidden="true" />
+                Call Mary — 844-379-3343
+              </PrimaryCta>
+            </div>
           </div>
         </div>
 
@@ -122,15 +113,24 @@ export default function HomePage() {
             <div className="industry-crawl-track" data-paused={crawlPaused ? "true" : "false"} aria-hidden="true">
               {[0, 1].map((copy) => (
                 <div className="industry-crawl-group" key={copy}>
-                  {INDUSTRIES.map((industry) => <span key={`${copy}-${industry}`}>{industry}</span>)}
+                  {INDUSTRIES.map((industry) => (
+                    <span key={`${copy}-${industry}`}>{industry}</span>
+                  ))}
                 </div>
               ))}
             </div>
           </div>
           <ul className="industry-crawl-static" role="list">
-            {INDUSTRIES.map((industry) => <li key={industry}>{industry}</li>)}
+            {INDUSTRIES.map((industry) => (
+              <li key={industry}>{industry}</li>
+            ))}
           </ul>
-          <button type="button" className="industry-crawl-toggle" onClick={() => setCrawlPaused((paused) => !paused)} aria-pressed={crawlPaused}>
+          <button
+            type="button"
+            className="industry-crawl-toggle focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#114CA8]"
+            onClick={() => setCrawlPaused((paused) => !paused)}
+            aria-pressed={crawlPaused}
+          >
             {crawlPaused ? "Resume industries" : "Pause industries"}
           </button>
         </div>
@@ -163,7 +163,7 @@ export default function HomePage() {
                 Customer interaction that continues when your staff cannot.
               </h2>
               <p className="mt-6 text-lg leading-relaxed text-[#191919]/68">
-            DSXEdge is an intelligent addition to your staff that works 24/7, never missing a call or text. It can handle many routine customer interactions autonomously. After hours it serves customers while no one is there, increasing revenue and delivering excellent customer service.
+                DSX Edge is an intelligent addition to your staff that works 24/7, never missing a call or text. It can handle many routine customer interactions autonomously. After hours it serves customers while no one is there, increasing revenue and delivering excellent customer service.
               </p>
             </div>
             <div className="experience-comparison">
@@ -187,6 +187,9 @@ export default function HomePage() {
               </p>
             </div>
           </div>
+          <div className="mt-12">
+            <PrimaryCta />
+          </div>
         </div>
       </section>
 
@@ -198,7 +201,10 @@ export default function HomePage() {
               Try It for Yourself — call 844-DSX-Edge and talk with Mary
             </h2>
           </div>
-          <a href="tel:8443793343" className="demo-call-action inline-flex min-h-11 shrink-0 items-center gap-3 rounded-lg bg-[#FC5104FA] px-6 py-3 font-semibold text-white transition-colors hover:bg-[#FC5104]">
+          <a
+            href="tel:8443793343"
+            className="demo-call-action inline-flex min-h-11 shrink-0 items-center gap-3 rounded-lg bg-[#FC5104FA] px-6 py-3 font-semibold text-white transition-colors hover:bg-[#FC5104] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#114CA8]"
+          >
             <Phone className="h-5 w-5" aria-hidden="true" />
             844-379-3343
           </a>
@@ -222,7 +228,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="bg-[#f6f8fa] px-4 py-20 sm:px-6 sm:py-24 md:px-10 md:py-32">
+      <section className="surface-muted px-4 py-20 sm:px-6 sm:py-24 md:px-10 md:py-32">
         <div className="mx-auto grid max-w-6xl gap-12 lg:grid-cols-2 lg:items-center">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#FC5104FA]">The Easiest Way for Your Business to Benefit From AI</p>
@@ -231,7 +237,7 @@ export default function HomePage() {
             </h2>
           </div>
           <p className="text-lg leading-relaxed text-[#191919]/68">
-            DSXEdge is a full-featured business communication platform that also includes a unique AI component designed to handle a wide range of business chores, from customer interactions and back-office tasks to taking and acting on customer and supplier information, answering complex customer questions and taking actions based on customer or staff requests. And it works across calls, texts, email, and live chat on your website.
+            DSX Edge is a full-featured business communication platform that also includes a unique AI component designed to handle a wide range of business chores, from customer interactions and back-office tasks to taking and acting on customer and supplier information, answering complex customer questions and taking actions based on customer or staff requests. And it works across calls, texts, email, and live chat on your website.
           </p>
         </div>
       </section>
@@ -246,12 +252,12 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="bg-[#f6f8fa] px-4 py-20 sm:px-6 sm:py-24 md:px-10 md:py-32">
+      <section className="surface-muted px-4 py-20 sm:px-6 sm:py-24 md:px-10 md:py-32">
         <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-center">
-          <h2 className="text-balance text-4xl font-bold tracking-tight text-[#191919] sm:text-5xl">Increase Productivity By 50% or More</h2>
+          <h2 className="text-balance text-4xl font-bold tracking-tight text-[#191919] sm:text-5xl">Free Your Team for Higher-Value Work</h2>
           <div className="space-y-5 text-lg leading-relaxed text-[#191919]/68">
-            <p>Numerous studies have shown that repetitive, routine tasks consume as much as 65% of staff time, keeping them from doing high-value work that boosts profitability.</p>
-            <p>During business hours, DSXEdge offloads routine customer interactions that drain your team’s time, reducing interruptions, raising productivity, and increasing customer and employee satisfaction.</p>
+            <p>Repetitive, routine tasks often consume the majority of staff time, keeping them from the high-value work that boosts profitability.</p>
+            <p>During business hours, DSX Edge offloads routine customer interactions that drain your team’s time, reducing interruptions, raising productivity, and increasing customer and employee satisfaction.</p>
           </div>
         </div>
       </section>
@@ -260,14 +266,14 @@ export default function HomePage() {
         <div className="mx-auto max-w-6xl">
           <div className="max-w-3xl">
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#FC5104FA]">Tailored to Your Business</p>
-            <h2 className="mt-4 text-balance text-4xl font-bold tracking-tight text-[#191919] sm:text-5xl">See DSXEdge for Your Business</h2>
+            <h2 className="mt-4 text-balance text-4xl font-bold tracking-tight text-[#191919] sm:text-5xl">See DSX Edge for Your Business</h2>
           </div>
           <div className="mt-12 divide-y divide-[#191919]/12 border-y border-[#191919]/12">
             {WORKFLOWS.map((workflow) => {
               const Icon = workflow.icon;
               return (
                 <details key={workflow.title} className="group">
-                  <summary className="flex min-h-14 list-none items-center gap-4 py-5 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#114CA8]">
+                  <summary className="flex min-h-14 cursor-pointer list-none items-center gap-4 py-5 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#114CA8]">
                     <span className="flex h-11 w-11 shrink-0 items-center justify-center bg-[#114CA8]/10 text-[#114CA8]">
                       <Icon className="h-5 w-5" aria-hidden="true" />
                     </span>
@@ -283,16 +289,25 @@ export default function HomePage() {
             <Building2 className="h-5 w-5 text-[#FC5104FA]" aria-hidden="true" />
             And Dozens of Others
           </p>
+          <div className="mt-10">
+            <Link
+              to="/industries"
+              className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-[#114CA8] hover:text-[#0d3a80] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#114CA8]"
+            >
+              Explore industries
+              <ArrowRight className="h-4 w-4" aria-hidden="true" />
+            </Link>
+          </div>
         </div>
       </section>
 
-      <section className="bg-[#f6f8fa] px-4 py-20 text-[#191919] sm:px-6 sm:py-24 md:px-10">
+      <section className="surface-muted px-4 py-20 text-[#191919] sm:px-6 sm:py-24 md:px-10">
         <div className="mx-auto flex max-w-6xl flex-col items-start justify-between gap-8 md:flex-row md:items-center">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#FC5104FA]">Improve Your Operations &amp; Increase Profits</p>
             <h2 className="mt-4 max-w-3xl text-balance text-4xl font-bold tracking-tight sm:text-5xl">Learn How DSX Edge Can Improve Your Operations &amp; Profits</h2>
           </div>
-          <ConsultationLink className="shrink-0 bg-[#FC5104FA] text-white hover:bg-[#FC5104]" />
+          <PrimaryCta className="shrink-0" />
         </div>
       </section>
     </main>

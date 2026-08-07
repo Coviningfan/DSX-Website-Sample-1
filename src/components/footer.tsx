@@ -15,10 +15,16 @@ export default function Footer() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-10 py-16">
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
           <div className="lg:col-span-2">
-            <Link to="/" className="inline-flex min-h-11 items-center gap-2.5 mb-4" aria-label="DSX Edge home">
+            <Link
+              to="/"
+              className="inline-flex min-h-11 items-center gap-2.5 mb-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+              aria-label="DSX Edge home"
+            >
               <img
                 src="/images/dsx-edge-logo-official.png"
                 alt="DSX Edge"
+                width="472"
+                height="188"
                 className="h-10 w-auto sm:h-12"
               />
             </Link>
@@ -37,7 +43,7 @@ export default function Footer() {
                 <li key={page.href}>
                   <Link
                     to={page.href}
-                    className="inline-flex min-h-11 items-center text-sm text-white/60 transition-colors duration-200 hover:text-[#FC5104FA]"
+                    className="inline-flex min-h-11 items-center text-sm text-white/60 transition-colors duration-200 hover:text-[#FC5104FA] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
                   >
                     {page.label}
                   </Link>
@@ -52,21 +58,30 @@ export default function Footer() {
             </p>
             <ul className="space-y-2.5 text-sm text-white/50">
               <li>
-                <a href="tel:775-624-9424" className="inline-flex min-h-11 items-center transition-colors duration-200 hover:text-[#FC5104FA]">
+                <a
+                  href="tel:7756249424"
+                  className="inline-flex min-h-11 items-center transition-colors duration-200 hover:text-[#FC5104FA] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                >
                   775-624-9424
                 </a>
               </li>
               <li>
-                <a href="mailto:info@dsxedge.com" className="inline-flex min-h-11 items-center transition-colors duration-200 hover:text-[#FC5104FA]">
+                <a
+                  href="mailto:info@dsxedge.com"
+                  className="inline-flex min-h-11 items-center transition-colors duration-200 hover:text-[#FC5104FA] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                >
                   info@dsxedge.com
                 </a>
               </li>
               <li>
-                <a href="mailto:sales@dsxedge.com" className="inline-flex min-h-11 items-center transition-colors duration-200 hover:text-[#FC5104FA]">
+                <a
+                  href="mailto:sales@dsxedge.com"
+                  className="inline-flex min-h-11 items-center transition-colors duration-200 hover:text-[#FC5104FA] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                >
                   sales@dsxedge.com
                 </a>
               </li>
-              <li>Reno, Nevada</li>
+              <li className="min-h-11 flex items-center">Reno, Nevada</li>
             </ul>
           </div>
         </div>
@@ -76,7 +91,7 @@ export default function Footer() {
           <div className="flex items-center justify-center gap-2.5" aria-label="Powered by JABV Labs">
             <span className="uppercase tracking-[0.14em] text-white/40">Powered by</span>
             <img
-              src="/assets/JABVLABS_LOGO_HD-removebg-preview_1771726977207.png"
+              src="/images/jabv-labs-logo.png"
               alt="JABV Labs"
               width="613"
               height="135"

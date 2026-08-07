@@ -128,12 +128,39 @@ html {
   scroll-padding-top: calc(5.5rem + env(safe-area-inset-top));
 }
 
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: 0;
+  z-index: 100;
+  transform: translateY(-120%);
+  border-radius: 0.5rem;
+  background: #114CA8;
+  color: white;
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform 160ms ease;
+}
+
+.skip-link:focus {
+  transform: translateY(0.75rem);
+  outline: 2px solid white;
+  outline-offset: 2px;
+}
+
 button,
 a,
 input,
 select,
 textarea {
   touch-action: manipulation;
+}
+
+/* Neutral surface token — cool off-white per style guide */
+.surface-muted {
+  background-color: #f6f8fa;
 }
 
 @media (max-width: 640px) {
@@ -319,6 +346,14 @@ h3 {
   overflow: hidden;
   isolation: isolate;
   transition: transform 180ms ease, box-shadow 180ms ease, background-color 180ms ease;
+}
+
+summary {
+  list-style: none;
+}
+
+summary::-webkit-details-marker {
+  display: none;
 }
 
 .consultation-action::after,

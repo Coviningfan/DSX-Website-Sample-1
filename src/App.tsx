@@ -4,6 +4,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
 import ScrollMotion from "@/components/scroll-motion";
+import SkipLink from "@/components/skip-link";
 import HomePage from "@/pages/home";
 import FeaturesPage from "@/pages/features";
 import IndustriesPage from "@/pages/industries";
@@ -52,6 +53,7 @@ export default function App() {
   return (
     <ThemeProvider defaultTheme="light">
       <BrowserRouter>
+        <SkipLink />
         <RouteScroll />
         <ScrollMotion />
         <Navbar />
@@ -65,7 +67,7 @@ export default function App() {
           <Route
             path="/_design"
             element={
-              <Suspense fallback={<main className="min-h-screen bg-background" />}>
+              <Suspense fallback={<main id="main-content" className="min-h-screen bg-background" />}>
                 <DesignKitDemo />
               </Suspense>
             }

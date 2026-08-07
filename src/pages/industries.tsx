@@ -1,42 +1,13 @@
 import { useState } from "react";
-import { ArrowRight, ChevronDown, Phone } from "lucide-react";
-import { Link } from "react-router-dom";
-
-const AUTOMOTIVE_ACTIVITIES = [
-  "Answer a call or text from an existing customer by name. Ask which vehicle they are calling about and what service need or problem they are having.",
-  "For a new customer, get their name, contact information, and vehicle information and add it to the shop’s database.",
-  "For a standard service, like a tune up or oil change, quote a price if asked and book an appointment and update the shop’s schedule.",
-  "For a problem they are having, ask questions for a first-level diagnosis, give a repair estimate with disclaimers, create a trouble ticket, check inventory for likely parts needed and add them to the ticket, notify the parts manager of parts not in stock, add parts to the order list for confirmation by the parts manager, and—based on estimated parts arrival—book an appointment and update the shop’s schedule.",
-  "Take a payment and update your accounting.",
-  "Change or cancel an appointment.",
-  "Remind a customer of an upcoming appointment.",
-  "Notify a customer that their parts are in and schedule an appointment.",
-  "Notify a customer that it is time for a tuneup or oil change.",
-];
-
-const INDUSTRIES = [
-  "Automotive",
-  "Construction",
-  "Education",
-  "Financial Services",
-  "Healthcare",
-  "Hotels",
-  "Logistics",
-  "Municipalities",
-  "Manufacturing",
-  "Nonprofit",
-  "Professional Services",
-  "Real Estate",
-  "Retail",
-  "Transportation",
-  "Wholesale",
-];
+import { ChevronDown, Phone } from "lucide-react";
+import { INDUSTRIES, INDUSTRY_DETAILS } from "@/data/industries";
+import PrimaryCta from "@/components/primary-cta";
 
 export default function IndustriesPage() {
   const [open, setOpen] = useState<number | null>(0);
 
   return (
-    <main className="min-h-screen overflow-x-hidden bg-white">
+    <main id="main-content" className="min-h-screen overflow-x-hidden bg-white">
       <section className="mx-auto max-w-6xl px-4 pb-20 pt-36 sm:px-6 sm:pb-24 sm:pt-44 md:px-10">
         <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#FC5104FA]">Industries</p>
         <h1 className="mt-4 max-w-4xl text-balance text-4xl font-bold leading-tight tracking-tight text-[#191919] sm:text-5xl md:text-6xl">
@@ -46,7 +17,7 @@ export default function IndustriesPage() {
           DSX Edge is customized to your individual business—your products and services, workflows, customers, pricing, payment terms, and any other information or activities you want the platform to handle for you.
         </p>
         <p className="mt-5 max-w-3xl leading-relaxed text-[#191919]/68">
-          The examples below illustrate just some of the business activities we handle autonomously during business hours, so your staff can focus on the work that builds your business and increases profits, and after hours so you never miss an opportunity.
+          The examples below illustrate business activities we handle autonomously during business hours—so your staff can focus on work that builds the business—and after hours so you never miss an opportunity.
         </p>
       </section>
 
@@ -55,6 +26,7 @@ export default function IndustriesPage() {
           {INDUSTRIES.map((industry, index) => {
             const expanded = open === index;
             const panelId = `industry-panel-${index}`;
+            const detail = INDUSTRY_DETAILS[industry];
             return (
               <div key={industry}>
                 <button
@@ -72,25 +44,36 @@ export default function IndustriesPage() {
                 </button>
                 {expanded && (
                   <div id={panelId} className="pb-8 pl-[3.25rem] pr-2">
-                    {index === 0 ? (
+                    {detail ? (
                       <>
                         <ul className="space-y-3">
-                          {AUTOMOTIVE_ACTIVITIES.map((activity) => (
+                          {detail.activities.map((activity) => (
                             <li key={activity} className="flex gap-3 leading-relaxed text-[#191919]/70">
                               <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#114CA8]" aria-hidden="true" />
                               <span>{activity}</span>
                             </li>
                           ))}
                         </ul>
-                        <a href="tel:8443792886" className="mt-8 inline-flex min-h-11 items-center gap-2 font-semibold text-[#FC5104FA] hover:text-[#FC5104]">
-                          <Phone className="h-4 w-4" aria-hidden="true" />
-                          Try It for Yourself — call 844-DSX-AUTO (844-379-2886) and talk with Pete
-                        </a>
+                        {detail.demo && (
+                          <a
+                            href={`tel:${detail.demo.tel}`}
+                            className="mt-8 inline-flex min-h-11 items-center gap-2 font-semibold text-[#FC5104FA] hover:text-[#FC5104] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#114CA8]"
+                          >
+                            <Phone className="h-4 w-4" aria-hidden="true" />
+                            {detail.demo.label}
+                          </a>
+                        )}
                       </>
                     ) : (
-                      <p className="max-w-2xl leading-relaxed text-[#191919]/60">
-                        Detailed activities and the dedicated demonstration line for this industry are pending approved source content.
-                      </p>
+                      <div className="max-w-2xl rounded-lg border border-[#191919]/10 bg-[#f6f8fa] px-5 py-4">
+                        <p className="leading-relaxed text-[#191919]/70">
+                          DSX Edge is configured to your workflows, systems, and escalation rules in this industry.
+                          Detailed activity examples and a dedicated demonstration line are available on a free consultation.
+                        </p>
+                        <div className="mt-4">
+                          <PrimaryCta className="text-xs uppercase tracking-[0.06em]" />
+                        </div>
+                      </div>
                     )}
                   </div>
                 )}
@@ -100,13 +83,10 @@ export default function IndustriesPage() {
         </div>
       </section>
 
-      <section className="bg-[#f6f8fa] px-4 py-20 text-[#191919] sm:px-6 sm:py-24 md:px-10">
+      <section className="surface-muted px-4 py-20 text-[#191919] sm:px-6 sm:py-24 md:px-10">
         <div className="mx-auto flex max-w-6xl flex-col items-start justify-between gap-8 md:flex-row md:items-center">
           <h2 className="max-w-3xl text-balance text-4xl font-bold tracking-tight sm:text-5xl">Improve Your Operations &amp; Increase Profits</h2>
-          <Link to="/contact" className="consultation-action inline-flex min-h-11 shrink-0 items-center gap-2 rounded-lg bg-[#FC5104FA] px-6 py-3 text-sm font-semibold uppercase tracking-[0.08em] text-white transition-colors hover:bg-[#FC5104]">
-            Book a Free Consultation
-            <ArrowRight className="h-4 w-4" aria-hidden="true" />
-          </Link>
+          <PrimaryCta className="shrink-0" />
         </div>
       </section>
     </main>

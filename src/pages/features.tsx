@@ -1,5 +1,4 @@
 import {
-  ArrowRight,
   BarChart3,
   Check,
   Globe,
@@ -8,7 +7,7 @@ import {
   Phone,
   Shield,
 } from "lucide-react";
-import { Link } from "react-router-dom";
+import PrimaryCta from "@/components/primary-cta";
 
 const CAPABILITIES = [
   {
@@ -112,10 +111,12 @@ function CapabilityList({ items }: { items: string[] }) {
         ))}
       </ul>
       <details className="group mt-3">
-        <summary className="inline-flex min-h-11 list-none items-center gap-2 text-sm font-semibold text-[#FC5104FA] marker:hidden focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#114CA8]">
+        <summary className="inline-flex min-h-11 cursor-pointer list-none items-center gap-2 text-sm font-semibold text-[#FC5104FA] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#114CA8]">
           <span className="group-open:hidden">View all capabilities</span>
           <span className="hidden group-open:inline">Show fewer capabilities</span>
-          <ArrowRight className="h-4 w-4 transition-transform duration-200 group-open:rotate-90 motion-reduce:transition-none" aria-hidden="true" />
+          <span className="text-base transition-transform duration-200 group-open:rotate-90 motion-reduce:transition-none" aria-hidden="true">
+            →
+          </span>
         </summary>
         <ul className="space-y-3 pb-1 pt-1">
           {items.slice(3).map((item) => (
@@ -134,7 +135,7 @@ export default function FeaturesPage() {
   const FoundationIcon = foundation.icon;
 
   return (
-    <main className="min-h-screen overflow-x-hidden bg-white">
+    <main id="main-content" className="min-h-screen overflow-x-hidden bg-white">
       <section className="px-4 pb-20 pt-36 sm:px-6 sm:pb-24 sm:pt-44 md:px-10">
         <div className="mx-auto grid max-w-6xl gap-12 lg:grid-cols-[1.2fr_0.8fr] lg:items-end">
           <div>
@@ -142,7 +143,7 @@ export default function FeaturesPage() {
               Platform Features
             </p>
             <h1 className="max-w-4xl text-balance text-4xl font-bold leading-[1.04] tracking-[-0.035em] text-[#191919] sm:text-5xl md:text-6xl">
-              The industry&rsquo;s most advanced business communications platform.
+              A complete business communications platform for modern operations.
             </h1>
             <p className="mt-7 max-w-3xl text-pretty text-lg leading-relaxed text-[#191919]/62">
               Calls, texts, email, customer requests, and business systems operate as one connected
@@ -165,7 +166,7 @@ export default function FeaturesPage() {
         </div>
       </section>
 
-      <section className="bg-[#f6f8fa] px-4 py-20 text-[#191919] sm:px-6 sm:py-24 md:px-10 md:py-28">
+      <section className="surface-muted px-4 py-20 text-[#191919] sm:px-6 sm:py-24 md:px-10 md:py-28">
         <div className="mx-auto max-w-6xl">
           <div className="relative border-y border-[#191919]/12 bg-white px-6 py-8 sm:px-8 sm:py-10 lg:px-10">
             <div className="absolute inset-x-0 top-0 h-1 bg-[#FC5104FA]" aria-hidden="true" />
@@ -257,13 +258,7 @@ export default function FeaturesPage() {
               configuring the platform.
             </p>
           </div>
-          <Link
-            to="/contact"
-            className="consultation-action inline-flex min-h-12 items-center justify-center gap-2 bg-[#FC5104FA] px-6 py-3 text-sm font-semibold text-white transition-colors duration-200 hover:bg-[#FC5104] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#114CA8]"
-          >
-            Book a Free Consultation
-            <ArrowRight className="h-4 w-4" aria-hidden="true" />
-          </Link>
+          <PrimaryCta className="shrink-0" />
         </div>
       </section>
     </main>
