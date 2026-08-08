@@ -100,7 +100,7 @@ export default function PanelModal({ layer, onClose }: PanelModalProps) {
           <div className="p-2 bg-[#0084FF]/10 rounded-xl mt-0.5">
             <Icon className="w-5 h-5 text-[#0084FF]" />
           </div>
-          <h3 className="text-xl font-bold text-[#191919] leading-snug">{item.headline}</h3>
+          <h3 className="text-xl font-bold text-[#114CA8] leading-snug">{item.headline}</h3>
         </div>
 
         <p className="text-[#191919]/70 text-sm leading-relaxed mb-6">{item.body}</p>

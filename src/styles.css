@@ -206,6 +206,7 @@ h1,
 h2,
 h3 {
   font-family: "Barlow Semi Condensed", "IBM Plex Sans", sans-serif;
+  color: #114CA8;
 }
 
 .hero-brand {
@@ -218,9 +219,161 @@ h3 {
   height: auto;
 }
 
+/* ── Hero type hierarchy ────────────────────────────────
+   H1 = display command. Lead = quieter body scale.
+   Tailored line = caption under the lead, not a third title.
+*/
+.hero-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
+  max-width: min(40rem, 100%);
+}
+
+.hero-title {
+  margin: 0;
+  max-width: 15ch;
+  font-size: clamp(2.75rem, 7.2vw, 5.75rem);
+  font-weight: 700;
+  line-height: 0.96;
+  letter-spacing: -0.03em;
+  color: #114CA8;
+  text-wrap: balance;
+}
+
+.hero-title-line {
+  display: block;
+}
+
+.hero-title-accent {
+  color: #FC5104FA;
+}
+
+.hero-lead {
+  margin: 0.8rem 0 0;
+  max-width: 26rem;
+  color: rgb(25 25 25 / 70%);
+  font-family: "IBM Plex Sans", system-ui, sans-serif;
+  font-size: clamp(1.02rem, 1.55vw, 1.25rem);
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: -0.005em;
+  text-wrap: pretty;
+}
+
+.hero-tailored {
+  margin: 0.55rem 0 0;
+  display: inline-flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  column-gap: 0.3em;
+  row-gap: 0.1em;
+  padding: 0.05rem 0 0.2rem;
+  border-bottom: 1.5px solid rgb(252 81 4 / 40%);
+  color: rgb(17 76 168 / 78%);
+  font-family: "IBM Plex Sans", system-ui, sans-serif;
+  font-size: clamp(0.88rem, 1.05vw, 1rem);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  line-height: 1.25;
+  text-transform: uppercase;
+}
+
+.hero-tailored-your {
+  margin: 0;
+  color: #FC5104FA;
+  font-style: italic;
+  font-weight: 700;
+  font-size: 1.1em;
+  letter-spacing: 0.06em;
+}
+
+/* Soft fade + hairline from hero image into white content */
+.hero-close {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  height: clamp(5rem, 14vh, 8.5rem);
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    rgb(255 255 255 / 0%) 0%,
+    rgb(255 255 255 / 42%) 42%,
+    rgb(255 255 255 / 88%) 78%,
+    #ffffff 100%
+  );
+}
+
+.hero-close::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: rgb(17 76 168 / 10%);
+}
+
+/* Section titles: clearly below hero display scale.
+   !important only where needed so leftover text-4xl/sm:text-5xl utilities cannot re-inflate them. */
+.section-title,
+main section:not(#home-hero) h2 {
+  font-family: "Barlow Semi Condensed", "IBM Plex Sans", sans-serif;
+  font-size: clamp(1.85rem, 3.2vw, 2.55rem) !important;
+  font-weight: 700;
+  line-height: 1.18;
+  letter-spacing: -0.02em;
+  color: #114CA8 !important;
+  text-wrap: balance;
+}
+
+main section:not(#home-hero) h3 {
+  font-size: clamp(1.35rem, 2.2vw, 1.75rem) !important;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+  color: #114CA8 !important;
+}
+
+/* Page H1s stay larger than section titles, still below hero display */
+main section:not(#home-hero) h1 {
+  font-size: clamp(2.25rem, 4.5vw, 3.5rem);
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+  color: #114CA8;
+}
+
 @media (min-width: 1024px) {
-  .hero-copy-shell > div {
-    max-width: 43rem;
+  .hero-copy-shell > .hero-copy {
+    max-width: 42rem;
+  }
+
+  .hero-title {
+    max-width: 14ch;
+  }
+}
+
+@media (max-width: 760px) {
+  .hero-title {
+    max-width: 12.5ch;
+    font-size: clamp(2.45rem, 10.5vw, 3.25rem);
+  }
+
+  .hero-lead {
+    margin-top: 0.7rem;
+    font-size: 1.02rem;
+  }
+
+  .hero-tailored {
+    margin-top: 0.5rem;
+    font-size: 0.875rem;
+  }
+
+  .hero-close {
+    height: 4.5rem;
   }
 }
 
@@ -246,51 +399,158 @@ h3 {
   z-index: 1;
 }
 
-.industry-crawl {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  align-items: center;
-  min-height: 3.5rem;
-}
-
-.industry-crawl-viewport {
+/* ── Hero industry band ─────────────────────────────────
+   Anchored footer of the hero: kicker + marquee + control.
+   Reads as product context, not a stock ticker strip.
+*/
+.industry-marquee {
   position: relative;
-  min-width: 0;
-  overflow: hidden;
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 2.5rem, #000 calc(100% - 2.5rem), transparent);
-  mask-image: linear-gradient(90deg, transparent, #000 2.5rem, #000 calc(100% - 2.5rem), transparent);
+  z-index: 10;
+  border-top: 1px solid rgb(17 76 168 / 12%);
+  background:
+    linear-gradient(180deg, rgb(255 255 255 / 92%) 0%, rgb(246 248 250 / 97%) 100%);
+  backdrop-filter: blur(8px);
 }
 
-.industry-crawl-track {
-  display: flex;
-  width: max-content;
-  animation: industry-crawl 42s linear infinite;
+.industry-marquee-rail {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 3px;
+  background: linear-gradient(180deg, #114CA8 0%, #FC5104FA 100%);
 }
 
-.industry-crawl-group {
+.industry-marquee-inner {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 1rem 1.5rem;
+  min-height: 3.75rem;
+  padding: 0.85rem clamp(1rem, 3vw, 2rem) 0.85rem clamp(1.15rem, 3vw, 2.25rem);
+}
+
+.industry-marquee-meta {
   display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.35rem;
   flex-shrink: 0;
-  align-items: center;
-  gap: clamp(2rem, 4vw, 4.5rem);
-  padding-inline: clamp(1rem, 2vw, 2rem);
 }
 
-.industry-crawl-group span {
-  display: flex;
-  align-items: center;
-  white-space: nowrap;
-  gap: clamp(2rem, 4vw, 4.5rem);
-  color: rgb(16 43 67 / 78%);
-  font-family: "IBM Plex Mono", monospace;
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.12em;
+.industry-marquee-kicker {
+  margin: 0;
+  color: #114CA8;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  line-height: 1;
   text-transform: uppercase;
 }
 
-.industry-crawl-group span::after {
-  content: "/";
-  color: #FC5104FA;
+.industry-marquee-viewport {
+  min-width: 0;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent 0,
+    #000 2rem,
+    #000 calc(100% - 2.5rem),
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    90deg,
+    transparent 0,
+    #000 2rem,
+    #000 calc(100% - 2.5rem),
+    transparent 100%
+  );
+}
+
+.industry-marquee-track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  backface-visibility: hidden;
+  animation: industry-marquee-scroll 30s linear infinite;
+}
+
+.industry-marquee[data-paused="true"] .industry-marquee-track {
+  animation-play-state: paused;
+}
+
+.industry-marquee-group {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+}
+
+.industry-marquee-label {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  color: #114CA8;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.industry-marquee-sep {
+  display: inline-block;
+  margin-inline: 1.25rem;
+  color: rgb(252 81 4 / 70%);
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+.industry-marquee-toggle {
+  min-height: 1.75rem;
+  padding: 0.2rem 0;
+  border: 0;
+  border-bottom: 1px solid rgb(17 76 168 / 28%);
+  background: transparent;
+  color: rgb(17 76 168 / 72%);
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 0.5625rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  line-height: 1;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.industry-marquee-toggle:hover {
+  color: #114CA8;
+  border-bottom-color: #114CA8;
+}
+
+.industry-marquee-toggle:focus-visible {
+  outline: 2px solid #114CA8;
+  outline-offset: 3px;
+}
+
+.industry-marquee-fallback {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+  list-style: none;
+}
+
+@keyframes industry-marquee-scroll {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(calc(-1 * var(--marquee-shift, 50%)), 0, 0);
+  }
 }
 
 .experience-comparison {
@@ -464,45 +724,7 @@ summary::-webkit-details-marker {
   outline: none;
 }
 
-.industry-crawl:hover .industry-crawl-track,
-.industry-crawl:focus-within .industry-crawl-track {
-  animation-play-state: paused;
-}
 
-.industry-crawl-track[data-paused="true"] {
-  animation-play-state: paused;
-}
-
-.industry-crawl-toggle {
-  min-height: 44px;
-  margin-right: 0.5rem;
-  padding-inline: 0.75rem;
-  border-left: 1px solid rgb(16 43 67 / 12%);
-  color: #102b43;
-  font-family: "IBM Plex Mono", monospace;
-  font-size: 0.625rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.industry-crawl-static {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
-}
-
-@keyframes industry-crawl {
-  to {
-    transform: translateX(-50%);
-  }
-}
 
 .site-nav {
   transform: translate3d(0, calc(var(--nav-motion, 0) * -4px), 0)
@@ -544,19 +766,63 @@ summary::-webkit-details-marker {
     background: linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.68) 64%, rgba(255, 255, 255, 0.26) 100%);
   }
 
-  .industry-crawl-toggle {
-    margin-right: 0.25rem;
-    padding-inline: 0.5rem;
-    font-size: 0;
+  .hero-title {
+    max-width: 12ch;
+    font-size: clamp(2.45rem, 11vw, 3.35rem);
   }
 
-  .industry-crawl-toggle::after {
-    content: "Pause";
-    font-size: 0.625rem;
+  .hero-lead {
+    margin-top: 0.95rem;
+    font-size: 1.05rem;
   }
 
-  .industry-crawl-toggle[aria-pressed="true"]::after {
-    content: "Resume";
+  .hero-tailored {
+    margin-top: 1.1rem;
+    font-size: 0.9rem;
+  }
+
+  .industry-marquee-inner {
+    grid-template-columns: 1fr;
+    gap: 0.55rem;
+    min-height: 0;
+    padding: 0.75rem 0.85rem 0.85rem 1rem;
+  }
+
+  .industry-marquee-meta {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .industry-marquee-label {
+    font-size: 0.6875rem;
+    letter-spacing: 0.12em;
+  }
+
+  .industry-marquee-sep {
+    margin-inline: 0.95rem;
+  }
+
+  .industry-marquee-viewport {
+    -webkit-mask-image: linear-gradient(
+      90deg,
+      transparent 0,
+      #000 1rem,
+      #000 calc(100% - 1.25rem),
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      90deg,
+      transparent 0,
+      #000 1rem,
+      #000 calc(100% - 1.25rem),
+      transparent 100%
+    );
+  }
+
+  .industry-marquee-track {
+    animation-duration: 22s;
   }
 
   .how-it-works-orb,
@@ -572,38 +838,37 @@ summary::-webkit-details-marker {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .industry-crawl-track {
-    display: none;
+  .industry-marquee-track {
+    display: none !important;
+    animation: none !important;
   }
 
-  .industry-crawl-static {
+  .industry-marquee-fallback {
     position: static;
     width: auto;
     height: auto;
+    margin: 0;
+    padding: 0 0 0.15rem;
     overflow: visible;
     clip: auto;
     white-space: normal;
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
-    gap: 0.5rem 1rem;
-    margin: 0;
-    padding: 0 1rem;
-    color: rgb(16 43 67 / 78%);
-    font-family: "IBM Plex Mono", monospace;
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.08em;
+    gap: 0.35rem 1.15rem;
     list-style: none;
+    color: #114CA8;
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
   }
 
-  .industry-crawl {
-    display: block;
-    padding-block: 0.875rem;
+  .industry-marquee-viewport {
+    display: none;
   }
 
-  .industry-crawl-toggle {
+  .industry-marquee-toggle {
     display: none;
   }
 }
@@ -708,7 +973,7 @@ summary::-webkit-details-marker {
   border-color: rgb(17 76 168 / 30%); background: rgb(17 76 168 / 10%); color: #114CA8;
 }
 .industry-item-title {
-  min-width: 0; color: #191919;
+  min-width: 0; color: #114CA8;
   font-family: "Barlow Semi Condensed", "IBM Plex Sans", sans-serif;
   font-size: clamp(1.125rem, 2.2vw, 1.375rem); font-weight: 700; letter-spacing: -0.01em; line-height: 1.2; text-transform: uppercase;
 }

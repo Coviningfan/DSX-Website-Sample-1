@@ -8,8 +8,6 @@ import {
   Wrench,
 } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useState } from "react";
-import { HOME_CRAWL_INDUSTRIES } from "@/data/industries";
 import PrimaryCta from "@/components/primary-cta";
 
 /** Home copy is word-for-word from Web Mockup-5 slide 1 (including DSXEdge). */
@@ -56,11 +54,12 @@ const WORKFLOWS = [
 ];
 
 export default function HomePage() {
-  const [crawlPaused, setCrawlPaused] = useState(false);
-
   return (
     <main id="main-content" className="min-h-screen overflow-x-hidden bg-white">
-      <section id="home-hero" className="relative flex min-h-[100svh] flex-col overflow-hidden pt-[env(safe-area-inset-top)] max-md:min-h-0">
+      <section
+        id="home-hero"
+        className="relative flex min-h-[100svh] flex-col overflow-hidden pt-[env(safe-area-inset-top)] max-md:min-h-0"
+      >
         <div className="hero-tunnel-bg absolute inset-0 z-0" aria-hidden="true">
           <img
             src="/images/dsx-edge-bkg.webp"
@@ -75,59 +74,37 @@ export default function HomePage() {
           />
         </div>
         <div className="hero-readability absolute inset-0 z-[1]" aria-hidden="true" />
+        {/* Soft fade into white content below */}
+        <div className="hero-close" aria-hidden="true" />
 
-        <Link to="/" className="hero-brand absolute left-4 top-6 z-10 sm:left-6 sm:top-8 md:left-10" aria-label="DSXEdge home">
+        <Link
+          to="/"
+          className="hero-brand absolute left-4 top-6 z-10 sm:left-6 sm:top-8 md:left-10"
+          aria-label="DSXEdge home"
+        >
           <img src="/images/dsx-edge-logo-official.png" alt="DSXEdge" width="472" height="188" />
         </Link>
 
-        <div className="hero-copy-shell relative z-10 flex w-full max-w-[80rem] flex-1 flex-col items-start justify-center px-4 pb-16 pt-32 text-left sm:px-6 sm:pt-40 md:px-10 md:pb-20">
-          <div className="max-w-3xl self-start text-left pl-[clamp(4.5rem,7vw,6.25rem)]">
-            <h1 className="font-display text-balance text-left text-[clamp(3rem,8vw,6.75rem)] font-bold leading-[0.9] tracking-[-0.035em] text-[#102b43]">
-              Business Communications That Drive Profit
+        <div className="hero-copy-shell relative z-10 flex w-full max-w-[80rem] flex-1 flex-col items-start justify-center px-4 pb-20 pt-32 text-left sm:px-6 sm:pb-24 sm:pt-40 md:px-10 md:pb-28">
+          <div className="hero-copy self-start text-left pl-[clamp(4.5rem,7vw,6.25rem)]">
+            <h1 className="hero-title font-display">
+              <span className="hero-title-line">Business Communications</span>
+              <span className="hero-title-line">
+                That Drive <span className="hero-title-accent">Profit</span>
+              </span>
             </h1>
-            <p className="mt-7 max-w-2xl text-balance text-left text-xl font-semibold leading-snug text-[#191919] sm:text-2xl md:text-3xl">
-              A New Dimension in Customer Interaction &amp; Service
-            </p>
-            <p className="mt-5 border-l-2 border-[#FC5104FA] pl-4 text-left text-lg font-semibold uppercase tracking-[0.08em] text-[#191919]/75 sm:text-xl">
-              Tailored to Your Business
+            <p className="hero-lead">A New Dimension in Customer Interaction &amp; Service</p>
+            <p className="hero-tailored">
+              Tailored to <em className="hero-tailored-your">YOUR</em> Business
             </p>
           </div>
-        </div>
-
-        <div className="industry-crawl relative z-10 border-y border-[#102b43]/12 bg-white/94" aria-label="Industries served">
-          <div className="industry-crawl-viewport">
-            <div className="industry-crawl-track" data-paused={crawlPaused ? "true" : "false"} aria-hidden="true">
-              {[0, 1].map((copy) => (
-                <div className="industry-crawl-group" key={copy}>
-                  {HOME_CRAWL_INDUSTRIES.map((industry) => (
-                    <span key={`${copy}-${industry}`}>{industry}</span>
-                  ))}
-                </div>
-              ))}
-            </div>
-          </div>
-          <ul className="industry-crawl-static" role="list">
-            {HOME_CRAWL_INDUSTRIES.map((industry) => (
-              <li key={industry}>{industry}</li>
-            ))}
-          </ul>
-          <button
-            type="button"
-            className="industry-crawl-toggle"
-            onClick={() => setCrawlPaused((paused) => !paused)}
-            aria-pressed={crawlPaused}
-          >
-            {crawlPaused ? "Resume industries" : "Pause industries"}
-          </button>
         </div>
       </section>
 
       <section className="bg-white px-4 py-20 sm:px-6 sm:py-24 md:px-10 md:py-32">
         <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
           <div>
-            <h2 className="text-balance text-4xl font-bold leading-tight tracking-tight text-[#191919] sm:text-5xl">
-              Every missed call is profit that disappears
-            </h2>
+            <h2 className="section-title">Every missed call is profit that disappears</h2>
             <p className="mt-4 text-2xl font-bold text-[#FC5104FA]">Hundreds or Thousands a Month!</p>
           </div>
           <div className="border-l-2 border-[#114CA8] pl-6 sm:pl-8">
@@ -141,9 +118,7 @@ export default function HomePage() {
 
       <section id="opportunity" className="bg-white px-4 py-20 text-[#191919] sm:px-6 sm:py-24 md:px-10 md:py-32">
         <div className="mx-auto max-w-6xl">
-          <h2 className="text-balance text-4xl font-bold leading-tight tracking-tight sm:text-5xl">
-            Never Miss Another Opportunity
-          </h2>
+          <h2 className="section-title">Never Miss Another Opportunity</h2>
           <p className="mt-6 max-w-3xl text-lg leading-relaxed text-[#191919]/68">
             DSXEdge is an intelligent addition to your staff that works 24/7, never missing a call or text. It can handle many routine customer interactions autonomously. After hours it serves customers while no one is there, increasing revenue and delivering excellent customer service.
           </p>
@@ -174,9 +149,7 @@ export default function HomePage() {
 
       <section className="surface-muted px-4 py-20 sm:px-6 sm:py-24 md:px-10 md:py-32">
         <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-center">
-          <h2 className="text-balance text-4xl font-bold tracking-tight text-[#191919] sm:text-5xl">
-            Increase Productivity By 50% or More
-          </h2>
+          <h2 className="section-title">Increase Productivity By 50% or More</h2>
           <div className="space-y-5 text-lg leading-relaxed text-[#191919]/68">
             <p>
               Numerous studies have shown that repetitive, routine tasks consume as much as 65% of staff time, keeping them from doing high-value work that boosts profitability.
@@ -190,7 +163,7 @@ export default function HomePage() {
 
       <section id="demo" className="bg-white px-4 py-20 sm:px-6 sm:py-24 md:px-10">
         <div className="mx-auto flex max-w-5xl flex-col items-center justify-between gap-8 border-y border-[#191919]/12 py-10 text-center md:flex-row md:text-left">
-          <h2 className="text-balance text-3xl font-bold tracking-tight text-[#191919] sm:text-4xl">
+          <h2 className="section-title">
             Try It for Yourself – call 844-DSX-Edge (844-379-3343) and talk with Mary
           </h2>
           <PrimaryCta href="tel:8443793343" showArrow={false} className="demo-call-action shrink-0">
@@ -202,9 +175,7 @@ export default function HomePage() {
 
       <section id="departments" className="bg-white px-4 py-20 sm:px-6 sm:py-24 md:px-10 md:py-32">
         <div className="mx-auto max-w-6xl">
-          <h2 className="max-w-4xl text-balance text-4xl font-bold tracking-tight text-[#191919] sm:text-5xl md:text-6xl">
-            Every Department, Every Function, 24/7
-          </h2>
+          <h2 className="section-title max-w-4xl">Every Department, Every Function, 24/7</h2>
           <div className="mt-12 grid grid-cols-1 border-l border-t border-[#191919]/12 sm:grid-cols-2 lg:grid-cols-5">
             {FUNCTIONS.map((item) => (
               <div key={item} className="min-w-0 border-b border-r border-[#191919]/12 p-5 sm:p-6">
@@ -218,9 +189,7 @@ export default function HomePage() {
       <section id="workflows" className="bg-white px-4 py-20 sm:px-6 sm:py-24 md:px-10 md:py-32">
         <div className="mx-auto max-w-6xl">
           <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-end">
-            <h2 className="text-balance text-4xl font-bold tracking-tight text-[#191919] sm:text-5xl">
-              SEE DSXEDGE FOR YOUR BUSINESS
-            </h2>
+            <h2 className="section-title">SEE DSXEDGE FOR YOUR BUSINESS</h2>
             <Link
               to="/industries"
               className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-[#FC5104FA] hover:text-[#FC5104]"
@@ -256,17 +225,13 @@ export default function HomePage() {
 
       <section className="surface-muted px-4 py-20 sm:px-6 sm:py-24 md:px-10 md:py-32">
         <div className="mx-auto max-w-6xl">
-          <h2 className="text-balance text-4xl font-bold leading-tight tracking-tight text-[#191919] sm:text-5xl">
-            The Easiest Way for Your Business to Benefit From AI
-          </h2>
+          <h2 className="section-title">The Easiest Way for Your Business to Benefit From AI</h2>
           <p className="mt-6 max-w-4xl text-lg leading-relaxed text-[#191919]/68">
             DSXEdge is a full-featured business communication platform that also includes a unique AI component designed to handle a wide range of business chores, from customer interactions and back-office tasks to taking and acting on customer and supplier information, answering complex customer questions and taking actions based on customer or staff requests. And it works across calls, texts, email, and live chat on your website.
           </p>
           <div className="mt-14 border-l-4 border-[#114CA8] pl-6 sm:pl-10">
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#FC5104FA]">Turnkey AI</p>
-            <h3 className="mt-4 max-w-4xl text-balance text-3xl font-bold tracking-tight text-[#191919] sm:text-4xl">
-              We set up the platform for your specific business and your specific needs.
-            </h3>
+            <h3 className="mt-4 max-w-4xl">We set up the platform for your specific business and your specific needs.</h3>
             <p className="mt-5 text-3xl font-bold text-[#FC5104FA] sm:text-4xl">You Just Use It.</p>
           </div>
         </div>
@@ -275,7 +240,7 @@ export default function HomePage() {
       <section className="bg-white px-4 py-20 text-[#191919] sm:px-6 sm:py-24 md:px-10">
         <div className="mx-auto flex max-w-6xl flex-col items-start justify-between gap-8 md:flex-row md:items-center">
           <div>
-            <h2 className="max-w-3xl text-balance text-4xl font-bold tracking-tight sm:text-5xl">
+            <h2 className="section-title max-w-3xl">
               Learn How DSXEdge Can Improve Your Operations &amp; Profits
             </h2>
             <p className="mt-4 text-lg text-[#191919]/60">Pick up phone and delegate</p>

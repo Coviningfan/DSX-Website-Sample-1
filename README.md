@@ -4,15 +4,17 @@ This file provides guidance when working with code in this repository. The READM
 
 ## STOP — Read before editing (agents / CLIs)
 
-**Public copy is locked to Web Mockup-5 word-for-word, including brand spelling `DSXEdge`.**
+**Public copy is locked to Web Mockup-5 word-for-word, including brand spelling `DSXEdge`.**  
+**Presentation locks (2026-08-08):** company blue headings (`#114CA8`), orange accents (`#FC5104FA`) for Profit/YOUR/CTAs; hero soft-close fade; **no industries strip on hero**; section titles quieter than hero display.
 
-- Binding rules: **`AGENTS.md`** (start here) and **`docs/AGENT_GUARDRAILS.md`**
-- Do **not** merge UI-audit or refinement branches over `main` without a full mockup-copy diff of `src/pages/*`
+- Binding rules: **`AGENTS.md`** (start here — includes **owner attitude**) and **`docs/AGENT_GUARDRAILS.md`**
+- Do **not** merge UI-audit or refinement branches over `main` without a full mockup-copy + hierarchy diff of `src/pages/*` and hero CSS
 - Do **not** replace the contact calendar with free-text day/time fields
 - Do **not** rewrite Features into a different IA than the mockup lists
-- If unsure, ask Joe — do not “improve” mockup wording
+- Do **not** re-add a hero marquee/strip unless Joe asks
+- If unsure, ask Joe — do not “improve” mockup wording or reverse locked visual decisions
 
-A prior session overwrote mockup-faithful work; these files exist so that does not happen again.
+Prior sessions overwrote mockup-faithful work and left broken hero chrome; these docs exist so that stops.
 
 ## DSXEdge — Industrial Telecom Website
 
